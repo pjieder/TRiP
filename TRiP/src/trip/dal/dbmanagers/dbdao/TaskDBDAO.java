@@ -70,8 +70,8 @@ public class TaskDBDAO implements ITaskDBDAO {
 
             stmt.setInt(1, timer.getTaskId());
             stmt.setInt(2, timer.getTime());
-            stmt.setString(3, TimeConverter.convertDateToString(timer.getStartTime()));
-            stmt.setString(4, TimeConverter.convertDateToString(timer.getStopTime()));
+            stmt.setString(3, TimeConverter.convertDateToStringDB(timer.getStartTime()));
+            stmt.setString(4, TimeConverter.convertDateToStringDB(timer.getStopTime()));
 
             ResultSet rs = stmt.executeQuery();
 
@@ -160,7 +160,7 @@ public class TaskDBDAO implements ITaskDBDAO {
 
         try {
             con = DBSettings.getInstance().getConnection();
-            String sql = "SELECT * FROM Tasks WHERE Tasks.taskID = ?";
+            String sql = "SELECT * FROM Tasks WHERE Tasks.taskID = ? ORDER BY Tasks.startTime asc";
             PreparedStatement stmt = con.prepareStatement(sql);
 
             stmt.setInt(1, taskId);
@@ -170,8 +170,8 @@ public class TaskDBDAO implements ITaskDBDAO {
 
                 int id = rs.getInt("ID");
                 int time = rs.getInt("time");
-                Date startTime = TimeConverter.convertStringToDate(rs.getString("startTime"));
-                Date stopTime = TimeConverter.convertStringToDate(rs.getString("stopTime"));
+                Date startTime = TimeConverter.convertStringToDateDB(rs.getString("startTime"));
+                Date stopTime = TimeConverter.convertStringToDateDB(rs.getString("stopTime"));
 
                 TaskTime taskTime = new TaskTime(time, startTime, stopTime);
                 taskTime.setId(id);

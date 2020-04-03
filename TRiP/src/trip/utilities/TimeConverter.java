@@ -30,17 +30,28 @@ public class TimeConverter {
         return simpleDateFormat.format(date);
     }
 
-    public static Date convertStringToDate(String dateString){
-        try 
-        {
+    public static Date convertStringToDate(String dateString) {
+        try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
             return simpleDateFormat.parse(dateString);
-        } 
-        catch (ParseException exception) 
-        {
-            
+        } catch (ParseException exception) {
+
         }
         return null;
     }
-  
+
+    public static String convertDateToStringDB(Date date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        return simpleDateFormat.format(date);
+    }
+
+    public static Date convertStringToDateDB(String dateString) {
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            return simpleDateFormat.parse(dateString);
+        } catch (ParseException exception) {
+
+        }
+        return null;
+    }
 }
