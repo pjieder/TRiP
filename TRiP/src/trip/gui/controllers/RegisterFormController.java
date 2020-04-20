@@ -14,6 +14,8 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
@@ -30,20 +32,38 @@ public class RegisterFormController implements Initializable {
     private JFXTextField testEmailTextField;
     @FXML
     private JFXButton registerButton;
+    @FXML
+    private TextField emailField;
+    @FXML
+    private Label invalidEmail;
+
+    private JFXTextField field;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         RegexValidator regex = new RegexValidator();
         regex.setRegexPattern("^.+@[^\\.].*\\.[a-z]{2,}$");
         regex.setMessage("Input is not a valid email");
-        testEmailTextField.getValidators().add(regex);
-        testEmailTextField.textProperty().addListener((observable, oldValue, newValue)->{
-            registerButton.setDisable(!testEmailTextField.validate());
+
+        //JFX design
+//        testEmailTextField.getValidators().add(regex);
+//        testEmailTextField.textProperty().addListener((observable, oldValue, newValue)->{
+//            registerButton.setDisable(!testEmailTextField.validate());
+//        });
+
+        //Standard Java design
+        field = new JFXTextField();
+        field.getValidators().add(regex);
+        emailField.textProperty().addListener((observable, oldValue, newValue) -> {
+            field.setText(newValue);
+            registerButton.setDisable(!field.validate());
+            invalidEmail.setVisible(!field.validate());
         });
+
     }
 
     @FXML

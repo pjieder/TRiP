@@ -37,7 +37,7 @@
       <Label layoutX="295.0" layoutY="199.0" text="Start Date" />
       <TextField layoutX="294.0" layoutY="297.0" style="-fx-background-color: #f1f1f1;" />
       <Label layoutX="294.0" layoutY="273.0" text="Password" />
-      <TextField layoutX="74.0" layoutY="297.0" style="-fx-background-color: #f1f1f1;" />
+      <TextField fx:id="emailField" layoutX="74.0" layoutY="297.0" style="-fx-background-color: #f1f1f1;" />
       <Label layoutX="74.0" layoutY="273.0" text="Email" />
       <ImageView fitHeight="25.0" fitWidth="42.0" layoutX="274.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -45,5 +45,6 @@
          </image>
       </ImageView>
       <JFXTextField fx:id="testEmailTextField" layoutX="197.0" layoutY="425.0" prefHeight="25.0" prefWidth="235.0" />
+      <Label fx:id="invalidEmail" layoutX="111.0" layoutY="273.0" text="Not valid Email!" textFill="#ff0909" visible="false" />
    </children>
 </AnchorPane>
