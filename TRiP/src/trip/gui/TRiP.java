@@ -20,12 +20,9 @@ public class TRiP extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-<<<<<<< HEAD:TRiP/src/trip/TRiP.java
+
         Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
-=======
-        Parent root = FXMLLoader.load(getClass().getResource("views/LoginView.fxml"));
->>>>>>> 073d5ce34db339ad7ba69808978d6f78735bec7b:TRiP/src/trip/gui/TRiP.java
-        
+      
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
