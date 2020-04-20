@@ -14,15 +14,14 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="393.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fitHeight="423.0" fitWidth="661.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Images/1.jpg" />
+            <Image url="@../images/1.jpg" />
          </image>
       </ImageView>
-      <GridPane layoutX="-6.0" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="405.0" styleClass="middlebackground">
+      <GridPane layoutX="-6.0" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="405.0" styleClass="middlebackground" stylesheets="@../styles/LoginCSS.css">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="179.0" minWidth="10.0" prefWidth="95.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="202.0" minWidth="10.0" prefWidth="153.0" />
@@ -50,27 +49,27 @@
          <children>
             <ImageView fitHeight="71.0" fitWidth="164.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                <image>
-                  <Image url="@Images/TRiP%20Font.png" />
+                  <Image url="@../images/TRiP%20Font.png" />
                </image>
             </ImageView>
-            <JFXTextField focusColor="#b49afd" promptText="Username" stylesheets="@CSS/LoginCSS.css" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="9">
+            <JFXTextField focusColor="#b49afd" promptText="Username" stylesheets="@../styles/LoginCSS.css" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="9">
                <font>
                   <Font size="15.0" />
                </font>
             </JFXTextField>
-            <JFXPasswordField focusColor="#b49afd" promptText="Password" stylesheets="@CSS/LoginCSS.css" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="7">
+            <JFXPasswordField focusColor="#b49afd" promptText="Password" stylesheets="@../styles/LoginCSS.css" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="7">
                <font>
                   <Font size="15.0" />
                </font>
             </JFXPasswordField>
-            <JFXProgressBar stylesheets="@CSS/LoginCSS.css" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="12" />
-            <JFXCheckBox checkedColor="#b49afd" stylesheets="@CSS/LoginCSS.css" text="Remember Me" textFill="WHITE" unCheckedColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="11" />
-            <JFXButton buttonType="RAISED" styleClass="login-button" stylesheets="@CSS/LoginCSS.css" text="LOGIN" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="14">
+            <JFXProgressBar stylesheets="@../styles/LoginCSS.css" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="12" />
+            <JFXCheckBox checkedColor="#b49afd" stylesheets="@../styles/LoginCSS.css" text="Remember Me" textFill="WHITE" unCheckedColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+            <JFXButton buttonType="RAISED" styleClass="login-button" stylesheets="@../styles/LoginCSS.css" text="LOGIN" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="14">
                <font>
                   <Font size="18.0" />
                </font>
             </JFXButton>
-            <Label stylesheets="@CSS/LoginCSS.css" text="Wrong Username or Password" textFill="RED" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="12" />
+            <Label stylesheets="@../styles/LoginCSS.css" text="Wrong Username or Password" textFill="RED" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="12" />
          </children>
       </GridPane>
    </children>

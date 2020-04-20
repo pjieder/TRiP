@@ -1,0 +1,4 @@
+server=10.176.111.31
+user=CSe19A_23
+password=CSe19A_23
+database=AttendingSchool
