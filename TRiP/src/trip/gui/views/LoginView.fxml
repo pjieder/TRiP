@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="393.0" prefWidth="398.0" styleClass="background" stylesheets="@loginView2.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="attendanceautomation.gui.controllers.LoginViewController">
+<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="393.0" prefWidth="398.0" styleClass="background" stylesheets="@../styles/loginView2.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.gui.controllers.LoginViewController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="316.0" minWidth="10.0" prefWidth="271.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="935.0" minWidth="10.0" prefWidth="516.0" />
@@ -25,7 +25,7 @@
       <RowConstraints maxHeight="197.0" minHeight="10.0" prefHeight="71.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <GridPane alignment="CENTER" prefHeight="312.0" prefWidth="516.0" styleClass="middlebackground" stylesheets="@loginView2.css" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <GridPane alignment="CENTER" prefHeight="312.0" prefWidth="516.0" styleClass="middlebackground" stylesheets="@../styles/loginView2.css" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="487.0" minWidth="10.0" prefWidth="88.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="487.0" minWidth="10.0" prefWidth="344.0" />
@@ -56,26 +56,26 @@
             <RowConstraints maxHeight="241.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <JFXCheckBox fx:id="rememberMe" checkedColor="#9a80fe" stylesheets="@loginView2.css" text="Remember Me" textFill="WHITE" unCheckedColor="#ffffffbd" GridPane.columnIndex="1" GridPane.rowIndex="15" />
-            <JFXTextField fx:id="usernameField" focusColor="#b49afd" promptText="Username" stylesheets="@loginView2.css" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="6">
+            <JFXCheckBox fx:id="rememberMe" checkedColor="#9a80fe" stylesheets="@../styles/loginView2.css" text="Remember Me" textFill="WHITE" unCheckedColor="#ffffffbd" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+            <JFXTextField fx:id="usernameField" focusColor="#b49afd" promptText="Username" stylesheets="@../styles/loginView2.css" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="6">
                <font>
                   <Font size="15.0" />
                </font></JFXTextField>
-            <JFXProgressBar fx:id="progressBar" stylesheets="@loginView2.css" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="17" GridPane.valignment="CENTER" />
-            <JFXPasswordField fx:id="passwordField" focusColor="#b49afd" promptText="Password" stylesheets="@loginView2.css" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="12">
+            <JFXProgressBar fx:id="progressBar" stylesheets="@../styles/loginView2.css" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="17" GridPane.valignment="CENTER" />
+            <JFXPasswordField fx:id="passwordField" focusColor="#b49afd" promptText="Password" stylesheets="@../styles/loginView2.css" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="12">
                <font>
                   <Font size="15.0" />
                </font>
             </JFXPasswordField>
             <Label fx:id="errorMsg" alignment="CENTER" text="Wrong Username or Password! Try again." textFill="#da0000" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="10" GridPane.valignment="CENTER" />
-            <JFXButton fx:id="loginButton" alignment="CENTER" buttonType="RAISED" onMouseClicked="#login" prefHeight="30.0" prefWidth="141.0" styleClass="login-button" stylesheets="@loginView2.css" text="LOGIN" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="19">
+            <JFXButton fx:id="loginButton" alignment="CENTER" buttonType="RAISED" onMouseClicked="#login" prefHeight="30.0" prefWidth="141.0" styleClass="login-button" stylesheets="@../styles/loginView2.css" text="LOGIN" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="19">
                <font>
                   <Font size="18.0" />
                </font>
             </JFXButton>
             <ImageView fitHeight="74.0" fitWidth="176.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <image>
-                  <Image url="@TRiP.png" />
+                  <Image url="@../images/TRiP.png" />
                </image>
             </ImageView>
          </children>
