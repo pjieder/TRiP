@@ -12,20 +12,20 @@ and open the template in the editor.
 
 .login-button
 {
-    -fx-background-color: #77d1b3;
+    -fx-background-color: #9a80fe;
 
 
-    
+   
 }
 .login-button:hover
 {
-    -fx-background-color: #67b49f;
+    -fx-background-color: #b49afd;
     
 }
 
 .background
 {
-    -fx-background-image: url("wallhaven-4d9l5j.jpg");
+    -fx-background-image: url("1.jpg");
     -fx-background-repeat: no-repeat;
     -fx-background-size: stretch;
 }
@@ -41,5 +41,9 @@ and open the template in the editor.
 }
 
 .jfx-progress-bar > .bar {
-    -fx-background-color: #77d1b3;
+    -fx-background-color: #9a80fe;
+}
+
+.text-field {
+    -fx-prompt-text-fill: white;
 }

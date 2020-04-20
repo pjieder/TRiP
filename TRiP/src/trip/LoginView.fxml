@@ -56,13 +56,13 @@
             <RowConstraints maxHeight="241.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <JFXCheckBox fx:id="rememberMe" checkedColor="#77d1b3" stylesheets="@loginView2.css" text="Remember Me" unCheckedColor="#858585bc" GridPane.columnIndex="1" GridPane.rowIndex="15" />
-            <JFXTextField fx:id="usernameField" focusColor="#77d1b3" promptText="Username" stylesheets="@loginView2.css" GridPane.columnIndex="1" GridPane.rowIndex="6">
+            <JFXCheckBox fx:id="rememberMe" checkedColor="#9a80fe" stylesheets="@loginView2.css" text="Remember Me" textFill="WHITE" unCheckedColor="#ffffffbd" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+            <JFXTextField fx:id="usernameField" focusColor="#b49afd" promptText="Username" stylesheets="@loginView2.css" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="6">
                <font>
                   <Font size="15.0" />
                </font></JFXTextField>
             <JFXProgressBar fx:id="progressBar" stylesheets="@loginView2.css" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="17" GridPane.valignment="CENTER" />
-            <JFXPasswordField fx:id="passwordField" focusColor="#77d1b3" promptText="Password" stylesheets="@loginView2.css" GridPane.columnIndex="1" GridPane.rowIndex="12">
+            <JFXPasswordField fx:id="passwordField" focusColor="#b49afd" promptText="Password" stylesheets="@loginView2.css" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="12">
                <font>
                   <Font size="15.0" />
                </font>
@@ -73,7 +73,7 @@
                   <Font size="18.0" />
                </font>
             </JFXButton>
-            <ImageView fitHeight="79.0" fitWidth="133.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+            <ImageView fitHeight="74.0" fitWidth="176.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <image>
                   <Image url="@TRiP.png" />
                </image>
