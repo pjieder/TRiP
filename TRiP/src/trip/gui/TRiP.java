@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package trip;
+package trip.gui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -20,14 +20,18 @@ public class TRiP extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
+<<<<<<< HEAD:TRiP/src/trip/TRiP.java
         Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+=======
+        Parent root = FXMLLoader.load(getClass().getResource("views/LoginView.fxml"));
+>>>>>>> 073d5ce34db339ad7ba69808978d6f78735bec7b:TRiP/src/trip/gui/TRiP.java
         
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
         stage.show();
         stage.setTitle("TRiP");
-        stage.getIcons().add(new Image(TRiP.class.getResourceAsStream("time.png")));
+        stage.getIcons().add(new Image(TRiP.class.getResourceAsStream("images/time.png")));
         stage.setResizable(false);
     }
 
