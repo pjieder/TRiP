@@ -47,3 +47,7 @@ and open the template in the editor.
 .text-field {
     -fx-prompt-text-fill: white;
 }
+
+.text-input {
+    -fx-text-fill: white;    
+}
