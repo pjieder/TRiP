@@ -1,0 +1,37 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 20. apr. 2020, 19.19.31
+    Author     : Peter
+*/
+
+@import url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
+
+.login-button
+{
+    -fx-background-color: #9a80fe;
+
+
+   
+}
+.login-button:hover
+{
+    -fx-background-color: #b49afd;
+    
+}
+
+.label
+{
+        -fx-font-family: 'Oswald', sans-serif;
+}
+
+.text-field {
+    -fx-prompt-text-fill: white;
+}
+
+.text-input {
+    -fx-text-fill: white;    
+}
