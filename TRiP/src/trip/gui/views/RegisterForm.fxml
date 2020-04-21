@@ -17,7 +17,7 @@
             <Image url="@../images/plus%20(4).png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="25.0" fitWidth="24.0" layoutX="271.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="41.0" fitWidth="49.0" layoutX="271.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/add%20(1).png" />
          </image>
@@ -38,11 +38,11 @@
          </font>
       </JFXButton>
       <JFXCheckBox fx:id="adminCheckbox" checkedColor="#9a80fe" layoutX="75.0" layoutY="431.0" onAction="#doAdmin" text="Admin" />
-      <JFXCheckBox fx:id="userCheckbox" checkedColor="#9a80fe" layoutX="156.0" layoutY="431.0" onAction="#doUser" selected="true" text="User" />
+      <JFXCheckBox fx:id="userCheckbox" checkedColor="#9a80fe" layoutX="156.0" layoutY="431.0" onAction="#doUser" text="User" />
       <Label layoutX="75.0" layoutY="408.0" text="Role" />
       <ComboBox fx:id="chooseProject" layoutX="75.0" layoutY="502.0" prefHeight="25.0" prefWidth="296.0" promptText="Choose Project" style="-fx-background-color: #f1f1f1;" />
       <Label layoutX="75.0" layoutY="477.0" text="Projects" />
-      <Label fx:id="invalidEmail" layoutX="75.0" layoutY="310.0" text="Not valid Email!" textFill="#ff0909" />
+      <Label fx:id="invalidEmail" layoutX="75.0" layoutY="310.0" text="Not valid Email!" textFill="#ff0909" visible="false" />
       <JFXTextField fx:id="firstNameField" focusColor="#9a80fe" layoutX="75.0" layoutY="136.0" prefHeight="25.0" prefWidth="296.0" promptText="First Name" stylesheets="@../styles/RegisterFormCSS.css" />
       <JFXTextField fx:id="lastNameField" layoutX="75.0" layoutY="208.0" prefHeight="25.0" prefWidth="296.0" promptText="Last Name" />
       <JFXTextField fx:id="emailField" layoutX="75.0" layoutY="278.0" prefHeight="25.0" prefWidth="296.0" promptText="Email" />
