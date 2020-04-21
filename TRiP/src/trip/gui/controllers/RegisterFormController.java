@@ -29,15 +29,16 @@ public class RegisterFormController implements Initializable {
     @FXML
     private JFXCheckBox userCheckbox;
     @FXML
-    private JFXTextField testEmailTextField;
-    @FXML
     private JFXButton registerButton;
-    @FXML
     private TextField emailField;
     @FXML
     private Label invalidEmail;
 
     private JFXTextField field;
+    @FXML
+    private JFXTextField EmailField;
+    @FXML
+    private JFXTextField EmailField1;
 
     /**
      * Initializes the controller class.

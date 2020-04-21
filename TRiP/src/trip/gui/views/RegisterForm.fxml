@@ -2,49 +2,42 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="510.0" prefWidth="529.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.gui.controllers.RegisterFormController">
+<AnchorPane id="AnchorPane" prefHeight="707.0" prefWidth="451.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.gui.controllers.RegisterFormController">
    <children>
       <Label layoutX="74.0" layoutY="58.0" text="Registration Form" textFill="#4d4d4d">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <JFXButton fx:id="registerButton" layoutX="74.0" layoutY="422.0" styleClass="login-button" stylesheets="@../styles/RegisterFormCSS.css" text="Register" textFill="WHITE">
+      <JFXButton fx:id="registerButton" layoutX="74.0" layoutY="618.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Register" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
       </JFXButton>
-      <JFXCheckBox fx:id="adminCheckbox" checkedColor="#9a80fe" layoutX="79.0" layoutY="225.0" onAction="#doAdmin" text="Admin" />
-      <JFXCheckBox fx:id="userCheckbox" checkedColor="#9a80fe" layoutX="160.0" layoutY="225.0" onAction="#doUser" selected="true" text="User" />
-      <TextField layoutX="74.0" layoutY="142.0" style="-fx-background-color: #f1f1f1;" />
-      <Label layoutX="75.0" layoutY="118.0" text="First Name" />
-      <TextField layoutX="294.0" layoutY="142.0" style="-fx-background-color: #f1f1f1;" />
-      <Label layoutX="294.0" layoutY="118.0" text="Last Name" />
-      <Label layoutX="79.0" layoutY="188.0" text="Role" />
-      <ComboBox layoutX="74.0" layoutY="369.0" prefHeight="25.0" prefWidth="372.0" promptText="Choose Project" style="-fx-background-color: #f1f1f1;" />
-      <Label layoutX="78.0" layoutY="344.0" text="Projects" />
-      <DatePicker layoutX="294.0" layoutY="221.0" prefHeight="25.0" prefWidth="149.0" style="-fx-background-color: #f1f1f1;" />
-      <Label layoutX="295.0" layoutY="199.0" text="Start Date" />
-      <TextField layoutX="294.0" layoutY="297.0" style="-fx-background-color: #f1f1f1;" />
-      <Label layoutX="294.0" layoutY="273.0" text="Password" />
-      <TextField fx:id="emailField" layoutX="74.0" layoutY="297.0" style="-fx-background-color: #f1f1f1;" />
-      <Label layoutX="74.0" layoutY="273.0" text="Email" />
+      <JFXCheckBox fx:id="adminCheckbox" checkedColor="#9a80fe" layoutX="75.0" layoutY="431.0" onAction="#doAdmin" text="Admin" />
+      <JFXCheckBox fx:id="userCheckbox" checkedColor="#9a80fe" layoutX="156.0" layoutY="431.0" onAction="#doUser" selected="true" text="User" />
+      <Label layoutX="75.0" layoutY="408.0" text="Role" />
+      <ComboBox layoutX="74.0" layoutY="563.0" prefHeight="25.0" prefWidth="296.0" promptText="Choose Project" style="-fx-background-color: #f1f1f1;" />
+      <Label layoutX="74.0" layoutY="538.0" text="Projects" />
       <ImageView fitHeight="25.0" fitWidth="42.0" layoutX="274.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/add%20(1).png" />
          </image>
       </ImageView>
-      <JFXTextField fx:id="testEmailTextField" layoutX="197.0" layoutY="425.0" prefHeight="25.0" prefWidth="235.0" />
       <Label fx:id="invalidEmail" layoutX="111.0" layoutY="273.0" text="Not valid Email!" textFill="#ff0909" visible="false" />
+      <JFXTextField focusColor="#9a80fe" layoutX="75.0" layoutY="136.0" prefHeight="25.0" prefWidth="296.0" promptText="First Name" stylesheets="@../styles/RegisterFormCSS.css" />
+      <JFXTextField layoutX="75.0" layoutY="208.0" prefHeight="25.0" prefWidth="296.0" promptText="Last Name" />
+      <JFXTextField fx:id="EmailField" layoutX="75.0" layoutY="278.0" prefHeight="25.0" prefWidth="296.0" promptText="Email" />
+      <JFXTextField fx:id="EmailField1" layoutX="75.0" layoutY="346.0" prefHeight="25.0" prefWidth="296.0" promptText="Email" text="Password" />
+      <JFXDatePicker defaultColor="#9a80fe" layoutX="74.0" layoutY="480.0" prefHeight="28.0" prefWidth="296.0" promptText="Start Date" />
    </children>
 </AnchorPane>
