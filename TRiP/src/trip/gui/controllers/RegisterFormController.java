@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
@@ -30,15 +31,20 @@ public class RegisterFormController implements Initializable {
     private JFXCheckBox userCheckbox;
     @FXML
     private JFXButton registerButton;
+    @FXML
     private TextField emailField;
     @FXML
     private Label invalidEmail;
 
     private JFXTextField field;
     @FXML
-    private JFXTextField EmailField;
+    private ComboBox<?> chooseProject;
     @FXML
-    private JFXTextField EmailField1;
+    private JFXTextField firstNameField;
+    @FXML
+    private JFXTextField lastNameField;
+    @FXML
+    private JFXTextField passwordField;
 
     /**
      * Initializes the controller class.
