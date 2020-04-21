@@ -50,26 +50,28 @@ and open the template in the editor.
 
 
 .menu-bar .menu-button:hover, .menu-bar .menu-button:focused, .menu-bar .menu-button:showing {
-    -fx-text-fill: white;
-    -fx-background: #9a80fe ;
+
+    -fx-background: #f1f1f1 ;
     -fx-opacity: 1;
-    -fx-text-fill: white;
+    -fx-text-fill: #333333;
 }
 
 .menu-bar .menu-button:focused {
-    -fx-text-fill: white;
+    -fx-text-fill: #333333;
+
 }
 
-.menu-item {
-    -fx-text-fill: white;
-    -fx-background: #9a80fe ;
+.menu-item:hover {
+    -fx-background: #f1f1f1 ;
+    -fx-text-fill: #333333;
 }
 .menu-item .label:hover{
-    -fx-background: #9a80fe ;
-    -fx-text-fill: white;
+    -fx-background: #e1e1e1 ;
+        -fx-text-fill: #333333;
 }
 .context-menu {
     -fx-skin: "com.sun.javafx.scene.control.skin.ContextMenuSkin";
+        -fx-text-fill: black;
     -fx-background-color:white ;
     -fx-border-width: 0.2px;
     -fx-border-color: black;
