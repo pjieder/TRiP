@@ -5,6 +5,9 @@
  */
 package trip.be;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 /**
  *
  * @author ander
@@ -13,11 +16,14 @@ public abstract class Employee {
 
     private int id;
     private Roles role;
-    private String name;
+    private String fName;
+    private String lName;
     private String email;
+    private ObservableList<Project> projects = FXCollections.observableArrayList();
 
-    public Employee(String name, String email, Roles role) {
-        this.name = name;
+    public Employee(String fName, String lName, String email, Roles role) {
+        this.fName = fName;
+        this.lName = lName;
         this.email = email;
         this.role = role;
     }
@@ -38,12 +44,20 @@ public abstract class Employee {
         this.role = role;
     }
 
-    public String getName() {
-        return name;
+    public String getfName() {
+        return fName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setfName(String fName) {
+        this.fName = fName;
+    }
+
+    public String getlName() {
+        return lName;
+    }
+
+    public void setlName(String lName) {
+        this.lName = lName;
     }
 
     public String getEmail() {
@@ -52,6 +66,14 @@ public abstract class Employee {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public ObservableList<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(ObservableList<Project> projects) {
+        this.projects = projects;
     }
     
     @Override

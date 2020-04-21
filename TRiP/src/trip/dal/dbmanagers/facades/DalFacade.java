@@ -5,30 +5,50 @@
  */
 package trip.dal.dbmanagers.facades;
 
+import trip.be.Admin;
 import trip.be.Employee;
 import trip.be.Roles;
+import trip.be.User;
 import trip.dal.dbmanagers.dbdao.IPersonDBDAO;
 import trip.dal.dbmanagers.dbdao.PersonDBDAO;
+import trip.dal.dbmanagers.dbdao.UserDBDAO;
 
 /**
  *
  * @author ander
  */
-public class DalFacade implements IDalFacade{
+public class DalFacade implements IDalFacade {
 
-    private IPersonDBDAO personManager = new PersonDBDAO();
-    
+    private PersonDBDAO personManager = new PersonDBDAO();
+    private UserDBDAO userManager = new UserDBDAO();
+
     @Override
     public Employee login(String username, String password) {
-        
-        int userId = personManager.isLoginCorrect(username, password);
 
-        if (userId != -1) {
-            Roles role = personManager.getRoleById(userId);
+        int employeeId = personManager.isLoginCorrect(username, password);
+
+        if (employeeId != -1) {
+            Roles role = personManager.getRoleById(employeeId);
+
+            if (role == Roles.USER) {
+                User user = userManager.getUserById(employeeId);
+                user.setProjects(personManager.getAllProjects());
+                userManager.loadProjects(employeeId, user.getProjects());
+                return userManager.getUserById(employeeId);
+
+            } else if (role == Roles.ADMIN) {
+                Admin admin = teacherManager.getTeacherById(userId);
+
+                for (Classroom c : teacher.getClassrooms()) {
+                    c.setStudents(studentManager.getStudentsInClass(c));
+                }
+
+                return teacher;
+            }
 
         }
 
         return null;
     }
-    
+
 }
