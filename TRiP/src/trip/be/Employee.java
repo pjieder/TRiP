@@ -9,14 +9,14 @@ package trip.be;
  *
  * @author ander
  */
-public abstract class Person {
+public abstract class Employee {
 
     private int id;
     private Roles role;
     private String name;
     private String email;
 
-    public Person(String name, String email, Roles role) {
+    public Employee(String name, String email, Roles role) {
         this.name = name;
         this.email = email;
         this.role = role;
@@ -57,7 +57,7 @@ public abstract class Person {
     @Override
     public boolean equals(Object obj) {
       
-        Person person = (Person) obj;
+        Employee person = (Employee) obj;
 
         if (person.getId() == this.getId()) {
             return true;

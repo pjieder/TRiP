@@ -7,7 +7,7 @@ package trip.bll;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import trip.be.Person;
+import trip.be.Employee;
 import trip.dal.dbmanagers.facades.DalFacade;
 import trip.dal.dbmanagers.facades.IDalFacade;
 import trip.utilities.HashAlgorithm;
@@ -30,7 +30,7 @@ public class PersonManager {
      * @param password The password of the person
      * @return The person found based on the username and password
      */
-    public Person validateUser(String username, String password)
+    public Employee validateUser(String username, String password)
     {
        return dalFacade.login(username, password);
     }

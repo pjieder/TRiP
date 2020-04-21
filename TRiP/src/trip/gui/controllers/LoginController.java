@@ -23,7 +23,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import trip.be.Person;
+import trip.be.Employee;
 import trip.gui.AppModel;
 
 /**

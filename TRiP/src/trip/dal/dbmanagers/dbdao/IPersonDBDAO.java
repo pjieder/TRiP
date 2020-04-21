@@ -5,7 +5,7 @@
  */
 package trip.dal.dbmanagers.dbdao;
 
-import trip.be.Person;
+import trip.be.Employee;
 import trip.be.Roles;
 
 /**

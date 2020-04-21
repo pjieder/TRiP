@@ -5,7 +5,7 @@
  */
 package trip.dal.dbmanagers.facades;
 
-import trip.be.Person;
+import trip.be.Employee;
 import trip.be.Roles;
 import trip.dal.dbmanagers.dbdao.IPersonDBDAO;
 import trip.dal.dbmanagers.dbdao.PersonDBDAO;
@@ -19,7 +19,7 @@ public class DalFacade implements IDalFacade{
     private IPersonDBDAO personManager = new PersonDBDAO();
     
     @Override
-    public Person login(String username, String password) {
+    public Employee login(String username, String password) {
         
         int userId = personManager.isLoginCorrect(username, password);
 

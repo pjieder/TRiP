@@ -5,7 +5,7 @@
  */
 package trip.gui;
 
-import trip.be.Person;
+import trip.be.Employee;
 import trip.bll.PersonManager;
 
 /**
@@ -27,7 +27,7 @@ public class AppModel {
      * @param password the password of the account
      * @return 
      */
-    public Person validateUser(String username, String password) {
+    public Employee validateUser(String username, String password) {
         return personManager.validateUser(username, password);
     }
 

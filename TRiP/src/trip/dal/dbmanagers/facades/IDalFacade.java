@@ -5,7 +5,7 @@
  */
 package trip.dal.dbmanagers.facades;
 
-import trip.be.Person;
+import trip.be.Employee;
 
 /**
  *
@@ -19,7 +19,7 @@ public interface IDalFacade {
      * @param password The password of the person
      * @return The person found based on the username and password
      */
-     public Person login(String username, String password);
+     public Employee login(String username, String password);
     
     
     
