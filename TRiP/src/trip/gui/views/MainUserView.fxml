@@ -1,11 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.gui.controllers.MainUserViewController">
-    
+
+<AnchorPane id="AnchorPane" prefHeight="599.0" prefWidth="1166.0" style="-fx-background-color: #ffffff;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="trip.gui.controllers.MainUserViewController">
+   <children>
+      <JFXButton layoutX="1033.0" layoutY="525.0" prefHeight="42.0" prefWidth="73.0" stylesheets="@../styles/MainUserViewCSS.css" text="Edit" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXButton>
+      <JFXTreeTableView editable="true" layoutX="63.0" layoutY="172.0" prefHeight="337.0" prefWidth="1043.0" />
+      <StackPane layoutX="160.0" layoutY="3.0" prefHeight="150.0" prefWidth="200.0" />
+      <AnchorPane layoutX="52.0" layoutY="43.0" prefHeight="53.0" prefWidth="1065.0">
+         <children>
+            <ComboBox layoutX="624.0" layoutY="5.0" prefHeight="44.0" prefWidth="183.0" promptText="Project" style="-fx-background-color: #f1f1f1;" />
+            <TextField layoutX="14.0" layoutY="5.0" prefHeight="44.0" prefWidth="598.0" promptText="What are you working on?" />
+            <JFXButton layoutX="949.0" layoutY="5.0" prefHeight="44.0" prefWidth="73.0" stylesheets="@../styles/MainUserViewCSS.css" text="Start" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXButton>
+            <ImageView fitHeight="17.0" fitWidth="20.0" layoutX="1034.0" layoutY="33.0" opacity="0.41" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/calendar%20(2).png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="17.0" fitWidth="17.0" layoutX="1034.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/clock.png" />
+               </image>
+            </ImageView>
+            <TextField layoutX="845.0" layoutY="7.0" prefHeight="42.0" prefWidth="87.0" stylesheets="@../styles/MainUserViewCSS.css" text="00:00:00">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+            <Line endX="-100.0" endY="26.0" layoutX="921.0" layoutY="19.0" opacity="0.35" startX="-100.0" startY="-9.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="41.0" layoutY="110.0" prefHeight="53.0" prefWidth="1065.0">
+         <children>
+            <ComboBox layoutX="365.0" layoutY="-1.0" prefHeight="44.0" prefWidth="183.0" promptText="Project" style="-fx-background-color: #f1f1f1;" />
+            <TextField layoutX="22.0" layoutY="-1.0" prefHeight="44.0" prefWidth="332.0" promptText="What are you working on?" />
+            <JFXButton layoutX="963.0" prefHeight="42.0" prefWidth="73.0" stylesheets="@../styles/MainUserViewCSS.css" text="Add" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXButton>
+            <ImageView fitHeight="17.0" fitWidth="20.0" layoutX="1048.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/calendar%20(2).png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="17.0" fitWidth="17.0" layoutX="1048.0" layoutY="-1.0" opacity="0.41" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/clock.png" />
+               </image>
+            </ImageView>
+            <TextField layoutX="851.0" prefHeight="42.0" prefWidth="87.0" stylesheets="@../styles/MainUserViewCSS.css" text="00:00:00">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+            <TextField layoutX="673.0" prefHeight="42.0" prefWidth="62.0" stylesheets="@../styles/MainUserViewCSS.css" text="00:00:00">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </TextField>
+            <TextField layoutX="747.0" prefHeight="42.0" prefWidth="62.0" stylesheets="@../styles/MainUserViewCSS.css" text="00:00:00">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </TextField>
+            <Line endX="-100.0" endY="26.0" layoutX="929.0" layoutY="12.0" opacity="0.35" startX="-100.0" startY="-9.0" />
+            <JFXDatePicker defaultColor="#9a80fe" layoutX="556.0" layoutY="6.0" prefHeight="28.0" prefWidth="114.0" promptText="Date" stylesheets="@../styles/MainUserViewCSS.css" />
+         </children>
+      </AnchorPane>
+   </children>
 </AnchorPane>
