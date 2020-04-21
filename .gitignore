@@ -40,3 +40,4 @@ nbdist/
 MyTunes/src/mytunes/dal/dbaccess/DBSettings.txt.txt
 MyTunes/src/mytunes/dal/dbaccess/DBSettings.txt
 AttendanceAutomation/DBSettings.txt
+TRiP/DBSettings.txt
