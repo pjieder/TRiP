@@ -1,11 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.gui.controllers.MainAdminViewController">
-    
+
+<AnchorPane id="AnchorPane" prefHeight="496.0" prefWidth="932.0" style="-fx-background-color: #ffffff;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="trip.gui.controllers.MainAdminViewController">
+   <children>
+      <JFXButton layoutX="228.0" layoutY="93.0" stylesheets="@../styles/MainAdminView.css" text="Create project" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="361.0" layoutY="93.0" prefHeight="31.0" prefWidth="114.0" stylesheets="@../styles/MainAdminView.css" text="Edit project" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXButton>
+      <JFXTreeTableView layoutX="52.0" layoutY="132.0" prefHeight="284.0" prefWidth="423.0" />
+      <Label layoutX="52.0" layoutY="98.0" text="Current Projects">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <JFXTreeTableView layoutX="504.0" layoutY="132.0" prefHeight="284.0" prefWidth="375.0" />
+      <Label layoutX="504.0" layoutY="98.0" text="Current Users">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <JFXButton layoutX="765.0" layoutY="93.0" prefHeight="31.0" prefWidth="114.0" stylesheets="@../styles/MainAdminView.css" text="Edit user" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="635.0" layoutY="93.0" stylesheets="@../styles/MainAdminView.css" text="Register user" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXButton>
+      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="932.0" stylesheets="@../styles/MainAdminView.css">
+        <menus>
+          <Menu mnemonicParsing="false" text="Projects">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Create project" />
+                  <MenuItem mnemonicParsing="false" text="Edit project" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Users">
+            <items>
+                  <MenuItem mnemonicParsing="false" text="Register user" />
+                  <MenuItem mnemonicParsing="false" text="Edit user" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="Statistics" />
+          <Menu mnemonicParsing="false" text="Log out" />
+        </menus>
+      </MenuBar>
+      <Label layoutX="400.0" layoutY="425.0" text="View Statistics" />
+   </children>
 </AnchorPane>
