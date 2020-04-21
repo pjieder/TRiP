@@ -45,7 +45,7 @@
             <Font size="15.0" />
          </font>
       </JFXButton>
-      <MenuBar layoutY="2.0" prefHeight="33.0" prefWidth="331.0" stylesheets="@../styles/MainAdminView.css">
+      <MenuBar layoutY="2.0" prefHeight="33.0" prefWidth="386.0" stylesheets="@../styles/MainAdminView.css">
         <menus>
           <Menu mnemonicParsing="false" text="Projects">
             <items>
@@ -81,6 +81,15 @@
                      </image>
                   </ImageView>
                </graphic></Menu>
+            <Menu mnemonicParsing="false" text="Time Tracking">
+               <graphic>
+                  <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/calendar%20(3).png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Menu>
         </menus>
       </MenuBar>
       <ImageView fitHeight="21.0" fitWidth="22.0" layoutX="166.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true">
