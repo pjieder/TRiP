@@ -58,10 +58,10 @@
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="426.0" minWidth="10.0" prefWidth="222.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="426.0" minWidth="0.0" prefWidth="18.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="480.0" minWidth="10.0" prefWidth="193.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.0" minWidth="0.0" prefWidth="121.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.0" minWidth="0.0" prefWidth="77.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.0" minWidth="0.0" prefWidth="84.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="480.0" minWidth="10.0" prefWidth="201.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.0" minWidth="0.0" prefWidth="129.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.0" minWidth="0.0" prefWidth="70.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.0" minWidth="0.0" prefWidth="75.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.0" minWidth="0.0" prefWidth="9.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.0" minWidth="10.0" prefWidth="96.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.0" minWidth="10.0" prefWidth="84.0" />
