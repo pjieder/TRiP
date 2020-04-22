@@ -5,6 +5,7 @@
  */
 package trip.dal.dbmanagers.facades;
 
+import javafx.collections.ObservableList;
 import trip.be.Admin;
 import trip.be.Employee;
 import trip.be.Project;
@@ -27,7 +28,7 @@ public class DalFacade implements IDalFacade {
 
     @Override
     public Employee login(String username, String password) {
-       
+
         Employee employee = null;
         int employeeId = employeeManager.isLoginCorrect(username, password);
 
@@ -37,21 +38,21 @@ public class DalFacade implements IDalFacade {
             if (role == Roles.USER) {
                 employee = userManager.getUserById(employeeId);
                 employee.setProjects(userManager.getEmployeeProjects(employeeId));
-            } 
-            else if (role == Roles.ADMIN) {
+            } else if (role == Roles.ADMIN) {
                 employee = adminManager.getAdminById(employeeId);
                 employee.setProjects(employeeManager.getAllActiveProjects());
             }
 
             for (Project project : employee.getProjects()) {
-                employeeManager.getProjectTime(employeeId, project.getId());
+                project.setTotalTime(employeeManager.getProjectTime(employeeId, project.getId()));
             }
-            
+
             return employee;
-            
+
         }
 
         return employee;
     }
-    
+
+
 }

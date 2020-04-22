@@ -23,6 +23,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import trip.be.Admin;
 import trip.be.Employee;
 import trip.be.Roles;
 import trip.gui.AppModel;
@@ -160,8 +161,8 @@ public class LoginController implements Initializable {
                         } catch (IOException ex) {
                             System.out.println("error");
                         }
-//                        MainAdminViewController controller = fxmlLoader.getController();
-//                        controller.setTeacher((Teacher) personToValidate);
+                        MainAdminViewController controller = fxmlLoader.getController();
+                        controller.setAdmin((Admin) employeeToValidate);
 
                     }
                     Stage appStage = (Stage) (rememberMe.getScene().getWindow());
