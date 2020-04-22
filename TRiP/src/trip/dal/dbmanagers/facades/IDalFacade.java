@@ -5,6 +5,7 @@
  */
 package trip.dal.dbmanagers.facades;
 
+import javafx.collections.ObservableList;
 import trip.be.Employee;
 
 /**
@@ -21,6 +22,6 @@ public interface IDalFacade {
      */
      public Employee login(String username, String password);
     
-    
+      public ObservableList<Employee> loadEmployees();
     
 }

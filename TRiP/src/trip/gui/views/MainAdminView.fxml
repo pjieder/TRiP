@@ -161,6 +161,6 @@
           <TableColumn fx:id="timeColumn" prefWidth="143.0" text="Time" />
         </columns>
       </TableView>
-      <JFXListView layoutX="724.0" layoutY="305.0" prefHeight="284.0" prefWidth="423.0" />
+      <JFXListView fx:id="employeeList" layoutX="724.0" layoutY="305.0" prefHeight="284.0" prefWidth="423.0" />
    </children>
 </AnchorPane>

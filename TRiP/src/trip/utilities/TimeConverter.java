@@ -25,10 +25,5 @@ public class TimeConverter {
     
     }
     
-//        public static String convertStringToSeconds(String seconds)
-//    {
-//        
-//    
-//    }
     
 }

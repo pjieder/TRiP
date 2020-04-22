@@ -5,8 +5,9 @@
  */
 package trip.gui;
 
+import javafx.collections.ObservableList;
 import trip.be.Employee;
-import trip.bll.PersonManager;
+import trip.bll.EmployeeManager;
 
 /**
  *
@@ -14,22 +15,25 @@ import trip.bll.PersonManager;
  */
 public class AppModel {
 
-    private final PersonManager personManager;
+    private final EmployeeManager employeeManager;
 
     public AppModel() {
-        personManager = new PersonManager();
-    }
-    
-    /**
-     * If correct username and password is entered,
-     * the stored person will be returned.
-     * @param username the username of the account
-     * @param password the password of the account
-     * @return 
-     */
-    public Employee validateEmployee(String username, String password) {
-        return personManager.validateEmployee(username, password);
+        employeeManager = new EmployeeManager();
     }
 
-    
+    /**
+     * If correct username and password is entered, the stored person will be returned.
+     *
+     * @param username the username of the account
+     * @param password the password of the account
+     * @return
+     */
+    public Employee validateEmployee(String username, String password) {
+        return employeeManager.validateEmployee(username, password);
+    }
+
+    public ObservableList<Employee> loadUsers() {
+        return employeeManager.loadEmployees();
+    }
+
 }

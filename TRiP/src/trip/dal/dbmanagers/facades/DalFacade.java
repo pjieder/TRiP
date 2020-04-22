@@ -54,5 +54,10 @@ public class DalFacade implements IDalFacade {
         return employee;
     }
 
-
+    @Override
+    public ObservableList<Employee> loadEmployees() {
+      return employeeManager.loadEmployees();
+    }
+    
+    
 }
