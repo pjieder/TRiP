@@ -2,8 +2,9 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXDatePicker?>
-<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -63,7 +64,6 @@
             <Font size="15.0" />
          </font>
       </JFXButton>
-      <JFXTreeTableView editable="true" layoutX="228.0" layoutY="305.0" prefHeight="337.0" prefWidth="450.0" />
       <StackPane layoutX="326.0" layoutY="120.0" prefHeight="150.0" prefWidth="200.0" />
       <GridPane layoutX="229.0" layoutY="238.0" prefHeight="44.0" prefWidth="908.0">
         <columnConstraints>
@@ -161,6 +161,17 @@
             <Image url="@../images/calendar%20(2).png" />
          </image>
       </ImageView>
-      <JFXTreeTableView editable="true" layoutX="700.0" layoutY="305.0" prefHeight="337.0" prefWidth="450.0" />
+      <TableView layoutX="229.0" layoutY="306.0" prefHeight="382.0" prefWidth="422.0" stylesheets="@../styles/MainUserViewCSS.css">
+        <columns>
+          <TableColumn prefWidth="201.0" text="C1" />
+          <TableColumn prefWidth="220.0" text="C2" />
+        </columns>
+      </TableView>
+      <TableView layoutX="724.0" layoutY="306.0" prefHeight="382.0" prefWidth="422.0" stylesheets="@../styles/MainUserViewCSS.css">
+         <columns>
+            <TableColumn prefWidth="214.0" text="C1" />
+            <TableColumn prefWidth="207.0" text="C2" />
+         </columns>
+      </TableView>
    </children>
 </AnchorPane>

@@ -8,7 +8,6 @@ and open the template in the editor.
     Author     : Peter
 */
 
-@import url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
 
 .button
 {
@@ -23,10 +22,6 @@ and open the template in the editor.
     
 }
 
-.label
-{
-        -fx-font-family: 'Oswald', sans-serif;
-}
 
 .text-field {
     -fx-background-color: -fx-control-inner-background;
@@ -71,4 +66,59 @@ and open the template in the editor.
   -fx-background-color: #EBBA16;
   -fx-background-insets: 0 ;
   -fx-text-fill: #ffffff;
+}
+
+.table-view{
+   -fx-background-color: transparent;
+   -fx-font-size: 15px;
+}
+
+.table-view:focused{
+    -fx-background-color: transparent;
+    -fx-background-insets: 0 ;
+    -fx-text-fill: #ffffff;
+}
+
+.table-view .column-header-background{
+    -fx-background-color: linear-gradient(#9a80fe 100%, #b49afd 100%);
+}
+
+.table-view .column-header-background .label{
+    -fx-background-color: transparent;
+    -fx-text-fill: #ffffff;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+
+.table-view .table-cell{
+    -fx-text-fill: black;
+    -fx-alignment: center;
+    -fx-border-color: #f9f9f9;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #f1f1f1;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1;
+    -fx-text-fill: #ffffff;
+}
+
+
+.table-view *.scroll-bar:horizontal *.increment-button,
+.table-view *.scroll-bar:horizontal *.decrement-button {
+  -fx-background-color: null;
+  -fx-background-radius: 0;
+  -fx-background-insets: 0;
+  -fx-padding: 0;
+}
+
+.table-view *.scroll-bar:horizontal *.increment-arrow,
+.table-view *.scroll-bar:horizontal *.decrement-arrow {
+  -fx-background-color: null;
+  -fx-background-radius: 0;
+  -fx-background-insets: 0;
+  -fx-padding: 0;
+  -fx-shape: null;
 }

@@ -40,43 +40,57 @@ and open the template in the editor.
     -fx-font-size: 15px;
 }
 
-.menu-bar{
-  -fx-background-color: #ffffff;
-  -fx-border-color:  #ffffff;
- -fx-border-width: 2
+.table-view{
+   -fx-background-color: transparent;
+   -fx-font-size: 15px;
+}
 
+.table-view:focused{
+    -fx-background-color: transparent;
+    -fx-background-insets: 0 ;
+    -fx-text-fill: #ffffff;
+}
+
+.table-view .column-header-background{
+    -fx-background-color: linear-gradient(#9a80fe 100%, #b49afd 100%);
+}
+
+.table-view .column-header-background .label{
+    -fx-background-color: transparent;
+    -fx-text-fill: #ffffff;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+
+.table-view .table-cell{
+    -fx-text-fill: black;
+    -fx-alignment: center;
+    -fx-border-color: #f9f9f9;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #f1f1f1;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1;
+    -fx-text-fill: #ffffff;
 }
 
 
-
-.menu-bar .menu-button:hover, .menu-bar .menu-button:focused, .menu-bar .menu-button:showing {
-
-    -fx-background: #f1f1f1 ;
-    -fx-opacity: 1;
-    -fx-text-fill: #333333;
+.table-view *.scroll-bar:horizontal *.increment-button,
+.table-view *.scroll-bar:horizontal *.decrement-button {
+  -fx-background-color: null;
+  -fx-background-radius: 0;
+  -fx-background-insets: 0;
+  -fx-padding: 0;
 }
 
-.menu-bar .menu-button:focused {
-    -fx-text-fill: #333333;
-
-}
-
-.menu-item:hover {
-    -fx-background: #f1f1f1 ;
-    -fx-text-fill: #333333;
-}
-.menu-item .label:hover{
-    -fx-background: #e1e1e1 ;
-        -fx-text-fill: #333333;
-}
-.context-menu {
-    -fx-skin: "com.sun.javafx.scene.control.skin.ContextMenuSkin";
-        -fx-text-fill: black;
-    -fx-background-color:white ;
-    -fx-border-width: 0.2px;
-    -fx-border-color: black;
-    /** -fx-background-insets: 0.0, 1.0, 2.0;
-    -fx-background-radius: 0.0 6.0 6.0 6.0, 0.0 5.0 5.0 5.0, 0.0 4.0 4.0 4.0;
-    -fx-padding: 0.333333em 0.083333em 0.666667em 0.083333em; 
-    -fx-opacity: 0.9;*/
+.table-view *.scroll-bar:horizontal *.increment-arrow,
+.table-view *.scroll-bar:horizontal *.decrement-arrow {
+  -fx-background-color: null;
+  -fx-background-radius: 0;
+  -fx-background-insets: 0;
+  -fx-padding: 0;
+  -fx-shape: null;
 }
