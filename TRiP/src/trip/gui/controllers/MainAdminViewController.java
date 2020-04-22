@@ -12,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.input.MouseEvent;
 import trip.be.Admin;
 import trip.be.Project;
 import trip.gui.AppModel;
@@ -64,26 +63,6 @@ public class MainAdminViewController implements Initializable {
     {
         loggedAdmin = admin;
         projectTable.setItems(loggedAdmin.getProjects());
-    }
-
-    @FXML
-    private void open_projects_view(MouseEvent event) {
-    }
-
-    @FXML
-    private void open_users_view(MouseEvent event) {
-    }
-
-    @FXML
-    private void open_statistics_view(MouseEvent event) {
-    }
-
-    @FXML
-    private void open_time_view(MouseEvent event) {
-    }
-
-    @FXML
-    private void log_out(MouseEvent event) {
     }
     
 }
