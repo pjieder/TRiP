@@ -10,6 +10,7 @@ import trip.be.Admin;
 import trip.be.Employee;
 import trip.be.Project;
 import trip.be.Roles;
+import trip.be.Task;
 import trip.be.User;
 import trip.dal.dbmanagers.dbdao.AdminDBDAO;
 import trip.dal.dbmanagers.dbdao.IPersonDBDAO;
@@ -56,8 +57,23 @@ public class DalFacade implements IDalFacade {
 
     @Override
     public ObservableList<Employee> loadEmployees() {
-      return employeeManager.loadEmployees();
+        return employeeManager.loadEmployees();
     }
 
+    @Override
+    public ObservableList<Task> loadTasks(int userId, int projectId) {
+
+        ObservableList<Task> tasks = employeeManager.loadTasks(userId, projectId);
+
+        for (Task task : tasks) {
+
+            task.setTasks(employeeManager.loadTimeForTask(userId));
+            task.setTotalTime(employeeManager.getTaskTime(task.getId()));
+
+        }
+
+        return tasks;
+
+    }
 
 }
