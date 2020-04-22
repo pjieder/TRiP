@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -17,11 +18,17 @@
          <font>
             <Font size="15.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </JFXButton>
       <JFXButton layoutX="361.0" layoutY="93.0" prefHeight="31.0" prefWidth="114.0" stylesheets="@../styles/MainAdminView.css" text="Edit project" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </JFXButton>
       <JFXTreeTableView layoutX="52.0" layoutY="132.0" prefHeight="284.0" prefWidth="423.0" />
       <Label layoutX="52.0" layoutY="98.0" text="Current Projects">
@@ -39,11 +46,17 @@
          <font>
             <Font size="15.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </JFXButton>
       <JFXButton layoutX="688.0" layoutY="93.0" stylesheets="@../styles/MainAdminView.css" text="Register user" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </JFXButton>
       <MenuBar layoutY="2.0" prefHeight="33.0" prefWidth="386.0" stylesheets="@../styles/MainAdminView.css">
         <menus>
@@ -51,6 +64,7 @@
             <items>
               <MenuItem mnemonicParsing="false" text="Create project" />
                   <MenuItem mnemonicParsing="false" text="Edit project" />
+                  <MenuItem mnemonicParsing="false" text="Inactive projects" />
             </items>
                <graphic>
                   <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
@@ -115,5 +129,18 @@
             </Menu>
          </menus>
       </MenuBar>
+      <Label layoutX="368.0" layoutY="418.0" text="Inactive projects">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Label>
+      <ImageView fitHeight="19.0" fitWidth="14.0" layoutX="461.0" layoutY="420.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/next%20(5).png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
    </children>
 </AnchorPane>
