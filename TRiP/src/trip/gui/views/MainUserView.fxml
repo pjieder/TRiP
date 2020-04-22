@@ -4,6 +4,13 @@
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.control.ComboBox?>
+<<<<<<< HEAD
+=======
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+>>>>>>> 581fd7fe01f9ee49b6e8666abc1f09812eb373ad
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -23,9 +30,14 @@
             <Font size="15.0" />
          </font>
       </JFXButton>
+<<<<<<< HEAD
       <JFXTreeTableView editable="true" layoutX="226.0" layoutY="243.0" prefHeight="453.0" prefWidth="450.0" />
       <StackPane layoutX="324.0" layoutY="58.0" prefHeight="150.0" prefWidth="200.0" />
       <GridPane layoutX="227.0" layoutY="176.0" prefHeight="44.0" prefWidth="908.0">
+=======
+      <StackPane layoutX="160.0" layoutY="141.0" prefHeight="150.0" prefWidth="200.0" />
+      <GridPane layoutX="63.0" layoutY="259.0" prefHeight="44.0" prefWidth="908.0">
+>>>>>>> 581fd7fe01f9ee49b6e8666abc1f09812eb373ad
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="426.0" minWidth="10.0" prefWidth="423.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="276.0" minWidth="10.0" prefWidth="20.0" />
@@ -38,11 +50,16 @@
           <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
+<<<<<<< HEAD
             <TextField prefHeight="44.0" prefWidth="405.0" promptText="What are you working on?">
                <font>
                   <Font size="15.0" />
                </font></TextField>
             <ComboBox prefHeight="44.0" prefWidth="259.0" promptText="Project" style="-fx-background-color: #f1f1f1;" stylesheets="@../styles/MainUserViewCSS.css" GridPane.columnIndex="2" />
+=======
+            <TextField prefHeight="44.0" prefWidth="405.0" promptText="What are you working on?" />
+            <ComboBox fx:id="projectComboBox" prefHeight="44.0" prefWidth="259.0" promptText="Project" style="-fx-background-color: #f1f1f1;" GridPane.columnIndex="2" />
+>>>>>>> 581fd7fe01f9ee49b6e8666abc1f09812eb373ad
             <Line endX="-100.0" endY="26.0" opacity="0.35" startX="-100.0" startY="-9.0" GridPane.columnIndex="3" />
             <TextField prefHeight="42.0" prefWidth="117.0" stylesheets="@../styles/MainUserViewCSS.css" text="00:00:00" GridPane.columnIndex="4">
                <font>
@@ -156,11 +173,24 @@
                      </image>
                   </ImageView>
                </graphic>
+<<<<<<< HEAD
                <font>
                   <Font size="15.0" />
                </font>
             </JFXButton>
          </children>
       </VBox>
+=======
+            </Menu>
+         </menus>
+      </MenuBar>
+      <JFXTreeTableView editable="true" layoutX="534.0" layoutY="326.0" prefHeight="337.0" prefWidth="450.0" />
+      <TableView fx:id="taskList" layoutX="62.0" layoutY="327.0" prefHeight="337.0" prefWidth="450.0">
+        <columns>
+          <TableColumn fx:id="nameColumn" prefWidth="322.0" text="Task" />
+          <TableColumn fx:id="timeColumn" prefWidth="127.0" text="Time" />
+        </columns>
+      </TableView>
+>>>>>>> 581fd7fe01f9ee49b6e8666abc1f09812eb373ad
    </children>
 </AnchorPane>

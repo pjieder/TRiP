@@ -69,17 +69,6 @@ public class UserDBDAO {
         return user;
     }
 
-//    public void loadProjects(int userID, ObservableList<Project> projects) {
-//        for (Project project : projects) {
-//
-//            project.setTasks(getProjectTasks(userID, project.getId()));
-//
-//            for (Task task : project.getTasks()) {
-//                task.setTasks(getTaskTimes(task.getId()));
-//            }
-//            
-//        }
-//    }
     public ObservableList<Project> getEmployeeProjects(int employeeID) {
 
         Connection con = null;

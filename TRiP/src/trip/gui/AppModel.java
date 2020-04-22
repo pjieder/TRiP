@@ -5,8 +5,10 @@
  */
 package trip.gui;
 
+import javafx.collections.ObservableList;
 import trip.be.Employee;
-import trip.bll.PersonManager;
+import trip.be.Task;
+import trip.bll.EmployeeManager;
 
 /**
  *
@@ -14,10 +16,10 @@ import trip.bll.PersonManager;
  */
 public class AppModel {
 
-    private final PersonManager personManager;
+    private final EmployeeManager employeeManager;
 
     public AppModel() {
-        personManager = new PersonManager();
+        employeeManager = new EmployeeManager();
     }
     
     /**
@@ -28,8 +30,16 @@ public class AppModel {
      * @return 
      */
     public Employee validateEmployee(String username, String password) {
-        return personManager.validateEmployee(username, password);
+        return employeeManager.validateEmployee(username, password);
     }
 
+    public ObservableList<Employee> loadUsers()
+    {
+        return employeeManager.loadEmployees();
+    }
     
+    public ObservableList<Task> loadTasks(int userId, int projectId)
+    {
+        return employeeManager.loadTasks(userId, projectId);
+    }
 }
