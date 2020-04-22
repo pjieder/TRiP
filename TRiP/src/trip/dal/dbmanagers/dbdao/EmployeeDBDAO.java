@@ -13,8 +13,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import trip.be.Admin;
+import trip.be.Employee;
 import trip.be.Project;
 import trip.be.Roles;
+import trip.be.User;
 import trip.utilities.HashAlgorithm;
 
 /**
@@ -170,6 +173,51 @@ public class EmployeeDBDAO implements IPersonDBDAO{
         return projects;
     }
     
-    
+     public ObservableList<Employee> loadEmployees() {
+
+        Connection con = null;
+        ObservableList<Employee> employees = FXCollections.observableArrayList();
+
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "SELECT * FROM Employees;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                int id = rs.getInt("ID");
+                String fname = rs.getString("fName");
+                String lname = rs.getString("lName");
+                String email = rs.getString("email");
+                boolean isAdmin = rs.getBoolean("isAdmin");
+
+                Employee employee;
+                
+                if (isAdmin == true)
+                {
+                    employee = new Admin(fname, lname, email);
+                }
+                else
+                {
+                    employee = new User(fname, lname, email);
+                }
+                    employee.setId(id);
+                    employees.add(employee);
+            }
+
+            return employees;
+
+        } catch (SQLServerException ex) {
+
+        } catch (SQLException ex) {
+
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+
+        return employees;
+    }
     
 }

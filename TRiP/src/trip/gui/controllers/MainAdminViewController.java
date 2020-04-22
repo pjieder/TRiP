@@ -5,6 +5,7 @@
  */
 package trip.gui.controllers;
 
+import com.jfoenix.controls.JFXListView;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
@@ -13,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import trip.be.Admin;
+import trip.be.Employee;
 import trip.be.Project;
 import trip.gui.AppModel;
 import trip.utilities.TimeConverter;
@@ -33,6 +35,8 @@ public class MainAdminViewController implements Initializable {
     private TableColumn<Project, String> projectColumn;
     @FXML
     private TableColumn<Project, String> timeColumn;
+    @FXML
+    private JFXListView<Employee> employeeList;
 
     /**
      * Initializes the controller class.
@@ -50,12 +54,8 @@ public class MainAdminViewController implements Initializable {
             Project project = data.getValue();
             return new SimpleStringProperty(TimeConverter.convertSecondsToString(project.getTotalTime()));
         });
-
-//        timeColumn.setComparator((project1, project2) -> {
-//
-//            return Iteger
-//        });
         
+        loadUsers();
         
     }
 
@@ -63,6 +63,11 @@ public class MainAdminViewController implements Initializable {
     {
         loggedAdmin = admin;
         projectTable.setItems(loggedAdmin.getProjects());
+    }
+    
+    public void loadUsers()
+    {
+        employeeList.setItems(appModel.loadUsers());
     }
     
 }
