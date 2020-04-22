@@ -9,6 +9,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import javafx.collections.ObservableList;
 import trip.be.Employee;
+import trip.be.Task;
 import trip.dal.dbmanagers.facades.DalFacade;
 import trip.dal.dbmanagers.facades.IDalFacade;
 
@@ -37,6 +38,11 @@ public class EmployeeManager {
 
     public ObservableList<Employee> loadEmployees() {
         return dalFacade.loadEmployees();
+    }
+    
+        public ObservableList<Task> loadTasks(int userId, int projectId)
+    {
+        return dalFacade.loadTasks(userId, projectId);
     }
 
 }

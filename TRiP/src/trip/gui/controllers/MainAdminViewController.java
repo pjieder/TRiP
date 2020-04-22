@@ -6,13 +6,18 @@
 package trip.gui.controllers;
 
 import com.jfoenix.controls.JFXListView;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import trip.be.Admin;
 import trip.be.Employee;
 import trip.be.Project;
@@ -35,8 +40,6 @@ public class MainAdminViewController implements Initializable {
     private TableColumn<Project, String> projectColumn;
     @FXML
     private TableColumn<Project, String> timeColumn;
-    @FXML
-    private JFXListView<Employee> employeeList;
 
     /**
      * Initializes the controller class.
@@ -55,7 +58,7 @@ public class MainAdminViewController implements Initializable {
             return new SimpleStringProperty(TimeConverter.convertSecondsToString(project.getTotalTime()));
         });
 
-        loadUsers();
+        projectTable.setOnSort((event)->{projectTable.getSelectionModel().clearSelection();});
     }
 
     public void setAdmin(Admin admin) {
@@ -63,8 +66,24 @@ public class MainAdminViewController implements Initializable {
         projectTable.setItems(loggedAdmin.getProjects());
     }
 
-    public void loadUsers() {
-        employeeList.setItems(appModel.loadUsers());
-    }
+    
+    @FXML
+    private void openProject(MouseEvent event) throws IOException {
+        
+        if (event.getClickCount() > 1 & !projectTable.getSelectionModel().isEmpty() & !event.isConsumed())
+        {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(AppModel.class.getResource("views/MainUserView.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
 
+            MainUserViewController controller = fxmlLoader.getController();
+            controller.setAdmin(loggedAdmin,projectTable.getSelectionModel().getSelectedItem());
+            stage.setScene(scene);
+            stage.show();
+
+        }
+                
+    }
+    
 }

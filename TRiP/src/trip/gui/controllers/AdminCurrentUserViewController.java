@@ -24,4 +24,10 @@ public class AdminCurrentUserViewController implements Initializable {
         // TODO
     }    
     
+    
+    //This method is populates the user list
+    //    public void loadUsers() {
+//        employeeList.setItems(appModel.loadUsers());
+//    }
+    // Remember to add method in initializer...
 }

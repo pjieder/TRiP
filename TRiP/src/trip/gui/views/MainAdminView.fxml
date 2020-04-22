@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXListView?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -134,12 +131,11 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <TableView fx:id="projectTable" layoutX="204.0" layoutY="151.0" prefHeight="505.0" prefWidth="995.0" stylesheets="@../styles/MainAdminView.css">
+      <TableView fx:id="projectTable" layoutX="204.0" layoutY="151.0" onMouseClicked="#openProject" prefHeight="505.0" prefWidth="995.0" stylesheets="@../styles/MainAdminView.css">
         <columns>
           <TableColumn fx:id="projectColumn" prefWidth="495.0" text="Project" />
           <TableColumn fx:id="timeColumn" prefWidth="499.0" text="Time" />
         </columns>
       </TableView>
-      <JFXListView fx:id="employeeList" layoutX="724.0" layoutY="305.0" prefHeight="284.0" prefWidth="423.0" />
    </children>
 </AnchorPane>
