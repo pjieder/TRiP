@@ -11,4 +11,21 @@ package trip.be;
  */
 public enum Roles {
     
+        USER("user"),ADMIN("admin");
+    
+    private String type;
+
+    private Roles(String type) {
+        this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return this.type; //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+    
+    
+    
 }

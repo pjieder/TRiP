@@ -11,6 +11,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import trip.be.Project;
 import trip.be.Roles;
 import trip.utilities.HashAlgorithm;
 
@@ -71,7 +74,7 @@ public class PersonDBDAO implements IPersonDBDAO{
         
         try {
             con = DBSettings.getInstance().getConnection();
-            String sql = "SELECT isStudent FROM Person WHERE Person.ID = ?;";
+            String sql = "SELECT isAdmin FROM User WHERE User.ID = ?;";
             PreparedStatement stmt = con.prepareStatement(sql);
             
             stmt.setInt(1, id);
@@ -80,13 +83,12 @@ public class PersonDBDAO implements IPersonDBDAO{
             
             while (rs.next()) {
                 
-                boolean isStudent = rs.getBoolean("isStudent");
+                boolean isAdmin = rs.getBoolean("isAdmin");
                 
-                if (isStudent == true) {
-//                    return Roles.STUDENT;
+                if (isAdmin == true) {
+                    return Roles.ADMIN;
                 } else {
-                    
-//                    return Roles.TEACHER;
+                    return Roles.USER;
                 }
             }
         } catch (SQLServerException ex) {
@@ -98,5 +100,46 @@ public class PersonDBDAO implements IPersonDBDAO{
         
         return null;
     }
+    
+    /**
+     * Returns a list of all projects
+     * @return A list of all projects stored in the database
+     */
+    public ObservableList<Project> getAllProjects() {
+        
+        Connection con = null;
+        ObservableList<Project> projects = FXCollections.observableArrayList();
+        try{
+            con = DBSettings.getInstance().getConnection();
+            String sql = "SELECT * FROM Project;";
+            PreparedStatement stmt = con.prepareStatement(sql);;
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                
+                int projectID = rs.getInt("ID");
+                String projectName = rs.getString("name");
+                double rate = rs.getDouble("rate");
+
+                Project project = new Project(projectName, rate);
+                project.setId(projectID);
+                projects.add(project);
+
+            }
+            
+            return projects;
+            
+        } catch (SQLServerException ex) {
+
+        } catch (SQLException ex) {
+
+        }
+        finally{
+        DBSettings.getInstance().releaseConnection(con);
+        }
+        return projects;
+    }
+    
+    
     
 }
