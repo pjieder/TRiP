@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="520.0" prefWidth="840.0" style="-fx-background-color: #ffffff;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="trip.gui.controllers.TabsViewController">
+   <children>
+      <VBox prefHeight="520.0" prefWidth="139.0" style="-fx-background-color: #f9f9f9;">
+         <children>
+            <JFXButton alignment="BOTTOM_LEFT" onMouseClicked="#open_projects_view" prefHeight="39.0" prefWidth="164.0" styleClass="main-bntns" stylesheets="@../styles/TabsView.css" text=" Projects">
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/rocket.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXButton>
+            <JFXButton alignment="BOTTOM_LEFT" onMouseClicked="#open_users_view" prefHeight="39.0" prefWidth="162.0" styleClass="main-bntns" stylesheets="@../styles/TabsView.css" text=" Users">
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/team.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXButton>
+            <JFXButton alignment="BOTTOM_LEFT" onMouseClicked="#open_statistics_view" prefHeight="39.0" prefWidth="166.0" styleClass="main-bntns" stylesheets="@../styles/TabsView.css" text=" Statistics">
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/pie-chart%20(2).png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXButton>
+            <JFXButton alignment="BOTTOM_LEFT" onMouseClicked="#open_time_view" prefHeight="39.0" prefWidth="162.0" styleClass="main-bntns" stylesheets="@../styles/TabsView.css" text=" Time Tracker">
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/calendar%20(3).png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXButton>
+            <JFXButton alignment="BOTTOM_LEFT" onMouseClicked="#log_out" prefHeight="39.0" prefWidth="209.0" styleClass="main-bntns" stylesheets="@../styles/TabsView.css" text=" Log out">
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/smart-key.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </VBox>
+      <Pane fx:id="pane" layoutX="139.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="701.0" />
+   </children>
+</AnchorPane>
