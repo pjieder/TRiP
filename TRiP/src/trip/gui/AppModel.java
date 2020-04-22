@@ -27,8 +27,8 @@ public class AppModel {
      * @param password the password of the account
      * @return 
      */
-    public Employee validateUser(String username, String password) {
-        return personManager.validateUser(username, password);
+    public Employee validateEmployee(String username, String password) {
+        return personManager.validateEmployee(username, password);
     }
 
 }

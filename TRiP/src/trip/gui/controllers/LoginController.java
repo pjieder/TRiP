@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package trip.gui.views;
+package trip.gui.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
@@ -24,7 +24,9 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import trip.be.Employee;
+import trip.be.Roles;
 import trip.gui.AppModel;
+import trip.gui.controllers.MainAdminViewController;
 
 /**
  * FXML Controller class
@@ -38,9 +40,9 @@ public class LoginController implements Initializable {
     Preferences preferences;
 
     @FXML
-    private JFXTextField passwordField;
+    private JFXPasswordField passwordField;
     @FXML
-    private JFXPasswordField usernameField;
+    private JFXTextField usernameField;
     @FXML
     private JFXProgressBar progressBar;
     @FXML
@@ -120,54 +122,54 @@ public class LoginController implements Initializable {
 
         Thread loginThread = new Thread(() -> {
 
-//            String username = usernameField.getText();
-//            String password = passwordField.getText();
-//            showLoading();
-//
-//            Person personToValidate = appModel.validateUser(username, password);
-//
-//            if (personToValidate == null) {
-//                hideLoading();
-//
-//            } else {
-//
-//                if (rememberMe.isSelected()) {
-//                    saveLogin();
-//                } else {
-//                    forgetLogin();
-//                }
-//
-//                Platform.runLater(() -> {
-//
-//                    FXMLLoader fxmlLoader = new FXMLLoader();
-//                    Scene scene = null;
-//
-//                    if (personToValidate.getRole().equals(Roles.STUDENT)) {
-//                        fxmlLoader.setLocation(AppModel.class.getResource("views/AttendanceView.fxml"));
-//                        try {
-//                            scene = new Scene(fxmlLoader.load());
-//                        } catch (IOException ex) {
-//                            System.out.println("error");
-//                        }
-//                        AttendanceController controller = fxmlLoader.getController();
+            String username = usernameField.getText();
+            String password = passwordField.getText();
+            showLoading();
+
+            Employee employeeToValidate = appModel.validateEmployee(username, password);
+
+            if (employeeToValidate == null) {
+                hideLoading();
+
+            } else {
+
+                if (rememberMe.isSelected()) {
+                    saveLogin();
+                } else {
+                    forgetLogin();
+                }
+
+                Platform.runLater(() -> {
+
+                    FXMLLoader fxmlLoader = new FXMLLoader();
+                    Scene scene = null;
+
+                    if (employeeToValidate.getRole().equals(Roles.USER)) {
+                        fxmlLoader.setLocation(AppModel.class.getResource("views/MainUserView.fxml"));
+                        try {
+                            scene = new Scene(fxmlLoader.load());
+                        } catch (IOException ex) {
+                            System.out.println("error");
+                        }
+//                        MainUserViewController controller = fxmlLoader.getController();
 //                        controller.setStudent((Student) personToValidate, null);
-//                    } else if (personToValidate.getRole().equals(Roles.TEACHER)) {
-//                        fxmlLoader.setLocation(AppModel.class.getResource("views/AttendanceViewTeacher.fxml"));
-//                        try {
-//                            scene = new Scene(fxmlLoader.load());
-//                        } catch (IOException ex) {
-//                            System.out.println("error");
-//                        }
-//                        AttendanceViewTeacherController controller = fxmlLoader.getController();
+                    } else if (employeeToValidate.getRole().equals(Roles.ADMIN)) {
+                        fxmlLoader.setLocation(AppModel.class.getResource("views/MainAdminView.fxml"));
+                        try {
+                            scene = new Scene(fxmlLoader.load());
+                        } catch (IOException ex) {
+                            System.out.println("error");
+                        }
+//                        MainAdminViewController controller = fxmlLoader.getController();
 //                        controller.setTeacher((Teacher) personToValidate);
-//
-//                    }
-//                    Stage appStage = (Stage) (rememberMe.getScene().getWindow());
-//                    appStage.setScene(scene);
-//                    appStage.show();
-//                });
-//
-//            }
+
+                    }
+                    Stage appStage = (Stage) (rememberMe.getScene().getWindow());
+                    appStage.setScene(scene);
+                    appStage.show();
+                });
+
+            }
 
         });
 

@@ -39,7 +39,7 @@ public class UserDBDAO {
 
         try {
             con = DBSettings.getInstance().getConnection();
-            String sql = "SELECT * FROM User WHERE User.ID = ?;";
+            String sql = "SELECT * FROM Employees WHERE Employees.ID = ?;";
             PreparedStatement stmt = con.prepareStatement(sql);
 
             stmt.setInt(1, id);
@@ -69,44 +69,42 @@ public class UserDBDAO {
         return user;
     }
 
-    public void loadProjects(int userID, ObservableList<Project> projects) {
-        for (Project project : projects) {
-
-            project.setTasks(getProjectTasks(userID, project.getId()));
-
-            for (Task task : project.getTasks()) {
-                task.setTasks(getTaskTimes(task.getId()));
-            }
-            
-        }
-    }
-
-    public ObservableList<Task> getProjectTasks(int userId, int projectId) {
+//    public void loadProjects(int userID, ObservableList<Project> projects) {
+//        for (Project project : projects) {
+//
+//            project.setTasks(getProjectTasks(userID, project.getId()));
+//
+//            for (Task task : project.getTasks()) {
+//                task.setTasks(getTaskTimes(task.getId()));
+//            }
+//            
+//        }
+//    }
+    public ObservableList<Project> getEmployeeProjects(int employeeID) {
 
         Connection con = null;
-        ObservableList<Task> tasks = FXCollections.observableArrayList();
+        ObservableList<Project> projects = FXCollections.observableArrayList();
         try {
             con = DBSettings.getInstance().getConnection();
-            String sql = "SELECT * FROM Task WHERE Task.userID = ? AND Task.projID = ?;";
+            String sql = "SELECT * FROM Project JOIN Projects on Project.ID = Projects.projID WHERE Projects.userID = ? AND Project.isActive = 1;";
             PreparedStatement stmt = con.prepareStatement(sql);
 
-            stmt.setInt(1, userId);
-            stmt.setInt(2, projectId);
-
+            stmt.setInt(1, employeeID);
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
 
-                int taskID = rs.getInt("ID");
-                String taskName = rs.getString("name");
+                int projectID = rs.getInt("ID");
+                String projectName = rs.getString("name");
+                double rate = rs.getDouble("rate");
 
-                Task task = new Task(taskName);
-                task.setId(taskID);
-                tasks.add(task);
+                Project project = new Project(projectName, rate);
+                project.setId(projectID);
+                projects.add(project);
 
             }
 
-            return tasks;
+            return projects;
 
         } catch (SQLServerException ex) {
 
@@ -115,46 +113,7 @@ public class UserDBDAO {
         } finally {
             DBSettings.getInstance().releaseConnection(con);
         }
-        return tasks;
-    }
-
-    public ObservableList<TaskTime> getTaskTimes(int taskId) {
-
-        Connection con = null;
-        ObservableList<TaskTime> taskTimes = FXCollections.observableArrayList();
-        try {
-            con = DBSettings.getInstance().getConnection();
-            String sql = "SELECT * FROM Tasks WHERE Task.taskID = ?;";
-            PreparedStatement stmt = con.prepareStatement(sql);
-
-            stmt.setInt(1, taskId);
-
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-
-                String taskName = rs.getString("name");
-                int time = rs.getInt("time");
-                Date startTime = rs.getDate("startTime");
-                Date endTime = rs.getDate("endTime");
-                LocalDate date = LocalDate.parse(rs.getString("date"));
-
-                TaskTime taskTime = new TaskTime(time, startTime, endTime, date);
-                taskTime.setId(taskId);
-                taskTimes.add(taskTime);
-
-            }
-
-            return taskTimes;
-
-        } catch (SQLServerException ex) {
-
-        } catch (SQLException ex) {
-
-        } finally {
-            DBSettings.getInstance().releaseConnection(con);
-        }
-        return taskTimes;
+        return projects;
     }
 
 }

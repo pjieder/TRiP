@@ -21,7 +21,7 @@ import trip.utilities.HashAlgorithm;
  *
  * @author ander
  */
-public class PersonDBDAO implements IPersonDBDAO{
+public class EmployeeDBDAO implements IPersonDBDAO{
 
     /**
      * Returns the ID of the user based on whether the login information given is valid or not.
@@ -35,7 +35,7 @@ public class PersonDBDAO implements IPersonDBDAO{
         Connection con = null;
         try {
             con = DBSettings.getInstance().getConnection();
-            String sql = "SELECT * FROM Logins WHERE username = ?;";
+            String sql = "SELECT * FROM Login WHERE username = ?;";
             PreparedStatement stmt = con.prepareStatement(sql);
 
             stmt.setString(1, userName);
@@ -46,9 +46,9 @@ public class PersonDBDAO implements IPersonDBDAO{
                 String salt = rs.getString("salt");
                 String hashedPassword = HashAlgorithm.generateHash(password, salt);
                 
-                if (hashedPassword.equals(rs.getString("password")))
+                if (hashedPassword.equals(rs.getString("hashedPassword")))
                 {
-                    return rs.getInt("persID");
+                    return rs.getInt("employeeID");
                 }
             } 
 
@@ -74,7 +74,7 @@ public class PersonDBDAO implements IPersonDBDAO{
         
         try {
             con = DBSettings.getInstance().getConnection();
-            String sql = "SELECT isAdmin FROM User WHERE User.ID = ?;";
+            String sql = "SELECT isAdmin FROM Employees WHERE Employees.ID = ?;";
             PreparedStatement stmt = con.prepareStatement(sql);
             
             stmt.setInt(1, id);
@@ -101,18 +101,49 @@ public class PersonDBDAO implements IPersonDBDAO{
         return null;
     }
     
+    public int getProjectTime(int employeeID, int projectID) {
+
+        Connection con = null;
+        int totalTime = 0;
+
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "SELECT SUM(Tasks.time) AS TotalTime FROM Tasks JOIN Task on Tasks.taskID = Task.ID WHERE Task.projID = ? AND Task.employeeID = ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, projectID);
+            stmt.setInt(2, employeeID);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                totalTime = rs.getInt("TotalTime");
+            }
+
+            return totalTime;
+
+        } catch (SQLServerException ex) {
+
+        } catch (SQLException ex) {
+
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+        return totalTime;
+    }
+    
     /**
      * Returns a list of all projects
      * @return A list of all projects stored in the database
      */
-    public ObservableList<Project> getAllProjects() {
+    public ObservableList<Project> getAllActiveProjects() {
         
         Connection con = null;
         ObservableList<Project> projects = FXCollections.observableArrayList();
         try{
             con = DBSettings.getInstance().getConnection();
-            String sql = "SELECT * FROM Project;";
-            PreparedStatement stmt = con.prepareStatement(sql);;
+            String sql = "SELECT * FROM Project WHERE isActive = 1;";
+            PreparedStatement stmt = con.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -124,7 +155,6 @@ public class PersonDBDAO implements IPersonDBDAO{
                 Project project = new Project(projectName, rate);
                 project.setId(projectID);
                 projects.add(project);
-
             }
             
             return projects;

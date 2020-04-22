@@ -61,4 +61,8 @@ public class HashAlgorithm {
         return hash.toString();
     }
 
+    public static void main(String[] args) {
+        System.out.println(generateHash("Sikkerhed", "a4de24"));
+    }
+    
 }

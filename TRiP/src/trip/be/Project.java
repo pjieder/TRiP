@@ -17,6 +17,8 @@ public class Project {
     private int id;
     private String name;
     private double rate;
+    private boolean isActive = true;
+    private int totalTime;
     private ObservableList<Task> tasks = FXCollections.observableArrayList();
 
     public Project(String name, double rate) {
@@ -56,6 +58,24 @@ public class Project {
         this.tasks = tasks;
     }
 
+    public boolean IsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public int getTotalTime() {
+        return totalTime;
+    }
+
+    public void setTotalTime(int totalTime) {
+        this.totalTime = totalTime;
+    }
+
+    
+    
     @Override
     public boolean equals(Object obj) {
 

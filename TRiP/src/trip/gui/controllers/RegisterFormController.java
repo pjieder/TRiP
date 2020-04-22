@@ -32,10 +32,6 @@ public class RegisterFormController implements Initializable {
     @FXML
     private JFXButton registerButton;
     @FXML
-    private TextField emailField;
-    @FXML
-    private Label invalidEmail;
-
     private JFXTextField field;
     @FXML
     private ComboBox<?> chooseProject;
@@ -45,6 +41,8 @@ public class RegisterFormController implements Initializable {
     private JFXTextField lastNameField;
     @FXML
     private JFXTextField passwordField;
+    @FXML
+    private JFXTextField emailField;
 
     /**
      * Initializes the controller class.
@@ -56,19 +54,9 @@ public class RegisterFormController implements Initializable {
         regex.setRegexPattern("^.+@[^\\.].*\\.[a-z]{2,}$");
         regex.setMessage("Input is not a valid email");
 
-        //JFX design
-//        testEmailTextField.getValidators().add(regex);
-//        testEmailTextField.textProperty().addListener((observable, oldValue, newValue)->{
-//            registerButton.setDisable(!testEmailTextField.validate());
-//        });
-
-        //Standard Java design
-        field = new JFXTextField();
-        field.getValidators().add(regex);
-        emailField.textProperty().addListener((observable, oldValue, newValue) -> {
-            field.setText(newValue);
-            registerButton.setDisable(!field.validate());
-            invalidEmail.setVisible(!field.validate());
+        emailField.getValidators().add(regex);
+        emailField.textProperty().addListener((observable, oldValue, newValue)->{
+            registerButton.setDisable(!emailField.validate());
         });
 
     }

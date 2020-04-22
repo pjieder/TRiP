@@ -30,7 +30,7 @@ public class PersonManager {
      * @param password The password of the person
      * @return The person found based on the username and password
      */
-    public Employee validateUser(String username, String password)
+    public Employee validateEmployee(String username, String password)
     {
        return dalFacade.login(username, password);
     }

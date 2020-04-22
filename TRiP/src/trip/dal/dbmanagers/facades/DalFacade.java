@@ -7,10 +7,12 @@ package trip.dal.dbmanagers.facades;
 
 import trip.be.Admin;
 import trip.be.Employee;
+import trip.be.Project;
 import trip.be.Roles;
 import trip.be.User;
+import trip.dal.dbmanagers.dbdao.AdminDBDAO;
 import trip.dal.dbmanagers.dbdao.IPersonDBDAO;
-import trip.dal.dbmanagers.dbdao.PersonDBDAO;
+import trip.dal.dbmanagers.dbdao.EmployeeDBDAO;
 import trip.dal.dbmanagers.dbdao.UserDBDAO;
 
 /**
@@ -19,36 +21,37 @@ import trip.dal.dbmanagers.dbdao.UserDBDAO;
  */
 public class DalFacade implements IDalFacade {
 
-    private PersonDBDAO personManager = new PersonDBDAO();
+    private EmployeeDBDAO employeeManager = new EmployeeDBDAO();
     private UserDBDAO userManager = new UserDBDAO();
+    private AdminDBDAO adminManager = new AdminDBDAO();
 
     @Override
     public Employee login(String username, String password) {
-
-        int employeeId = personManager.isLoginCorrect(username, password);
+       
+        Employee employee = null;
+        int employeeId = employeeManager.isLoginCorrect(username, password);
 
         if (employeeId != -1) {
-            Roles role = personManager.getRoleById(employeeId);
+            Roles role = employeeManager.getRoleById(employeeId);
 
             if (role == Roles.USER) {
-                User user = userManager.getUserById(employeeId);
-                user.setProjects(personManager.getAllProjects());
-                userManager.loadProjects(employeeId, user.getProjects());
-                return userManager.getUserById(employeeId);
-
-            } else if (role == Roles.ADMIN) {
-                Admin admin = teacherManager.getTeacherById(userId);
-
-                for (Classroom c : teacher.getClassrooms()) {
-                    c.setStudents(studentManager.getStudentsInClass(c));
-                }
-
-                return teacher;
+                employee = userManager.getUserById(employeeId);
+                employee.setProjects(userManager.getEmployeeProjects(employeeId));
+            } 
+            else if (role == Roles.ADMIN) {
+                employee = adminManager.getAdminById(employeeId);
+                employee.setProjects(employeeManager.getAllActiveProjects());
             }
 
+            for (Project project : employee.getProjects()) {
+                employeeManager.getProjectTime(employeeId, project.getId());
+            }
+            
+            return employee;
+            
         }
 
-        return null;
+        return employee;
     }
-
+    
 }

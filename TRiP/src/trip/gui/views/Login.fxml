@@ -52,12 +52,7 @@
                   <Image url="@../images/TRiP%20Font.png" />
                </image>
             </ImageView>
-            <JFXTextField fx:id="passwordField" focusColor="#b49afd" promptText="Username" stylesheets="@../styles/LoginCSS.css" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="9">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </JFXTextField>
-            <JFXPasswordField fx:id="usernameField" focusColor="#b49afd" promptText="Password" stylesheets="@../styles/LoginCSS.css" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="7">
+            <JFXPasswordField fx:id="passwordField" focusColor="#b49afd" promptText="Password" stylesheets="@../styles/LoginCSS.css" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="9">
                <font>
                   <Font size="15.0" />
                </font>
@@ -70,6 +65,11 @@
                </font>
             </JFXButton>
             <Label fx:id="errorMsg" stylesheets="@../styles/LoginCSS.css" text="Wrong Username or Password" textFill="RED" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="12" />
+            <JFXTextField fx:id="usernameField" focusColor="#b49afd" promptText="Username" stylesheets="@../styles/LoginCSS.css" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="7">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXTextField>
          </children>
       </GridPane>
    </children>
