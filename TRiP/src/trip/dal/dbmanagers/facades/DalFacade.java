@@ -67,7 +67,7 @@ public class DalFacade implements IDalFacade {
 
         for (Task task : tasks) {
 
-            task.setTasks(employeeManager.loadTimeForTask(userId));
+            task.setTasks(employeeManager.loadTimeForTask(task.getId()));
             task.setTotalTime(employeeManager.getTaskTime(task.getId()));
 
         }

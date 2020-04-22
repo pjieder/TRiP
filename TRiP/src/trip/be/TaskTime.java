@@ -14,18 +14,16 @@ import java.util.Date;
  * @author ander
  */
 public class TaskTime {
- 
+
     private int id;
     private int time;
     private Date startTime;
     private Date stopTime;
-    private LocalDate date;
 
-    public TaskTime(int time, Date startTime, Date stopTime, LocalDate date) {
+    public TaskTime(int time, Date startTime, Date stopTime) {
         this.time = time;
         this.startTime = startTime;
         this.stopTime = stopTime;
-        this.date = date;
     }
 
     public int getId() {
@@ -60,15 +58,7 @@ public class TaskTime {
         this.stopTime = stopTime;
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-            @Override
+    @Override
     public boolean equals(Object obj) {
 
         TaskTime taskTime = (TaskTime) obj;
@@ -79,5 +69,5 @@ public class TaskTime {
         return false;
 
     }
-    
+
 }

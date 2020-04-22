@@ -23,6 +23,7 @@ import trip.be.Task;
 import trip.be.TaskTime;
 import trip.be.User;
 import trip.utilities.HashAlgorithm;
+import trip.utilities.TimeConverter;
 
 /**
  *
@@ -307,11 +308,10 @@ public class EmployeeDBDAO implements IPersonDBDAO{
 
                 int id = rs.getInt("ID");
                 int time = rs.getInt("time");
-                Date startTime = rs.getDate("startTime");
-                Date stopTime = rs.getDate("stopTime");
-                LocalDate date = LocalDate.parse(rs.getString("LocalDate"));
+                Date startTime = TimeConverter.convertStringToDate(rs.getString("startTime"));
+                Date stopTime = TimeConverter.convertStringToDate(rs.getString("stopTime"));
                 
-                TaskTime taskTime = new TaskTime(time, startTime, stopTime, date);
+                TaskTime taskTime = new TaskTime(time, startTime, stopTime);
                 taskTime.setId(id);
                 tasks.add(taskTime);
                 

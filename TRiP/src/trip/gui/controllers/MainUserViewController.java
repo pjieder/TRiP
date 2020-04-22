@@ -6,9 +6,15 @@
 package trip.gui.controllers;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -18,6 +24,7 @@ import javafx.scene.input.MouseEvent;
 import trip.be.Employee;
 import trip.be.Project;
 import trip.be.Task;
+import trip.be.TaskTime;
 import trip.gui.AppModel;
 import trip.utilities.TimeConverter;
 
@@ -39,6 +46,14 @@ public class MainUserViewController implements Initializable {
     private TableColumn<Task, String> nameColumn;
     @FXML
     private TableColumn<Task, String> timeColumn;
+    @FXML
+    private TableView<TaskTime> taskTimerList;
+    @FXML
+    private TableColumn<TaskTime, String> durationColumn;
+    @FXML
+    private TableColumn<TaskTime, String> startColumn;
+    @FXML
+    private TableColumn<TaskTime, String> endColumn;
 
     /**
      * Initializes the controller class.
@@ -52,9 +67,23 @@ public class MainUserViewController implements Initializable {
         });
 
         timeColumn.setCellValueFactory((data) -> {
-
             Task task = data.getValue();
             return new SimpleStringProperty(TimeConverter.convertSecondsToString(task.getTotalTime()));
+        });
+
+        durationColumn.setCellValueFactory((data) -> {
+            TaskTime taskTime = data.getValue();
+            return new SimpleStringProperty(TimeConverter.convertSecondsToString(taskTime.getTime()));
+        });
+
+        startColumn.setCellValueFactory((data) -> {
+            TaskTime taskTime = data.getValue();
+            return new SimpleStringProperty(TimeConverter.convertDateToString(taskTime.getStartTime()));
+        });
+
+        endColumn.setCellValueFactory((data) -> {
+            TaskTime taskTime = data.getValue();
+            return new SimpleStringProperty(TimeConverter.convertDateToString(taskTime.getStopTime()));
         });
 
     }
@@ -77,6 +106,31 @@ public class MainUserViewController implements Initializable {
         return appModel.loadTasks(loggedEmployee.getId(), projectId);
     }
 
+    @FXML
+    private void showTime(MouseEvent event) {
+
+        if (!taskList.getSelectionModel().isEmpty()) {
+            taskTimerList.setItems(taskList.getSelectionModel().getSelectedItem().getTimeTasks());
+        }
+    }
+
+    @FXML
+    private void switchProject(ActionEvent event) {
+        taskList.setItems(loadTasks(loggedEmployee.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     @FXML
     private void open_statistics_view(MouseEvent event) {
     }

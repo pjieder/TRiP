@@ -152,8 +152,8 @@ public class LoginController implements Initializable {
                         } catch (IOException ex) {
                             System.out.println("error");
                         }
-//                        MainUserViewController controller = fxmlLoader.getController();
-//                        controller.setStudent((Student) personToValidate, null);
+                        MainUserViewController controller = fxmlLoader.getController();
+                        controller.setUser(employeeToValidate);
                     } else if (employeeToValidate.getRole().equals(Roles.ADMIN)) {
                         fxmlLoader.setLocation(AppModel.class.getResource("views/MainAdminView.fxml"));
                         try {

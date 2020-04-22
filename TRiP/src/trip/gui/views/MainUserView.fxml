@@ -19,7 +19,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="735.0" prefWidth="1261.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.gui.controllers.MainUserViewController">
    <children>
-      <TableView fx:id="taskList" layoutX="229.0" layoutY="306.0" prefHeight="382.0" prefWidth="422.0" stylesheets="@../styles/MainUserViewCSS.css">
+      <TableView fx:id="taskList" layoutX="229.0" layoutY="306.0" onMouseClicked="#showTime" prefHeight="382.0" prefWidth="422.0" stylesheets="@../styles/MainUserViewCSS.css">
         <columns>
           <TableColumn fx:id="nameColumn" prefWidth="302.0" text="Task" />
           <TableColumn fx:id="timeColumn" prefWidth="119.0" text="Time" />
@@ -88,7 +88,7 @@
                <font>
                   <Font size="15.0" />
                </font></TextField>
-            <ComboBox fx:id="projectComboBox" prefHeight="44.0" prefWidth="259.0" promptText="Project" style="-fx-background-color: #f1f1f1;" stylesheets="@../styles/MainUserViewCSS.css" GridPane.columnIndex="2" />
+            <ComboBox fx:id="projectComboBox" onAction="#switchProject" prefHeight="44.0" prefWidth="259.0" promptText="Project" style="-fx-background-color: #f1f1f1;" stylesheets="@../styles/MainUserViewCSS.css" GridPane.columnIndex="2" />
             <Line endX="-100.0" endY="26.0" opacity="0.35" startX="-100.0" startY="-9.0" GridPane.columnIndex="3" />
             <TextField prefHeight="42.0" prefWidth="117.0" stylesheets="@../styles/MainUserViewCSS.css" text="00:00:00" GridPane.columnIndex="4">
                <font>
@@ -167,10 +167,11 @@
             <Image url="@../images/calendar%20(2).png" />
          </image>
       </ImageView>
-      <TableView layoutX="724.0" layoutY="306.0" prefHeight="382.0" prefWidth="422.0" stylesheets="@../styles/MainUserViewCSS.css">
+      <TableView fx:id="taskTimerList" layoutX="724.0" layoutY="306.0" prefHeight="382.0" prefWidth="422.0" stylesheets="@../styles/MainUserViewCSS.css">
          <columns>
-            <TableColumn prefWidth="214.0" text="C1" />
-            <TableColumn prefWidth="207.0" text="C2" />
+            <TableColumn fx:id="durationColumn" prefWidth="121.0" text="Duration" />
+            <TableColumn fx:id="startColumn" prefWidth="171.0" sortable="false" text="Start time" />
+            <TableColumn fx:id="endColumn" prefWidth="129.0" sortable="false" text="End time" />
          </columns>
       </TableView>
    </children>

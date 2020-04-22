@@ -75,7 +75,7 @@ public class UserDBDAO {
         ObservableList<Project> projects = FXCollections.observableArrayList();
         try {
             con = DBSettings.getInstance().getConnection();
-            String sql = "SELECT * FROM Project JOIN Projects on Project.ID = Projects.projID WHERE Projects.userID = ? AND Project.isActive = 1;";
+            String sql = "SELECT * FROM Project JOIN Projects on Project.ID = Projects.projID WHERE Projects.employeeID = ? AND Project.isActive = 1;";
             PreparedStatement stmt = con.prepareStatement(sql);
 
             stmt.setInt(1, employeeID);
