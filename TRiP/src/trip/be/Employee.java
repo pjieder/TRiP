@@ -85,13 +85,7 @@ public abstract class Employee {
             return true;
         }
         return false;
-    }
 
-    @Override
-    public String toString() {
-        return fName + " " + lName;
     }
-    
-    
 
 }

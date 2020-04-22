@@ -5,24 +5,15 @@
  */
 package trip.gui.controllers;
 
-import com.jfoenix.controls.JFXListView;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
-<<<<<<< HEAD
-=======
-import javafx.stage.Stage;
->>>>>>> 581fd7fe01f9ee49b6e8666abc1f09812eb373ad
 import trip.be.Admin;
-import trip.be.Employee;
 import trip.be.Project;
 import trip.gui.AppModel;
 import trip.utilities.TimeConverter;
@@ -43,8 +34,6 @@ public class MainAdminViewController implements Initializable {
     private TableColumn<Project, String> projectColumn;
     @FXML
     private TableColumn<Project, String> timeColumn;
-    @FXML
-    private JFXListView<Employee> employeeList;
 
     /**
      * Initializes the controller class.
@@ -62,10 +51,12 @@ public class MainAdminViewController implements Initializable {
             Project project = data.getValue();
             return new SimpleStringProperty(TimeConverter.convertSecondsToString(project.getTotalTime()));
         });
+
+//        timeColumn.setComparator((project1, project2) -> {
+//
+//            return Iteger
+//        });
         
-        projectTable.setOnSort((event)->{projectTable.getSelectionModel().clearSelection();});
-        
-        loadUsers();
         
     }
 
@@ -93,34 +84,6 @@ public class MainAdminViewController implements Initializable {
 
     @FXML
     private void log_out(MouseEvent event) {
-    }
-    
-    public void loadUsers()
-    {
-        employeeList.setItems(appModel.loadUsers());
-    }
-
-    @FXML
-    private void openProject(MouseEvent event) throws IOException {
-        
-        if (event.getClickCount() > 1 & !projectTable.getSelectionModel().isEmpty() & !event.isConsumed())
-        {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(AppModel.class.getResource("views/MainUserView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            Stage stage = new Stage();
-
-            MainUserViewController controller = fxmlLoader.getController();
-            controller.setAdmin(loggedAdmin,projectTable.getSelectionModel().getSelectedItem());
-            stage.setScene(scene);
-            stage.show();
-            
-            
-            
-            
-        }
-        
-        
     }
     
 }

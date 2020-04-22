@@ -116,37 +116,11 @@
                      </image>
                   </ImageView>
                </graphic>
-<<<<<<< HEAD
                <font>
                   <Font size="15.0" />
                </font>
             </JFXButton>
          </children>
       </VBox>
-=======
-            </Menu>
-         </menus>
-      </MenuBar>
-      <Label layoutX="368.0" layoutY="418.0" text="Inactive projects">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Label>
-      <ImageView fitHeight="19.0" fitWidth="14.0" layoutX="461.0" layoutY="420.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/next%20(5).png" />
-         </image>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </ImageView>
-      <TableView fx:id="projectTable" layoutX="53.0" layoutY="135.0" onMouseClicked="#openProject" prefHeight="284.0" prefWidth="423.0">
-        <columns>
-          <TableColumn fx:id="projectColumn" prefWidth="279.0" text="Project" />
-          <TableColumn fx:id="timeColumn" prefWidth="143.0" text="Time" />
-        </columns>
-      </TableView>
-      <JFXListView fx:id="employeeList" layoutX="505.0" layoutY="135.0" prefHeight="284.0" prefWidth="423.0" />
->>>>>>> 581fd7fe01f9ee49b6e8666abc1f09812eb373ad
    </children>
 </AnchorPane>

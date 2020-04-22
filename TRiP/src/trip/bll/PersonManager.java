@@ -7,9 +7,7 @@ package trip.bll;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import javafx.collections.ObservableList;
 import trip.be.Employee;
-import trip.be.Task;
 import trip.dal.dbmanagers.facades.DalFacade;
 import trip.dal.dbmanagers.facades.IDalFacade;
 import trip.utilities.HashAlgorithm;
@@ -18,11 +16,11 @@ import trip.utilities.HashAlgorithm;
  *
  * @author ander
  */
-public class EmployeeManager {
+public class PersonManager {
     
     private IDalFacade dalFacade;
 
-    public EmployeeManager() {
+    public PersonManager() {
         dalFacade = new DalFacade();
     }
 
@@ -37,13 +35,5 @@ public class EmployeeManager {
        return dalFacade.login(username, password);
     }
     
-    public ObservableList<Employee> loadEmployees()
-    {
-        return dalFacade.loadEmployees();
-    }
     
-    public ObservableList<Task> loadTasks(int userId, int projectId)
-    {
-        return dalFacade.loadTasks(userId, projectId);
-    }
 }

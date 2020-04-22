@@ -16,7 +16,6 @@ public class Task {
     
     private int id;
     private String name;
-    private int totalTime;
     private ObservableList<TaskTime> timeTasks = FXCollections.observableArrayList();
 
     public Task(String name) {
@@ -45,14 +44,6 @@ public class Task {
 
     public void setTasks(ObservableList<TaskTime> timeTasks) {
         this.timeTasks = timeTasks;
-    }
-
-    public int getTotalTime() {
-        return totalTime;
-    }
-
-    public void setTotalTime(int totalTime) {
-        this.totalTime = totalTime;
     }
     
         @Override

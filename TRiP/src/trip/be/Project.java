@@ -74,29 +74,18 @@ public class Project {
         this.totalTime = totalTime;
     }
 
+    
+    
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
+
+        Project project = (Project) obj;
+
+        if (project.getId() == this.getId()) {
             return true;
         }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Project other = (Project) obj;
-        if (this.id != other.id) {
-            return false;
-        }
-        return true;
-    }
-    
- 
+        return false;
 
-    @Override
-    public String toString() {
-        return name;
     }
 
 }
