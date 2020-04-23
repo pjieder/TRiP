@@ -31,7 +31,7 @@ public class ProjectModel
         selectedProject = FXCollections.observableArrayList();
     }
     
-    public static ProjectModel getInstance() throws IOException, Exception
+    public static ProjectModel getInstance()
     {
         if (instance == null)
         {
@@ -43,6 +43,15 @@ public class ProjectModel
     public List<Project> getAllProjects()
     {
         return getAllProjects();
+    }
+    
+    
+    public ObservableList<Project> loadAllActiveProjects(int employeeId) {
+        return projectManager.loadAllActiveProjects(employeeId);
+    }
+
+    public ObservableList<Project> loadAllUserProjects(int employeeId) {
+        return projectManager.loadUserProjects(employeeId);
     }
     
     public void createProject(Project project)

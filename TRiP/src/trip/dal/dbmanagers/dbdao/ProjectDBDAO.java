@@ -41,9 +41,9 @@ public class ProjectDBDAO implements IProjectDBDAO
     }
     
     @Override
-    public List<Project> getAllProjects()
+    public ObservableList<Project> getAllProjects()
     {
-        ArrayList<Project> allProjects = new ArrayList<>();
+        ObservableList<Project> allProjects = FXCollections.observableArrayList();
         try ( Connection con = dbCon.getConnection())
         {
             String sql = "SELECT * From Project;";

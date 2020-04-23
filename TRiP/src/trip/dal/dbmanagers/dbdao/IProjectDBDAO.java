@@ -15,7 +15,7 @@ import trip.be.Project;
  */
 public interface IProjectDBDAO
 {
-    public List<Project> getAllProjects();
+    public ObservableList<Project> getAllProjects();
     
     public void createProject(Project project);
     

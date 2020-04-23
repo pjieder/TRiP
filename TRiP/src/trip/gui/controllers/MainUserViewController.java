@@ -31,6 +31,7 @@ import trip.be.Roles;
 import trip.be.Task;
 import trip.be.TaskTime;
 import trip.gui.AppModel;
+import trip.gui.models.ProjectModel;
 import trip.utilities.StageOpener;
 import trip.utilities.TimeConverter;
 
@@ -42,6 +43,7 @@ import trip.utilities.TimeConverter;
 public class MainUserViewController implements Initializable {
 
     private AppModel appModel = new AppModel();
+    private ProjectModel projectModel = ProjectModel.getInstance();
 
     @FXML
     private ComboBox<Project> projectComboBox;
@@ -102,11 +104,11 @@ public class MainUserViewController implements Initializable {
         
         if (loggedUser.getRole() == Roles.ADMIN)
         {
-            projectComboBox.setItems(appModel.loadAllProjects(loggedUser.getId()));
+            projectComboBox.setItems(projectModel.loadAllActiveProjects(loggedUser.getId()));
         }
         else
         {
-            projectComboBox.setItems(appModel.loadAllUserProjects(loggedUser.getId()));
+            projectComboBox.setItems(projectModel.loadAllUserProjects(loggedUser.getId()));
         }
     }
 

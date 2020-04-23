@@ -37,14 +37,6 @@ public class AppModel {
         return employeeManager.validateEmployee(username, password);
     }
 
-    public ObservableList<Project> loadAllProjects(int employeeId) {
-        return projectManager.loadAllProjects(employeeId);
-    }
-
-    public ObservableList<Project> loadAllUserProjects(int employeeId) {
-        return projectManager.loadUserProjects(employeeId);
-    }
-
     public ObservableList<Employee> loadUsers() {
         return employeeManager.loadEmployees();
     }

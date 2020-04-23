@@ -79,7 +79,7 @@ public class DalFacade implements IDalFacade {
     }
 
     @Override
-    public ObservableList<Project> loadAllProjects(int employeeId) {
+    public ObservableList<Project> loadAllActiveProjects(int employeeId) {
         ObservableList<Project> allActiveProjects = projectManager.getAllActiveProjects();
         for (Project project : allActiveProjects)
         {

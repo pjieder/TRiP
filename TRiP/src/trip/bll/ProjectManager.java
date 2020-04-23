@@ -25,7 +25,7 @@ public class ProjectManager
         dalFacade = new DalFacade();
     }
     
-    public List<Project> getAllProjects()
+    public ObservableList<Project> getAllProjects()
     {
         return projectDao.getAllProjects();
     }
@@ -45,8 +45,8 @@ public class ProjectManager
         projectDao.deleteProject(project);
     }
 
-    public ObservableList<Project> loadAllProjects(int employeeId) {
-        return dalFacade.loadAllProjects(employeeId);
+    public ObservableList<Project> loadAllActiveProjects(int employeeId) {
+        return dalFacade.loadAllActiveProjects(employeeId);
     }
 
     public ObservableList<Project> loadUserProjects(int employeeId) {

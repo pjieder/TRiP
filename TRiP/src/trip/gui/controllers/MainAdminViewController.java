@@ -23,6 +23,7 @@ import trip.be.Admin;
 import trip.be.Employee;
 import trip.be.Project;
 import trip.gui.AppModel;
+import trip.gui.models.ProjectModel;
 import trip.utilities.StageOpener;
 import trip.utilities.TimeConverter;
 
@@ -34,7 +35,8 @@ import trip.utilities.TimeConverter;
 public class MainAdminViewController implements Initializable {
 
     private AppModel appModel = new AppModel();
-
+    private ProjectModel projectModel = ProjectModel.getInstance();
+    
     @FXML
     private TableView<Project> projectTable;
     @FXML
@@ -66,7 +68,7 @@ public class MainAdminViewController implements Initializable {
     
     public void loadAllProjects()
     {
-       projectTable.setItems(appModel.loadAllProjects(LoginController.loggedUser.getId()));
+       projectTable.setItems(projectModel.loadAllActiveProjects(LoginController.loggedUser.getId()));
     }
     
     @FXML
