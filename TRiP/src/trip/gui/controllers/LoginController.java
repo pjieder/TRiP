@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package trip.gui.views;
+package trip.gui.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
@@ -17,14 +17,14 @@ import java.util.concurrent.ExecutionException;
 import java.util.prefs.Preferences;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import trip.be.Employee;
+import trip.be.Roles;
 import trip.gui.AppModel;
+import trip.utilities.StageOpener;
 
 /**
  * FXML Controller class
@@ -33,14 +33,14 @@ import trip.gui.AppModel;
  */
 public class LoginController implements Initializable {
 
-    AppModel appModel = new AppModel();
-
-    Preferences preferences;
+    private AppModel appModel = new AppModel();
+    private Preferences preferences;
+    public static Employee loggedUser;
 
     @FXML
-    private JFXTextField passwordField;
+    private JFXPasswordField passwordField;
     @FXML
-    private JFXPasswordField usernameField;
+    private JFXTextField usernameField;
     @FXML
     private JFXProgressBar progressBar;
     @FXML
@@ -55,7 +55,7 @@ public class LoginController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         preferences = Preferences.userRoot().node("TRiP");
         if (preferences != null) {
             usernameField.setText(preferences.get("username", null));
@@ -65,20 +65,19 @@ public class LoginController implements Initializable {
     }
 
     /**
-     * Event handler for the login button.
-     * Starts the thread returned by the loadPerson method.
+     * Event handler for the login button. Starts the thread returned by the loadPerson method.
+     *
      * @param event
      * @throws IOException
      * @throws InterruptedException
-     * @throws ExecutionException 
+     * @throws ExecutionException
      */
     @FXML
     private void login(MouseEvent event) throws IOException, InterruptedException, ExecutionException {
         loadPerson().start();
         rememberMe.requestFocus();
-
     }
-    
+
     /**
      * Displays loading and disables the login button
      */
@@ -87,7 +86,7 @@ public class LoginController implements Initializable {
         progressBar.setVisible(true);
         errorMsg.setVisible(false);
     }
-    
+
     /**
      * Hides loading and enables the login button
      */
@@ -96,7 +95,7 @@ public class LoginController implements Initializable {
         errorMsg.setVisible(true);
         loginButton.setDisable(false);
     }
-    
+
     /**
      * Saves the login username and password entered in preferences
      */
@@ -105,7 +104,7 @@ public class LoginController implements Initializable {
         preferences.put("password", passwordField.getText());
         preferences.putBoolean("rememberActivated", true);
     }
-    
+
     /**
      * Saves an empty string as the username and password in preferences
      */
@@ -114,63 +113,40 @@ public class LoginController implements Initializable {
         preferences.put("password", "");
         preferences.putBoolean("rememberActivated", false);
     }
-    
 
     public Thread loadPerson() throws InterruptedException, ExecutionException, IOException {
 
         Thread loginThread = new Thread(() -> {
 
-//            String username = usernameField.getText();
-//            String password = passwordField.getText();
-//            showLoading();
-//
-//            Person personToValidate = appModel.validateUser(username, password);
-//
-//            if (personToValidate == null) {
-//                hideLoading();
-//
-//            } else {
-//
-//                if (rememberMe.isSelected()) {
-//                    saveLogin();
-//                } else {
-//                    forgetLogin();
-//                }
-//
-//                Platform.runLater(() -> {
-//
-//                    FXMLLoader fxmlLoader = new FXMLLoader();
-//                    Scene scene = null;
-//
-//                    if (personToValidate.getRole().equals(Roles.STUDENT)) {
-//                        fxmlLoader.setLocation(AppModel.class.getResource("views/AttendanceView.fxml"));
-//                        try {
-//                            scene = new Scene(fxmlLoader.load());
-//                        } catch (IOException ex) {
-//                            System.out.println("error");
-//                        }
-//                        AttendanceController controller = fxmlLoader.getController();
-//                        controller.setStudent((Student) personToValidate, null);
-//                    } else if (personToValidate.getRole().equals(Roles.TEACHER)) {
-//                        fxmlLoader.setLocation(AppModel.class.getResource("views/AttendanceViewTeacher.fxml"));
-//                        try {
-//                            scene = new Scene(fxmlLoader.load());
-//                        } catch (IOException ex) {
-//                            System.out.println("error");
-//                        }
-//                        AttendanceViewTeacherController controller = fxmlLoader.getController();
-//                        controller.setTeacher((Teacher) personToValidate);
-//
-//                    }
-//                    Stage appStage = (Stage) (rememberMe.getScene().getWindow());
-//                    appStage.setScene(scene);
-//                    appStage.show();
-//                });
-//
-//            }
+            String username = usernameField.getText();
+            String password = passwordField.getText();
+            showLoading();
 
+            Employee employeeToValidate = appModel.validateEmployee(username, password);
+
+            if (employeeToValidate == null) {
+                hideLoading();
+            } else {
+
+                if (rememberMe.isSelected()) {
+                    saveLogin();
+                } else {
+                    forgetLogin();
+                }
+                loggedUser = employeeToValidate;
+                Platform.runLater(() -> {
+
+                    if (employeeToValidate.getRole().equals(Roles.USER)) 
+                    {
+                        StageOpener.changeStage("views/MainUserView.fxml", (Stage) (rememberMe.getScene().getWindow()));
+                    } 
+                    else if (employeeToValidate.getRole().equals(Roles.ADMIN)) 
+                    {
+                        StageOpener.changeStage("views/MainAdminView.fxml", (Stage) (rememberMe.getScene().getWindow()));
+                    }
+                });
+            }
         });
-
         return loginThread;
     }
 

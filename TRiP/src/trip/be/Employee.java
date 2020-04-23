@@ -75,17 +75,21 @@ public abstract class Employee {
     public void setProjects(ObservableList<Project> projects) {
         this.projects = projects;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
-      
+
         Employee person = (Employee) obj;
 
         if (person.getId() == this.getId()) {
             return true;
         }
         return false;
+    }
 
+    @Override
+    public String toString() {
+        return fName + " " + lName;
     }
 
 }

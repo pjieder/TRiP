@@ -5,12 +5,14 @@
  */
 package trip.dal.dbmanagers.facades;
 
-import trip.be.Admin;
+import javafx.collections.ObservableList;
 import trip.be.Employee;
+import trip.be.Project;
 import trip.be.Roles;
-import trip.be.User;
-import trip.dal.dbmanagers.dbdao.IPersonDBDAO;
-import trip.dal.dbmanagers.dbdao.PersonDBDAO;
+import trip.be.Task;
+import trip.dal.dbmanagers.dbdao.AdminDBDAO;
+import trip.dal.dbmanagers.dbdao.EmployeeDBDAO;
+import trip.dal.dbmanagers.dbdao.ProjectDBDAO;
 import trip.dal.dbmanagers.dbdao.UserDBDAO;
 
 /**
@@ -19,36 +21,75 @@ import trip.dal.dbmanagers.dbdao.UserDBDAO;
  */
 public class DalFacade implements IDalFacade {
 
-    private PersonDBDAO personManager = new PersonDBDAO();
+    private EmployeeDBDAO employeeManager = new EmployeeDBDAO();
     private UserDBDAO userManager = new UserDBDAO();
+    private AdminDBDAO adminManager = new AdminDBDAO();
+    private ProjectDBDAO projectManager;
+
+    public DalFacade() throws Exception
+    {
+        this.projectManager = new ProjectDBDAO();
+    }
 
     @Override
     public Employee login(String username, String password) {
 
-        int employeeId = personManager.isLoginCorrect(username, password);
+        Employee employee = null;
+        int employeeId = employeeManager.isLoginCorrect(username, password);
 
         if (employeeId != -1) {
-            Roles role = personManager.getRoleById(employeeId);
+            Roles role = employeeManager.getRoleById(employeeId);
 
             if (role == Roles.USER) {
-                User user = userManager.getUserById(employeeId);
-                user.setProjects(personManager.getAllProjects());
-                userManager.loadProjects(employeeId, user.getProjects());
-                return userManager.getUserById(employeeId);
-
-//            } else if (role == Roles.ADMIN) {
-//                Admin admin = teacherManager.getTeacherById(userId);
-//
-//                for (Classroom c : teacher.getClassrooms()) {
-//                    c.setStudents(studentManager.getStudentsInClass(c));
-//                }
-//
-//                return teacher;
+                employee = userManager.getUserById(employeeId);
+            } else if (role == Roles.ADMIN) {
+                employee = adminManager.getAdminById(employeeId);
             }
+
+            return employee;
 
         }
 
-        return null;
+        return employee;
+    }
+
+    @Override
+    public ObservableList<Employee> loadEmployees() {
+        return employeeManager.loadEmployees();
+    }
+
+    @Override
+    public ObservableList<Task> loadTasks(int userId, int projectId) {
+
+        ObservableList<Task> tasks = employeeManager.loadTasks(userId, projectId);
+
+        for (Task task : tasks) {
+
+            task.setTasks(employeeManager.loadTimeForTask(task.getId()));
+            task.setTotalTime(employeeManager.getTaskTime(task.getId()));
+
+        }
+
+        return tasks;
+
+    }
+
+    @Override
+    public ObservableList<Project> loadAllProjects(int employeeId) {
+        ObservableList<Project> allActiveProjects = projectManager.getAllActiveProjects();
+        for (Project project : allActiveProjects) {
+            project.setTotalTime(projectManager.getProjectTime(employeeId, project.getId()));
+        }
+        return allActiveProjects;
+    }
+
+    @Override
+    public ObservableList<Project> loadUserProjects(int employeeId) {
+        ObservableList<Project> allUserProjects = projectManager.getEmployeeProjects(employeeId);
+        for (Project project : allUserProjects) {
+            project.setTotalTime(projectManager.getProjectTime(employeeId, project.getId()));
+        }
+        return allUserProjects;
     }
 
 }

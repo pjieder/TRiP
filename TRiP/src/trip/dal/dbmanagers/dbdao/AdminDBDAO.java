@@ -5,10 +5,62 @@
  */
 package trip.dal.dbmanagers.dbdao;
 
+import attendanceautomation.dal.dbaccess.DBSettings;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import trip.be.Admin;
+import trip.be.User;
+
 /**
  *
  * @author ander
  */
 public class AdminDBDAO {
+    
+        /**
+     * Returns the user based on the specified ID.
+     *
+     * @param id the ID of the user
+     * @return The user with the specified ID
+     */
+    public Admin getAdminById(int id) {
+
+        Connection con = null;
+        Admin admin = null;
+
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "SELECT * FROM Employees WHERE Employees.ID = ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                String fname = rs.getString("fName");
+                String lname = rs.getString("lName");
+                String email = rs.getString("email");
+
+                admin = new Admin(fname, lname, email);
+                admin.setId(id);
+
+            }
+
+            return admin;
+
+        } catch (SQLServerException ex) {
+
+        } catch (SQLException ex) {
+
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+
+        return admin;
+    }
     
 }

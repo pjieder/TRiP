@@ -42,7 +42,6 @@
       <Label layoutX="75.0" layoutY="408.0" text="Role" />
       <ComboBox fx:id="chooseProject" layoutX="75.0" layoutY="502.0" prefHeight="25.0" prefWidth="296.0" promptText="Choose Project" style="-fx-background-color: #f1f1f1;" />
       <Label layoutX="75.0" layoutY="477.0" text="Projects" />
-      <Label fx:id="invalidEmail" layoutX="75.0" layoutY="310.0" text="Not valid Email!" textFill="#ff0909" visible="false" />
       <JFXTextField fx:id="firstNameField" focusColor="#9a80fe" layoutX="75.0" layoutY="136.0" prefHeight="25.0" prefWidth="296.0" promptText="First Name" stylesheets="@../styles/RegisterFormCSS.css" />
       <JFXTextField fx:id="lastNameField" focusColor="#9a80fe" layoutX="75.0" layoutY="208.0" prefHeight="25.0" prefWidth="296.0" promptText="Last Name" />
       <JFXTextField fx:id="emailField" focusColor="#9a80fe" layoutX="75.0" layoutY="278.0" prefHeight="25.0" prefWidth="296.0" promptText="Email" />

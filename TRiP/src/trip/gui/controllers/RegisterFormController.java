@@ -17,6 +17,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import trip.be.Admin;
+import trip.be.Employee;
+import trip.be.User;
 
 /**
  * FXML Controller class
@@ -32,10 +35,6 @@ public class RegisterFormController implements Initializable {
     @FXML
     private JFXButton registerButton;
     @FXML
-    private TextField emailField;
-    @FXML
-    private Label invalidEmail;
-
     private JFXTextField field;
     @FXML
     private ComboBox<?> chooseProject;
@@ -45,6 +44,8 @@ public class RegisterFormController implements Initializable {
     private JFXTextField lastNameField;
     @FXML
     private JFXTextField passwordField;
+    @FXML
+    private JFXTextField emailField;
 
     /**
      * Initializes the controller class.
@@ -56,23 +57,42 @@ public class RegisterFormController implements Initializable {
         regex.setRegexPattern("^.+@[^\\.].*\\.[a-z]{2,}$");
         regex.setMessage("Input is not a valid email");
 
-        //JFX design
-//        testEmailTextField.getValidators().add(regex);
-//        testEmailTextField.textProperty().addListener((observable, oldValue, newValue)->{
-//            registerButton.setDisable(!testEmailTextField.validate());
-//        });
-
-        //Standard Java design
-        field = new JFXTextField();
-        field.getValidators().add(regex);
-        emailField.textProperty().addListener((observable, oldValue, newValue) -> {
-            field.setText(newValue);
-            registerButton.setDisable(!field.validate());
-            invalidEmail.setVisible(!field.validate());
+        emailField.getValidators().add(regex);
+        emailField.textProperty().addListener((observable, oldValue, newValue)->{
+            registerButton.setDisable(!emailField.validate());
         });
 
     }
 
+    @FXML
+    private void registerEmployee(ActionEvent event) 
+    {
+        Employee newEmployee;
+        
+        try 
+        {
+            String fName = firstNameField.getText().trim();
+            String lName = lastNameField.getText().trim();
+            String email = emailField.getText().trim();
+            String password = passwordField.getText().trim();
+            
+            if (adminCheckbox.isSelected())
+            {
+                newEmployee = new Admin(fName, lName, email);
+                
+            } else 
+            {
+                newEmployee = new User(fName, lName, email);
+            }
+          
+        } catch (Exception ex)
+                {
+                    //TODO errormessage
+                }
+        
+    }
+    
+    
     @FXML
     private void doAdmin(ActionEvent event) {
 

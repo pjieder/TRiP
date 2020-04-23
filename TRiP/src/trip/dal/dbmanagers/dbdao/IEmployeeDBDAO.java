@@ -12,7 +12,7 @@ import trip.be.Roles;
  *
  * @author ander
  */
-public interface IPersonDBDAO {
+public interface IEmployeeDBDAO {
     
     /**
      * Returns the ID of the user based on whether the login information given is valid or not.

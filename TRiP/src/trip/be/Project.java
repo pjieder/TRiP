@@ -17,7 +17,8 @@ public class Project {
     private int id;
     private String name;
     private double rate;
-    private boolean isActive;
+    private boolean isActive = true;
+    private int totalTime;
 
     public Project(String name, double rate) {
         this.name = name;
@@ -53,26 +54,44 @@ public class Project {
         this.rate = rate;
     }
 
-    public boolean getIsActive()
-    {
+    public boolean getIsActive() {
         return isActive;
     }
 
-    public void setIsActive(boolean isActive)
-    {
+    public void setIsActive(boolean isActive) {
         this.isActive = isActive;
+    }
+
+    public int getTotalTime() {
+        return totalTime;
+    }
+
+    public void setTotalTime(int totalTime) {
+        this.totalTime = totalTime;
     }
 
     @Override
     public boolean equals(Object obj) {
 
-        Project project = (Project) obj;
-
-        if (project.getId() == this.getId()) {
+        if (this == obj) {
             return true;
         }
-        return false;
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Project other = (Project) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
+    }
 
+    @Override
+    public String toString() {
+        return name;
     }
 
 }

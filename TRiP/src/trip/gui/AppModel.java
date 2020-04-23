@@ -5,8 +5,12 @@
  */
 package trip.gui;
 
+import javafx.collections.ObservableList;
 import trip.be.Employee;
-import trip.bll.PersonManager;
+import trip.be.Project;
+import trip.be.Task;
+import trip.bll.EmployeeManager;
+import trip.bll.ProjectManager;
 
 /**
  *
@@ -14,21 +18,38 @@ import trip.bll.PersonManager;
  */
 public class AppModel {
 
-    private final PersonManager personManager;
+    private final EmployeeManager employeeManager;
+    private final ProjectManager projectManager;
 
     public AppModel() {
-        personManager = new PersonManager();
-    }
-    
-    /**
-     * If correct username and password is entered,
-     * the stored person will be returned.
-     * @param username the username of the account
-     * @param password the password of the account
-     * @return 
-     */
-    public Employee validateUser(String username, String password) {
-        return personManager.validateUser(username, password);
+        employeeManager = new EmployeeManager();
+        projectManager = new ProjectManager();
     }
 
+    /**
+     * If correct username and password is entered, the stored person will be returned.
+     *
+     * @param username the username of the account
+     * @param password the password of the account
+     * @return
+     */
+    public Employee validateEmployee(String username, String password) {
+        return employeeManager.validateEmployee(username, password);
+    }
+
+    public ObservableList<Project> loadAllProjects(int employeeId) {
+        return projectManager.loadAllProjects(employeeId);
+    }
+
+    public ObservableList<Project> loadAllUserProjects(int employeeId) {
+        return projectManager.loadUserProjects(employeeId);
+    }
+
+    public ObservableList<Employee> loadUsers() {
+        return employeeManager.loadEmployees();
+    }
+
+    public ObservableList<Task> loadTasks(int userId, int projectId) {
+        return employeeManager.loadTasks(userId, projectId);
+    }
 }

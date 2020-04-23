@@ -5,6 +5,7 @@
  */
 package trip.gui;
 
+import attendanceautomation.dal.dbaccess.DBSettings;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,7 +22,7 @@ public class TRiP extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        Parent root = FXMLLoader.load(getClass().getResource("views/RegisterForm.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("views/Login.fxml"));
       
         Scene scene = new Scene(root);
         
@@ -30,6 +31,11 @@ public class TRiP extends Application {
         stage.setTitle("TRiP");
         stage.getIcons().add(new Image(TRiP.class.getResourceAsStream("images/time.png")));
         stage.setResizable(false);
+        
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+
+            DBSettings.getInstance().closeAllConnections();
+        }));
     }
 
     /**

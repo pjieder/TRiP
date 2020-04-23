@@ -11,13 +11,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.Date;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import trip.be.Project;
-import trip.be.Task;
-import trip.be.TaskTime;
 import trip.be.User;
 
 /**
@@ -39,7 +35,7 @@ public class UserDBDAO {
 
         try {
             con = DBSettings.getInstance().getConnection();
-            String sql = "SELECT * FROM User WHERE User.ID = ?;";
+            String sql = "SELECT * FROM Employees WHERE Employees.ID = ?;";
             PreparedStatement stmt = con.prepareStatement(sql);
 
             stmt.setInt(1, id);
@@ -68,93 +64,5 @@ public class UserDBDAO {
 
         return user;
     }
-
-    public void loadProjects(int userID, ObservableList<Project> projects) {
-        for (Project project : projects) {
-
-            project.setTasks(getProjectTasks(userID, project.getId()));
-
-            for (Task task : project.getTasks()) {
-                task.setTasks(getTaskTimes(task.getId()));
-            }
-            
-        }
-    }
-
-    public ObservableList<Task> getProjectTasks(int userId, int projectId) {
-
-        Connection con = null;
-        ObservableList<Task> tasks = FXCollections.observableArrayList();
-        try {
-            con = DBSettings.getInstance().getConnection();
-            String sql = "SELECT * FROM Task WHERE Task.userID = ? AND Task.projID = ?;";
-            PreparedStatement stmt = con.prepareStatement(sql);
-
-            stmt.setInt(1, userId);
-            stmt.setInt(2, projectId);
-
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-
-                int taskID = rs.getInt("ID");
-                String taskName = rs.getString("name");
-
-                Task task = new Task(taskName);
-                task.setId(taskID);
-                tasks.add(task);
-
-            }
-
-            return tasks;
-
-        } catch (SQLServerException ex) {
-
-        } catch (SQLException ex) {
-
-        } finally {
-            DBSettings.getInstance().releaseConnection(con);
-        }
-        return tasks;
-    }
-
-    public ObservableList<TaskTime> getTaskTimes(int taskId) {
-
-        Connection con = null;
-        ObservableList<TaskTime> taskTimes = FXCollections.observableArrayList();
-        try {
-            con = DBSettings.getInstance().getConnection();
-            String sql = "SELECT * FROM Tasks WHERE Task.taskID = ?;";
-            PreparedStatement stmt = con.prepareStatement(sql);
-
-            stmt.setInt(1, taskId);
-
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-
-                String taskName = rs.getString("name");
-                int time = rs.getInt("time");
-                Date startTime = rs.getDate("startTime");
-                Date endTime = rs.getDate("endTime");
-                LocalDate date = LocalDate.parse(rs.getString("date"));
-
-                TaskTime taskTime = new TaskTime(time, startTime, endTime, date);
-                taskTime.setId(taskId);
-                taskTimes.add(taskTime);
-
-            }
-
-            return taskTimes;
-
-        } catch (SQLServerException ex) {
-
-        } catch (SQLException ex) {
-
-        } finally {
-            DBSettings.getInstance().releaseConnection(con);
-        }
-        return taskTimes;
-    }
-
+    
 }

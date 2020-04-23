@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="735.0" prefWidth="1261.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.gui.controllers.AdminStatisticsViewController">
+<AnchorPane id="AnchorPane" prefHeight="735.0" prefWidth="1261.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.gui.controllers.AdminCurrentUserViewController">
    <children>
-      <VBox prefHeight="735.0" prefWidth="139.0" style="-fx-background-color: #f9f9f9;">
+      <VBox prefHeight="735.0" prefWidth="147.0" style="-fx-background-color: #f9f9f9;">
          <children>
             <JFXButton alignment="BOTTOM_LEFT" onMouseClicked="#open_projects_view" prefHeight="39.0" prefWidth="164.0" styleClass="main-bntns" stylesheets="@../styles/TabsView.css" text=" Projects">
                <graphic>
@@ -73,5 +78,58 @@
             </JFXButton>
          </children>
       </VBox>
+      <Label layoutX="207.0" layoutY="81.0" text="Current Users">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <JFXButton layoutX="1089.0" layoutY="76.0" prefHeight="31.0" prefWidth="114.0" stylesheets="@../styles/MainAdminView.css" text="Edit user" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton layoutX="964.0" layoutY="76.0" stylesheets="@../styles/MainAdminView.css" text="Register user" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <ImageView fitHeight="21.0" fitWidth="22.0" layoutX="307.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/team.png" />
+         </image>
+      </ImageView>
+      <JFXListView layoutX="208.0" layoutY="118.0" prefHeight="565.0" prefWidth="995.0" stylesheets="@../styles/AdminCurrentUserCSS.css" />
+      <TextField layoutX="358.0" layoutY="76.0" prefHeight="31.0" prefWidth="283.0" promptText="Search" style="-fx-background-color: f1f1f1;">
+         <font>
+            <Font size="15.0" />
+         </font></TextField>
+      <ComboBox layoutX="658.0" layoutY="76.0" prefHeight="31.0" prefWidth="283.0" promptText="Projects" stylesheets="@../styles/AdminCurrentUserCSS.css" />
+      <ImageView fitHeight="21.0" fitWidth="21.0" layoutX="610.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/magnifying-glass%20(6).png" />
+         </image>
+      </ImageView>
+      <Label layoutX="1089.0" layoutY="689.0" text="Inactive users">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="19.0" fitWidth="14.0" layoutX="1186.0" layoutY="692.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/next%20(5).png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
    </children>
 </AnchorPane>
