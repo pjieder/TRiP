@@ -5,6 +5,7 @@
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXProgressBar?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -58,11 +59,17 @@
                </font>
             </JFXPasswordField>
             <JFXProgressBar fx:id="progressBar" stylesheets="@../styles/LoginCSS.css" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="12" />
-            <JFXCheckBox fx:id="rememberMe" checkedColor="#b49afd" stylesheets="@../styles/LoginCSS.css" text="Remember Me" textFill="WHITE" unCheckedColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+            <JFXCheckBox fx:id="rememberMe" checkedColor="#b49afd" stylesheets="@../styles/LoginCSS.css" text="Remember Me" textFill="WHITE" unCheckedColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="11">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></JFXCheckBox>
             <JFXButton fx:id="loginButton" buttonType="RAISED" onMouseClicked="#login" styleClass="login-button" stylesheets="@../styles/LoginCSS.css" text="LOGIN" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="14">
                <font>
                   <Font size="18.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
             <Label fx:id="errorMsg" stylesheets="@../styles/LoginCSS.css" text="Wrong Username or Password" textFill="RED" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="12" />
             <JFXTextField fx:id="usernameField" focusColor="#b49afd" promptText="Username" stylesheets="@../styles/LoginCSS.css" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="7">

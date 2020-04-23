@@ -1,0 +1,46 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 23. apr. 2020, 18.54.00
+    Author     : Peter
+*/
+
+.combo-box{
+    -fx-border-width:1;
+    -fx-background-color: #f3f3f3;
+    -fx-font-size: 15px;
+
+}
+
+
+.combo-box-popup .list-cell {    
+    -fx-background-color: white;    
+    -fx-text-fill: #333333;
+}
+
+.combo-box-popup .list-cell:filled:hover {
+    -fx-background-color: #EBBA16;
+    -fx-text-fill: #ffffff;
+}
+
+.combo-box-popup .list-cell:filled:selected {
+  -fx-background-color: #EBBA16;
+  -fx-background-insets: 0 ;
+  -fx-text-fill: #ffffff;
+}
+
+.login-button
+{
+    -fx-background-color: #9a80fe;
+
+
+   
+}
+.login-button:hover
+{
+    -fx-background-color: #b49afd;
+    
+}

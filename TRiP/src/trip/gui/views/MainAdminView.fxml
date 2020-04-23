@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -89,7 +90,7 @@
             </JFXButton>
          </children>
       </VBox>
-      <JFXButton layoutX="958.0" layoutY="102.0" stylesheets="@../styles/MainAdminView.css" text="Create project" textFill="WHITE">
+      <JFXButton layoutX="958.0" layoutY="63.0" stylesheets="@../styles/MainAdminView.css" text="Create project" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
@@ -97,7 +98,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton layoutX="1085.0" layoutY="102.0" prefHeight="31.0" prefWidth="114.0" stylesheets="@../styles/MainAdminView.css" text="Edit project" textFill="WHITE">
+      <JFXButton layoutX="1085.0" layoutY="63.0" prefHeight="31.0" prefWidth="114.0" stylesheets="@../styles/MainAdminView.css" text="Edit project" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
@@ -105,12 +106,12 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <Label layoutX="204.0" layoutY="108.0" text="Current Projects">
+      <Label layoutX="204.0" layoutY="69.0" text="Current Projects">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <ImageView fitHeight="21.0" fitWidth="22.0" layoutX="318.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="21.0" fitWidth="22.0" layoutX="318.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/rocket.png" />
          </image>
@@ -131,11 +132,21 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <TableView fx:id="projectTable" layoutX="204.0" layoutY="151.0" onMouseClicked="#openProject" prefHeight="505.0" prefWidth="995.0" stylesheets="@../styles/MainAdminView.css">
+      <TableView fx:id="projectTable" layoutX="204.0" layoutY="112.0" onMouseClicked="#openProject" prefHeight="544.0" prefWidth="995.0" stylesheets="@../styles/MainAdminView.css">
         <columns>
           <TableColumn fx:id="projectColumn" prefWidth="495.0" text="Project" />
           <TableColumn fx:id="timeColumn" prefWidth="499.0" text="Time" />
         </columns>
       </TableView>
+      <TextField layoutX="377.0" layoutY="63.0" prefHeight="31.0" prefWidth="540.0" promptText="Search" style="-fx-background-color: f1f1f1;" stylesheets="@../styles/MainAdminView.css">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </TextField>
+      <ImageView fitHeight="83.0" fitWidth="21.0" layoutX="885.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/magnifying-glass%20(6).png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
