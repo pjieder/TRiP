@@ -5,6 +5,7 @@
  */
 package trip.dal.dbmanagers.dbdao;
 
+import trip.dal.dbmanagers.dbdao.Interfaces.IAdminDBDAO;
 import trip.dal.dbaccess.DBSettings;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.Connection;
@@ -12,20 +13,22 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import trip.be.Admin;
-import trip.be.User;
+
+
 
 /**
  *
  * @author ander
  */
-public class AdminDBDAO {
+public class AdminDBDAO implements IAdminDBDAO{
     
-        /**
+    /**
      * Returns the user based on the specified ID.
      *
      * @param id the ID of the user
      * @return The user with the specified ID
      */
+    @Override
     public Admin getAdminById(int id) {
 
         Connection con = null;

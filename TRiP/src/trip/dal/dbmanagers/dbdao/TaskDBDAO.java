@@ -14,19 +14,77 @@ import java.sql.Statement;
 import java.util.Date;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import trip.be.Roles;
 import trip.be.Task;
 import trip.be.TaskTime;
 import trip.be.Timer;
 import trip.dal.dbaccess.DBSettings;
+import trip.dal.dbmanagers.dbdao.Interfaces.ITaskDBDAO;
 import trip.utilities.TimeConverter;
 
 /**
  *
  * @author ander
  */
-public class TaskDBDAO {
+public class TaskDBDAO implements ITaskDBDAO {
 
+    @Override
+    public int addTask(int userId, int projectId, String taskName) {
+        Connection con = null;
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "INSERT INTO Task (projID, employeeID, name) "
+                    + "VALUES (?,?,?);";
+            PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            stmt.setInt(1, projectId);
+            stmt.setInt(2, userId);
+            stmt.setString(3, taskName);
+
+            stmt.executeUpdate();
+
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                return generatedKeys.getInt(1);
+            }
+
+        } catch (SQLServerException ex) {
+            //TODO
+        } catch (SQLException ex) {
+            //TODO
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+
+        return -1;
+    }
+
+    @Override
+    public void addTimeToTask(Timer timer) {
+        Connection con = null;
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "INSERT INTO Tasks (taskID, time, startTime, stopTime) "
+                    + "VALUES (?,?,?,?);";
+
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, timer.getTaskId());
+            stmt.setInt(2, timer.getTime());
+            stmt.setString(3, TimeConverter.convertDateToString(timer.getStartTime()));
+            stmt.setString(4, TimeConverter.convertDateToString(timer.getStopTime()));
+
+            ResultSet rs = stmt.executeQuery();
+
+        } catch (SQLServerException ex) {
+            //TODO
+        } catch (SQLException ex) {
+            //TODO
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+    }
+
+    @Override
     public int getTaskTime(int taskID) {
 
         Connection con = null;
@@ -57,6 +115,7 @@ public class TaskDBDAO {
         return totalTime;
     }
 
+    @Override
     public ObservableList<Task> loadTasks(int userId, int projectId) {
 
         Connection con = null;
@@ -93,6 +152,7 @@ public class TaskDBDAO {
         return tasks;
     }
 
+    @Override
     public ObservableList<TaskTime> loadTimeForTask(int taskId) {
 
         Connection con = null;
@@ -129,61 +189,6 @@ public class TaskDBDAO {
             DBSettings.getInstance().releaseConnection(con);
         }
         return tasks;
-    }
-
-    public int addTask(int userId, int projectId, String taskName) {
-        Connection con = null;
-        try {
-            con = DBSettings.getInstance().getConnection();
-            String sql = "INSERT INTO Task (projID, employeeID, name) "
-                    + "VALUES (?,?,?);";
-            PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
-            stmt.setInt(1, projectId);
-            stmt.setInt(2, userId);
-            stmt.setString(3, taskName);
-
-            stmt.executeUpdate();
-
-            ResultSet generatedKeys = stmt.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                return generatedKeys.getInt(1);
-            }
-
-        } catch (SQLServerException ex) {
-            //TODO
-        } catch (SQLException ex) {
-            //TODO
-        } finally {
-            DBSettings.getInstance().releaseConnection(con);
-        }
-
-        return -1;
-    }
-
-    public void addTimeToTask(Timer timer) {
-        Connection con = null;
-        try {
-            con = DBSettings.getInstance().getConnection();
-            String sql = "INSERT INTO Tasks (taskID, time, startTime, stopTime) "
-                    + "VALUES (?,?,?,?);";
-
-            PreparedStatement stmt = con.prepareStatement(sql);
-
-            stmt.setInt(1, timer.getTaskId());
-            stmt.setInt(2, timer.getTime());
-            stmt.setString(3, TimeConverter.convertDateToString(timer.getStartTime()));
-            stmt.setString(4, TimeConverter.convertDateToString(timer.getStopTime()));
-            
-            ResultSet rs = stmt.executeQuery();
-
-        } catch (SQLServerException ex) {
-            //TODO
-        } catch (SQLException ex) {
-            //TODO
-        } finally {
-            DBSettings.getInstance().releaseConnection(con);
-        }
     }
 
 }

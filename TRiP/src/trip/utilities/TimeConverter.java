@@ -8,8 +8,6 @@ package trip.utilities;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.util.Duration;
 
 /**

@@ -28,7 +28,6 @@ import trip.be.Roles;
 import trip.be.Task;
 import trip.be.TaskTime;
 import trip.be.Timer;
-import trip.gui.AppModel;
 import trip.gui.models.ProjectModel;
 import trip.gui.models.TaskModel;
 import trip.utilities.StageOpener;
@@ -41,11 +40,11 @@ import trip.utilities.TimeConverter;
  */
 public class MainUserViewController implements Initializable {
 
-    private AppModel appModel = new AppModel();
     private ProjectModel projectModel = new ProjectModel();
     private TaskModel taskModel = new TaskModel();
 
     private Timer timer = new Timer();
+    private Employee loggedUser = LoginController.loggedUser;
 
     @FXML
     private ComboBox<Project> projectComboBox;
@@ -119,9 +118,12 @@ public class MainUserViewController implements Initializable {
         });
     }
 
-    public void loadProjects() {
+    public void setAdmin(Project project) {
+        projectComboBox.getSelectionModel().select(project);
+        taskList.setItems(taskModel.loadTasks(loggedUser.getId(), project.getId()));
+    }
 
-        Employee loggedUser = LoginController.loggedUser;
+    public void loadProjects() {
 
         if (loggedUser.getRole() == Roles.ADMIN) {
             projectComboBox.setItems(projectModel.loadAllActiveProjects(loggedUser.getId()));
@@ -130,9 +132,10 @@ public class MainUserViewController implements Initializable {
         }
     }
 
-    public void setAdmin(Project project) {
-        projectComboBox.getSelectionModel().select(project);
-        taskList.setItems(taskModel.loadTasks(LoginController.loggedUser.getId(), project.getId()));
+    @FXML
+    private void switchProject(ActionEvent event) {
+        taskList.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
+        decideTimerEnabled();
     }
 
     @FXML
@@ -144,29 +147,10 @@ public class MainUserViewController implements Initializable {
         }
     }
 
-    private void decideTimerEnabled() {
-        if (!taskList.getSelectionModel().isEmpty()) {
-            startTimer.setDisable(false);
-        } else if (!newTaskTitle.getText().trim().isEmpty() && projectComboBox.getSelectionModel().getSelectedItem() != null) {
-            startTimer.setDisable(false);
-        } else {
-            startTimer.setDisable(true);
-        }
-    }
-
-    @FXML
-    private void switchProject(ActionEvent event) {
+    private int addTask() {
+        String taskName = newTaskTitle.getText().trim();
         taskList.setItems(taskModel.loadTasks(LoginController.loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
-        decideTimerEnabled();
-    }
-
-    @FXML
-    private void open_time_view(MouseEvent event) {
-    }
-
-    @FXML
-    private void log_out(MouseEvent event) {
-        StageOpener.changeStage("views/Login.fxml", (Stage) taskList.getScene().getWindow());
+        return taskModel.addTask(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId(), taskName);
     }
 
     @FXML
@@ -189,13 +173,12 @@ public class MainUserViewController implements Initializable {
     private void stopTimer(ActionEvent event) {
         timer.stopTimer();
         taskModel.saveTimeForTask(timer);
-        updateView();
         startTimer.setVisible(true);
         stopTimer.setVisible(false);
         cancelTimer.setVisible(false);
+        updateView();
     }
-    
-    
+
     @FXML
     private void cancelTime(ActionEvent event) {
         timer.stopTimer();
@@ -207,26 +190,34 @@ public class MainUserViewController implements Initializable {
     private void updateView() {
         if (!taskList.getSelectionModel().isEmpty()) {
             int location = taskList.getSelectionModel().getSelectedIndex();
-            taskList.setItems(taskModel.loadTasks(LoginController.loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
+            taskList.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
             taskList.refresh();
             taskList.getSelectionModel().select(location);
             taskTimerList.setItems(taskList.getSelectionModel().getSelectedItem().getTimeTasks());
         } else {
-            taskList.setItems(taskModel.loadTasks(LoginController.loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
+            taskList.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
             taskList.refresh();
         }
 
     }
 
-    private int addTask() {
-        int id;
+    private void decideTimerEnabled() {
+        if (!taskList.getSelectionModel().isEmpty()) {
+            startTimer.setDisable(false);
+        } else if (!newTaskTitle.getText().trim().isEmpty() && projectComboBox.getSelectionModel().getSelectedItem() != null) {
+            startTimer.setDisable(false);
+        } else {
+            startTimer.setDisable(true);
+        }
+    }
 
-        String taskName = newTaskTitle.getText().trim();
-        Task taskToAdd = new Task(taskName);
-        id = taskModel.addTask(LoginController.loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId(), taskName);
-        taskList.setItems(taskModel.loadTasks(LoginController.loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
+    @FXML
+    private void open_time_view(MouseEvent event) {
+    }
 
-        return id;
+    @FXML
+    private void log_out(MouseEvent event) {
+        StageOpener.changeStage("views/Login.fxml", (Stage) taskList.getScene().getWindow());
     }
 
     public void setupCloseRequest() {
@@ -241,6 +232,5 @@ public class MainUserViewController implements Initializable {
             }
         });
     }
-
 
 }

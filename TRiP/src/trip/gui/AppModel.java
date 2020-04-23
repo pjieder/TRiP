@@ -7,10 +7,7 @@ package trip.gui;
 
 import javafx.collections.ObservableList;
 import trip.be.Employee;
-import trip.be.Project;
-import trip.be.Task;
 import trip.bll.EmployeeManager;
-import trip.bll.ProjectManager;
 
 /**
  *
@@ -35,12 +32,12 @@ public class AppModel {
         return employeeManager.validateEmployee(username, password);
     }
 
+    public void createUser(Employee employee, String password) {
+        employeeManager.createUser(employee, password);
+    }
+
     public ObservableList<Employee> loadUsers() {
         return employeeManager.loadEmployees();
     }
-    
-    public void createUser(Employee employee, String password)
-    {
-        employeeManager.createUser(employee, password);
-    }
+
 }

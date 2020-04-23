@@ -7,7 +7,6 @@ package trip.bll;
 
 import javafx.collections.ObservableList;
 import trip.be.Employee;
-import trip.be.Task;
 import trip.dal.dbmanagers.facades.DalFacade;
 import trip.dal.dbmanagers.facades.IDalFacade;
 
@@ -34,12 +33,12 @@ public class EmployeeManager {
         return dalFacade.login(username, password);
     }
 
-    public ObservableList<Employee> loadEmployees() {
-        return dalFacade.loadEmployees();
-    }
-
     public void createUser(Employee employee, String password) {
         dalFacade.createUser(employee, password);
+    }
+
+    public ObservableList<Employee> loadEmployees() {
+        return dalFacade.loadEmployees();
     }
 
 }

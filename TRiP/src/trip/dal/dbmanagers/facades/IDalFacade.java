@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import trip.be.Employee;
 import trip.be.Project;
 import trip.be.Task;
+import trip.be.Timer;
 
 /**
  *
@@ -25,13 +26,18 @@ public interface IDalFacade {
      */
     public Employee login(String username, String password);
 
-    public ObservableList<Employee> loadEmployees();
-
     public void createUser(Employee employee, String password);
+
+    public int addTask(int userId, int projectId, String taskName);
+
+    public void saveTimeForTask(Timer timer);
+
+    public ObservableList<Employee> loadEmployees();
 
     public ObservableList<Task> loadTasks(int userId, int projectId);
 
     public ObservableList<Project> loadAllActiveProjects(int employeeId);
 
     public ObservableList<Project> loadUserProjects(int employeeId);
+
 }

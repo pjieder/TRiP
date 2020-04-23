@@ -15,12 +15,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import trip.be.Project;
 import trip.be.User;
+import trip.dal.dbmanagers.dbdao.Interfaces.IUserDBDAO;
 
 /**
  *
  * @author ander
  */
-public class UserDBDAO {
+public class UserDBDAO implements IUserDBDAO {
 
     /**
      * Returns the user based on the specified ID.
@@ -28,6 +29,7 @@ public class UserDBDAO {
      * @param id the ID of the user
      * @return The user with the specified ID
      */
+    @Override
     public User getUserById(int id) {
 
         Connection con = null;
@@ -64,5 +66,5 @@ public class UserDBDAO {
 
         return user;
     }
-    
+
 }

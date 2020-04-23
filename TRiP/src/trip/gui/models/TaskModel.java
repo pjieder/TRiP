@@ -23,17 +23,16 @@ public class TaskModel {
         taskManager = new TaskManager();
     }
 
+    public int addTask(int userId, int projectId, String taskName) {
+        return taskManager.addTask(userId, projectId, taskName);
+    }
+
+    public void saveTimeForTask(Timer timer) {
+        taskManager.saveTimeForTask(timer);
+    }
+
     public ObservableList<Task> loadTasks(int userId, int projectId) {
         return taskManager.loadTasks(userId, projectId);
     }
-    
-    public int addTask(int userId, int projectId, String taskName)
-    {
-        return taskManager.addTask(userId, projectId, taskName);
-    }
-    
-    public void saveTimeForTask(Timer timer)
-    {
-        taskManager.saveTimeForTask(timer);
-    }
+
 }

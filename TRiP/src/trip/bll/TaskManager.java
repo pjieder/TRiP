@@ -23,18 +23,16 @@ public class TaskManager {
         dalFacade = new DalFacade();
     }
 
-    public ObservableList<Task> loadTasks(int userId, int projectId) {
-        return dalFacade.loadTasks(userId, projectId);
-    }
-    
-    public int addTask(int userId, int projectId, String taskName)
-    {
+    public int addTask(int userId, int projectId, String taskName) {
         return dalFacade.addTask(userId, projectId, taskName);
     }
-    
-    public void saveTimeForTask(Timer timer)
-    {
+
+    public void saveTimeForTask(Timer timer) {
         dalFacade.saveTimeForTask(timer);
+    }
+
+    public ObservableList<Task> loadTasks(int userId, int projectId) {
+        return dalFacade.loadTasks(userId, projectId);
     }
 
 }

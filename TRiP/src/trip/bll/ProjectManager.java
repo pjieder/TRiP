@@ -8,7 +8,7 @@ package trip.bll;
 import java.util.List;
 import javafx.collections.ObservableList;
 import trip.be.Project;
-import trip.dal.dbmanagers.dbdao.IProjectDBDAO;
+import trip.dal.dbmanagers.dbdao.Interfaces.IProjectDBDAO;
 import trip.dal.dbmanagers.facades.IDalFacade;
 import trip.dal.dbmanagers.facades.DalFacade;
 

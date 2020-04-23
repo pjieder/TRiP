@@ -5,7 +5,6 @@
  */
 package trip.gui.controllers;
 
-import com.jfoenix.controls.JFXListView;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,8 +18,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import trip.be.Admin;
-import trip.be.Employee;
 import trip.be.Project;
 import trip.gui.AppModel;
 import trip.gui.models.ProjectModel;

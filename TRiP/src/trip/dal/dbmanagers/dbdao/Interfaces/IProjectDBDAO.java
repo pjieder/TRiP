@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package trip.dal.dbmanagers.dbdao;
+package trip.dal.dbmanagers.dbdao.Interfaces;
 
 import java.util.List;
 import javafx.collections.ObservableList;
