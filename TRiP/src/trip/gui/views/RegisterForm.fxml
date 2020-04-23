@@ -83,5 +83,13 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
+      <JFXButton fx:id="registerButton11" disable="true" layoutX="240.0" layoutY="557.0" onAction="#registerEmployee" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Delete" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
    </children>
 </AnchorPane>

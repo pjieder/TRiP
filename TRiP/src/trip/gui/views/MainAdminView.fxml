@@ -116,7 +116,7 @@
             <Image url="@../images/rocket.png" />
          </image>
       </ImageView>
-      <Label layoutX="1066.0" layoutY="662.0" text="Inactive projects">
+      <Label layoutX="1066.0" layoutY="673.0" text="Inactive projects">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -124,7 +124,7 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <ImageView fitHeight="19.0" fitWidth="14.0" layoutX="1185.0" layoutY="665.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="19.0" fitWidth="14.0" layoutX="1185.0" layoutY="676.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/next%20(5).png" />
          </image>
