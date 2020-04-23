@@ -17,11 +17,16 @@ public class Project {
     private int id;
     private String name;
     private double rate;
-    private ObservableList<Task> tasks = FXCollections.observableArrayList();
+    private boolean isActive;
 
     public Project(String name, double rate) {
         this.name = name;
         this.rate = rate;
+    }
+    
+    public Project()
+    {
+        
     }
 
     public int getId() {
@@ -48,12 +53,14 @@ public class Project {
         this.rate = rate;
     }
 
-    public ObservableList<Task> getTasks() {
-        return tasks;
+    public boolean getIsActive()
+    {
+        return isActive;
     }
 
-    public void setTasks(ObservableList<Task> tasks) {
-        this.tasks = tasks;
+    public void setIsActive(boolean isActive)
+    {
+        this.isActive = isActive;
     }
 
     @Override

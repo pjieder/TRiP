@@ -36,14 +36,14 @@ public class DalFacade implements IDalFacade {
                 userManager.loadProjects(employeeId, user.getProjects());
                 return userManager.getUserById(employeeId);
 
-            } else if (role == Roles.ADMIN) {
-                Admin admin = teacherManager.getTeacherById(userId);
-
-                for (Classroom c : teacher.getClassrooms()) {
-                    c.setStudents(studentManager.getStudentsInClass(c));
-                }
-
-                return teacher;
+//            } else if (role == Roles.ADMIN) {
+//                Admin admin = teacherManager.getTeacherById(userId);
+//
+//                for (Classroom c : teacher.getClassrooms()) {
+//                    c.setStudents(studentManager.getStudentsInClass(c));
+//                }
+//
+//                return teacher;
             }
 
         }
