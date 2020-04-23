@@ -18,32 +18,32 @@ import trip.bll.ProjectManager;
  */
 public class ProjectModel
 {
-    private static ProjectModel instance;
+//    private static ProjectModel instance;
     private final ProjectManager projectManager;
-    private final ObservableList<Project> allProjects;
-    private final ObservableList<Project> selectedProject;
+//    private final ObservableList<Project> allProjects;
+//    private final ObservableList<Project> selectedProject;
     
     public ProjectModel()
     {
         this.projectManager = new ProjectManager();
-        allProjects = FXCollections.observableArrayList();
-        allProjects.addAll(projectManager.getAllProjects());
-        selectedProject = FXCollections.observableArrayList();
+//        allProjects = FXCollections.observableArrayList();
+//        allProjects.addAll(projectManager.getAllProjects());
+//        selectedProject = FXCollections.observableArrayList();
     }
     
-    public static ProjectModel getInstance()
-    {
-        if (instance == null)
-        {
-            instance = new ProjectModel();
-        }
-        return instance;
-    }
+//    public static ProjectModel getInstance()
+//    {
+//        if (instance == null)
+//        {
+//            instance = new ProjectModel();
+//        }
+//        return instance;
+//    }
     
-    public List<Project> getAllProjects()
-    {
-        return getAllProjects();
-    }
+//    public List<Project> getAllProjects()
+//    {
+//        return getAllProjects();
+//    }
     
     
     public ObservableList<Project> loadAllActiveProjects(int employeeId) {
@@ -62,24 +62,24 @@ public class ProjectModel
     public void updateProject(Project project)
     {
         projectManager.updateProject(project);
-        allProjects.add(project);
-        allProjects.clear();
-        allProjects.addAll(projectManager.getAllProjects());
+//        allProjects.add(project);
+//        allProjects.clear();
+//        allProjects.addAll(projectManager.getAllProjects());
     }
     
     public void deleteProject(Project project)
     {
         projectManager.deleteProject(project);
-        allProjects.remove(project);
+//        allProjects.remove(project);
     }
     
-    public ObservableList<Project> getSelectedProject()
-    {
-        return selectedProject;
-    }
+//    public ObservableList<Project> getSelectedProject()
+//    {
+//        return selectedProject;
+//    }
     
     public void addSelectedMovie(Project project)
     {
-        selectedProject.add(project);
+//        selectedProject.add(project);
     }
 }

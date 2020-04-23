@@ -38,10 +38,6 @@ public class EmployeeManager {
         return dalFacade.loadEmployees();
     }
 
-    public ObservableList<Task> loadTasks(int userId, int projectId) {
-        return dalFacade.loadTasks(userId, projectId);
-    }
-
     public void createUser(Employee employee, String password) {
         dalFacade.createUser(employee, password);
     }

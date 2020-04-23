@@ -10,7 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import trip.gui.AppModel;
-import trip.gui.controllers.MainUserViewController;
 
 /**
  *
@@ -31,6 +30,7 @@ public class StageOpener {
         }
         catch (IOException exception)
         {
+            exception.printStackTrace();
         }
     }
 
@@ -46,6 +46,7 @@ public class StageOpener {
         }
         catch (IOException exception)
         {
+            exception.printStackTrace();
         }
     }
     

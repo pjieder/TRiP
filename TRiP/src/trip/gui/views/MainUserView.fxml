@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -67,25 +68,30 @@
           <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField prefHeight="44.0" prefWidth="405.0" promptText="What are you working on?">
+            <TextField fx:id="newTaskTitle" prefHeight="44.0" prefWidth="405.0" promptText="What are you working on?">
                <font>
                   <Font size="15.0" />
                </font></TextField>
             <ComboBox fx:id="projectComboBox" onAction="#switchProject" prefHeight="44.0" prefWidth="259.0" promptText="Project" style="-fx-background-color: #f1f1f1;" stylesheets="@../styles/MainUserViewCSS.css" GridPane.columnIndex="2" />
             <Line endX="-100.0" endY="26.0" opacity="0.35" startX="-100.0" startY="-9.0" GridPane.columnIndex="3" />
-            <TextField prefHeight="42.0" prefWidth="117.0" stylesheets="@../styles/MainUserViewCSS.css" text="00:00:00" GridPane.columnIndex="4">
+            <JFXButton fx:id="startTimer" disable="true" onAction="#startTimer" prefHeight="44.0" prefWidth="73.0" stylesheets="@../styles/MainUserViewCSS.css" text="Start" textFill="WHITE" GridPane.columnIndex="5">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXButton>
+            <Label fx:id="timerLabel" stylesheets="@../styles/MainUserViewCSS.css" text="00:00:00" GridPane.columnIndex="4">
                <font>
                   <Font size="20.0" />
                </font>
-            </TextField>
-            <JFXButton prefHeight="44.0" prefWidth="73.0" stylesheets="@../styles/MainUserViewCSS.css" text="Start" textFill="WHITE" GridPane.columnIndex="5">
+            </Label>
+            <JFXButton fx:id="stopTimer" onAction="#stopTimer" prefHeight="44.0" prefWidth="73.0" stylesheets="@../styles/MainUserViewCSS.css" text="Stop" textFill="WHITE" visible="false" GridPane.columnIndex="5">
                <font>
                   <Font size="15.0" />
                </font>
             </JFXButton>
          </children>
       </GridPane>
-      <GridPane layoutX="229.0" layoutY="84.0" prefHeight="44.0" prefWidth="902.0">
+      <GridPane fx:id="addTiimerPane" layoutX="229.0" layoutY="84.0" prefHeight="44.0" prefWidth="902.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="426.0" minWidth="10.0" prefWidth="222.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="426.0" minWidth="0.0" prefWidth="18.0" />
@@ -157,5 +163,20 @@
             <TableColumn fx:id="endColumn" prefWidth="129.0" sortable="false" text="End time" />
          </columns>
       </TableView>
+      <ImageView fitHeight="17.0" fitWidth="17.0" layoutX="203.0" layoutY="165.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/clock.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="17.0" fitWidth="17.0" layoutX="203.0" layoutY="98.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/clock.png" />
+         </image>
+      </ImageView>
+      <JFXButton fx:id="cancelTimer" layoutX="1060.0" layoutY="205.0" onAction="#cancelTime" prefHeight="17.0" prefWidth="49.0" stylesheets="@../styles/MainUserViewCSS.css" text="Cancel" textFill="WHITE" visible="false">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>

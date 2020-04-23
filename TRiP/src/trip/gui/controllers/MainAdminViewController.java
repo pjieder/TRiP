@@ -35,7 +35,7 @@ import trip.utilities.TimeConverter;
 public class MainAdminViewController implements Initializable {
 
     private AppModel appModel = new AppModel();
-    private ProjectModel projectModel = ProjectModel.getInstance();
+    private ProjectModel projectModel = new ProjectModel();
     
     @FXML
     private TableView<Project> projectTable;

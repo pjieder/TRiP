@@ -19,11 +19,9 @@ import trip.bll.ProjectManager;
 public class AppModel {
 
     private final EmployeeManager employeeManager;
-    private final ProjectManager projectManager;
 
     public AppModel() {
         employeeManager = new EmployeeManager();
-        projectManager = new ProjectManager();
     }
 
     /**
@@ -39,10 +37,6 @@ public class AppModel {
 
     public ObservableList<Employee> loadUsers() {
         return employeeManager.loadEmployees();
-    }
-
-    public ObservableList<Task> loadTasks(int userId, int projectId) {
-        return employeeManager.loadTasks(userId, projectId);
     }
     
     public void createUser(Employee employee, String password)

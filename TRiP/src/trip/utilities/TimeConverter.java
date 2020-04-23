@@ -28,14 +28,14 @@ public class TimeConverter {
     }
 
     public static String convertDateToString(Date date) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:MM");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         return simpleDateFormat.format(date);
     }
 
     public static Date convertStringToDate(String dateString){
         try 
         {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:MM");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
             return simpleDateFormat.parse(dateString);
         } 
         catch (ParseException exception) 
