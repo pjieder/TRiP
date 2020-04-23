@@ -17,7 +17,7 @@ import trip.dal.dbmanagers.facades.IDalFacade;
  */
 public class TaskManager {
 
-    private DalFacade dalFacade;
+    private IDalFacade dalFacade;
 
     public TaskManager() {
         dalFacade = new DalFacade();
