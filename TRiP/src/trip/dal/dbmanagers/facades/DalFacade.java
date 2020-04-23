@@ -13,10 +13,10 @@ import trip.be.Roles;
 import trip.be.Task;
 import trip.be.User;
 import trip.dal.dbmanagers.dbdao.AdminDBDAO;
-import trip.dal.dbmanagers.dbdao.IPersonDBDAO;
 import trip.dal.dbmanagers.dbdao.EmployeeDBDAO;
 import trip.dal.dbmanagers.dbdao.ProjectDBDAO;
 import trip.dal.dbmanagers.dbdao.UserDBDAO;
+import trip.dal.dbmanagers.dbdao.IEmployeeDBDAO;
 
 /**
  *

@@ -17,6 +17,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import trip.be.Admin;
+import trip.be.Employee;
+import trip.be.User;
 
 /**
  * FXML Controller class
@@ -61,6 +64,35 @@ public class RegisterFormController implements Initializable {
 
     }
 
+    @FXML
+    private void registerEmployee(ActionEvent event) 
+    {
+        Employee newEmployee;
+        
+        try 
+        {
+            String fName = firstNameField.getText().trim();
+            String lName = lastNameField.getText().trim();
+            String email = emailField.getText().trim();
+            String password = passwordField.getText().trim();
+            
+            if (adminCheckbox.isSelected())
+            {
+                newEmployee = new Admin(fName, lName, email);
+                
+            } else 
+            {
+                newEmployee = new User(fName, lName, email);
+            }
+          
+        } catch (Exception ex)
+                {
+                    //TODO errormessage
+                }
+        
+    }
+    
+    
     @FXML
     private void doAdmin(ActionEvent event) {
 

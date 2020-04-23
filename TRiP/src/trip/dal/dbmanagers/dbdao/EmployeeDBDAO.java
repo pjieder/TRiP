@@ -7,6 +7,7 @@ package trip.dal.dbmanagers.dbdao;
 
 import attendanceautomation.dal.dbaccess.DBSettings;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
+import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,8 +30,53 @@ import trip.utilities.TimeConverter;
  *
  * @author ander
  */
-public class EmployeeDBDAO implements IPersonDBDAO{
+public class EmployeeDBDAO implements IEmployeeDBDAO{
 
+    
+    //adds employee to Employees Table in SQL
+    public boolean createEmployee(Employee employee)
+    {
+        Connection con = null;
+        try
+        {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "INSERT INTO Employees (fName, lName, email, isAdmin) "
+                    + "VALUES (?,?,?,?);";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            
+            stmt.setString(1, employee.getfName());
+            stmt.setString(2, employee.getlName());
+            stmt.setString(3, employee.getEmail());
+            
+            if (employee.getRole() == Roles.ADMIN)
+            {
+                stmt.setBoolean(4, true);
+            } else
+            {
+                stmt.setBoolean(4, false);
+            }
+   
+            int updatedRows = stmt.executeUpdate();
+            
+           
+            
+            return updatedRows > 0;
+        }
+        catch (SQLServerException ex)
+        {
+            //TODO
+        }
+        catch (SQLException ex)
+        {
+            //TODO
+        }
+        finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+        return false;
+    }
+    
+    
     /**
      * Returns the ID of the user based on whether the login information given is valid or not.
      * @param userName The username of the account
