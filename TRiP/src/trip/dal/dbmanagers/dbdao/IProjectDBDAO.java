@@ -6,6 +6,7 @@
 package trip.dal.dbmanagers.dbdao;
 
 import java.util.List;
+import javafx.collections.ObservableList;
 import trip.be.Project;
 
 /**
@@ -21,4 +22,10 @@ public interface IProjectDBDAO
     public void updateProject(Project project);
     
     public void deleteProject(Project project);
+    
+    public ObservableList<Project> getAllActiveProjects();
+    
+    public ObservableList<Project> getEmployeeProjects(int employeeID);
+    
+    public int getProjectTime(int employeeID, int projectID);
 }
