@@ -2,8 +2,8 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -32,19 +32,19 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <JFXButton fx:id="registerButton" layoutX="75.0" layoutY="557.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Register" textFill="WHITE">
+      <JFXButton fx:id="registerButton" disable="true" layoutX="75.0" layoutY="557.0" onAction="#registerEmployee" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Register" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
       </JFXButton>
-      <JFXCheckBox fx:id="adminCheckbox" checkedColor="#9a80fe" layoutX="75.0" layoutY="431.0" onAction="#doAdmin" text="Admin" />
-      <JFXCheckBox fx:id="userCheckbox" checkedColor="#9a80fe" layoutX="156.0" layoutY="431.0" onAction="#doUser" text="User" />
-      <Label layoutX="75.0" layoutY="408.0" text="Role" />
-      <ComboBox fx:id="chooseProject" layoutX="75.0" layoutY="502.0" prefHeight="25.0" prefWidth="296.0" promptText="Choose Project" style="-fx-background-color: #f1f1f1;" />
-      <Label layoutX="75.0" layoutY="477.0" text="Projects" />
+      <JFXCheckBox fx:id="adminCheckbox" checkedColor="#9a80fe" layoutX="75.0" layoutY="510.0" onAction="#doAdmin" text="Admin" />
+      <JFXCheckBox fx:id="userCheckbox" checkedColor="#9a80fe" layoutX="158.0" layoutY="510.0" onAction="#doUser" selected="true" text="User" />
+      <Label layoutX="75.0" layoutY="477.0" text="Role" />
       <JFXTextField fx:id="firstNameField" focusColor="#9a80fe" layoutX="75.0" layoutY="136.0" prefHeight="25.0" prefWidth="296.0" promptText="First Name" stylesheets="@../styles/RegisterFormCSS.css" />
       <JFXTextField fx:id="lastNameField" focusColor="#9a80fe" layoutX="75.0" layoutY="208.0" prefHeight="25.0" prefWidth="296.0" promptText="Last Name" />
       <JFXTextField fx:id="emailField" focusColor="#9a80fe" layoutX="75.0" layoutY="278.0" prefHeight="25.0" prefWidth="296.0" promptText="Email" />
-      <JFXTextField fx:id="passwordField" focusColor="#9a80fe" layoutX="75.0" layoutY="346.0" prefHeight="25.0" prefWidth="296.0" promptText="Password" />
+      <JFXPasswordField fx:id="passwordField" layoutX="75.0" layoutY="346.0" prefHeight="25.0" prefWidth="296.0" promptText="Password" />
+      <JFXPasswordField fx:id="passwordFieldTwo" layoutX="75.0" layoutY="413.0" prefHeight="25.0" prefWidth="296.0" promptText="Re-enter Password" />
+      <Label fx:id="passwordError" layoutX="75.0" layoutY="446.0" text="Password is not identical. Try again." textFill="#d00000" visible="false" />
    </children>
 </AnchorPane>

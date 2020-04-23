@@ -52,4 +52,9 @@ public class AppModel {
     public ObservableList<Task> loadTasks(int userId, int projectId) {
         return employeeManager.loadTasks(userId, projectId);
     }
+    
+    public void createUser(Employee employee, String password)
+    {
+        employeeManager.createUser(employee, password);
+    }
 }

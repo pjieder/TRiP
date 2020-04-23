@@ -78,13 +78,24 @@ public abstract class Employee {
 
     @Override
     public boolean equals(Object obj) {
-
-        Employee person = (Employee) obj;
-
-        if (person.getId() == this.getId()) {
+        if (this == obj)
+        {
             return true;
         }
-        return false;
+        if (obj == null)
+        {
+            return false;
+        }
+        if (getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final Employee other = (Employee) obj;
+        if (this.id != other.id)
+        {
+            return false;
+        }
+        return true;
     }
 
     @Override

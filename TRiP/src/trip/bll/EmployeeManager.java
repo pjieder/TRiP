@@ -37,10 +37,13 @@ public class EmployeeManager {
     public ObservableList<Employee> loadEmployees() {
         return dalFacade.loadEmployees();
     }
-    
-        public ObservableList<Task> loadTasks(int userId, int projectId)
-    {
+
+    public ObservableList<Task> loadTasks(int userId, int projectId) {
         return dalFacade.loadTasks(userId, projectId);
+    }
+
+    public void createUser(Employee employee, String password) {
+        dalFacade.createUser(employee, password);
     }
 
 }
