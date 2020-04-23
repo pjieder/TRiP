@@ -149,8 +149,9 @@ public class MainUserViewController implements Initializable {
 
     private int addTask() {
         String taskName = newTaskTitle.getText().trim();
+        int id = taskModel.addTask(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId(), taskName);
         taskList.setItems(taskModel.loadTasks(LoginController.loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
-        return taskModel.addTask(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId(), taskName);
+        return id;
     }
 
     @FXML
