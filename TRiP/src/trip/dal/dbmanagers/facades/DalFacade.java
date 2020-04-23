@@ -24,11 +24,11 @@ public class DalFacade implements IDalFacade {
     private EmployeeDBDAO employeeManager = new EmployeeDBDAO();
     private UserDBDAO userManager = new UserDBDAO();
     private AdminDBDAO adminManager = new AdminDBDAO();
-    private ProjectDBDAO projectManager;
+    private ProjectDBDAO projectManager = new ProjectDBDAO();
 
-    public DalFacade() throws Exception
+    public DalFacade()
     {
-        this.projectManager = new ProjectDBDAO();
+        
     }
 
     @Override

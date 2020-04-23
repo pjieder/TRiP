@@ -25,7 +25,7 @@ public class DBSettings {
     private static DBSettings instance;
     private SQLServerDataSource dataSource;
     private List<Connection> connections = new CopyOnWriteArrayList<>();
-    private Deque<Connection> releasedConnections = new ArrayDeque();
+    private Deque<Connection> releasedConnections = new ArrayDeque<>();
 
     /**
      * Sets the user credentials, ip, and port configuration

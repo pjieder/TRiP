@@ -21,7 +21,7 @@ public class ProjectManager
     private IProjectDBDAO projectDao;
     private IDalFacade dalFacade;
     
-    public ProjectManager() throws Exception {
+    public ProjectManager() {
         dalFacade = new DalFacade();
     }
     

@@ -6,6 +6,7 @@
 package trip.dal.dbmanagers.dbdao;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,11 +27,17 @@ import trip.dal.dbaccess.DBSettings;
  */
 public class ProjectDBDAO implements IProjectDBDAO
 {
-    private final DBSettings dbCon;
+    private DBSettings dbCon;
 
-    public ProjectDBDAO() throws Exception
+    public ProjectDBDAO()
     {
-        dbCon = new DBSettings();
+        try
+        {
+            dbCon = new DBSettings();
+        } catch (IOException ex)
+        {
+            Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     @Override
