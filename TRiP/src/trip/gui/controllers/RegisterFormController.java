@@ -7,6 +7,7 @@ package trip.gui.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RegexValidator;
 import java.net.URL;
@@ -17,9 +18,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import trip.be.Admin;
 import trip.be.Employee;
 import trip.be.User;
+import trip.gui.AppModel;
 
 /**
  * FXML Controller class
@@ -28,6 +31,9 @@ import trip.be.User;
  */
 public class RegisterFormController implements Initializable {
 
+    private AppModel appModel = new AppModel();
+    private Thread updateThread;
+    
     @FXML
     private JFXCheckBox adminCheckbox;
     @FXML
@@ -35,17 +41,17 @@ public class RegisterFormController implements Initializable {
     @FXML
     private JFXButton registerButton;
     @FXML
-    private JFXTextField field;
-    @FXML
-    private ComboBox<?> chooseProject;
-    @FXML
     private JFXTextField firstNameField;
     @FXML
     private JFXTextField lastNameField;
     @FXML
-    private JFXTextField passwordField;
-    @FXML
     private JFXTextField emailField;
+    @FXML
+    private Label passwordError;
+    @FXML
+    private JFXPasswordField passwordField;
+    @FXML
+    private JFXPasswordField passwordFieldTwo;
 
     /**
      * Initializes the controller class.
@@ -56,25 +62,79 @@ public class RegisterFormController implements Initializable {
         RegexValidator regex = new RegexValidator();
         regex.setRegexPattern("^.+@[^\\.].*\\.[a-z]{2,}$");
         regex.setMessage("Input is not a valid email");
-
+        
+        firstNameField.textProperty().addListener((Observable, oldValue, newValue)->{
+        validateInput();
+        });
+        
+        lastNameField.textProperty().addListener((Observable, oldValue, newValue)->{
+        validateInput();
+        });
+        
         emailField.getValidators().add(regex);
         emailField.textProperty().addListener((observable, oldValue, newValue)->{
-            registerButton.setDisable(!emailField.validate());
+            emailField.validate();
+            validateInput();
+        });
+        
+        passwordField.textProperty().addListener((Observable, oldValue, newValue)->{
+        validateIdenticalPassword();
+        validateInput();
+        });
+        
+        passwordFieldTwo.textProperty().addListener((Observable, oldValue, newValue)->{
+        validateIdenticalPassword();
+        validateInput();
         });
 
     }
 
+    private void validateInput()
+    {
+        String fName = firstNameField.getText();
+        String lName = lastNameField.getText();
+        String email = emailField.getText();
+        String password = passwordField.getText();
+        String password2 = passwordFieldTwo.getText();
+        if (fName.equals("") || lName.equals("") || email.equals("") || password.equals("") || password2.equals("") )
+        {
+            registerButton.setDisable(true);
+        }
+        else if(!emailField.validate() || !validateIdenticalPassword())
+        {
+            registerButton.setDisable(true);
+        }
+        else
+        {
+            registerButton.setDisable(false);
+        }
+    }
+    
+    private boolean validateIdenticalPassword()
+    {
+        if(!passwordField.getText().equals(passwordFieldTwo.getText()))
+        {
+            passwordError.setVisible(true);
+            return false;
+        }
+        else
+        {
+            passwordError.setVisible(false);
+            return true;
+        }
+    }
+    
     @FXML
     private void registerEmployee(ActionEvent event) 
     {
-        Employee newEmployee;
+            Employee newEmployee;
         
-        try 
-        {
+
             String fName = firstNameField.getText().trim();
             String lName = lastNameField.getText().trim();
             String email = emailField.getText().trim();
             String password = passwordField.getText().trim();
+            
             
             if (adminCheckbox.isSelected())
             {
@@ -84,12 +144,20 @@ public class RegisterFormController implements Initializable {
             {
                 newEmployee = new User(fName, lName, email);
             }
-          
-        } catch (Exception ex)
-                {
-                    //TODO errormessage
-                }
+           
+            
+            appModel.createUser(newEmployee, password);
+            updateThread.run();
+            Stage currentStage =(Stage) firstNameField.getScene().getWindow();
+            currentStage.close();
+            
+   
         
+    }
+    
+    public void setUpdateThread(Thread thread)
+    {
+        this.updateThread = thread;
     }
     
     

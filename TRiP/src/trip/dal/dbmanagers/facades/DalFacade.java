@@ -35,12 +35,15 @@ public class DalFacade implements IDalFacade {
         Employee employee = null;
         int employeeId = employeeManager.isLoginCorrect(username, password);
 
-        if (employeeId != -1) {
+        if (employeeId != -1)
+        {
             Roles role = employeeManager.getRoleById(employeeId);
 
-            if (role == Roles.USER) {
+            if (role == Roles.USER)
+            {
                 employee = userManager.getUserById(employeeId);
-            } else if (role == Roles.ADMIN) {
+            } else if (role == Roles.ADMIN)
+            {
                 employee = adminManager.getAdminById(employeeId);
             }
 
@@ -61,7 +64,8 @@ public class DalFacade implements IDalFacade {
 
         ObservableList<Task> tasks = employeeManager.loadTasks(userId, projectId);
 
-        for (Task task : tasks) {
+        for (Task task : tasks)
+        {
 
             task.setTasks(employeeManager.loadTimeForTask(task.getId()));
             task.setTotalTime(employeeManager.getTaskTime(task.getId()));
@@ -75,7 +79,8 @@ public class DalFacade implements IDalFacade {
     @Override
     public ObservableList<Project> loadAllProjects(int employeeId) {
         ObservableList<Project> allActiveProjects = projectManager.getAllActiveProjects();
-        for (Project project : allActiveProjects) {
+        for (Project project : allActiveProjects)
+        {
             project.setTotalTime(projectManager.getProjectTime(employeeId, project.getId()));
         }
         return allActiveProjects;
@@ -84,10 +89,16 @@ public class DalFacade implements IDalFacade {
     @Override
     public ObservableList<Project> loadUserProjects(int employeeId) {
         ObservableList<Project> allUserProjects = projectManager.getEmployeeProjects(employeeId);
-        for (Project project : allUserProjects) {
+        for (Project project : allUserProjects)
+        {
             project.setTotalTime(projectManager.getProjectTime(employeeId, project.getId()));
         }
         return allUserProjects;
+    }
+
+    @Override
+    public void createUser(Employee employee, String password) {
+        employeeManager.createEmployee(employee, password);
     }
 
 }

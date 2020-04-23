@@ -27,9 +27,11 @@ public interface IDalFacade {
 
     public ObservableList<Employee> loadEmployees();
 
+    public void createUser(Employee employee, String password);
+
     public ObservableList<Task> loadTasks(int userId, int projectId);
 
     public ObservableList<Project> loadAllProjects(int employeeId);
-    
-     public ObservableList<Project> loadUserProjects(int employeeId);
+
+    public ObservableList<Project> loadUserProjects(int employeeId);
 }

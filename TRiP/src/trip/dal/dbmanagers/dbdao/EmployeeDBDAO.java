@@ -7,18 +7,16 @@ package trip.dal.dbmanagers.dbdao;
 
 import attendanceautomation.dal.dbaccess.DBSettings;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
-import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.sql.Statement;
 import java.util.Date;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import trip.be.Admin;
 import trip.be.Employee;
-import trip.be.Project;
 import trip.be.Roles;
 import trip.be.Task;
 import trip.be.TaskTime;
@@ -34,7 +32,7 @@ public class EmployeeDBDAO implements IEmployeeDBDAO{
 
     
     //adds employee to Employees Table in SQL
-    public boolean createEmployee(Employee employee)
+    public boolean createEmployee(Employee employee, String password)
     {
         Connection con = null;
         try
@@ -42,12 +40,11 @@ public class EmployeeDBDAO implements IEmployeeDBDAO{
             con = DBSettings.getInstance().getConnection();
             String sql = "INSERT INTO Employees (fName, lName, email, isAdmin) "
                     + "VALUES (?,?,?,?);";
-            PreparedStatement stmt = con.prepareStatement(sql);
+            PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             
             stmt.setString(1, employee.getfName());
             stmt.setString(2, employee.getlName());
             stmt.setString(3, employee.getEmail());
-            
             if (employee.getRole() == Roles.ADMIN)
             {
                 stmt.setBoolean(4, true);
@@ -57,9 +54,14 @@ public class EmployeeDBDAO implements IEmployeeDBDAO{
             }
    
             int updatedRows = stmt.executeUpdate();
-            
-           
-            
+          
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+            if (generatedKeys.next())
+            {
+                createPassword(employee.getEmail(), password, generatedKeys.getInt(1));
+                
+            }
+
             return updatedRows > 0;
         }
         catch (SQLServerException ex)
@@ -76,6 +78,34 @@ public class EmployeeDBDAO implements IEmployeeDBDAO{
         return false;
     }
     
+    
+    public void createPassword(String userName, String password, int ID) {
+        
+        Connection con = null;
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "INSERT INTO Login (employeeID, username, hashedPassword, salt) "
+                    + "VALUES (?,?,?,?);";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            String salt = HashAlgorithm.generateSalt();
+            String hashedPassword = HashAlgorithm.generateHash(password, salt);
+            stmt.setInt(1, ID);
+            stmt.setString(2, userName);
+            stmt.setString(3, hashedPassword);
+            stmt.setString(4, salt);
+
+            ResultSet rs = stmt.executeQuery();
+         
+        } catch (SQLServerException ex) {
+
+        } catch (SQLException ex) {
+
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+        
+    }
     
     /**
      * Returns the ID of the user based on whether the login information given is valid or not.

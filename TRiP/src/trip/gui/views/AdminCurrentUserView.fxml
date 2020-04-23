@@ -91,7 +91,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton layoutX="964.0" layoutY="76.0" stylesheets="@../styles/MainAdminView.css" text="Register user" textFill="WHITE">
+      <JFXButton layoutX="964.0" layoutY="76.0" onAction="#openAddUser" stylesheets="@../styles/MainAdminView.css" text="Register user" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
@@ -104,7 +104,7 @@
             <Image url="@../images/team.png" />
          </image>
       </ImageView>
-      <JFXListView layoutX="208.0" layoutY="118.0" prefHeight="565.0" prefWidth="995.0" stylesheets="@../styles/AdminCurrentUserCSS.css" />
+      <JFXListView fx:id="userList" layoutX="208.0" layoutY="118.0" prefHeight="565.0" prefWidth="995.0" stylesheets="@../styles/AdminCurrentUserCSS.css" />
       <TextField layoutX="358.0" layoutY="76.0" prefHeight="31.0" prefWidth="283.0" promptText="Search" style="-fx-background-color: f1f1f1;">
          <font>
             <Font size="15.0" />
