@@ -4,22 +4,18 @@
 <?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="636.0" prefWidth="451.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.gui.controllers.RegisterFormController">
+<AnchorPane id="AnchorPane" prefHeight="636.0" prefWidth="451.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.gui.controllers.RegisterFormController">
    <children>
       <ImageView fitHeight="277.0" fitWidth="282.0" layoutX="-74.0" layoutY="-63.0" opacity="0.09" pickOnBounds="true" preserveRatio="true" rotate="122.5">
          <image>
             <Image url="@../images/plus%20(4).png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="41.0" fitWidth="49.0" layoutX="271.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/add%20(1).png" />
          </image>
       </ImageView>
       <ImageView fitHeight="240.0" fitWidth="149.0" layoutX="189.0" layoutY="411.0" opacity="0.12" pickOnBounds="true" preserveRatio="true" rotate="48.7">
@@ -27,24 +23,73 @@
             <Image url="@../images/plus%20(4).png" />
          </image>
       </ImageView>
-      <Label layoutX="74.0" layoutY="58.0" text="Registration Form" textFill="#4d4d4d">
+      <Label layoutX="74.0" layoutY="58.0" text="Add/Edit User" textFill="#4d4d4d">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <JFXButton fx:id="registerButton" disable="true" layoutX="75.0" layoutY="557.0" onAction="#registerEmployee" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Register" textFill="WHITE">
+      <JFXButton fx:id="registerButton" disable="true" layoutX="75.0" layoutY="557.0" onAction="#registerEmployee" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Add" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </JFXButton>
-      <JFXCheckBox fx:id="adminCheckbox" checkedColor="#9a80fe" layoutX="75.0" layoutY="510.0" onAction="#doAdmin" text="Admin" />
-      <JFXCheckBox fx:id="userCheckbox" checkedColor="#9a80fe" layoutX="158.0" layoutY="510.0" onAction="#doUser" selected="true" text="User" />
-      <Label layoutX="75.0" layoutY="477.0" text="Role" />
-      <JFXTextField fx:id="firstNameField" focusColor="#9a80fe" layoutX="75.0" layoutY="136.0" prefHeight="25.0" prefWidth="296.0" promptText="First Name" stylesheets="@../styles/RegisterFormCSS.css" />
-      <JFXTextField fx:id="lastNameField" focusColor="#9a80fe" layoutX="75.0" layoutY="208.0" prefHeight="25.0" prefWidth="296.0" promptText="Last Name" />
-      <JFXTextField fx:id="emailField" focusColor="#9a80fe" layoutX="75.0" layoutY="278.0" prefHeight="25.0" prefWidth="296.0" promptText="Email" />
-      <JFXPasswordField fx:id="passwordField" layoutX="75.0" layoutY="346.0" prefHeight="25.0" prefWidth="296.0" promptText="Password" />
-      <JFXPasswordField fx:id="passwordFieldTwo" layoutX="75.0" layoutY="413.0" prefHeight="25.0" prefWidth="296.0" promptText="Re-enter Password" />
+      <JFXCheckBox fx:id="adminCheckbox" checkedColor="#9a80fe" layoutX="75.0" layoutY="510.0" onAction="#doAdmin" text="Admin">
+         <font>
+            <Font size="15.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></JFXCheckBox>
+      <JFXCheckBox fx:id="userCheckbox" checkedColor="#9a80fe" layoutX="158.0" layoutY="510.0" onAction="#doUser" selected="true" text="User">
+         <font>
+            <Font size="15.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></JFXCheckBox>
+      <Label layoutX="75.0" layoutY="477.0" text="Role">
+         <font>
+            <Font size="15.0" />
+         </font></Label>
+      <JFXTextField fx:id="firstNameField" focusColor="#9a80fe" layoutX="75.0" layoutY="136.0" prefHeight="25.0" prefWidth="296.0" promptText="First Name" stylesheets="@../styles/RegisterFormCSS.css">
+         <font>
+            <Font size="15.0" />
+         </font></JFXTextField>
+      <JFXTextField fx:id="lastNameField" focusColor="#9a80fe" layoutX="75.0" layoutY="208.0" prefHeight="25.0" prefWidth="296.0" promptText="Last Name">
+         <font>
+            <Font size="15.0" />
+         </font></JFXTextField>
+      <JFXTextField fx:id="emailField" focusColor="#9a80fe" layoutX="75.0" layoutY="278.0" prefHeight="25.0" prefWidth="296.0" promptText="Email">
+         <font>
+            <Font size="15.0" />
+         </font></JFXTextField>
+      <JFXPasswordField fx:id="passwordField" layoutX="75.0" layoutY="346.0" prefHeight="25.0" prefWidth="296.0" promptText="Password">
+         <font>
+            <Font size="15.0" />
+         </font></JFXPasswordField>
+      <JFXPasswordField fx:id="passwordFieldTwo" layoutX="75.0" layoutY="413.0" prefHeight="25.0" prefWidth="296.0" promptText="Re-enter Password">
+         <font>
+            <Font size="15.0" />
+         </font></JFXPasswordField>
       <Label fx:id="passwordError" layoutX="75.0" layoutY="446.0" text="Password is not identical. Try again." textFill="#d00000" visible="false" />
+      <JFXButton fx:id="registerButton1" disable="true" layoutX="158.0" layoutY="557.0" onAction="#registerEmployee" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Edit" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton fx:id="registerButton11" disable="true" layoutX="240.0" layoutY="557.0" onAction="#registerEmployee" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Delete" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
    </children>
 </AnchorPane>

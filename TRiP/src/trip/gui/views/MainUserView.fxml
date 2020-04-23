@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXDatePicker?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -88,6 +89,9 @@
                <font>
                   <Font size="15.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
          </children>
       </GridPane>
@@ -122,6 +126,9 @@
                <font>
                   <Font size="15.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
             <TextField prefHeight="42.0" prefWidth="90.0" stylesheets="@../styles/MainUserViewCSS.css" text="00:00:00" GridPane.columnIndex="5">
                <font>
