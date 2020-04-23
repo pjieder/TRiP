@@ -1,0 +1,69 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 23. apr. 2020, 13.26.47
+    Author     : Peter
+*/
+
+.combo-box{
+    -fx-border-width:1;
+    -fx-background-color: #f3f3f3;
+    -fx-font-size: 15px;
+
+}
+
+
+.combo-box-popup .list-cell {    
+    -fx-background-color: white;    
+    -fx-text-fill: #333333;
+}
+
+.combo-box-popup .list-cell:filled:hover {
+    -fx-background-color: #EBBA16;
+    -fx-text-fill: #ffffff;
+}
+
+.combo-box-popup .list-cell:filled:selected {
+  -fx-background-color: #EBBA16;
+  -fx-background-insets: 0 ;
+  -fx-text-fill: #ffffff;
+}
+
+.chart {
+    -fx-padding: 10px;
+    -fx-background-color: #ffffff;
+    -fx-legend-visible: false;
+}
+
+.chart-content {
+    -fx-padding: 30px;    
+}
+
+.chart-title {
+    -fx-text-fill: black;
+}
+
+.axis-label {
+    -fx-text-fill: black;
+}
+
+.chart-plot-background {
+    -fx-background-color:transparent;
+}
+
+
+.chart-alternative-row-fill {
+    -fx-fill:transparent;
+    -fx-stroke: transparent;
+}
+
+.default-color0.chart-series-line {
+    -fx-stroke: #0000ff;
+}
+
+.default-color0.chart-line-symbol {
+    -fx-background-color: #0000ff, white;
+}
