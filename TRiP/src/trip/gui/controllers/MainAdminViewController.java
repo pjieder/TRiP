@@ -76,8 +76,7 @@ public class MainAdminViewController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(AppModel.class.getResource("views/MainUserView.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
-            Stage stage = new Stage();
-
+            Stage stage = (Stage) projectTable.getScene().getWindow();
             MainUserViewController controller = fxmlLoader.getController();
             controller.setAdmin(projectTable.getSelectionModel().getSelectedItem());
             stage.setScene(scene);

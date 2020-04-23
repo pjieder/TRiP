@@ -113,7 +113,6 @@ public class MainUserViewController implements Initializable {
     public void setAdmin(Project project) {
         projectComboBox.getSelectionModel().select(project);
         taskList.setItems(appModel.loadTasks(LoginController.loggedUser.getId(), project.getId()));
-        menuBar.setVisible(false);
     }
 
     @FXML
