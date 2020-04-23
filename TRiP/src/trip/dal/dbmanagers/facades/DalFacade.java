@@ -15,6 +15,7 @@ import trip.be.User;
 import trip.dal.dbmanagers.dbdao.AdminDBDAO;
 import trip.dal.dbmanagers.dbdao.IPersonDBDAO;
 import trip.dal.dbmanagers.dbdao.EmployeeDBDAO;
+import trip.dal.dbmanagers.dbdao.ProjectDBDAO;
 import trip.dal.dbmanagers.dbdao.UserDBDAO;
 
 /**
@@ -26,6 +27,7 @@ public class DalFacade implements IDalFacade {
     private EmployeeDBDAO employeeManager = new EmployeeDBDAO();
     private UserDBDAO userManager = new UserDBDAO();
     private AdminDBDAO adminManager = new AdminDBDAO();
+    private ProjectDBDAO projectManager = new ProjectDBDAO();
 
     @Override
     public Employee login(String username, String password) {
@@ -38,14 +40,8 @@ public class DalFacade implements IDalFacade {
 
             if (role == Roles.USER) {
                 employee = userManager.getUserById(employeeId);
-                employee.setProjects(userManager.getEmployeeProjects(employeeId));
             } else if (role == Roles.ADMIN) {
                 employee = adminManager.getAdminById(employeeId);
-                employee.setProjects(employeeManager.getAllActiveProjects());
-            }
-
-            for (Project project : employee.getProjects()) {
-                project.setTotalTime(employeeManager.getProjectTime(employeeId, project.getId()));
             }
 
             return employee;
@@ -57,9 +53,9 @@ public class DalFacade implements IDalFacade {
 
     @Override
     public ObservableList<Employee> loadEmployees() {
-      return employeeManager.loadEmployees();
+        return employeeManager.loadEmployees();
     }
-    
+
     @Override
     public ObservableList<Task> loadTasks(int userId, int projectId) {
 
@@ -75,5 +71,23 @@ public class DalFacade implements IDalFacade {
         return tasks;
 
     }
-    
+
+    @Override
+    public ObservableList<Project> loadAllProjects(int employeeId) {
+        ObservableList<Project> allActiveProjects = projectManager.getAllActiveProjects();
+        for (Project project : allActiveProjects) {
+            project.setTotalTime(projectManager.getProjectTime(employeeId, project.getId()));
+        }
+        return allActiveProjects;
+    }
+
+    @Override
+    public ObservableList<Project> loadUserProjects(int employeeId) {
+        ObservableList<Project> allUserProjects = projectManager.getEmployeeProjects(employeeId);
+        for (Project project : allUserProjects) {
+            project.setTotalTime(projectManager.getProjectTime(employeeId, project.getId()));
+        }
+        return allUserProjects;
+    }
+
 }

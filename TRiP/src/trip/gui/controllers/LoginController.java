@@ -17,17 +17,14 @@ import java.util.concurrent.ExecutionException;
 import java.util.prefs.Preferences;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import trip.be.Admin;
 import trip.be.Employee;
 import trip.be.Roles;
 import trip.gui.AppModel;
-import trip.gui.controllers.MainAdminViewController;
+import trip.utilities.StageOpener;
 
 /**
  * FXML Controller class
@@ -36,9 +33,9 @@ import trip.gui.controllers.MainAdminViewController;
  */
 public class LoginController implements Initializable {
 
-    AppModel appModel = new AppModel();
-
-    Preferences preferences;
+    private AppModel appModel = new AppModel();
+    private Preferences preferences;
+    public static Employee loggedUser;
 
     @FXML
     private JFXPasswordField passwordField;
@@ -58,7 +55,7 @@ public class LoginController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         preferences = Preferences.userRoot().node("TRiP");
         if (preferences != null) {
             usernameField.setText(preferences.get("username", null));
@@ -68,20 +65,19 @@ public class LoginController implements Initializable {
     }
 
     /**
-     * Event handler for the login button.
-     * Starts the thread returned by the loadPerson method.
+     * Event handler for the login button. Starts the thread returned by the loadPerson method.
+     *
      * @param event
      * @throws IOException
      * @throws InterruptedException
-     * @throws ExecutionException 
+     * @throws ExecutionException
      */
     @FXML
     private void login(MouseEvent event) throws IOException, InterruptedException, ExecutionException {
         loadPerson().start();
         rememberMe.requestFocus();
-
     }
-    
+
     /**
      * Displays loading and disables the login button
      */
@@ -90,7 +86,7 @@ public class LoginController implements Initializable {
         progressBar.setVisible(true);
         errorMsg.setVisible(false);
     }
-    
+
     /**
      * Hides loading and enables the login button
      */
@@ -99,7 +95,7 @@ public class LoginController implements Initializable {
         errorMsg.setVisible(true);
         loginButton.setDisable(false);
     }
-    
+
     /**
      * Saves the login username and password entered in preferences
      */
@@ -108,7 +104,7 @@ public class LoginController implements Initializable {
         preferences.put("password", passwordField.getText());
         preferences.putBoolean("rememberActivated", true);
     }
-    
+
     /**
      * Saves an empty string as the username and password in preferences
      */
@@ -117,7 +113,6 @@ public class LoginController implements Initializable {
         preferences.put("password", "");
         preferences.putBoolean("rememberActivated", false);
     }
-    
 
     public Thread loadPerson() throws InterruptedException, ExecutionException, IOException {
 
@@ -131,7 +126,6 @@ public class LoginController implements Initializable {
 
             if (employeeToValidate == null) {
                 hideLoading();
-
             } else {
 
                 if (rememberMe.isSelected()) {
@@ -139,41 +133,20 @@ public class LoginController implements Initializable {
                 } else {
                     forgetLogin();
                 }
-
+                loggedUser = employeeToValidate;
                 Platform.runLater(() -> {
 
-                    FXMLLoader fxmlLoader = new FXMLLoader();
-                    Scene scene = null;
-
-                    if (employeeToValidate.getRole().equals(Roles.USER)) {
-                        fxmlLoader.setLocation(AppModel.class.getResource("views/MainUserView.fxml"));
-                        try {
-                            scene = new Scene(fxmlLoader.load());
-                        } catch (IOException ex) {
-                            System.out.println("error");
-                        }
-                        MainUserViewController controller = fxmlLoader.getController();
-                        controller.setUser(employeeToValidate);
-                    } else if (employeeToValidate.getRole().equals(Roles.ADMIN)) {
-                        fxmlLoader.setLocation(AppModel.class.getResource("views/MainAdminView.fxml"));
-                        try {
-                            scene = new Scene(fxmlLoader.load());
-                        } catch (IOException ex) {
-                            System.out.println("error");
-                        }
-                        MainAdminViewController controller = fxmlLoader.getController();
-                        controller.setAdmin((Admin) employeeToValidate);
-
+                    if (employeeToValidate.getRole().equals(Roles.USER)) 
+                    {
+                        StageOpener.changeStage("views/MainUserView.fxml", (Stage) (rememberMe.getScene().getWindow()));
+                    } 
+                    else if (employeeToValidate.getRole().equals(Roles.ADMIN)) 
+                    {
+                        StageOpener.changeStage("views/MainAdminView.fxml", (Stage) (rememberMe.getScene().getWindow()));
                     }
-                    Stage appStage = (Stage) (rememberMe.getScene().getWindow());
-                    appStage.setScene(scene);
-                    appStage.show();
                 });
-
             }
-
         });
-
         return loginThread;
     }
 

@@ -16,16 +16,22 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import trip.be.Employee;
 import trip.be.Project;
+import trip.be.Roles;
 import trip.be.Task;
 import trip.be.TaskTime;
 import trip.gui.AppModel;
+import trip.utilities.StageOpener;
 import trip.utilities.TimeConverter;
 
 /**
@@ -36,7 +42,6 @@ import trip.utilities.TimeConverter;
 public class MainUserViewController implements Initializable {
 
     private AppModel appModel = new AppModel();
-    private Employee loggedEmployee;
 
     @FXML
     private ComboBox<Project> projectComboBox;
@@ -54,6 +59,8 @@ public class MainUserViewController implements Initializable {
     private TableColumn<TaskTime, String> startColumn;
     @FXML
     private TableColumn<TaskTime, String> endColumn;
+    @FXML
+    private VBox menuBar;
 
     /**
      * Initializes the controller class.
@@ -85,25 +92,28 @@ public class MainUserViewController implements Initializable {
             TaskTime taskTime = data.getValue();
             return new SimpleStringProperty(TimeConverter.convertDateToString(taskTime.getStopTime()));
         });
-
+        
+        loadProjects();
     }
 
-    public void setAdmin(Employee employee, Project project) {
-        this.loggedEmployee = employee;
-        projectComboBox.setItems(loggedEmployee.getProjects());
+    public void loadProjects() {
+        
+        Employee loggedUser = LoginController.loggedUser;
+        
+        if (loggedUser.getRole() == Roles.ADMIN)
+        {
+            projectComboBox.setItems(appModel.loadAllProjects(loggedUser.getId()));
+        }
+        else
+        {
+            projectComboBox.setItems(appModel.loadAllUserProjects(loggedUser.getId()));
+        }
+    }
+
+    public void setAdmin(Project project) {
         projectComboBox.getSelectionModel().select(project);
-
-        project.setTasks(loadTasks(loggedEmployee.getId(), project.getId()));
-        taskList.setItems(project.getTasks());
-    }
-
-    public void setUser(Employee employee) {
-        this.loggedEmployee = employee;
-        projectComboBox.setItems(loggedEmployee.getProjects());
-    }
-
-    public ObservableList<Task> loadTasks(int userId, int projectId) {
-        return appModel.loadTasks(loggedEmployee.getId(), projectId);
+        taskList.setItems(appModel.loadTasks(LoginController.loggedUser.getId(), project.getId()));
+        menuBar.setVisible(false);
     }
 
     @FXML
@@ -116,21 +126,9 @@ public class MainUserViewController implements Initializable {
 
     @FXML
     private void switchProject(ActionEvent event) {
-        taskList.setItems(loadTasks(loggedEmployee.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
+        taskList.setItems(appModel.loadTasks(LoginController.loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     @FXML
     private void open_statistics_view(MouseEvent event) {
     }
@@ -141,6 +139,7 @@ public class MainUserViewController implements Initializable {
 
     @FXML
     private void log_out(MouseEvent event) {
+        StageOpener.changeStage("views/Login.fxml", (Stage) taskList.getScene().getWindow());
     }
 
 }

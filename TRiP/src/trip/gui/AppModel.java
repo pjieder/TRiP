@@ -7,8 +7,10 @@ package trip.gui;
 
 import javafx.collections.ObservableList;
 import trip.be.Employee;
+import trip.be.Project;
 import trip.be.Task;
 import trip.bll.EmployeeManager;
+import trip.bll.ProjectManager;
 
 /**
  *
@@ -17,9 +19,11 @@ import trip.bll.EmployeeManager;
 public class AppModel {
 
     private final EmployeeManager employeeManager;
+    private final ProjectManager projectManager;
 
     public AppModel() {
         employeeManager = new EmployeeManager();
+        projectManager = new ProjectManager();
     }
 
     /**
@@ -33,12 +37,19 @@ public class AppModel {
         return employeeManager.validateEmployee(username, password);
     }
 
+    public ObservableList<Project> loadAllProjects(int employeeId) {
+        return projectManager.loadAllProjects(employeeId);
+    }
+
+    public ObservableList<Project> loadAllUserProjects(int employeeId) {
+        return projectManager.loadUserProjects(employeeId);
+    }
+
     public ObservableList<Employee> loadUsers() {
         return employeeManager.loadEmployees();
     }
 
-    public ObservableList<Task> loadTasks(int userId, int projectId)
-    {
+    public ObservableList<Task> loadTasks(int userId, int projectId) {
         return employeeManager.loadTasks(userId, projectId);
     }
 }

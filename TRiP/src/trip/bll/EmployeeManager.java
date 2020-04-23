@@ -5,8 +5,6 @@
  */
 package trip.bll;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import javafx.collections.ObservableList;
 import trip.be.Employee;
 import trip.be.Task;

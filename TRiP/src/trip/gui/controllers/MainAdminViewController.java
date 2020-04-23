@@ -22,6 +22,7 @@ import trip.be.Admin;
 import trip.be.Employee;
 import trip.be.Project;
 import trip.gui.AppModel;
+import trip.utilities.StageOpener;
 import trip.utilities.TimeConverter;
 
 /**
@@ -31,8 +32,7 @@ import trip.utilities.TimeConverter;
  */
 public class MainAdminViewController implements Initializable {
 
-    AppModel appModel = new AppModel();
-    private Admin loggedAdmin;
+    private AppModel appModel = new AppModel();
 
     @FXML
     private TableView<Project> projectTable;
@@ -59,13 +59,14 @@ public class MainAdminViewController implements Initializable {
         });
 
         projectTable.setOnSort((event)->{projectTable.getSelectionModel().clearSelection();});
+        
+        loadAllProjects();
     }
-
-    public void setAdmin(Admin admin) {
-        loggedAdmin = admin;
-        projectTable.setItems(loggedAdmin.getProjects());
+    
+    public void loadAllProjects()
+    {
+       projectTable.setItems(appModel.loadAllProjects(LoginController.loggedUser.getId()));
     }
-
     
     @FXML
     private void openProject(MouseEvent event) throws IOException {
@@ -78,12 +79,17 @@ public class MainAdminViewController implements Initializable {
             Stage stage = new Stage();
 
             MainUserViewController controller = fxmlLoader.getController();
-            controller.setAdmin(loggedAdmin,projectTable.getSelectionModel().getSelectedItem());
+            controller.setAdmin(projectTable.getSelectionModel().getSelectedItem());
             stage.setScene(scene);
             stage.show();
 
         }
                 
+    }
+
+    @FXML
+    private void log_out(MouseEvent event) {
+        StageOpener.changeStage("views/Login.fxml", (Stage) projectTable.getScene().getWindow());
     }
     
 }

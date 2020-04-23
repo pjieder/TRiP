@@ -109,37 +109,6 @@ public class EmployeeDBDAO implements IPersonDBDAO{
         return null;
     }
     
-    public int getProjectTime(int employeeID, int projectID) {
-
-        Connection con = null;
-        int totalTime = 0;
-
-        try {
-            con = DBSettings.getInstance().getConnection();
-            String sql = "SELECT SUM(Tasks.time) AS TotalTime FROM Tasks JOIN Task on Tasks.taskID = Task.ID WHERE Task.projID = ? AND Task.employeeID = ?;";
-            PreparedStatement stmt = con.prepareStatement(sql);
-
-            stmt.setInt(1, projectID);
-            stmt.setInt(2, employeeID);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-
-                totalTime = rs.getInt("TotalTime");
-            }
-
-            return totalTime;
-
-        } catch (SQLServerException ex) {
-
-        } catch (SQLException ex) {
-
-        } finally {
-            DBSettings.getInstance().releaseConnection(con);
-        }
-        return totalTime;
-    }
-    
     public int getTaskTime(int taskID) {
 
         Connection con = null;
@@ -168,44 +137,6 @@ public class EmployeeDBDAO implements IPersonDBDAO{
             DBSettings.getInstance().releaseConnection(con);
         }
         return totalTime;
-    }
-    
-    /**
-     * Returns a list of all projects
-     * @return A list of all projects stored in the database
-     */
-    public ObservableList<Project> getAllActiveProjects() {
-        
-        Connection con = null;
-        ObservableList<Project> projects = FXCollections.observableArrayList();
-        try{
-            con = DBSettings.getInstance().getConnection();
-            String sql = "SELECT * FROM Project WHERE isActive = 1;";
-            PreparedStatement stmt = con.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                
-                int projectID = rs.getInt("ID");
-                String projectName = rs.getString("name");
-                double rate = rs.getDouble("rate");
-
-                Project project = new Project(projectName, rate);
-                project.setId(projectID);
-                projects.add(project);
-            }
-            
-            return projects;
-            
-        } catch (SQLServerException ex) {
-
-        } catch (SQLException ex) {
-
-        }
-        finally{
-        DBSettings.getInstance().releaseConnection(con);
-        }
-        return projects;
     }
     
      public ObservableList<Employee> loadEmployees() {

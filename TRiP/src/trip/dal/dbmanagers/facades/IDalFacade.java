@@ -7,6 +7,7 @@ package trip.dal.dbmanagers.facades;
 
 import javafx.collections.ObservableList;
 import trip.be.Employee;
+import trip.be.Project;
 import trip.be.Task;
 
 /**
@@ -27,4 +28,8 @@ public interface IDalFacade {
     public ObservableList<Employee> loadEmployees();
 
     public ObservableList<Task> loadTasks(int userId, int projectId);
+
+    public ObservableList<Project> loadAllProjects(int employeeId);
+    
+     public ObservableList<Project> loadUserProjects(int employeeId);
 }

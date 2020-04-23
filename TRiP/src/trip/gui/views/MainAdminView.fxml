@@ -75,7 +75,7 @@
                   <Font size="15.0" />
                </font>
             </JFXButton>
-            <JFXButton alignment="BOTTOM_LEFT" prefHeight="39.0" prefWidth="209.0" styleClass="main-bntns" stylesheets="@../styles/TabsView.css" text=" Log out">
+            <JFXButton alignment="BOTTOM_LEFT" onMouseClicked="#log_out" prefHeight="39.0" prefWidth="209.0" styleClass="main-bntns" stylesheets="@../styles/TabsView.css" text=" Log out">
                <graphic>
                   <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                      <image>
