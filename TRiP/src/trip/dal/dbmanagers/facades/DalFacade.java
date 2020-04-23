@@ -6,17 +6,14 @@
 package trip.dal.dbmanagers.facades;
 
 import javafx.collections.ObservableList;
-import trip.be.Admin;
 import trip.be.Employee;
 import trip.be.Project;
 import trip.be.Roles;
 import trip.be.Task;
-import trip.be.User;
 import trip.dal.dbmanagers.dbdao.AdminDBDAO;
 import trip.dal.dbmanagers.dbdao.EmployeeDBDAO;
 import trip.dal.dbmanagers.dbdao.ProjectDBDAO;
 import trip.dal.dbmanagers.dbdao.UserDBDAO;
-import trip.dal.dbmanagers.dbdao.IEmployeeDBDAO;
 
 /**
  *
@@ -28,6 +25,11 @@ public class DalFacade implements IDalFacade {
     private UserDBDAO userManager = new UserDBDAO();
     private AdminDBDAO adminManager = new AdminDBDAO();
     private ProjectDBDAO projectManager = new ProjectDBDAO();
+
+    public DalFacade()
+    {
+        
+    }
 
     @Override
     public Employee login(String username, String password) {

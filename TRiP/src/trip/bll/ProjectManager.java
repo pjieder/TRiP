@@ -5,21 +5,44 @@
  */
 package trip.bll;
 
+import java.util.List;
 import javafx.collections.ObservableList;
 import trip.be.Project;
-import trip.dal.dbmanagers.facades.DalFacade;
+import trip.dal.dbmanagers.dbdao.IProjectDBDAO;
 import trip.dal.dbmanagers.facades.IDalFacade;
+import trip.dal.dbmanagers.facades.DalFacade;
 
 /**
  *
- * @author ander
+ * @author Jacob
  */
-public class ProjectManager {
-
+public class ProjectManager
+{
+    private IProjectDBDAO projectDao;
     private IDalFacade dalFacade;
-
+    
     public ProjectManager() {
         dalFacade = new DalFacade();
+    }
+    
+    public List<Project> getAllProjects()
+    {
+        return projectDao.getAllProjects();
+    }
+    
+    public void createProject(Project project)
+    {
+        projectDao.createProject(project);
+    }
+    
+    public void updateProject(Project project)
+    {
+        projectDao.updateProject(project);
+    }
+    
+    public void deleteProject(Project project)
+    {
+        projectDao.deleteProject(project);
     }
 
     public ObservableList<Project> loadAllProjects(int employeeId) {
@@ -29,5 +52,4 @@ public class ProjectManager {
     public ObservableList<Project> loadUserProjects(int employeeId) {
         return dalFacade.loadUserProjects(employeeId);
     }
-
 }

@@ -5,7 +5,7 @@
  */
 package trip.dal.dbmanagers.dbdao;
 
-import attendanceautomation.dal.dbaccess.DBSettings;
+import trip.dal.dbaccess.DBSettings;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

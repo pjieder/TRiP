@@ -5,7 +5,7 @@
  */
 package trip.gui;
 
-import attendanceautomation.dal.dbaccess.DBSettings;
+import trip.dal.dbaccess.DBSettings;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

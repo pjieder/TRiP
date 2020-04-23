@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package attendanceautomation.dal.dbaccess;
+package trip.dal.dbaccess;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
@@ -25,14 +25,14 @@ public class DBSettings {
     private static DBSettings instance;
     private SQLServerDataSource dataSource;
     private List<Connection> connections = new CopyOnWriteArrayList<>();
-    private Deque<Connection> releasedConnections = new ArrayDeque();
+    private Deque<Connection> releasedConnections = new ArrayDeque<>();
 
     /**
      * Sets the user credentials, ip, and port configuration
      *
      * @throws IOException
      */
-    private DBSettings() throws IOException {
+    public DBSettings() throws IOException {
         Properties props = new Properties();
         props.load(new FileReader("DBSettings.txt"));
         dataSource = new SQLServerDataSource();
