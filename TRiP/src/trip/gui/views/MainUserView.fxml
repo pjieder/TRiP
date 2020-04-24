@@ -23,8 +23,22 @@
    <children>
       <TableView fx:id="taskList" layoutX="229.0" layoutY="243.0" onMouseClicked="#showTime" prefHeight="445.0" prefWidth="422.0" stylesheets="@../styles/MainUserViewCSS.css">
         <columns>
-          <TableColumn fx:id="nameColumn" prefWidth="302.0" text="Task" />
-          <TableColumn fx:id="timeColumn" prefWidth="119.0" text="Time" />
+          <TableColumn fx:id="nameColumn" prefWidth="302.0" text="Task">
+               <graphic>
+                  <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/calendar%20(3).png" />
+                     </image>
+                  </ImageView>
+               </graphic></TableColumn>
+          <TableColumn fx:id="timeColumn" prefWidth="119.0" text="Time">
+               <graphic>
+                  <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/calendar%20(3).png" />
+                     </image>
+                  </ImageView>
+               </graphic></TableColumn>
         </columns>
       </TableView>
       <VBox fx:id="menuBar" layoutY="2.0" prefHeight="735.0" prefWidth="139.0" style="-fx-background-color: #f9f9f9;">
@@ -165,9 +179,30 @@
       </ImageView>
       <TableView fx:id="taskTimerList" layoutX="724.0" layoutY="243.0" prefHeight="445.0" prefWidth="422.0" stylesheets="@../styles/MainUserViewCSS.css">
          <columns>
-            <TableColumn fx:id="durationColumn" prefWidth="121.0" text="Duration" />
-            <TableColumn fx:id="startColumn" prefWidth="171.0" sortable="false" text="Start time" />
-            <TableColumn fx:id="endColumn" prefWidth="129.0" sortable="false" text="End time" />
+            <TableColumn fx:id="durationColumn" prefWidth="121.0" text="Duration">
+               <graphic>
+                  <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/calendar%20(3).png" />
+                     </image>
+                  </ImageView>
+               </graphic></TableColumn>
+            <TableColumn fx:id="startColumn" prefWidth="171.0" sortable="false" text="Start time">
+               <graphic>
+                  <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/calendar%20(3).png" />
+                     </image>
+                  </ImageView>
+               </graphic></TableColumn>
+            <TableColumn fx:id="endColumn" prefWidth="129.0" sortable="false" text="End time">
+               <graphic>
+                  <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/calendar%20(3).png" />
+                     </image>
+                  </ImageView>
+               </graphic></TableColumn>
          </columns>
       </TableView>
       <ImageView fitHeight="17.0" fitWidth="17.0" layoutX="203.0" layoutY="165.0" pickOnBounds="true" preserveRatio="true">
