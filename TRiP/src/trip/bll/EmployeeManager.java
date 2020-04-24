@@ -37,8 +37,18 @@ public class EmployeeManager {
         dalFacade.createUser(employee, password);
     }
 
+    public void updateEmployee(Employee employee) {
+        dalFacade.updateEmployee(employee);
+    }
+    
+    public void updatePassword(String username, String password, int id) {
+        dalFacade.updatePassword(username, password, id);
+    }
+    
     public ObservableList<Employee> loadEmployees() {
         return dalFacade.loadEmployees();
     }
+    
+   
 
 }

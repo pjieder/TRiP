@@ -83,7 +83,7 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <JFXButton layoutX="1089.0" layoutY="76.0" prefHeight="31.0" prefWidth="114.0" stylesheets="@../styles/MainAdminView.css" text="Edit user" textFill="WHITE">
+      <JFXButton layoutX="1089.0" layoutY="76.0" onAction="#openUpdateUser" prefHeight="31.0" prefWidth="114.0" stylesheets="@../styles/MainAdminView.css" text="Update user" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>

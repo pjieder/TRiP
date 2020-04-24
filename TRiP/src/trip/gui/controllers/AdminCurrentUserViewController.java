@@ -96,4 +96,23 @@ public class AdminCurrentUserViewController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
+    @FXML
+    private void openUpdateUser(ActionEvent event) throws IOException{
+        
+        if (!userList.getSelectionModel().isEmpty())
+        {
+        
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(AppModel.class.getResource("views/RegisterForm.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+
+        RegisterFormController controller = fxmlLoader.getController();
+        controller.setEmployee(userList.getSelectionModel().getSelectedItem(), getUpdateListThread());
+
+        stage.setScene(scene);
+        stage.show();
+        }
+    }
 }

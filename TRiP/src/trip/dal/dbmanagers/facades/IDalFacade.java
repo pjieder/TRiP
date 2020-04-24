@@ -27,6 +27,10 @@ public interface IDalFacade {
     public Employee login(String username, String password);
 
     public void createUser(Employee employee, String password);
+    
+    public void updateEmployee(Employee employee);
+    
+    public void updatePassword(String username, String password, int id);
 
     public int addTask(int userId, int projectId, String taskName);
 

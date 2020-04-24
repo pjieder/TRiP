@@ -62,6 +62,7 @@ public class LoginController implements Initializable {
             passwordField.setText(preferences.get("password", null));
             rememberMe.setSelected(preferences.getBoolean("rememberActivated", false));
         }
+        
     }
 
     /**

@@ -71,6 +71,16 @@ public class DalFacade implements IDalFacade {
     }
 
     @Override
+    public void updateEmployee(Employee employee) {
+        employeeManager.updateEmployee(employee);
+    }
+    
+    @Override
+    public void updatePassword(String username, String password, int id) {
+        employeeManager.updatePassword(username, password, id);
+    }
+    
+    @Override
     public int addTask(int userId, int projectId, String taskName) {
         return taskManager.addTask(userId, projectId, taskName);
     }
