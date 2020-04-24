@@ -109,7 +109,7 @@
          <font>
             <Font size="15.0" />
          </font></TextField>
-      <ComboBox layoutX="658.0" layoutY="76.0" prefHeight="31.0" prefWidth="283.0" promptText="Projects" stylesheets="@../styles/AdminCurrentUserCSS.css" />
+      <ComboBox layoutX="658.0" layoutY="76.0" prefHeight="31.0" prefWidth="283.0" promptText="Projects" style="-fx-background-color: f1f1f1;" styleClass="combo-box" stylesheets="@../styles/AdminCurrentUserCSS.css" />
       <ImageView fitHeight="21.0" fitWidth="21.0" layoutX="610.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/magnifying-glass%20(6).png" />
