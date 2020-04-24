@@ -25,17 +25,17 @@
         <columns>
           <TableColumn fx:id="nameColumn" prefWidth="302.0" text="Task">
                <graphic>
-                  <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="16.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/calendar%20(3).png" />
+                        <Image url="@../images/list.png" />
                      </image>
                   </ImageView>
                </graphic></TableColumn>
           <TableColumn fx:id="timeColumn" prefWidth="119.0" text="Time">
                <graphic>
-                  <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="16.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/calendar%20(3).png" />
+                        <Image url="@../images/clock%20(3).png" />
                      </image>
                   </ImageView>
                </graphic></TableColumn>
@@ -181,40 +181,30 @@
          <columns>
             <TableColumn fx:id="durationColumn" prefWidth="121.0" text="Duration">
                <graphic>
-                  <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="16.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/calendar%20(3).png" />
+                        <Image url="@../images/clock%20(3).png" />
                      </image>
                   </ImageView>
                </graphic></TableColumn>
             <TableColumn fx:id="startColumn" prefWidth="171.0" sortable="false" text="Start time">
                <graphic>
-                  <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="16.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/calendar%20(3).png" />
+                        <Image url="@../images/start.png" />
                      </image>
                   </ImageView>
                </graphic></TableColumn>
             <TableColumn fx:id="endColumn" prefWidth="129.0" sortable="false" text="End time">
                <graphic>
-                  <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="16.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/calendar%20(3).png" />
+                        <Image url="@../images/stop%20(1).png" />
                      </image>
                   </ImageView>
                </graphic></TableColumn>
          </columns>
       </TableView>
-      <ImageView fitHeight="17.0" fitWidth="17.0" layoutX="203.0" layoutY="165.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/clock.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="17.0" fitWidth="17.0" layoutX="203.0" layoutY="98.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/clock.png" />
-         </image>
-      </ImageView>
       <JFXButton fx:id="cancelTimer" layoutX="1060.0" layoutY="205.0" onAction="#cancelTime" prefHeight="17.0" prefWidth="49.0" stylesheets="@../styles/MainUserViewCSS.css" text="Cancel" textFill="WHITE" visible="false">
          <font>
             <Font size="10.0" />
