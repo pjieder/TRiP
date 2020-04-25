@@ -19,7 +19,7 @@ public class TimeConverter {
     public static String convertSecondsToString(int seconds) {
         Duration duration = Duration.seconds(seconds);
         String timeString = String.format("%02d:%02d:%02d",
-                (int) duration.toHours() % 60,
+                (int) duration.toHours(),
                 (int) duration.toMinutes() % 60,
                 (int) duration.toSeconds() % 60);
         return timeString;
