@@ -180,18 +180,29 @@ public class MainUserViewController implements Initializable {
     }
 
     @FXML
-    private void showTime(MouseEvent event) {
+    private void showTime(MouseEvent event) throws IOException {
 
         if (!taskList.getSelectionModel().isEmpty()) {
             taskTimerList.setItems(taskList.getSelectionModel().getSelectedItem().getTimeTasks());
             decideTimerEnabled();
+        }
+
+        if (event.getClickCount() > 1 & !taskList.getSelectionModel().isEmpty() & !event.isConsumed()) {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(AppModel.class.getResource("views/UpdateTaskForm.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+            UpdateTaskForm controller = fxmlLoader.getController();
+            controller.setTask(updateView(), taskList.getSelectionModel().getSelectedItem());
+            stage.setScene(scene);
+            stage.show();
         }
     }
 
     private int addTask() {
         String taskName = newTaskTitle.getText().trim();
         int id = taskModel.addTask(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId(), taskName);
-        taskList.setItems(taskModel.loadTasks(LoginController.loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
+        updateView().start();
         return id;
     }
 
@@ -266,16 +277,25 @@ public class MainUserViewController implements Initializable {
 
             Platform.runLater(() -> {
                 if (!taskList.getSelectionModel().isEmpty()) {
-                    int location = taskList.getSelectionModel().getSelectedIndex();
+
+                    Task selectedTask = taskList.getSelectionModel().getSelectedItem();
                     taskList.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
                     taskList.refresh();
-                    taskList.getSelectionModel().select(location);
-                    taskTimerList.setItems(taskList.getSelectionModel().getSelectedItem().getTimeTasks());
+                    taskList.getSelectionModel().select(selectedTask);
+                    taskTimerList.getItems().clear();
+
+                    if (taskList.getSelectionModel().getSelectedItem() != null) {
+
+                        taskTimerList.setItems(taskList.getSelectionModel().getSelectedItem().getTimeTasks());
+                    }
                     taskTimerList.refresh();
                 } else {
                     taskList.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
                     taskList.refresh();
                 }
+                 Task selectedItem = tasks.getSelectionModel().getSelectedItem();
+                tasks.setItems(taskList.getItems());
+                tasks.getSelectionModel().select(selectedItem);
             });
         });
         return updateThread;
