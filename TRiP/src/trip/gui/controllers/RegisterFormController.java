@@ -184,7 +184,7 @@ public class RegisterFormController implements Initializable {
             }
         }
         
-        updateThread.run();
+        updateThread.start();
         Stage currentStage = (Stage) firstNameField.getScene().getWindow();
         currentStage.close();
     }

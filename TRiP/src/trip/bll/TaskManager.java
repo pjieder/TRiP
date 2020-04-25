@@ -8,7 +8,7 @@ package trip.bll;
 import java.util.Date;
 import javafx.collections.ObservableList;
 import trip.be.Task;
-import trip.be.Timer;
+import trip.be.TaskTime;
 import trip.dal.dbmanagers.facades.DalFacade;
 import trip.dal.dbmanagers.facades.IDalFacade;
 
@@ -28,8 +28,24 @@ public class TaskManager {
         return dalFacade.addTask(userId, projectId, taskName);
     }
 
+    public boolean updateTask(Task task) {
+        return dalFacade.updateTask(task);
+    }
+
+    public boolean deleteTask(int taskId) {
+        return dalFacade.deleteTask(taskId);
+    }
+
     public void saveTimeForTask(int taskId, int time, Date startTime, Date stopTime) {
         dalFacade.saveTimeForTask(taskId, time, startTime, stopTime);
+    }
+
+    public boolean UpdateTimeToTask(TaskTime taskTime) {
+        return dalFacade.UpdateTimeToTask(taskTime);
+    }
+
+    public boolean DeleteTimeToTask(TaskTime taskTime) {
+        return dalFacade.DeleteTimeToTask(taskTime);
     }
 
     public ObservableList<Task> loadTasks(int userId, int projectId) {

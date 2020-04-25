@@ -40,6 +40,8 @@ public class MainAdminViewController implements Initializable {
     private TableColumn<Project, String> projectColumn;
     @FXML
     private TableColumn<Project, String> timeColumn;
+    @FXML
+    private TableColumn<?, ?> timeColumn1;
 
     /**
      * Initializes the controller class.
@@ -81,11 +83,14 @@ public class MainAdminViewController implements Initializable {
             controller.setAdmin(projectTable.getSelectionModel().getSelectedItem());
             stage.setScene(scene);
             stage.show();
-
         }
-                
     }
 
+    @FXML
+    private void openProjectMenu(MouseEvent event) {
+        StageOpener.changeStage("views/MainUserView.fxml", (Stage) projectTable.getScene().getWindow());
+    }
+    
     @FXML
     private void log_out(MouseEvent event) {
         StageOpener.changeStage("views/Login.fxml", (Stage) projectTable.getScene().getWindow());

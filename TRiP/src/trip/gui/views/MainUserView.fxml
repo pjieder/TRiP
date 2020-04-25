@@ -148,8 +148,8 @@
             </TextField>
             <JFXDatePicker fx:id="dateStart" defaultColor="#9a80fe" onAction="#validateAddTask" prefHeight="30.0" prefWidth="126.0" promptText="Date" stylesheets="@../styles/MainUserViewCSS.css" GridPane.columnIndex="2" />
             <JFXDatePicker fx:id="dateEnd" defaultColor="#9a80fe" onAction="#validateAddTask" prefHeight="30.0" prefWidth="126.0" promptText="Date" stylesheets="@../styles/MainUserViewCSS.css" GridPane.columnIndex="3" />
-            <JFXTimePicker fx:id="timeEnd" onAction="#validateAddTask" GridPane.columnIndex="5" />
-            <JFXTimePicker fx:id="timeStart" onAction="#validateAddTask" GridPane.columnIndex="4" />
+            <JFXTimePicker fx:id="timeEnd" defaultColor="#9a80fe" onAction="#validateAddTask" GridPane.columnIndex="5" />
+            <JFXTimePicker fx:id="timeStart" defaultColor="#9a80fe" onAction="#validateAddTask" GridPane.columnIndex="4" />
             <Line endX="-100.0" endY="26.0" opacity="0.35" startX="-100.0" startY="-9.0" GridPane.columnIndex="6" />
             <JFXTextField fx:id="timerField" focusColor="#405aa800" text="00:00:00" unFocusColor="#4d4d4d00" GridPane.columnIndex="7">
                <font>
@@ -178,7 +178,7 @@
             <Image url="@../images/calendar%20(2).png" />
          </image>
       </ImageView>
-      <TableView fx:id="taskTimerList" layoutX="724.0" layoutY="243.0" prefHeight="445.0" prefWidth="422.0" stylesheets="@../styles/MainUserViewCSS.css">
+      <TableView fx:id="taskTimerList" layoutX="724.0" layoutY="243.0" onMouseClicked="#openTaskTime" prefHeight="445.0" prefWidth="422.0" stylesheets="@../styles/MainUserViewCSS.css">
          <columns>
             <TableColumn fx:id="durationColumn" prefWidth="121.0" text="Duration">
                <graphic>

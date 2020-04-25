@@ -19,7 +19,15 @@ public interface ITaskDBDAO {
    
     public int addTask(int userId, int projectId, String taskName);
     
+    public boolean updateTask(Task task); //
+    
+    public boolean deleteTask(int taskId); //
+    
     public void addTimeToTask(int taskId, int time, Date startTime, Date stopTime);
+    
+    public boolean UpdateTimeToTask(TaskTime taskTime); //
+    
+    public boolean DeleteTimeToTask(TaskTime taskTime); //
     
     public int getTaskTime(int taskID);
     

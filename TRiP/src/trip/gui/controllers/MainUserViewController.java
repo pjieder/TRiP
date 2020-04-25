@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
 import com.jfoenix.validation.RegexValidator;
+import java.io.IOException;
 import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -21,7 +22,9 @@ import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -37,6 +40,7 @@ import trip.be.Roles;
 import trip.be.Task;
 import trip.be.TaskTime;
 import trip.be.Timer;
+import trip.gui.AppModel;
 import trip.gui.models.ProjectModel;
 import trip.gui.models.TaskModel;
 import trip.utilities.StageOpener;
@@ -214,7 +218,7 @@ public class MainUserViewController implements Initializable {
         startTimer.setVisible(true);
         stopTimer.setVisible(false);
         cancelTimer.setVisible(false);
-        updateView();
+        updateView().start();
     }
 
     @FXML
@@ -253,21 +257,28 @@ public class MainUserViewController implements Initializable {
         dateEnd.setValue(null);
         timeStart.setValue(null);
         timeEnd.setValue(null);
-        updateView();
+        updateView().start();
     }
 
-    private void updateView() {
-        if (!taskList.getSelectionModel().isEmpty()) {
-            int location = taskList.getSelectionModel().getSelectedIndex();
-            taskList.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
-            taskList.refresh();
-            taskList.getSelectionModel().select(location);
-            taskTimerList.setItems(taskList.getSelectionModel().getSelectedItem().getTimeTasks());
-        } else {
-            taskList.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
-            taskList.refresh();
-        }
+    private Thread updateView() {
 
+        Thread updateThread = new Thread(() -> {
+
+            Platform.runLater(() -> {
+                if (!taskList.getSelectionModel().isEmpty()) {
+                    int location = taskList.getSelectionModel().getSelectedIndex();
+                    taskList.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
+                    taskList.refresh();
+                    taskList.getSelectionModel().select(location);
+                    taskTimerList.setItems(taskList.getSelectionModel().getSelectedItem().getTimeTasks());
+                    taskTimerList.refresh();
+                } else {
+                    taskList.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
+                    taskList.refresh();
+                }
+            });
+        });
+        return updateThread;
     }
 
     private void decideTimerEnabled() {
@@ -289,6 +300,33 @@ public class MainUserViewController implements Initializable {
         }
     }
 
+    public void setupCloseRequest() {
+
+        Stage appStage = (Stage) taskList.getScene().getWindow();
+
+        appStage.setOnCloseRequest((e) -> {
+            System.out.println("Closing thread");
+            if (timer.isEnabled()) {
+                timer.stopTimer();
+                System.out.println("Closed");
+            }
+        });
+    }
+
+    @FXML
+    private void openTaskTime(MouseEvent event) throws IOException {
+        if (event.getClickCount() > 1 & !taskTimerList.getSelectionModel().isEmpty() & !event.isConsumed()) {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(AppModel.class.getResource("views/UpdateTasktimeForm.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+            UpdateTasktimeForm controller = fxmlLoader.getController();
+            controller.setTaskTime(updateView(), taskTimerList.getSelectionModel().getSelectedItem());
+            stage.setScene(scene);
+            stage.show();
+        }
+    }
+
     @FXML
     private void validateAddTask(ActionEvent event) {
         decideAddTimeEnabled();
@@ -301,19 +339,6 @@ public class MainUserViewController implements Initializable {
     @FXML
     private void log_out(MouseEvent event) {
         StageOpener.changeStage("views/Login.fxml", (Stage) taskList.getScene().getWindow());
-    }
-
-    public void setupCloseRequest() {
-
-        Stage appStage = (Stage) taskList.getScene().getWindow();
-
-        appStage.setOnCloseRequest((e) -> {
-            System.out.println("Closing thread");
-            if (timer.isEnabled()) {
-                timer.stopTimer();
-                System.out.println("Closed");
-            }
-        });
     }
 
 }

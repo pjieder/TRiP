@@ -59,6 +59,59 @@ public class TaskDBDAO implements ITaskDBDAO {
     }
 
     @Override
+    public boolean updateTask(Task task) {
+        Connection con = null;
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "UPDATE Task SET Task.name = ? WHERE Task.ID = ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setString(1, task.getName());
+            stmt.setInt(2, task.getId());
+
+            ResultSet rs = stmt.executeQuery();
+            stmt.executeUpdate();
+
+            return true;
+
+        } catch (SQLServerException ex) {
+            //TODO
+        } catch (SQLException ex) {
+            //TODO
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean deleteTask(int taskId) {
+        Connection con = null;
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "DELETE FROM Task WHERE Task.ID = ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, taskId);
+
+            ResultSet rs = stmt.executeQuery();
+            stmt.executeUpdate();
+
+            return true;
+
+        } catch (SQLServerException ex) {
+            //TODO
+        } catch (SQLException ex) {
+            //TODO
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+
+        return false;
+    }
+
+    @Override
     public void addTimeToTask(int taskId, int time, Date startTime, Date stopTime) {
         Connection con = null;
         try {
@@ -82,6 +135,59 @@ public class TaskDBDAO implements ITaskDBDAO {
         } finally {
             DBSettings.getInstance().releaseConnection(con);
         }
+    }
+
+    @Override
+    public boolean UpdateTimeToTask(TaskTime taskTime) {
+        Connection con = null;
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "UPDATE Tasks SET Tasks.time = ?, Tasks.startTime = ?, Tasks.stopTime = ? WHERE Tasks.ID = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, taskTime.getTime());
+            stmt.setString(2, TimeConverter.convertDateToStringDB(taskTime.getStartTime()));
+            stmt.setString(3, TimeConverter.convertDateToStringDB(taskTime.getStopTime()));
+            stmt.setInt(4, taskTime.getId());
+
+            ResultSet rs = stmt.executeQuery();
+            stmt.executeUpdate();
+
+            return true;
+
+        } catch (SQLServerException ex) {
+            //TODO
+        } catch (SQLException ex) {
+            //TODO
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean DeleteTimeToTask(TaskTime taskTime) {
+        Connection con = null;
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "DELETE FROM Tasks WHERE Tasks.ID = ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, taskTime.getId());
+
+            ResultSet rs = stmt.executeQuery();
+            stmt.executeUpdate();
+
+            return true;
+
+        } catch (SQLServerException ex) {
+            //TODO
+        } catch (SQLException ex) {
+            //TODO
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+        return false;
     }
 
     @Override
