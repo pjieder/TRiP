@@ -6,7 +6,16 @@
 package trip.gui.controllers;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXTimePicker;
+import com.jfoenix.validation.RegexValidator;
 import java.net.URL;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -76,6 +85,20 @@ public class MainUserViewController implements Initializable {
     private JFXButton stopTimer;
     @FXML
     private JFXButton cancelTimer;
+    @FXML
+    private ComboBox<Task> tasks;
+    @FXML
+    private JFXDatePicker dateStart;
+    @FXML
+    private JFXDatePicker dateEnd;
+    @FXML
+    private JFXTimePicker timeEnd;
+    @FXML
+    private JFXTimePicker timeStart;
+    @FXML
+    private JFXTextField timerField;
+    @FXML
+    private JFXButton addTime;
 
     /**
      * Initializes the controller class.
@@ -112,6 +135,18 @@ public class MainUserViewController implements Initializable {
             decideTimerEnabled();
         });
 
+        timeStart.set24HourView(true);
+        timeEnd.set24HourView(true);
+
+        RegexValidator regex = new RegexValidator();
+        regex.setRegexPattern("^([0-5][0-9]|[2][0-3]):([0-5][0-9]):([0-5][0-9])$");
+        regex.setMessage("Input is not a valid time");
+        timerField.getValidators().add(regex);
+
+        timerField.textProperty().addListener((Observable, oldValue, newValue) -> {
+            decideAddTimeEnabled();
+        });
+
         loadProjects();
         Platform.runLater(() -> {
             setupCloseRequest();
@@ -121,6 +156,7 @@ public class MainUserViewController implements Initializable {
     public void setAdmin(Project project) {
         projectComboBox.getSelectionModel().select(project);
         taskList.setItems(taskModel.loadTasks(loggedUser.getId(), project.getId()));
+        tasks.setItems(taskModel.loadTasks(loggedUser.getId(), project.getId()));
     }
 
     public void loadProjects() {
@@ -135,6 +171,7 @@ public class MainUserViewController implements Initializable {
     @FXML
     private void switchProject(ActionEvent event) {
         taskList.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
+        tasks.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
         decideTimerEnabled();
     }
 
@@ -173,7 +210,7 @@ public class MainUserViewController implements Initializable {
     @FXML
     private void stopTimer(ActionEvent event) {
         timer.stopTimer();
-        taskModel.saveTimeForTask(timer);
+        taskModel.saveTimeForTask(timer.getTaskId(), timer.getTime(), timer.getStartTime(), timer.getStopTime());
         startTimer.setVisible(true);
         stopTimer.setVisible(false);
         cancelTimer.setVisible(false);
@@ -186,6 +223,37 @@ public class MainUserViewController implements Initializable {
         startTimer.setVisible(true);
         stopTimer.setVisible(false);
         cancelTimer.setVisible(false);
+    }
+
+    @FXML
+    private void addTime(ActionEvent event) {
+
+        Task selectedTask = tasks.getSelectionModel().getSelectedItem();
+        int taskId = (selectedTask != null) ? selectedTask.getId() : taskList.getSelectionModel().getSelectedItem().getId();
+
+        int time = TimeConverter.convertStringToSeconds(timerField.getText());
+        LocalDate localStart = dateStart.getValue();
+        LocalDate localStop = dateEnd.getValue();
+
+        LocalTime start = timeStart.getValue();
+        LocalTime stop = timeEnd.getValue();
+
+        Instant instantStart = localStart.atTime(start).atZone(ZoneId.systemDefault()).toInstant();
+        Instant instantEnd = localStop.atTime(stop).atZone(ZoneId.systemDefault()).toInstant();
+
+        Date startDate = Date.from(instantStart);
+        Date endDate = Date.from(instantEnd);
+
+        TaskTime taskTime = new TaskTime(time, startDate, endDate);
+
+        taskModel.saveTimeForTask(taskId, time, startDate, endDate);
+
+        timerField.setText("00:00:00");
+        dateStart.setValue(null);
+        dateEnd.setValue(null);
+        timeStart.setValue(null);
+        timeEnd.setValue(null);
+        updateView();
     }
 
     private void updateView() {
@@ -210,6 +278,20 @@ public class MainUserViewController implements Initializable {
         } else {
             startTimer.setDisable(true);
         }
+    }
+
+    private void decideAddTimeEnabled() {
+        if ((tasks.getSelectionModel().getSelectedItem() != null || !taskList.getSelectionModel().isEmpty()) && dateStart.getValue() != null && dateEnd.getValue() != null
+                && timeStart.getValue() != null && timeEnd.getValue() != null && timerField.validate()) {
+            addTime.setDisable(false);
+        } else {
+            addTime.setDisable(true);
+        }
+    }
+
+    @FXML
+    private void validateAddTask(ActionEvent event) {
+        decideAddTimeEnabled();
     }
 
     @FXML

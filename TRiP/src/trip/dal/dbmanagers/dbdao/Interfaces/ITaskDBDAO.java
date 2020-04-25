@@ -5,6 +5,7 @@
  */
 package trip.dal.dbmanagers.dbdao.Interfaces;
 
+import java.util.Date;
 import javafx.collections.ObservableList;
 import trip.be.Task;
 import trip.be.TaskTime;
@@ -18,7 +19,7 @@ public interface ITaskDBDAO {
    
     public int addTask(int userId, int projectId, String taskName);
     
-    public void addTimeToTask(Timer timer);
+    public void addTimeToTask(int taskId, int time, Date startTime, Date stopTime);
     
     public int getTaskTime(int taskID);
     

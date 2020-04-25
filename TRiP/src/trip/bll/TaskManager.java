@@ -5,6 +5,7 @@
  */
 package trip.bll;
 
+import java.util.Date;
 import javafx.collections.ObservableList;
 import trip.be.Task;
 import trip.be.Timer;
@@ -27,8 +28,8 @@ public class TaskManager {
         return dalFacade.addTask(userId, projectId, taskName);
     }
 
-    public void saveTimeForTask(Timer timer) {
-        dalFacade.saveTimeForTask(timer);
+    public void saveTimeForTask(int taskId, int time, Date startTime, Date stopTime) {
+        dalFacade.saveTimeForTask(taskId, time, startTime, stopTime);
     }
 
     public ObservableList<Task> loadTasks(int userId, int projectId) {

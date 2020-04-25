@@ -5,6 +5,7 @@
  */
 package trip.gui.models;
 
+import java.util.Date;
 import javafx.collections.ObservableList;
 import trip.be.Task;
 import trip.be.Timer;
@@ -27,8 +28,8 @@ public class TaskModel {
         return taskManager.addTask(userId, projectId, taskName);
     }
 
-    public void saveTimeForTask(Timer timer) {
-        taskManager.saveTimeForTask(timer);
+    public void saveTimeForTask(int taskId, int time, Date startTime, Date stopTime) {
+        taskManager.saveTimeForTask(taskId, time, startTime, stopTime);
     }
 
     public ObservableList<Task> loadTasks(int userId, int projectId) {

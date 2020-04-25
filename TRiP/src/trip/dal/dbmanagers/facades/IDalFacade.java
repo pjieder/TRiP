@@ -5,6 +5,7 @@
  */
 package trip.dal.dbmanagers.facades;
 
+import java.util.Date;
 import javafx.collections.ObservableList;
 import trip.be.Employee;
 import trip.be.Project;
@@ -34,7 +35,7 @@ public interface IDalFacade {
 
     public int addTask(int userId, int projectId, String taskName);
 
-    public void saveTimeForTask(Timer timer);
+    public void saveTimeForTask(int taskId, int time, Date startTime, Date stopTime);
 
     public ObservableList<Employee> loadEmployees();
 

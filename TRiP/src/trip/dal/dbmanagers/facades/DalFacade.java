@@ -5,6 +5,7 @@
  */
 package trip.dal.dbmanagers.facades;
 
+import java.util.Date;
 import javafx.collections.ObservableList;
 import trip.be.Employee;
 import trip.be.Project;
@@ -86,8 +87,8 @@ public class DalFacade implements IDalFacade {
     }
 
     @Override
-    public void saveTimeForTask(Timer timer) {
-        taskManager.addTimeToTask(timer);
+    public void saveTimeForTask(int taskId, int time, Date startTime, Date stopTime) {
+        taskManager.addTimeToTask(taskId, time, startTime, stopTime);
     }
 
     @Override

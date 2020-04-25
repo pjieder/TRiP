@@ -59,7 +59,7 @@ public class TaskDBDAO implements ITaskDBDAO {
     }
 
     @Override
-    public void addTimeToTask(Timer timer) {
+    public void addTimeToTask(int taskId, int time, Date startTime, Date stopTime) {
         Connection con = null;
         try {
             con = DBSettings.getInstance().getConnection();
@@ -68,10 +68,10 @@ public class TaskDBDAO implements ITaskDBDAO {
 
             PreparedStatement stmt = con.prepareStatement(sql);
 
-            stmt.setInt(1, timer.getTaskId());
-            stmt.setInt(2, timer.getTime());
-            stmt.setString(3, TimeConverter.convertDateToStringDB(timer.getStartTime()));
-            stmt.setString(4, TimeConverter.convertDateToStringDB(timer.getStopTime()));
+            stmt.setInt(1, taskId);
+            stmt.setInt(2, time);
+            stmt.setString(3, TimeConverter.convertDateToStringDB(startTime));
+            stmt.setString(4, TimeConverter.convertDateToStringDB(stopTime));
 
             ResultSet rs = stmt.executeQuery();
 
