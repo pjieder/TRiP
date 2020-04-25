@@ -149,6 +149,7 @@ public class MainUserViewController implements Initializable {
 
         timerField.textProperty().addListener((Observable, oldValue, newValue) -> {
             decideAddTimeEnabled();
+            timerField.validate();
         });
 
         loadProjects();
@@ -293,9 +294,14 @@ public class MainUserViewController implements Initializable {
                     taskList.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
                     taskList.refresh();
                 }
-                 Task selectedItem = tasks.getSelectionModel().getSelectedItem();
+                Task selectedItem = tasks.getSelectionModel().getSelectedItem();
                 tasks.setItems(taskList.getItems());
-                tasks.getSelectionModel().select(selectedItem);
+
+                if (taskList.getItems().contains(selectedItem)) {
+                    tasks.getSelectionModel().select(selectedItem);
+                } else {
+                    tasks.getSelectionModel().selectLast();
+                }
             });
         });
         return updateThread;
