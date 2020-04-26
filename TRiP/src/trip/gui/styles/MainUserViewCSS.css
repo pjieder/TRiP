@@ -40,6 +40,17 @@ and open the template in the editor.
     -fx-font-size: 15px;
 }
 
+.jfx-time-picker .input-line {
+    -fx-background-color: white;
+}
+.jfx-time-picker .input-focused-line {
+    -fx-background-color: white;
+}
+
+.jfx-time-picker {
+    -fx-font-size: 15px;
+}
+
 .input .text-field {
          -fx-prompt-text-fill: #ffffff;
 }
