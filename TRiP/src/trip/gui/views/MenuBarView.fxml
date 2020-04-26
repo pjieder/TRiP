@@ -8,8 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="1261.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="BP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="1261.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.gui.views.MenuBarViewController">
    <left>
       <VBox prefHeight="735.0" prefWidth="139.0" style="-fx-background-color: f9f9f9;" BorderPane.alignment="CENTER">
          <children>
@@ -89,6 +88,6 @@
       </VBox>
    </left>
    <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: ffffff;" BorderPane.alignment="CENTER" />
+      <AnchorPane fx:id="AP" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: ffffff;" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>
