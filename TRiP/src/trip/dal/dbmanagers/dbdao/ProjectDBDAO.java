@@ -6,7 +6,6 @@
 package trip.dal.dbmanagers.dbdao;
 
 import trip.dal.dbmanagers.dbdao.Interfaces.IProjectDBDAO;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -185,8 +184,8 @@ public class ProjectDBDAO implements IProjectDBDAO
 
             return projects;
 
-        } catch (SQLException ex)
-        {
+        } catch (SQLException ex){
+            Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally
         {
             DBSettings.getInstance().releaseConnection(con);
@@ -224,14 +223,9 @@ public class ProjectDBDAO implements IProjectDBDAO
 
             return projects;
 
-        } catch (SQLServerException ex)
-        {
-
-        } catch (SQLException ex)
-        {
-
-        } finally
-        {
+        }  catch (SQLException ex) {
+            Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
             DBSettings.getInstance().releaseConnection(con);
         }
         return projects;
@@ -262,14 +256,9 @@ public class ProjectDBDAO implements IProjectDBDAO
 
             return totalTime;
 
-        } catch (SQLServerException ex)
-        {
-
-        } catch (SQLException ex)
-        {
-
-        } finally
-        {
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
             DBSettings.getInstance().releaseConnection(con);
         }
         return totalTime;

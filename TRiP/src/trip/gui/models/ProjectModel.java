@@ -5,8 +5,10 @@
  */
 package trip.gui.models;
 
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import trip.be.Employee;
 import trip.be.Project;
 import trip.bll.ProjectManager;
 
@@ -17,6 +19,7 @@ import trip.bll.ProjectManager;
 public class ProjectModel
 {
     private final ProjectManager projectManager;
+    
 
     public ProjectModel()
     {
@@ -38,14 +41,14 @@ public class ProjectModel
         return projectManager.loadUserProjects(employeeId);
     }
 
-    public void createProject(Project project)
+    public void createProject(Project project, List<Employee> allEmployees)
     {
-        projectManager.createProject(project);
+        projectManager.createProject(project, allEmployees);
     }
 
-    public void updateProject(Project project)
+    public void updateProject(Project project, List<Employee> allEmployees)
     {
-        projectManager.updateProject(project);
+        projectManager.updateProject(project, allEmployees);
     }
 
     public void deleteProject(Project project)

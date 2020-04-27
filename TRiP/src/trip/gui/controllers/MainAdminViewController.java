@@ -139,7 +139,6 @@ public class MainAdminViewController implements Initializable
     {
         if (!projectTable.getSelectionModel().isEmpty())
         {
-
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(AppModel.class.getResource("views/AddEditProject.fxml"));
             Scene scene = new Scene(fxmlLoader.load());

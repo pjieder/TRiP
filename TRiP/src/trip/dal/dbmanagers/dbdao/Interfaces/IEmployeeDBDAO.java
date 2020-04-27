@@ -23,11 +23,11 @@ public interface IEmployeeDBDAO {
      * @return
      */
     public boolean createEmployee(Employee employee, String password);
-    
+
     public boolean updateEmployee(Employee employee);
-    
+
     public void createPassword(String userName, String password, int ID);
-    
+
     public void updatePassword(String username, String password, int ID);
 
     /**
@@ -46,8 +46,12 @@ public interface IEmployeeDBDAO {
      * @return The role of the person entered
      */
     public Roles getRoleById(int id);
-    
 
-    
     public ObservableList<Employee> loadEmployees();
+
+    public void addEmployeeToProject(int employeeID, int projID);
+
+    public void removeAllEmployeesFromProject(int projID);
+
+    public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId);
 }

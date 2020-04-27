@@ -43,7 +43,7 @@
             <Font size="15.0" />
          </font>
       </JFXTextField>
-      <ComboBox fx:id="activeUsersCBox" layoutX="84.0" layoutY="329.0" onAction="#addUserToProject" prefHeight="25.0" prefWidth="296.0" promptText="Active Users" style="-fx-background-color: f1f1f1;" stylesheets="@../styles/AddEditProjects.css" />
+      <ComboBox fx:id="activeUsersCBox" layoutX="84.0" layoutY="329.0" prefHeight="25.0" prefWidth="296.0" promptText="Active Users" style="-fx-background-color: f1f1f1;" stylesheets="@../styles/AddEditProjects.css" />
       <JFXButton fx:id="registerButton" disable="true" layoutX="85.0" layoutY="629.0" onAction="#registerProject" prefHeight="31.0" prefWidth="75.0" styleClass="login-button" stylesheets="@../styles/AddEditProjects.css" text="Add" textFill="WHITE">
          <font>
             <Font size="15.0" />
@@ -58,7 +58,7 @@
          </image>
       </ImageView>
       <JFXListView fx:id="activeUsersList" layoutX="85.0" layoutY="384.0" prefHeight="206.0" prefWidth="296.0" />
-      <Label fx:id="removeUser" layoutX="305.0" layoutY="598.0" onDragDetected="#removeUser" text="Remove User">
+      <Label fx:id="removeUser" layoutX="305.0" layoutY="598.0" onMouseClicked="#removeUser" text="Remove User">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

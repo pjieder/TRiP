@@ -7,7 +7,6 @@ package trip.dal.dbmanagers.dbdao;
 
 import trip.dal.dbmanagers.dbdao.Interfaces.IEmployeeDBDAO;
 import trip.dal.dbaccess.DBSettings;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -63,25 +62,22 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
             }
 
             return updatedRows > 0;
-        } catch (SQLServerException ex) {
-            //TODO
         } catch (SQLException ex) {
-            //TODO
+            Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
         }
         return false;
     }
-    
+
     @Override
-    public boolean updateEmployee(Employee employee)
-    {
+    public boolean updateEmployee(Employee employee) {
         Connection con = null;
         try {
             con = DBSettings.getInstance().getConnection();
             String sql = "UPDATE Employees SET fName = ?, lName = ?, email = ?, isAdmin = ? WHERE id = ?;";
             PreparedStatement stmt = con.prepareStatement(sql);
-            
+
             stmt.setString(1, employee.getfName());
             stmt.setString(2, employee.getlName());
             stmt.setString(3, employee.getEmail());
@@ -91,16 +87,14 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
                 stmt.setBoolean(4, false);
             }
             stmt.setInt(5, employee.getId());
-            
+
             int updatedRows = stmt.executeUpdate();
 
             return updatedRows > 0;
-        } catch (SQLServerException ex)
-        {
-            //TODO
-        } catch (SQLException ex)
-        {
-            //TODO
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
         }
         return false;
     }
@@ -122,12 +116,10 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
             stmt.setString(3, hashedPassword);
             stmt.setString(4, salt);
 
-            ResultSet rs = stmt.executeQuery();
-
-        } catch (SQLServerException ex) {
+            int updatedRows = stmt.executeUpdate();
 
         } catch (SQLException ex) {
-
+            Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
         }
@@ -150,19 +142,17 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
             stmt.setString(2, hashedPassword);
             stmt.setString(3, salt);
             stmt.setInt(4, ID);
-            
-            ResultSet rs = stmt.executeQuery();
 
-        } catch (SQLServerException ex) {
+            int updatedRows = stmt.executeUpdate();
 
         } catch (SQLException ex) {
-
+            Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
         }
 
     }
-    
+
     /**
      * Returns the ID of the user based on whether the login information given is valid or not.
      *
@@ -192,10 +182,8 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
                 }
             }
 
-        } catch (SQLServerException ex) {
-
         } catch (SQLException ex) {
-
+            Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
         }
@@ -232,9 +220,8 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
                     return Roles.USER;
                 }
             }
-        } catch (SQLServerException ex) {
-
         } catch (SQLException ex) {
+            Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
         }
@@ -276,10 +263,93 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
 
             return employees;
 
-        } catch (SQLServerException ex) {
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+
+        return employees;
+    }
+
+    @Override
+    public void addEmployeeToProject(int employeeID, int projID) {
+
+        Connection con = null;
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "INSERT INTO Projects (employeeID, projID) VALUES (?,?);";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, employeeID);
+            stmt.setInt(2, projID);
+
+            int updatedRows = stmt.executeUpdate();
 
         } catch (SQLException ex) {
+            Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+    }
 
+    @Override
+    public void removeAllEmployeesFromProject(int projID) {
+
+        Connection con = null;
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "DELETE FROM Projects WHERE Projects.projID = ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, projID);
+
+            int updatedRows = stmt.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+    }
+
+    @Override
+    public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId) {
+
+        Connection con = null;
+        ObservableList<Employee> employees = FXCollections.observableArrayList();
+
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "SELECT * FROM Employees JOIN Projects on Projects.employeeID = Employees.ID WHERE Projects.projID = ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, projectId);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                int id = rs.getInt("ID");
+                String fname = rs.getString("fName");
+                String lname = rs.getString("lName");
+                String email = rs.getString("email");
+                boolean isAdmin = rs.getBoolean("isAdmin");
+
+                Employee employee;
+
+                if (isAdmin == true) {
+                    employee = new Admin(fname, lname, email);
+                } else {
+                    employee = new User(fname, lname, email);
+                }
+                employee.setId(id);
+                employees.add(employee);
+            }
+
+            return employees;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
         }

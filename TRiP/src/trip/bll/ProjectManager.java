@@ -5,7 +5,9 @@
  */
 package trip.bll;
 
+import java.util.List;
 import javafx.collections.ObservableList;
+import trip.be.Employee;
 import trip.be.Project;
 import trip.dal.dbmanagers.dbdao.Interfaces.IProjectDBDAO;
 import trip.dal.dbmanagers.dbdao.ProjectDBDAO;
@@ -31,14 +33,14 @@ public class ProjectManager
         return projectDao.getAllProjects();
     }
     
-    public void createProject(Project project)
+    public void createProject(Project project, List<Employee> allEmployees)
     {
-        projectDao.createProject(project);
+        dalFacade.createProject(project, allEmployees);
     }
     
-    public void updateProject(Project project)
+    public void updateProject(Project project, List<Employee> allEmployees)
     {
-        projectDao.updateProject(project);
+        dalFacade.updateProject(project, allEmployees);
     }
     
     public void deleteProject(Project project)

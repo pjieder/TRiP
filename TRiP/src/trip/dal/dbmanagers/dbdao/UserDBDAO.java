@@ -6,14 +6,12 @@
 package trip.dal.dbmanagers.dbdao;
 
 import trip.dal.dbaccess.DBSettings;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import trip.be.Project;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import trip.be.User;
 import trip.dal.dbmanagers.dbdao.Interfaces.IUserDBDAO;
 
@@ -56,10 +54,8 @@ public class UserDBDAO implements IUserDBDAO {
 
             return user;
 
-        } catch (SQLServerException ex) {
-
         } catch (SQLException ex) {
-
+            Logger.getLogger(UserDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
         }

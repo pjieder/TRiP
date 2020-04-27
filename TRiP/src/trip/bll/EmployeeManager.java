@@ -49,6 +49,9 @@ public class EmployeeManager {
         return dalFacade.loadEmployees();
     }
     
-   
+    public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId)
+    {
+        return dalFacade.loadEmployeesAssignedToProject(projectId);
+    }
 
 }

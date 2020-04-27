@@ -5,18 +5,18 @@
  */
 package trip.dal.dbmanagers.dbdao;
 
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import trip.be.Task;
 import trip.be.TaskTime;
-import trip.be.Timer;
 import trip.dal.dbaccess.DBSettings;
 import trip.dal.dbmanagers.dbdao.Interfaces.ITaskDBDAO;
 import trip.utilities.TimeConverter;
@@ -47,10 +47,8 @@ public class TaskDBDAO implements ITaskDBDAO {
                 return generatedKeys.getInt(1);
             }
 
-        } catch (SQLServerException ex) {
-            //TODO
         } catch (SQLException ex) {
-            //TODO
+            Logger.getLogger(TaskDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
         }
@@ -69,15 +67,12 @@ public class TaskDBDAO implements ITaskDBDAO {
             stmt.setString(1, task.getName());
             stmt.setInt(2, task.getId());
 
-            ResultSet rs = stmt.executeQuery();
             stmt.executeUpdate();
 
             return true;
 
-        } catch (SQLServerException ex) {
-            //TODO
         } catch (SQLException ex) {
-            //TODO
+            Logger.getLogger(TaskDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
         }
@@ -95,15 +90,12 @@ public class TaskDBDAO implements ITaskDBDAO {
 
             stmt.setInt(1, taskId);
 
-            ResultSet rs = stmt.executeQuery();
             stmt.executeUpdate();
 
             return true;
 
-        } catch (SQLServerException ex) {
-            //TODO
         } catch (SQLException ex) {
-            //TODO
+            Logger.getLogger(TaskDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
         }
@@ -126,12 +118,10 @@ public class TaskDBDAO implements ITaskDBDAO {
             stmt.setString(3, TimeConverter.convertDateToStringDB(startTime));
             stmt.setString(4, TimeConverter.convertDateToStringDB(stopTime));
 
-            ResultSet rs = stmt.executeQuery();
+            stmt.executeUpdate();
 
-        } catch (SQLServerException ex) {
-            //TODO
         } catch (SQLException ex) {
-            //TODO
+            Logger.getLogger(TaskDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
         }
@@ -150,15 +140,12 @@ public class TaskDBDAO implements ITaskDBDAO {
             stmt.setString(3, TimeConverter.convertDateToStringDB(taskTime.getStopTime()));
             stmt.setInt(4, taskTime.getId());
 
-            ResultSet rs = stmt.executeQuery();
             stmt.executeUpdate();
 
             return true;
 
-        } catch (SQLServerException ex) {
-            //TODO
         } catch (SQLException ex) {
-            //TODO
+            Logger.getLogger(TaskDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
         }
@@ -175,15 +162,12 @@ public class TaskDBDAO implements ITaskDBDAO {
 
             stmt.setInt(1, taskTime.getId());
 
-            ResultSet rs = stmt.executeQuery();
             stmt.executeUpdate();
 
             return true;
 
-        } catch (SQLServerException ex) {
-            //TODO
         } catch (SQLException ex) {
-            //TODO
+            Logger.getLogger(TaskDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
         }
@@ -211,10 +195,8 @@ public class TaskDBDAO implements ITaskDBDAO {
 
             return totalTime;
 
-        } catch (SQLServerException ex) {
-
         } catch (SQLException ex) {
-
+            Logger.getLogger(TaskDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
         }
@@ -248,10 +230,8 @@ public class TaskDBDAO implements ITaskDBDAO {
 
             return tasks;
 
-        } catch (SQLServerException ex) {
-
         } catch (SQLException ex) {
-
+            Logger.getLogger(TaskDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
         }
@@ -287,10 +267,8 @@ public class TaskDBDAO implements ITaskDBDAO {
 
             return tasks;
 
-        } catch (SQLServerException ex) {
-
         } catch (SQLException ex) {
-
+            Logger.getLogger(TaskDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
         }

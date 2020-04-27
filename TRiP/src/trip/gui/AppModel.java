@@ -39,13 +39,16 @@ public class AppModel {
     public void updateEmployee(Employee employee) {
         employeeManager.updateEmployee(employee);
     }
-    
+
     public void updatePassword(String username, String password, int id) {
         employeeManager.updatePassword(username, password, id);
     }
-    
+
     public ObservableList<Employee> loadUsers() {
         return employeeManager.loadEmployees();
     }
 
+    public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId) {
+        return employeeManager.loadEmployeesAssignedToProject(projectId);
+    }
 }
