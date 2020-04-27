@@ -40,10 +40,6 @@ public class AddEditProjectController implements Initializable {
     private ProjectModel projectModel = new ProjectModel();
     private AppModel appModel = new AppModel();
 
-    private ChangeListener<Employee> changeListener = (Observable, oldValue, newValue) -> {
-        addUserToProject();
-    };
-
     @FXML
     private JFXTextField nameField;
     @FXML
@@ -51,7 +47,7 @@ public class AddEditProjectController implements Initializable {
     @FXML
     private JFXTextField rateField;
     @FXML
-    private ComboBox<Employee> activeUsersCBox;
+    private ChoiceBox<Employee> activeUsersCBox;
     @FXML
     private JFXListView<Employee> activeUsersList;
     @FXML
@@ -88,7 +84,9 @@ public class AddEditProjectController implements Initializable {
             rateField.validate();
         });
 
-        activeUsersCBox.getSelectionModel().selectedItemProperty().addListener(changeListener);
+        activeUsersCBox.getSelectionModel().selectedItemProperty().addListener((Observable, oldValue, newValue) -> {
+            addUserToProject();
+        });
 
     }
 
@@ -130,36 +128,30 @@ public class AddEditProjectController implements Initializable {
 
     private void addUserToProject() {
 
-        if (activeUsersCBox.getValue() != null) {
+        if (activeUsersCBox.getValue() != null && !activeUsersList.getItems().contains(activeUsersCBox.getSelectionModel().getSelectedItem())) {
 
             Employee selectedItem = activeUsersCBox.getValue();
-
+            activeUsersCBox.getItems().clear();
             activeUsersList.getItems().add(selectedItem);
+            updateCheckBox();
 
-            Platform.runLater(() -> {
-                updateComboBox();
-            });
         }
     }
 
-    private void updateComboBox() {
-        activeUsersCBox.getSelectionModel().selectedItemProperty().removeListener(changeListener);
-
-        activeUsersCBox.getSelectionModel().clearSelection();
+    private void updateCheckBox() {
         ObservableList<Employee> updatedCombo = appModel.loadUsers();
 
         for (Employee employee : activeUsersList.getItems()) {
             updatedCombo.remove(employee);
         }
         activeUsersCBox.setItems(updatedCombo);
-        activeUsersCBox.getSelectionModel().selectedItemProperty().addListener(changeListener);
     }
 
     @FXML
     private void removeUser(MouseEvent event) {
         if (!activeUsersList.getSelectionModel().isEmpty()) {
             activeUsersList.getItems().remove(activeUsersList.getSelectionModel().getSelectedItem());
-            updateComboBox();
+            updateCheckBox();
         }
     }
 
@@ -183,9 +175,10 @@ public class AddEditProjectController implements Initializable {
         nameField.setText(projectToUpdate.getName());
         clientField.setText("Client is not yet implemented bitch");
         rateField.setText(projectToUpdate.getRate() + "");
-        
+
         activeUsersList.setItems(appModel.loadEmployeesAssignedToProject(project.getId()));
-        updateComboBox();
+        updateCheckBox();
+
     }
 
     private void closeScene() {
