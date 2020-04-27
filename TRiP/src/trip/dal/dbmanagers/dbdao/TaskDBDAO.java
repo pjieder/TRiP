@@ -59,7 +59,60 @@ public class TaskDBDAO implements ITaskDBDAO {
     }
 
     @Override
-    public void addTimeToTask(Timer timer) {
+    public boolean updateTask(Task task) {
+        Connection con = null;
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "UPDATE Task SET Task.name = ? WHERE Task.ID = ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setString(1, task.getName());
+            stmt.setInt(2, task.getId());
+
+            ResultSet rs = stmt.executeQuery();
+            stmt.executeUpdate();
+
+            return true;
+
+        } catch (SQLServerException ex) {
+            //TODO
+        } catch (SQLException ex) {
+            //TODO
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean deleteTask(int taskId) {
+        Connection con = null;
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "DELETE FROM Task WHERE Task.ID = ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, taskId);
+
+            ResultSet rs = stmt.executeQuery();
+            stmt.executeUpdate();
+
+            return true;
+
+        } catch (SQLServerException ex) {
+            //TODO
+        } catch (SQLException ex) {
+            //TODO
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+
+        return false;
+    }
+
+    @Override
+    public void addTimeToTask(int taskId, int time, Date startTime, Date stopTime) {
         Connection con = null;
         try {
             con = DBSettings.getInstance().getConnection();
@@ -68,10 +121,10 @@ public class TaskDBDAO implements ITaskDBDAO {
 
             PreparedStatement stmt = con.prepareStatement(sql);
 
-            stmt.setInt(1, timer.getTaskId());
-            stmt.setInt(2, timer.getTime());
-            stmt.setString(3, TimeConverter.convertDateToString(timer.getStartTime()));
-            stmt.setString(4, TimeConverter.convertDateToString(timer.getStopTime()));
+            stmt.setInt(1, taskId);
+            stmt.setInt(2, time);
+            stmt.setString(3, TimeConverter.convertDateToStringDB(startTime));
+            stmt.setString(4, TimeConverter.convertDateToStringDB(stopTime));
 
             ResultSet rs = stmt.executeQuery();
 
@@ -82,6 +135,59 @@ public class TaskDBDAO implements ITaskDBDAO {
         } finally {
             DBSettings.getInstance().releaseConnection(con);
         }
+    }
+
+    @Override
+    public boolean UpdateTimeToTask(TaskTime taskTime) {
+        Connection con = null;
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "UPDATE Tasks SET Tasks.time = ?, Tasks.startTime = ?, Tasks.stopTime = ? WHERE Tasks.ID = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, taskTime.getTime());
+            stmt.setString(2, TimeConverter.convertDateToStringDB(taskTime.getStartTime()));
+            stmt.setString(3, TimeConverter.convertDateToStringDB(taskTime.getStopTime()));
+            stmt.setInt(4, taskTime.getId());
+
+            ResultSet rs = stmt.executeQuery();
+            stmt.executeUpdate();
+
+            return true;
+
+        } catch (SQLServerException ex) {
+            //TODO
+        } catch (SQLException ex) {
+            //TODO
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean DeleteTimeToTask(TaskTime taskTime) {
+        Connection con = null;
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "DELETE FROM Tasks WHERE Tasks.ID = ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, taskTime.getId());
+
+            ResultSet rs = stmt.executeQuery();
+            stmt.executeUpdate();
+
+            return true;
+
+        } catch (SQLServerException ex) {
+            //TODO
+        } catch (SQLException ex) {
+            //TODO
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+        return false;
     }
 
     @Override
@@ -160,7 +266,7 @@ public class TaskDBDAO implements ITaskDBDAO {
 
         try {
             con = DBSettings.getInstance().getConnection();
-            String sql = "SELECT * FROM Tasks WHERE Tasks.taskID = ?";
+            String sql = "SELECT * FROM Tasks WHERE Tasks.taskID = ? ORDER BY Tasks.startTime asc";
             PreparedStatement stmt = con.prepareStatement(sql);
 
             stmt.setInt(1, taskId);
@@ -170,8 +276,8 @@ public class TaskDBDAO implements ITaskDBDAO {
 
                 int id = rs.getInt("ID");
                 int time = rs.getInt("time");
-                Date startTime = TimeConverter.convertStringToDate(rs.getString("startTime"));
-                Date stopTime = TimeConverter.convertStringToDate(rs.getString("stopTime"));
+                Date startTime = TimeConverter.convertStringToDateDB(rs.getString("startTime"));
+                Date stopTime = TimeConverter.convertStringToDateDB(rs.getString("stopTime"));
 
                 TaskTime taskTime = new TaskTime(time, startTime, stopTime);
                 taskTime.setId(id);

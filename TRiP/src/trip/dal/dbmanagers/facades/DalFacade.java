@@ -5,11 +5,13 @@
  */
 package trip.dal.dbmanagers.facades;
 
+import java.util.Date;
 import javafx.collections.ObservableList;
 import trip.be.Employee;
 import trip.be.Project;
 import trip.be.Roles;
 import trip.be.Task;
+import trip.be.TaskTime;
 import trip.be.Timer;
 import trip.dal.dbmanagers.dbdao.AdminDBDAO;
 import trip.dal.dbmanagers.dbdao.EmployeeDBDAO;
@@ -71,13 +73,43 @@ public class DalFacade implements IDalFacade {
     }
 
     @Override
+    public void updateEmployee(Employee employee) {
+        employeeManager.updateEmployee(employee);
+    }
+
+    @Override
+    public void updatePassword(String username, String password, int id) {
+        employeeManager.updatePassword(username, password, id);
+    }
+
+    @Override
     public int addTask(int userId, int projectId, String taskName) {
         return taskManager.addTask(userId, projectId, taskName);
     }
 
     @Override
-    public void saveTimeForTask(Timer timer) {
-        taskManager.addTimeToTask(timer);
+    public boolean updateTask(Task task) {
+        return taskManager.updateTask(task);
+    }
+
+    @Override
+    public boolean deleteTask(int taskId) {
+        return taskManager.deleteTask(taskId);
+    }
+
+    @Override
+    public void saveTimeForTask(int taskId, int time, Date startTime, Date stopTime) {
+        taskManager.addTimeToTask(taskId, time, startTime, stopTime);
+    }
+
+    @Override
+    public boolean UpdateTimeToTask(TaskTime taskTime) {
+        return taskManager.UpdateTimeToTask(taskTime);
+    }
+
+    @Override
+    public boolean DeleteTimeToTask(TaskTime taskTime) {
+        return taskManager.DeleteTimeToTask(taskTime);
     }
 
     @Override

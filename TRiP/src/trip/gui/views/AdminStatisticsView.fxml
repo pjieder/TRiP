@@ -72,7 +72,7 @@
       </AnchorPane>
       <VBox prefHeight="735.0" prefWidth="139.0" style="-fx-background-color: #f9f9f9;">
          <children>
-            <JFXButton alignment="BOTTOM_LEFT" onMouseClicked="#open_projects_view" prefHeight="39.0" prefWidth="164.0" styleClass="main-bntns" stylesheets="@../styles/TabsView.css" text=" Projects">
+            <JFXButton alignment="BOTTOM_LEFT" onMouseClicked="#open_projects_view" prefHeight="39.0" prefWidth="164.0" styleClass="menubar1" stylesheets="@../styles/MenuBarCSS.css" text=" Projects">
                <graphic>
                   <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -84,7 +84,7 @@
                   <Font size="15.0" />
                </font>
             </JFXButton>
-            <JFXButton alignment="BOTTOM_LEFT" onMouseClicked="#open_users_view" prefHeight="39.0" prefWidth="162.0" styleClass="main-bntns" stylesheets="@../styles/TabsView.css" text=" Users">
+            <JFXButton alignment="BOTTOM_LEFT" onMouseClicked="#open_users_view" prefHeight="39.0" prefWidth="162.0" styleClass="menubar2" stylesheets="@../styles/MenuBarCSS.css" text=" Users">
                <graphic>
                   <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -96,7 +96,7 @@
                   <Font size="15.0" />
                </font>
             </JFXButton>
-            <JFXButton alignment="BOTTOM_LEFT" onMouseClicked="#open_statistics_view" prefHeight="39.0" prefWidth="166.0" styleClass="main-bntns" stylesheets="@../styles/TabsView.css" text=" Statistics">
+            <JFXButton alignment="BOTTOM_LEFT" onMouseClicked="#open_statistics_view" prefHeight="39.0" prefWidth="166.0" styleClass="menubar3" stylesheets="@../styles/MenuBarCSS.css" text=" Statistics">
                <graphic>
                   <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -108,7 +108,7 @@
                   <Font size="15.0" />
                </font>
             </JFXButton>
-            <JFXButton alignment="BOTTOM_LEFT" onMouseClicked="#open_time_view" prefHeight="39.0" prefWidth="162.0" styleClass="main-bntns" stylesheets="@../styles/TabsView.css" text=" Time Tracker">
+            <JFXButton alignment="BOTTOM_LEFT" onMouseClicked="#open_time_view" prefHeight="39.0" prefWidth="162.0" styleClass="menubar4" stylesheets="@../styles/MenuBarCSS.css" text=" Time Tracker">
                <graphic>
                   <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -120,7 +120,19 @@
                   <Font size="15.0" />
                </font>
             </JFXButton>
-            <JFXButton alignment="BOTTOM_LEFT" onMouseClicked="#log_out" prefHeight="39.0" prefWidth="209.0" styleClass="main-bntns" stylesheets="@../styles/TabsView.css" text=" Log out">
+            <JFXButton alignment="BOTTOM_LEFT" prefHeight="39.0" prefWidth="162.0" styleClass="menubar5" stylesheets="@../styles/MenuBarCSS.css" text=" Economy">
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/euro.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXButton>
+            <JFXButton alignment="BOTTOM_LEFT" onMouseClicked="#log_out" prefHeight="39.0" prefWidth="209.0" styleClass="menubar6" stylesheets="@../styles/MenuBarCSS.css" text=" Log out">
                <graphic>
                   <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                      <image>

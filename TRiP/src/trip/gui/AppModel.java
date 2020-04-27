@@ -36,6 +36,14 @@ public class AppModel {
         employeeManager.createUser(employee, password);
     }
 
+    public void updateEmployee(Employee employee) {
+        employeeManager.updateEmployee(employee);
+    }
+    
+    public void updatePassword(String username, String password, int id) {
+        employeeManager.updatePassword(username, password, id);
+    }
+    
     public ObservableList<Employee> loadUsers() {
         return employeeManager.loadEmployees();
     }

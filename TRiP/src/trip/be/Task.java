@@ -57,14 +57,27 @@ public class Task {
 
     @Override
     public boolean equals(Object obj) {
-
-        Task task = (Task) obj;
-
-        if (task.getId() == this.getId()) {
+        if (this == obj) {
             return true;
         }
-        return false;
-
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Task other = (Task) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+    
+    
 
 }

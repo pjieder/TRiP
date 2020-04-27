@@ -16,7 +16,7 @@
    <children>
       <VBox prefHeight="735.0" prefWidth="139.0" style="-fx-background-color: #f9f9f9;">
          <children>
-            <JFXButton alignment="BOTTOM_LEFT" prefHeight="39.0" prefWidth="164.0" styleClass="main-bntns" stylesheets="@../styles/TabsView.css" text=" Projects">
+            <JFXButton alignment="BOTTOM_LEFT" prefHeight="39.0" prefWidth="164.0" styleClass="menubar1" stylesheets="@../styles/MenuBarCSS.css" text=" Projects">
                <graphic>
                   <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -28,7 +28,7 @@
                   <Font size="15.0" />
                </font>
             </JFXButton>
-            <JFXButton alignment="BOTTOM_LEFT" onAction="#openUsers" prefHeight="39.0" prefWidth="162.0" styleClass="main-bntns" stylesheets="@../styles/TabsView.css" text=" Users">
+            <JFXButton alignment="BOTTOM_LEFT" onAction="#openUsers" prefHeight="39.0" prefWidth="162.0" styleClass="menubar2" stylesheets="@../styles/MenuBarCSS.css" text=" Users">
                <graphic>
                   <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -40,7 +40,7 @@
                   <Font size="15.0" />
                </font>
             </JFXButton>
-            <JFXButton alignment="BOTTOM_LEFT" prefHeight="39.0" prefWidth="166.0" styleClass="main-bntns" stylesheets="@../styles/TabsView.css" text=" Statistics">
+            <JFXButton alignment="BOTTOM_LEFT" prefHeight="39.0" prefWidth="166.0" styleClass="menubar3" stylesheets="@../styles/MenuBarCSS.css" text=" Statistics">
                <graphic>
                   <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -52,7 +52,7 @@
                   <Font size="15.0" />
                </font>
             </JFXButton>
-            <JFXButton alignment="BOTTOM_LEFT" prefHeight="39.0" prefWidth="162.0" styleClass="main-bntns" stylesheets="@../styles/TabsView.css" text=" Time Tracker">
+            <JFXButton alignment="BOTTOM_LEFT" onMouseClicked="#openProjectMenu" prefHeight="39.0" prefWidth="162.0" styleClass="menubar4" stylesheets="@../styles/MenuBarCSS.css" text=" Time Tracker">
                <graphic>
                   <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -64,7 +64,7 @@
                   <Font size="15.0" />
                </font>
             </JFXButton>
-            <JFXButton alignment="BOTTOM_LEFT" prefHeight="39.0" prefWidth="162.0" styleClass="main-bntns" stylesheets="@../styles/TabsView.css" text=" Economy">
+            <JFXButton alignment="BOTTOM_LEFT" prefHeight="39.0" prefWidth="162.0" styleClass="menubar5" stylesheets="@../styles/MenuBarCSS.css" text=" Economy">
                <graphic>
                   <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -76,7 +76,7 @@
                   <Font size="15.0" />
                </font>
             </JFXButton>
-            <JFXButton alignment="BOTTOM_LEFT" onMouseClicked="#log_out" prefHeight="39.0" prefWidth="209.0" styleClass="main-bntns" stylesheets="@../styles/TabsView.css" text=" Log out">
+            <JFXButton alignment="BOTTOM_LEFT" onMouseClicked="#log_out" prefHeight="39.0" prefWidth="209.0" styleClass="menubar6" stylesheets="@../styles/MenuBarCSS.css" text=" Log out">
                <graphic>
                   <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -134,8 +134,34 @@
       </ImageView>
       <TableView fx:id="projectTable" layoutX="204.0" layoutY="112.0" onMouseClicked="#openProject" prefHeight="544.0" prefWidth="995.0" stylesheets="@../styles/MainAdminView.css">
         <columns>
-          <TableColumn fx:id="projectColumn" prefWidth="495.0" text="Project" />
-          <TableColumn fx:id="timeColumn" prefWidth="499.0" text="Time" />
+          <TableColumn fx:id="projectColumn" prefWidth="341.0" text="Project">
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/start-button.png" />
+                     </image>
+                  </ImageView>
+               </graphic></TableColumn>
+          <TableColumn fx:id="timeColumn" prefWidth="323.0" text="Time">
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/clock%20(3).png" />
+                     </image>
+                  </ImageView>
+               </graphic></TableColumn>
+            <TableColumn fx:id="timeColumn1" prefWidth="330.0" text="Rate ">
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/coin-stack.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+               </graphic>
+            </TableColumn>
         </columns>
       </TableView>
       <TextField layoutX="377.0" layoutY="63.0" prefHeight="31.0" prefWidth="540.0" promptText="Search" style="-fx-background-color: f1f1f1;" stylesheets="@../styles/MainAdminView.css">

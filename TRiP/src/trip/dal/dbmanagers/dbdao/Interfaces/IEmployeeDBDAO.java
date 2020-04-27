@@ -24,7 +24,11 @@ public interface IEmployeeDBDAO {
      */
     public boolean createEmployee(Employee employee, String password);
     
+    public boolean updateEmployee(Employee employee);
+    
     public void createPassword(String userName, String password, int ID);
+    
+    public void updatePassword(String username, String password, int ID);
 
     /**
      * Returns the ID of the user based on whether the login information given is valid or not.

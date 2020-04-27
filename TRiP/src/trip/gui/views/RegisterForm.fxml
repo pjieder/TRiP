@@ -75,7 +75,7 @@
             <Font size="15.0" />
          </font></JFXPasswordField>
       <Label fx:id="passwordError" layoutX="75.0" layoutY="446.0" text="Password is not identical. Try again." textFill="#d00000" visible="false" />
-      <JFXButton fx:id="registerButton1" disable="true" layoutX="158.0" layoutY="557.0" onAction="#registerEmployee" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Edit" textFill="WHITE">
+      <JFXButton fx:id="updateButton" disable="true" layoutX="75.0" layoutY="557.0" onAction="#registerEmployee" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Update" textFill="WHITE" visible="false">
          <font>
             <Font size="15.0" />
          </font>
@@ -83,7 +83,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton fx:id="registerButton11" disable="true" layoutX="240.0" layoutY="557.0" onAction="#registerEmployee" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Delete" textFill="WHITE">
+      <JFXButton fx:id="cancelButton" layoutX="169.0" layoutY="557.0" onAction="#cancelScene" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Cancel" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
@@ -91,5 +91,6 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
+      <JFXCheckBox fx:id="passwordVisibility" checkedColor="#9a80fe" layoutX="250.0" layoutY="318.0" onAction="#makePasswordVisible" text="Change Password" visible="false" />
    </children>
 </AnchorPane>

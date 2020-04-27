@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="BP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="1261.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.gui.views.MenuBarViewController">
+   <left>
+      <VBox prefHeight="735.0" prefWidth="139.0" style="-fx-background-color: f9f9f9;" BorderPane.alignment="CENTER">
+         <children>
+            <JFXButton alignment="BASELINE_LEFT" onMouseClicked="#openProjectsView" prefHeight="39.0" prefWidth="164.0" styleClass="menubar1" stylesheets="@../styles/MenuBarCSS.css" text=" Projects">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/rocket.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton alignment="BASELINE_LEFT" onMouseClicked="#openUserView" prefHeight="39.0" prefWidth="164.0" styleClass="menubar2" stylesheets="@../styles/MenuBarCSS.css" text=" Users">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/team.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton alignment="BASELINE_LEFT" onMouseClicked="#openStatisticsView" prefHeight="39.0" prefWidth="164.0" styleClass="menubar3" stylesheets="@../styles/MenuBarCSS.css" text=" Statistics">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/pie-chart%20(2).png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton alignment="BASELINE_LEFT" onMouseClicked="#openTimeTrackingView" prefHeight="39.0" prefWidth="164.0" styleClass="menubar4" stylesheets="@../styles/MenuBarCSS.css" text=" Time Tracking">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/calendar%20(3).png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton alignment="BASELINE_LEFT" onMouseClicked="#openEconomyView" prefHeight="39.0" prefWidth="164.0" styleClass="menubar5" stylesheets="@../styles/MenuBarCSS.css" text=" Economy">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/euro.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton alignment="BASELINE_LEFT" onMouseClicked="#logOut" prefHeight="39.0" prefWidth="164.0" styleClass="menubar6" stylesheets="@../styles/MenuBarCSS.css" text=" Log Out">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/smart-key.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <AnchorPane fx:id="AP" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: ffffff;" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>
