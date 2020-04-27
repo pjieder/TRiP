@@ -5,7 +5,6 @@
  */
 package trip.dal.dbmanagers.dbdao.Interfaces;
 
-import java.util.List;
 import javafx.collections.ObservableList;
 import trip.be.Project;
 

@@ -5,7 +5,6 @@
  */
 package trip.bll;
 
-import java.util.List;
 import javafx.collections.ObservableList;
 import trip.be.Project;
 import trip.dal.dbmanagers.dbdao.Interfaces.IProjectDBDAO;
@@ -32,7 +31,7 @@ public class ProjectManager
     
     public void createProject(Project project)
     {
-        projectDao.createProject(project);
+        dalFacade.createProject(project);
     }
     
     public void updateProject(Project project)

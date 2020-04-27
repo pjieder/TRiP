@@ -28,23 +28,23 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <JFXTextField fx:id="firstNameField" focusColor="#9a80fe" layoutX="85.0" layoutY="146.0" prefHeight="25.0" prefWidth="296.0" promptText="Project Name" stylesheets="@../styles/RegisterFormCSS.css">
+      <JFXTextField fx:id="nameField" focusColor="#9a80fe" layoutX="85.0" layoutY="146.0" prefHeight="25.0" prefWidth="296.0" promptText="Project Name" stylesheets="@../styles/RegisterFormCSS.css">
          <font>
             <Font size="15.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="firstNameField1" focusColor="#9a80fe" layoutX="85.0" layoutY="205.0" prefHeight="25.0" prefWidth="296.0" promptText="Client" stylesheets="@../styles/RegisterFormCSS.css">
+      <JFXTextField fx:id="clientField" focusColor="#9a80fe" layoutX="85.0" layoutY="205.0" prefHeight="25.0" prefWidth="296.0" promptText="Client" stylesheets="@../styles/RegisterFormCSS.css">
          <font>
             <Font size="15.0" />
          </font>
       </JFXTextField>
-      <ComboBox layoutX="84.0" layoutY="329.0" prefHeight="25.0" prefWidth="296.0" promptText="Active Users" style="-fx-background-color: f1f1f1;" stylesheets="@../styles/AddEditProjects.css" />
-      <JFXTextField fx:id="firstNameField11" focusColor="#9a80fe" layoutX="85.0" layoutY="265.0" prefHeight="25.0" prefWidth="296.0" promptText="Hourly Rate $" stylesheets="@../styles/RegisterFormCSS.css">
+      <JFXTextField fx:id="rateField" focusColor="#9a80fe" layoutX="85.0" layoutY="265.0" prefHeight="25.0" prefWidth="296.0" promptText="Hourly Rate $" stylesheets="@../styles/RegisterFormCSS.css">
          <font>
             <Font size="15.0" />
          </font>
       </JFXTextField>
-      <JFXButton layoutX="85.0" layoutY="629.0" prefHeight="31.0" prefWidth="75.0" styleClass="login-button" stylesheets="@../styles/AddEditProjects.css" text="Add" textFill="WHITE">
+      <ComboBox fx:id="activeUsersCBox" layoutX="84.0" layoutY="329.0" prefHeight="25.0" prefWidth="296.0" promptText="Active Users" style="-fx-background-color: f1f1f1;" stylesheets="@../styles/AddEditProjects.css" />
+      <JFXButton fx:id="add" layoutX="85.0" layoutY="629.0" onAction="#addProject" prefHeight="31.0" prefWidth="75.0" styleClass="login-button" stylesheets="@../styles/AddEditProjects.css" text="Add" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
@@ -52,7 +52,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton layoutX="172.0" layoutY="629.0" prefHeight="31.0" prefWidth="75.0" styleClass="login-button" stylesheets="@../styles/AddEditProjects.css" text="Edit" textFill="WHITE">
+      <JFXButton layoutX="172.0" layoutY="629.0" onAction="#editProject" prefHeight="31.0" prefWidth="75.0" styleClass="login-button" stylesheets="@../styles/AddEditProjects.css" text="Edit" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
@@ -65,8 +65,8 @@
             <Image url="@../images/plus%20(4).png" />
          </image>
       </ImageView>
-      <JFXListView layoutX="85.0" layoutY="384.0" prefHeight="206.0" prefWidth="296.0" />
-      <JFXButton layoutX="260.0" layoutY="629.0" prefHeight="31.0" prefWidth="75.0" styleClass="login-button" stylesheets="@../styles/AddEditProjects.css" text="Delete" textFill="WHITE">
+      <JFXListView fx:id="activeUsersList" layoutX="85.0" layoutY="384.0" prefHeight="206.0" prefWidth="296.0" />
+      <JFXButton layoutX="260.0" layoutY="629.0" onAction="#deleteProject" prefHeight="31.0" prefWidth="75.0" styleClass="login-button" stylesheets="@../styles/AddEditProjects.css" text="Delete" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>

@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -94,6 +95,27 @@ public class MainAdminViewController implements Initializable {
     @FXML
     private void openUsers(ActionEvent event) {
         StageOpener.changeStage("views/AdminCurrentUserView.fxml", (Stage) projectTable.getScene().getWindow());
+    }
+
+    @FXML
+    private void createProject(ActionEvent event) throws IOException
+    {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(AppModel.class.getResource("views/AddEditProject.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    private void editProject(ActionEvent event) throws IOException
+    {
+        Parent loader = FXMLLoader.load(getClass().getResource("views/AddEditProject.fxml"));
+        Scene scene = new Scene(loader);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
     }
     
 }
