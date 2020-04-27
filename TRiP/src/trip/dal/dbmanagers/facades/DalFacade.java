@@ -132,11 +132,6 @@ public class DalFacade implements IDalFacade {
         return tasks;
 
     }
-    
-    @Override
-    public void createProject(Project project) {
-        projectManager.createProject(project);
-    }
 
     @Override
     public ObservableList<Project> loadAllActiveProjects(int employeeId) {

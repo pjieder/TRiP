@@ -8,6 +8,7 @@ package trip.gui.controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,11 +31,12 @@ import trip.utilities.TimeConverter;
  *
  * @author Peter
  */
-public class MainAdminViewController implements Initializable {
+public class MainAdminViewController implements Initializable
+{
 
     private AppModel appModel = new AppModel();
     private ProjectModel projectModel = new ProjectModel();
-    
+
     @FXML
     private TableView<Project> projectTable;
     @FXML
@@ -42,38 +44,52 @@ public class MainAdminViewController implements Initializable {
     @FXML
     private TableColumn<Project, String> timeColumn;
     @FXML
-    private TableColumn<?, ?> timeColumn1;
+    private TableColumn<Project, String> rateColumn;
 
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb)
+    {
 
-        projectColumn.setCellValueFactory((data) -> {
+        projectColumn.setCellValueFactory((data) ->
+        {
             Project project = data.getValue();
             return new SimpleStringProperty(project.getName());
         });
 
-        timeColumn.setCellValueFactory((data) -> {
+        timeColumn.setCellValueFactory((data) ->
+        {
 
             Project project = data.getValue();
             return new SimpleStringProperty(TimeConverter.convertSecondsToString(project.getTotalTime()));
         });
 
-        projectTable.setOnSort((event)->{projectTable.getSelectionModel().clearSelection();});
-        
+        rateColumn.setCellValueFactory((data) ->
+        {
+
+            Project project = data.getValue();
+            return new SimpleStringProperty(Double.toString(project.getRate()));
+        });
+
+        projectTable.setOnSort((event) ->
+        {
+            projectTable.getSelectionModel().clearSelection();
+        });
+
         loadAllProjects();
     }
-    
+
     public void loadAllProjects()
     {
-       projectTable.setItems(projectModel.loadAllActiveProjects(LoginController.loggedUser.getId()));
+        updateView().start();
     }
-    
+
     @FXML
-    private void openProject(MouseEvent event) throws IOException {
-        
+    private void openProject(MouseEvent event) throws IOException
+    {
+
         if (event.getClickCount() > 1 & !projectTable.getSelectionModel().isEmpty() & !event.isConsumed())
         {
             FXMLLoader fxmlLoader = new FXMLLoader();
@@ -88,17 +104,20 @@ public class MainAdminViewController implements Initializable {
     }
 
     @FXML
-    private void openProjectMenu(MouseEvent event) {
+    private void openProjectMenu(MouseEvent event)
+    {
         StageOpener.changeStage("views/MainUserView.fxml", (Stage) projectTable.getScene().getWindow());
     }
-    
+
     @FXML
-    private void log_out(MouseEvent event) {
+    private void log_out(MouseEvent event)
+    {
         StageOpener.changeStage("views/Login.fxml", (Stage) projectTable.getScene().getWindow());
     }
 
     @FXML
-    private void openUsers(ActionEvent event) {
+    private void openUsers(ActionEvent event)
+    {
         StageOpener.changeStage("views/AdminCurrentUserView.fxml", (Stage) projectTable.getScene().getWindow());
     }
 
@@ -109,6 +128,8 @@ public class MainAdminViewController implements Initializable {
         fxmlLoader.setLocation(AppModel.class.getResource("views/AddEditProject.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
+        AddEditProjectController controller = fxmlLoader.getController();
+        controller.setUpdateThread(updateView());
         stage.setScene(scene);
         stage.show();
     }
@@ -116,11 +137,31 @@ public class MainAdminViewController implements Initializable {
     @FXML
     private void editProject(ActionEvent event) throws IOException
     {
-        Parent loader = FXMLLoader.load(getClass().getResource("views/AddEditProject.fxml"));
-        Scene scene = new Scene(loader);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
+        if (!projectTable.getSelectionModel().isEmpty())
+        {
+
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(AppModel.class.getResource("views/AddEditProject.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+            AddEditProjectController controller = fxmlLoader.getController();
+            controller.setProject(updateView(), projectTable.getSelectionModel().getSelectedItem());
+            stage.setScene(scene);
+            stage.show();
+        }
     }
-    
+
+    private Thread updateView()
+    {
+        Thread updateThread = new Thread(() ->
+        {
+            Platform.runLater(() ->
+            {
+                projectTable.setItems(projectModel.loadAllActiveProjects(LoginController.loggedUser.getId()));
+                projectTable.refresh();
+            });
+        });
+
+        return updateThread;
+    }
 }

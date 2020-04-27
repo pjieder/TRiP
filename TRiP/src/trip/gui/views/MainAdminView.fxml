@@ -150,7 +150,7 @@
                      </image>
                   </ImageView>
                </graphic></TableColumn>
-            <TableColumn fx:id="timeColumn1" prefWidth="330.0" text="Rate ">
+            <TableColumn fx:id="rateColumn" prefWidth="330.0" text="Rate ">
                <graphic>
                   <ImageView fitHeight="19.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>

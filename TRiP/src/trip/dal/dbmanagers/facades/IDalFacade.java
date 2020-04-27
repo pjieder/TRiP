@@ -49,8 +49,6 @@ public interface IDalFacade {
     public ObservableList<Employee> loadEmployees();
 
     public ObservableList<Task> loadTasks(int userId, int projectId);
-    
-    public void createProject(Project project);
 
     public ObservableList<Project> loadAllActiveProjects(int employeeId);
 

@@ -24,26 +24,35 @@ import trip.dal.dbaccess.DBSettings;
  *
  * @author Jacob
  */
-public class ProjectDBDAO implements IProjectDBDAO {
+public class ProjectDBDAO implements IProjectDBDAO
+{
 
     private DBSettings dbCon;
 
-    public ProjectDBDAO() {
-        try {
+    public ProjectDBDAO()
+    {
+        try
+        {
             dbCon = new DBSettings();
-        } catch (IOException ex) {
+        } catch (IOException ex)
+        {
             Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
-    public ObservableList<Project> getAllProjects() {
+    public ObservableList<Project> getAllProjects()
+    {
+        Connection con = null;
         ObservableList<Project> allProjects = FXCollections.observableArrayList();
-        try (Connection con = dbCon.getConnection()) {
+        try
+        {
+            con = DBSettings.getInstance().getConnection();
             String sql = "SELECT * From Project;";
             Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery(sql);
-            while (rs.next()) {
+            while (rs.next())
+            {
                 Project project = new Project();
                 project.setId(rs.getInt("id"));
                 project.setName(rs.getString("name"));
@@ -53,15 +62,23 @@ public class ProjectDBDAO implements IProjectDBDAO {
                 allProjects.add(project);
             }
             return allProjects;
-        } catch (SQLException ex) {
+        } catch (SQLException ex)
+        {
             Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally
+        {
+            DBSettings.getInstance().releaseConnection(con);
         }
         return null;
     }
 
     @Override
-    public void createProject(Project project) {
-        try (Connection con = dbCon.getConnection()) {
+    public void createProject(Project project)
+    {
+        Connection con = null;
+        try
+        {
+            con = DBSettings.getInstance().getConnection();
             String sql = "INSERT INTO Project (name, rate, isActive) VALUES (?,?,?);";
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
@@ -70,22 +87,32 @@ public class ProjectDBDAO implements IProjectDBDAO {
             ps.setBoolean(3, project.getIsActive());
 
             int affectedRows = ps.executeUpdate();
-            if (affectedRows < 1) {
+            if (affectedRows < 1)
+            {
                 throw new SQLException();
             }
 
             ResultSet rs = ps.getGeneratedKeys();
-            if (rs.next()) {
+            if (rs.next())
+            {
                 project.setId(rs.getInt(1));
             }
-        } catch (SQLException ex) {
+        } catch (SQLException ex)
+        {
             Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally
+        {
+            DBSettings.getInstance().releaseConnection(con);
         }
     }
 
     @Override
-    public void updateProject(Project project) {
-        try (Connection con = dbCon.getConnection()) {
+    public void updateProject(Project project)
+    {
+        Connection con = null;
+        try
+        {
+            con = DBSettings.getInstance().getConnection();
             String sql = "UPDATE Project SET name=?, rate=?, isActive=? WHERE id=?;";
             PreparedStatement ps = con.prepareStatement(sql);
 
@@ -95,23 +122,36 @@ public class ProjectDBDAO implements IProjectDBDAO {
             ps.setInt(4, project.getId());
 
             int affected = ps.executeUpdate();
-            if (affected < 1) {
+            if (affected < 1)
+            {
                 throw new SQLException();
             }
-        } catch (SQLException ex) {
+        } catch (SQLException ex)
+        {
             Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally
+        {
+            DBSettings.getInstance().releaseConnection(con);
         }
     }
 
     @Override
-    public void deleteProject(Project project) {
-        try (Connection con = dbCon.getConnection()) {
+    public void deleteProject(Project project)
+    {
+        Connection con = null;
+        try
+        {
+            con = DBSettings.getInstance().getConnection();
             String sql = "DELETE FROM Project WHERE id=?;";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, project.getId());
             ps.execute();
-        } catch (SQLException ex) {
+        } catch (SQLException ex)
+        {
             Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally
+        {
+            DBSettings.getInstance().releaseConnection(con);
         }
     }
 
@@ -121,18 +161,19 @@ public class ProjectDBDAO implements IProjectDBDAO {
      * @return A list of all projects stored in the database
      */
     @Override
-    public ObservableList<Project> getAllActiveProjects() {
-
+    public ObservableList<Project> getAllActiveProjects()
+    {
         Connection con = null;
         ObservableList<Project> projects = FXCollections.observableArrayList();
-        try {
+        try
+        {
             con = DBSettings.getInstance().getConnection();
             String sql = "SELECT * FROM Project WHERE isActive = 1;";
             PreparedStatement stmt = con.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
 
-            while (rs.next()) {
-
+            while (rs.next())
+            {
                 int projectID = rs.getInt("ID");
                 String projectName = rs.getString("name");
                 double rate = rs.getDouble("rate");
@@ -144,22 +185,23 @@ public class ProjectDBDAO implements IProjectDBDAO {
 
             return projects;
 
-        } catch (SQLServerException ex) {
-
-        } catch (SQLException ex) {
-
-        } finally {
+        } catch (SQLException ex)
+        {
+        } finally
+        {
             DBSettings.getInstance().releaseConnection(con);
         }
         return projects;
     }
 
     @Override
-    public ObservableList<Project> getEmployeeProjects(int employeeID) {
+    public ObservableList<Project> getEmployeeProjects(int employeeID)
+    {
 
         Connection con = null;
         ObservableList<Project> projects = FXCollections.observableArrayList();
-        try {
+        try
+        {
             con = DBSettings.getInstance().getConnection();
             String sql = "SELECT * FROM Project JOIN Projects on Project.ID = Projects.projID WHERE Projects.employeeID = ? AND Project.isActive = 1;";
             PreparedStatement stmt = con.prepareStatement(sql);
@@ -167,7 +209,8 @@ public class ProjectDBDAO implements IProjectDBDAO {
             stmt.setInt(1, employeeID);
             ResultSet rs = stmt.executeQuery();
 
-            while (rs.next()) {
+            while (rs.next())
+            {
 
                 int projectID = rs.getInt("ID");
                 String projectName = rs.getString("name");
@@ -181,23 +224,28 @@ public class ProjectDBDAO implements IProjectDBDAO {
 
             return projects;
 
-        } catch (SQLServerException ex) {
+        } catch (SQLServerException ex)
+        {
 
-        } catch (SQLException ex) {
+        } catch (SQLException ex)
+        {
 
-        } finally {
+        } finally
+        {
             DBSettings.getInstance().releaseConnection(con);
         }
         return projects;
     }
 
     @Override
-    public int getProjectTime(int employeeID, int projectID) {
+    public int getProjectTime(int employeeID, int projectID)
+    {
 
         Connection con = null;
         int totalTime = 0;
 
-        try {
+        try
+        {
             con = DBSettings.getInstance().getConnection();
             String sql = "SELECT SUM(Tasks.time) AS TotalTime FROM Tasks JOIN Task on Tasks.taskID = Task.ID WHERE Task.projID = ? AND Task.employeeID = ?;";
             PreparedStatement stmt = con.prepareStatement(sql);
@@ -206,18 +254,22 @@ public class ProjectDBDAO implements IProjectDBDAO {
             stmt.setInt(2, employeeID);
             ResultSet rs = stmt.executeQuery();
 
-            while (rs.next()) {
+            while (rs.next())
+            {
 
                 totalTime = rs.getInt("TotalTime");
             }
 
             return totalTime;
 
-        } catch (SQLServerException ex) {
+        } catch (SQLServerException ex)
+        {
 
-        } catch (SQLException ex) {
+        } catch (SQLException ex)
+        {
 
-        } finally {
+        } finally
+        {
             DBSettings.getInstance().releaseConnection(con);
         }
         return totalTime;

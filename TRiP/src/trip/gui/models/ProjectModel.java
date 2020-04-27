@@ -16,27 +16,11 @@ import trip.bll.ProjectManager;
  */
 public class ProjectModel
 {
-
-    private static ProjectModel instance;
     private final ProjectManager projectManager;
-//    private final ObservableList<Project> allProjects;
-    private final ObservableList<Project> selectedProject;
 
     public ProjectModel()
     {
-        this.projectManager = new ProjectManager();
-//        allProjects = FXCollections.observableArrayList();
-//        allProjects.addAll(projectManager.getAllProjects());
-        selectedProject = FXCollections.observableArrayList();
-    }
-
-    public static ProjectModel getInstance()
-    {
-        if (instance == null)
-        {
-            instance = new ProjectModel();
-        }
-        return instance;
+        projectManager = new ProjectManager();
     }
 
     public ObservableList<Project> getAllProjects()
@@ -62,14 +46,10 @@ public class ProjectModel
     public void updateProject(Project project)
     {
         projectManager.updateProject(project);
-//        allProjects.add(project);
-//        allProjects.clear();
-//        allProjects.addAll(projectManager.getAllProjects());
     }
 
     public void deleteProject(Project project)
     {
         projectManager.deleteProject(project);
-//        allProjects.remove(project);
     }
 }

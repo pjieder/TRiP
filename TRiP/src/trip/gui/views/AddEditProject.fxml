@@ -43,16 +43,8 @@
             <Font size="15.0" />
          </font>
       </JFXTextField>
-      <ComboBox fx:id="activeUsersCBox" layoutX="84.0" layoutY="329.0" prefHeight="25.0" prefWidth="296.0" promptText="Active Users" style="-fx-background-color: f1f1f1;" stylesheets="@../styles/AddEditProjects.css" />
-      <JFXButton fx:id="add" layoutX="85.0" layoutY="629.0" onAction="#addProject" prefHeight="31.0" prefWidth="75.0" styleClass="login-button" stylesheets="@../styles/AddEditProjects.css" text="Add" textFill="WHITE">
-         <font>
-            <Font size="15.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </JFXButton>
-      <JFXButton layoutX="172.0" layoutY="629.0" onAction="#editProject" prefHeight="31.0" prefWidth="75.0" styleClass="login-button" stylesheets="@../styles/AddEditProjects.css" text="Edit" textFill="WHITE">
+      <ComboBox fx:id="activeUsersCBox" layoutX="84.0" layoutY="329.0" onAction="#addUserToProject" prefHeight="25.0" prefWidth="296.0" promptText="Active Users" style="-fx-background-color: f1f1f1;" stylesheets="@../styles/AddEditProjects.css" />
+      <JFXButton fx:id="registerButton" disable="true" layoutX="85.0" layoutY="629.0" onAction="#registerProject" prefHeight="31.0" prefWidth="75.0" styleClass="login-button" stylesheets="@../styles/AddEditProjects.css" text="Add" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
@@ -66,15 +58,7 @@
          </image>
       </ImageView>
       <JFXListView fx:id="activeUsersList" layoutX="85.0" layoutY="384.0" prefHeight="206.0" prefWidth="296.0" />
-      <JFXButton layoutX="260.0" layoutY="629.0" onAction="#deleteProject" prefHeight="31.0" prefWidth="75.0" styleClass="login-button" stylesheets="@../styles/AddEditProjects.css" text="Delete" textFill="WHITE">
-         <font>
-            <Font size="15.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </JFXButton>
-      <Label layoutX="305.0" layoutY="598.0" text="Remove User">
+      <Label fx:id="removeUser" layoutX="305.0" layoutY="598.0" onDragDetected="#removeUser" text="Remove User">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -82,5 +66,21 @@
             <Font size="13.0" />
          </font>
       </Label>
+      <JFXButton fx:id="cancelButton" layoutX="172.0" layoutY="629.0" onAction="#cancelScene" prefHeight="31.0" prefWidth="75.0" styleClass="login-button" stylesheets="@../styles/AddEditProjects.css" text="Cancel" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton fx:id="updateButton" disable="true" layoutX="85.0" layoutY="629.0" onAction="#registerProject" prefHeight="31.0" prefWidth="75.0" styleClass="login-button" stylesheets="@../styles/AddEditProjects.css" text="Update" textFill="WHITE" visible="false">
+         <font>
+            <Font size="15.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
    </children>
 </AnchorPane>
