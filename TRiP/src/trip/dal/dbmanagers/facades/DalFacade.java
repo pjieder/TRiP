@@ -30,119 +30,125 @@ import trip.dal.dbmanagers.dbdao.UserDBDAO;
  * @author ander
  */
 public class DalFacade implements IDalFacade {
-    
+
     private IEmployeeDBDAO employeeManager;
     private IUserDBDAO userManager;
     private IAdminDBDAO adminManager;
     private IProjectDBDAO projectManager;
     private ITaskDBDAO taskManager;
-    
+
     public DalFacade() {
-        
+
         employeeManager = new EmployeeDBDAO();
         userManager = new UserDBDAO();
         adminManager = new AdminDBDAO();
         projectManager = new ProjectDBDAO();
         taskManager = new TaskDBDAO();
     }
-    
+
     @Override
     public Employee login(String username, String password) {
-        
+
         Employee employee = null;
         int employeeId = employeeManager.isLoginCorrect(username, password);
-        
+
         if (employeeId != -1) {
             Roles role = employeeManager.getRoleById(employeeId);
-            
+
             if (role == Roles.USER) {
                 employee = userManager.getUserById(employeeId);
             } else if (role == Roles.ADMIN) {
                 employee = adminManager.getAdminById(employeeId);
             }
-            
+
             return employee;
-            
+
         }
-        
+
         return employee;
     }
-    
+
     @Override
     public void createUser(Employee employee, String password) {
         employeeManager.createEmployee(employee, password);
     }
-    
+
     @Override
     public void updateEmployee(Employee employee) {
         employeeManager.updateEmployee(employee);
     }
-    
+
     @Override
     public void updatePassword(String username, String password, int id) {
         employeeManager.updatePassword(username, password, id);
     }
-    
+
     @Override
     public int addTask(int userId, int projectId, String taskName) {
         return taskManager.addTask(userId, projectId, taskName);
     }
-    
+
     @Override
     public boolean updateTask(Task task) {
         return taskManager.updateTask(task);
     }
-    
+
     @Override
     public boolean deleteTask(int taskId) {
         return taskManager.deleteTask(taskId);
     }
-    
+
     @Override
     public void saveTimeForTask(int taskId, int time, Date startTime, Date stopTime) {
         taskManager.addTimeToTask(taskId, time, startTime, stopTime);
     }
-    
+
     @Override
     public boolean UpdateTimeToTask(TaskTime taskTime) {
         return taskManager.UpdateTimeToTask(taskTime);
     }
-    
+
     @Override
     public boolean DeleteTimeToTask(TaskTime taskTime) {
         return taskManager.DeleteTimeToTask(taskTime);
     }
-    
+
     @Override
     public ObservableList<Employee> loadEmployees() {
         return employeeManager.loadEmployees();
     }
-    
+
     @Override
     public ObservableList<Task> loadTasks(int userId, int projectId) {
-        
+
         ObservableList<Task> tasks = taskManager.loadTasks(userId, projectId);
-        
+
         for (Task task : tasks) {
-            
+
             task.setTasks(taskManager.loadTimeForTask(task.getId()));
             task.setTotalTime(taskManager.getTaskTime(task.getId()));
-            
         }
-        
         return tasks;
-        
     }
-    
+
     @Override
-    public ObservableList<Project> loadAllActiveProjects(int employeeId) {
+    public ObservableList<Project> loadAllActiveProjects() {
         ObservableList<Project> allActiveProjects = projectManager.getAllActiveProjects();
         for (Project project : allActiveProjects) {
-            project.setTotalTime(projectManager.getProjectTime(employeeId, project.getId()));
+            project.setTotalTime(projectManager.getTotalProjectTime(project.getId()));
         }
         return allActiveProjects;
     }
-    
+
+    @Override
+    public ObservableList<Project> loadAllInactiveProjects() {
+        ObservableList<Project> allActiveProjects = projectManager.getAllInactiveProjects();
+        for (Project project : allActiveProjects) {
+            project.setTotalTime(projectManager.getTotalProjectTime(project.getId()));
+        }
+        return allActiveProjects;
+    }
+
     @Override
     public ObservableList<Project> loadUserProjects(int employeeId) {
         ObservableList<Project> allUserProjects = projectManager.getEmployeeProjects(employeeId);
@@ -151,29 +157,28 @@ public class DalFacade implements IDalFacade {
         }
         return allUserProjects;
     }
-    
+
     @Override
     public void createProject(Project project, List<Employee> allEmployees) {
         projectManager.createProject(project);
-        
+
         for (Employee employee : allEmployees) {
             employeeManager.addEmployeeToProject(employee.getId(), project.getId());
         }
     }
-    
+
     @Override
     public void updateProject(Project project, List<Employee> allEmployees) {
         projectManager.updateProject(project);
         employeeManager.removeAllEmployeesFromProject(project.getId());
-        
+
         for (Employee employee : allEmployees) {
             employeeManager.addEmployeeToProject(employee.getId(), project.getId());
         }
     }
-    
+
     @Override
-     public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId)
-     {
+    public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId) {
         return employeeManager.loadEmployeesAssignedToProject(projectId);
-     }
+    }
 }

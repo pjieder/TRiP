@@ -18,38 +18,38 @@ import trip.dal.dbmanagers.facades.DalFacade;
  *
  * @author Jacob
  */
-public class ProjectManager
-{
+public class ProjectManager {
+
     private IProjectDBDAO projectDao;
     private IDalFacade dalFacade;
-    
+
     public ProjectManager() {
         projectDao = new ProjectDBDAO();
         dalFacade = new DalFacade();
     }
-    
-    public ObservableList<Project> getAllProjects()
-    {
+
+    public ObservableList<Project> getAllProjects() {
         return projectDao.getAllProjects();
     }
-    
-    public void createProject(Project project, List<Employee> allEmployees)
-    {
+
+    public void createProject(Project project, List<Employee> allEmployees) {
         dalFacade.createProject(project, allEmployees);
     }
-    
-    public void updateProject(Project project, List<Employee> allEmployees)
-    {
+
+    public void updateProject(Project project, List<Employee> allEmployees) {
         dalFacade.updateProject(project, allEmployees);
     }
-    
-    public void deleteProject(Project project)
-    {
+
+    public void deleteProject(Project project) {
         projectDao.deleteProject(project);
     }
 
-    public ObservableList<Project> loadAllActiveProjects(int employeeId) {
-        return dalFacade.loadAllActiveProjects(employeeId);
+    public ObservableList<Project> loadAllActiveProjects() {
+        return dalFacade.loadAllActiveProjects();
+    }
+
+    public ObservableList<Project> loadAllInactiveProjects() {
+        return dalFacade.loadAllInactiveProjects();
     }
 
     public ObservableList<Project> loadUserProjects(int employeeId) {

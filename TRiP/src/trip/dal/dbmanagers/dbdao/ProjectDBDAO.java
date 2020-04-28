@@ -193,6 +193,45 @@ public class ProjectDBDAO implements IProjectDBDAO
         return projects;
     }
 
+    /**
+     * Returns a list of all projects
+     *
+     * @return A list of all projects stored in the database
+     */
+    @Override
+    public ObservableList<Project> getAllInactiveProjects()
+    {
+        Connection con = null;
+        ObservableList<Project> projects = FXCollections.observableArrayList();
+        try
+        {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "SELECT * FROM Project WHERE isActive = 0;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next())
+            {
+                int projectID = rs.getInt("ID");
+                String projectName = rs.getString("name");
+                double rate = rs.getDouble("rate");
+
+                Project project = new Project(projectName, rate);
+                project.setId(projectID);
+                projects.add(project);
+            }
+
+            return projects;
+
+        } catch (SQLException ex){
+            Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally
+        {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+        return projects;
+    }
+    
     @Override
     public ObservableList<Project> getEmployeeProjects(int employeeID)
     {
@@ -264,4 +303,36 @@ public class ProjectDBDAO implements IProjectDBDAO
         return totalTime;
     }
 
+     @Override
+    public int getTotalProjectTime(int projectID)
+    {
+
+        Connection con = null;
+        int totalTime = 0;
+
+        try
+        {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "SELECT SUM(Tasks.time) AS TotalTime FROM Tasks JOIN Task on Tasks.taskID = Task.ID WHERE Task.projID = ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, projectID);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next())
+            {
+
+                totalTime = rs.getInt("TotalTime");
+            }
+
+            return totalTime;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+        return totalTime;
+    }
+    
 }

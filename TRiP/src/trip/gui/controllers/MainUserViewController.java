@@ -167,7 +167,7 @@ public class MainUserViewController implements Initializable {
     public void loadProjects() {
 
         if (loggedUser.getRole() == Roles.ADMIN) {
-            projectComboBox.setItems(projectModel.loadAllActiveProjects(loggedUser.getId()));
+            projectComboBox.setItems(projectModel.loadAllActiveProjects());
         } else {
             projectComboBox.setItems(projectModel.loadAllUserProjects(loggedUser.getId()));
         }

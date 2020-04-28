@@ -116,7 +116,7 @@
             <Image url="@../images/rocket.png" />
          </image>
       </ImageView>
-      <Label layoutX="1066.0" layoutY="673.0" text="Inactive projects">
+      <Label fx:id="inactiveProjects" layoutX="1066.0" layoutY="673.0" onMouseClicked="#showInactiveProjects" text="Inactive projects">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -174,5 +174,13 @@
             <Image url="@../images/magnifying-glass%20(6).png" />
          </image>
       </ImageView>
+      <Label fx:id="activeProjects" layoutX="1076.0" layoutY="673.0" onMouseClicked="#showIActiveProjects" text="Active projects" visible="false">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

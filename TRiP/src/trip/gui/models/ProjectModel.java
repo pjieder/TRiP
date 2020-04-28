@@ -31,11 +31,16 @@ public class ProjectModel
         return projectManager.getAllProjects();
     }
     
-    public ObservableList<Project> loadAllActiveProjects(int employeeId)
+    public ObservableList<Project> loadAllActiveProjects()
     {
-        return projectManager.loadAllActiveProjects(employeeId);
+        return projectManager.loadAllActiveProjects();
     }
 
+    public ObservableList<Project> loadAllInactiveProjects()
+    {
+        return projectManager.loadAllInactiveProjects();
+    }
+    
     public ObservableList<Project> loadAllUserProjects(int employeeId)
     {
         return projectManager.loadUserProjects(employeeId);

@@ -24,7 +24,11 @@ public interface IProjectDBDAO
     
     public ObservableList<Project> getAllActiveProjects();
     
+    public ObservableList<Project> getAllInactiveProjects();
+    
     public ObservableList<Project> getEmployeeProjects(int employeeID);
     
     public int getProjectTime(int employeeID, int projectID);
+    
+    public int getTotalProjectTime(int projectID);
 }

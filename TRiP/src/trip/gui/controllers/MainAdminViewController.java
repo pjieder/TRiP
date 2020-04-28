@@ -16,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
@@ -31,8 +32,7 @@ import trip.utilities.TimeConverter;
  *
  * @author Peter
  */
-public class MainAdminViewController implements Initializable
-{
+public class MainAdminViewController implements Initializable {
 
     private AppModel appModel = new AppModel();
     private ProjectModel projectModel = new ProjectModel();
@@ -45,53 +45,53 @@ public class MainAdminViewController implements Initializable
     private TableColumn<Project, String> timeColumn;
     @FXML
     private TableColumn<Project, String> rateColumn;
+    @FXML
+    private Label inactiveProjects;
+    @FXML
+    private Label activeProjects;
 
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
 
-        projectColumn.setCellValueFactory((data) ->
-        {
+        projectColumn.setCellValueFactory((data)
+                -> {
             Project project = data.getValue();
             return new SimpleStringProperty(project.getName());
         });
 
-        timeColumn.setCellValueFactory((data) ->
-        {
+        timeColumn.setCellValueFactory((data)
+                -> {
 
             Project project = data.getValue();
             return new SimpleStringProperty(TimeConverter.convertSecondsToString(project.getTotalTime()));
         });
 
-        rateColumn.setCellValueFactory((data) ->
-        {
+        rateColumn.setCellValueFactory((data)
+                -> {
 
             Project project = data.getValue();
             return new SimpleStringProperty(Double.toString(project.getRate()));
         });
 
-        projectTable.setOnSort((event) ->
-        {
+        projectTable.setOnSort((event)
+                -> {
             projectTable.getSelectionModel().clearSelection();
         });
 
         loadAllProjects();
     }
 
-    public void loadAllProjects()
-    {
+    public void loadAllProjects() {
         updateView().start();
     }
 
     @FXML
-    private void openProject(MouseEvent event) throws IOException
-    {
+    private void openProject(MouseEvent event) throws IOException {
 
-        if (event.getClickCount() > 1 & !projectTable.getSelectionModel().isEmpty() & !event.isConsumed())
-        {
+        if (event.getClickCount() > 1 & !projectTable.getSelectionModel().isEmpty() & !event.isConsumed()) {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(AppModel.class.getResource("views/MainUserView.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
@@ -104,26 +104,22 @@ public class MainAdminViewController implements Initializable
     }
 
     @FXML
-    private void openProjectMenu(MouseEvent event)
-    {
+    private void openProjectMenu(MouseEvent event) {
         StageOpener.changeStage("views/MainUserView.fxml", (Stage) projectTable.getScene().getWindow());
     }
 
     @FXML
-    private void log_out(MouseEvent event)
-    {
+    private void log_out(MouseEvent event) {
         StageOpener.changeStage("views/Login.fxml", (Stage) projectTable.getScene().getWindow());
     }
 
     @FXML
-    private void openUsers(ActionEvent event)
-    {
+    private void openUsers(ActionEvent event) {
         StageOpener.changeStage("views/AdminCurrentUserView.fxml", (Stage) projectTable.getScene().getWindow());
     }
 
     @FXML
-    private void createProject(ActionEvent event) throws IOException
-    {
+    private void createProject(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(AppModel.class.getResource("views/AddEditProject.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
@@ -135,10 +131,8 @@ public class MainAdminViewController implements Initializable
     }
 
     @FXML
-    private void editProject(ActionEvent event) throws IOException
-    {
-        if (!projectTable.getSelectionModel().isEmpty())
-        {
+    private void editProject(ActionEvent event) throws IOException {
+        if (!projectTable.getSelectionModel().isEmpty()) {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(AppModel.class.getResource("views/AddEditProject.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
@@ -150,17 +144,32 @@ public class MainAdminViewController implements Initializable
         }
     }
 
-    private Thread updateView()
-    {
-        Thread updateThread = new Thread(() ->
-        {
-            Platform.runLater(() ->
-            {
-                projectTable.setItems(projectModel.loadAllActiveProjects(LoginController.loggedUser.getId()));
+    private Thread updateView() {
+        Thread updateThread = new Thread(()
+                -> {
+            Platform.runLater(()
+                    -> {
+                projectTable.setItems(projectModel.loadAllActiveProjects());
                 projectTable.refresh();
             });
         });
 
         return updateThread;
+    }
+
+    @FXML
+    private void showInactiveProjects(MouseEvent event) {
+        inactiveProjects.setVisible(false);
+        activeProjects.setVisible(true);
+        projectTable.setItems(projectModel.loadAllInactiveProjects());
+        projectTable.refresh();
+    }
+
+    @FXML
+    private void showIActiveProjects(MouseEvent event) {
+        inactiveProjects.setVisible(true);
+        activeProjects.setVisible(false);
+        projectTable.setItems(projectModel.loadAllActiveProjects());
+        projectTable.refresh();
     }
 }
