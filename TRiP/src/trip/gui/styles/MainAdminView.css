@@ -22,6 +22,18 @@ and open the template in the editor.
     
 }
 
+#deleteButton
+{
+    -fx-background-color: #ff0000;
+
+
+   
+}
+#deleteButton:hover
+{
+    -fx-background-color: #b80202;
+    
+}
 
 .text-field {
     -fx-background-color: -fx-control-inner-background;

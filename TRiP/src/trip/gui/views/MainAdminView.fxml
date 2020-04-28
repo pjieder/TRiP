@@ -174,7 +174,7 @@
             <Image url="@../images/magnifying-glass%20(6).png" />
          </image>
       </ImageView>
-      <Label fx:id="activeProjects" layoutX="1101.0" layoutY="673.0" onMouseClicked="#showIActiveProjects" text="Active projects" visible="false">
+      <Label fx:id="activeProjects" layoutX="1101.0" layoutY="673.0" onMouseClicked="#showActiveProjects" text="Active projects" visible="false">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -190,5 +190,13 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
+      <JFXButton fx:id="deleteButton" layoutX="204.0" layoutY="668.0" onAction="#deleteProject" prefHeight="31.0" prefWidth="114.0" stylesheets="@../styles/MainAdminView.css" text="Delete project" textFill="WHITE" visible="false">
+         <font>
+            <Font size="15.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
    </children>
 </AnchorPane>
