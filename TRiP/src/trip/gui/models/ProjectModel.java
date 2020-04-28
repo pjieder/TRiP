@@ -6,7 +6,6 @@
 package trip.gui.models;
 
 import java.util.List;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import trip.be.Employee;
 import trip.be.Project;

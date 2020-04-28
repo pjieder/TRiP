@@ -1,0 +1,155 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package trip.dal.dbmanagers.dbdao;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import trip.be.Customer;
+import trip.dal.dbaccess.DBSettings;
+import trip.dal.dbmanagers.dbdao.Interfaces.ICustomerDBDAO;
+
+/**
+ *
+ * @author Jacob
+ */
+public class CustomerDBDAO implements ICustomerDBDAO
+{
+    private DBSettings dbCon;
+
+    public CustomerDBDAO()
+    {
+        try
+        {
+            dbCon = new DBSettings();
+        } catch (IOException ex)
+        {
+            Logger.getLogger(CustomerDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public ObservableList<Customer> getAllCustomers()
+    {
+        Connection con = null;
+        ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
+        try
+        {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "SELECT * From Customer;";
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+            while (rs.next())
+            {
+                Customer customer = new Customer();
+                customer.setId(rs.getInt("id"));
+                customer.setName(rs.getString("name"));
+                customer.setPhoneNumber(rs.getString("phoneNumber"));
+                customer.setEmail(rs.getString("email"));
+
+                allCustomers.add(customer);
+            }
+            return allCustomers;
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(CustomerDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally
+        {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+        return null;
+    }
+
+    @Override
+    public void createCustomer(Customer customer)
+    {
+        Connection con = null;
+        try
+        {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "INSERT INTO Customer (name, phoneNumber, email) VALUES (?,?,?);";
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            ps.setString(1, customer.getName());
+            ps.setString(2, customer.getPhoneNumber());
+            ps.setString(3, customer.getEmail());
+
+            int affectedRows = ps.executeUpdate();
+            if (affectedRows < 1)
+            {
+                throw new SQLException();
+            }
+
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next())
+            {
+                customer.setId(rs.getInt(1));
+            }
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(CustomerDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally
+        {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+    }
+
+    @Override
+    public void updateCustomer(Customer customer)
+    {
+        Connection con = null;
+        try
+        {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "UPDATE Customer SET name=?, phoneNumber=?, email=? WHERE id=?;";
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setString(1, customer.getName());
+            ps.setString(2, customer.getPhoneNumber());
+            ps.setString(3, customer.getEmail());
+            ps.setInt(4, customer.getId());
+
+            int affected = ps.executeUpdate();
+            if (affected < 1)
+            {
+                throw new SQLException();
+            }
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(CustomerDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally
+        {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+    }
+
+    @Override
+    public void deleteCustomer(Customer customer)
+    {
+        Connection con = null;
+        try
+        {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "DELETE FROM Customer WHERE id=?;";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, customer.getId());
+            ps.execute();
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(CustomerDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally
+        {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+    }
+}
