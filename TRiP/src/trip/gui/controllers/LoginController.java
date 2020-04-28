@@ -17,7 +17,9 @@ import java.util.concurrent.ExecutionException;
 import java.util.prefs.Preferences;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -62,7 +64,7 @@ public class LoginController implements Initializable {
             passwordField.setText(preferences.get("password", null));
             rememberMe.setSelected(preferences.getBoolean("rememberActivated", false));
         }
-        
+
     }
 
     /**
@@ -82,7 +84,7 @@ public class LoginController implements Initializable {
     /**
      * Displays loading and disables the login button
      */
-    public void showLoading() {
+    private void showLoading() {
         loginButton.setDisable(true);
         progressBar.setVisible(true);
         errorMsg.setVisible(false);
@@ -91,7 +93,7 @@ public class LoginController implements Initializable {
     /**
      * Hides loading and enables the login button
      */
-    public void hideLoading() {
+    private void hideLoading() {
         progressBar.setVisible(false);
         errorMsg.setVisible(true);
         loginButton.setDisable(false);
@@ -100,7 +102,7 @@ public class LoginController implements Initializable {
     /**
      * Saves the login username and password entered in preferences
      */
-    public void saveLogin() {
+    private void saveLogin() {
         preferences.put("username", usernameField.getText());
         preferences.put("password", passwordField.getText());
         preferences.putBoolean("rememberActivated", true);
@@ -109,7 +111,7 @@ public class LoginController implements Initializable {
     /**
      * Saves an empty string as the username and password in preferences
      */
-    public void forgetLogin() {
+    private void forgetLogin() {
         preferences.put("username", "");
         preferences.put("password", "");
         preferences.putBoolean("rememberActivated", false);
@@ -137,13 +139,10 @@ public class LoginController implements Initializable {
                 loggedUser = employeeToValidate;
                 Platform.runLater(() -> {
 
-                    if (employeeToValidate.getRole().equals(Roles.USER)) 
-                    {
+                    if (employeeToValidate.getRole().equals(Roles.USER)) {
                         StageOpener.changeStage("views/MainUserView.fxml", (Stage) (rememberMe.getScene().getWindow()));
-                    } 
-                    else if (employeeToValidate.getRole().equals(Roles.ADMIN)) 
-                    {
-                        StageOpener.changeStage("views/MainAdminView.fxml", (Stage) (rememberMe.getScene().getWindow()));
+                    } else if (employeeToValidate.getRole().equals(Roles.ADMIN)) {
+                        loadAdminView();
                     }
                 });
             }
@@ -151,4 +150,18 @@ public class LoginController implements Initializable {
         return loginThread;
     }
 
+    private void loadAdminView() {
+
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(AppModel.class.getResource("views/MainAdminView.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = (Stage) rememberMe.getScene().getWindow();
+            MainAdminViewController controller = fxmlLoader.getController();
+            controller.loadAllProjects();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException ex) {
+        }
+    }
 }

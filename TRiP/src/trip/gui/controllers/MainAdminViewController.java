@@ -96,7 +96,7 @@ public class MainAdminViewController implements Initializable {
     }
 
     public void loadAllProjects() {
-        updateView().start();
+        projectTable.setItems(projectModel.loadAllActiveProjects());
     }
 
     @FXML

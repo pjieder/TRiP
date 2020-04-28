@@ -91,7 +91,7 @@
             </JFXButton>
          </children>
       </VBox>
-      <Label layoutX="207.0" layoutY="81.0" text="Current Users">
+      <Label layoutX="210.0" layoutY="81.0" text="Current Users">
          <font>
             <Font size="15.0" />
          </font>
@@ -127,7 +127,7 @@
             <Image url="@../images/magnifying-glass%20(6).png" />
          </image>
       </ImageView>
-      <Label layoutX="1089.0" layoutY="689.0" text="Inactive users">
+      <Label fx:id="inactiveUsers" layoutX="1089.0" layoutY="689.0" onMouseClicked="#showInactiveUsers" text="Inactive users">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -135,7 +135,7 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <ImageView fitHeight="19.0" fitWidth="14.0" layoutX="1186.0" layoutY="692.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="activeArrow" fitHeight="19.0" fitWidth="14.0" layoutX="1186.0" layoutY="692.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/next%20(5).png" />
          </image>
@@ -143,5 +143,25 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
+      <Label fx:id="activeUsers" layoutX="1114.0" layoutY="689.0" onMouseClicked="#showActiveUsers" prefHeight="21.0" prefWidth="90.0" text="Active Users" visible="false">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <ImageView fx:id="inactiveArrow" fitHeight="19.0" fitWidth="14.0" layoutX="1089.0" layoutY="692.0" pickOnBounds="true" preserveRatio="true" rotate="-180.0" visible="false">
+         <image>
+            <Image url="@../images/next%20(5).png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <JFXButton fx:id="deleteButton" layoutX="210.0" layoutY="684.0" onAction="#deleteProject" prefHeight="31.0" prefWidth="114.0" stylesheets="@../styles/MainAdminView.css" text="Delete project" textFill="WHITE" visible="false">
+         <font>
+            <Font size="15.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
    </children>
 </AnchorPane>
