@@ -19,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import trip.be.Project;
@@ -49,6 +50,10 @@ public class MainAdminViewController implements Initializable {
     private Label inactiveProjects;
     @FXML
     private Label activeProjects;
+    @FXML
+    private ImageView activeArrow;
+    @FXML
+    private ImageView inactiveArrow;
 
     /**
      * Initializes the controller class.
@@ -161,6 +166,8 @@ public class MainAdminViewController implements Initializable {
     private void showInactiveProjects(MouseEvent event) {
         inactiveProjects.setVisible(false);
         activeProjects.setVisible(true);
+        activeArrow.setVisible(false);
+        inactiveArrow.setVisible(true);
         projectTable.setItems(projectModel.loadAllInactiveProjects());
         projectTable.refresh();
     }
@@ -169,6 +176,8 @@ public class MainAdminViewController implements Initializable {
     private void showIActiveProjects(MouseEvent event) {
         inactiveProjects.setVisible(true);
         activeProjects.setVisible(false);
+        activeArrow.setVisible(true);
+        inactiveArrow.setVisible(false);
         projectTable.setItems(projectModel.loadAllActiveProjects());
         projectTable.refresh();
     }

@@ -124,7 +124,7 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <ImageView fitHeight="19.0" fitWidth="14.0" layoutX="1185.0" layoutY="676.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="activeArrow" fitHeight="19.0" fitWidth="14.0" layoutX="1185.0" layoutY="676.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/next%20(5).png" />
          </image>
@@ -174,7 +174,7 @@
             <Image url="@../images/magnifying-glass%20(6).png" />
          </image>
       </ImageView>
-      <Label fx:id="activeProjects" layoutX="1076.0" layoutY="673.0" onMouseClicked="#showIActiveProjects" text="Active projects" visible="false">
+      <Label fx:id="activeProjects" layoutX="1101.0" layoutY="673.0" onMouseClicked="#showIActiveProjects" text="Active projects" visible="false">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -182,5 +182,13 @@
             <Font size="15.0" />
          </font>
       </Label>
+      <ImageView fx:id="inactiveArrow" fitHeight="19.0" fitWidth="14.0" layoutX="1065.0" layoutY="677.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" visible="false">
+         <image>
+            <Image url="@../images/next%20(5).png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
    </children>
 </AnchorPane>
