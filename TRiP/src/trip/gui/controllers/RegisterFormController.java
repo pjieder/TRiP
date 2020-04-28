@@ -102,8 +102,8 @@ public class RegisterFormController implements Initializable {
     
     private void validateInput() {
         
-        String fName = firstNameField.getText();
-        String lName = lastNameField.getText();
+        String fName = firstNameField.getText().trim();
+        String lName = lastNameField.getText().trim();
         String email = emailField.getText();
         String password = passwordField.getText();
         String password2 = passwordFieldTwo.getText();

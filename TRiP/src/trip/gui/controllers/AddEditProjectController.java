@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.NumberValidator;
+import com.jfoenix.validation.RegexValidator;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -64,9 +65,13 @@ public class AddEditProjectController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        NumberValidator validator = new NumberValidator();
-        validator.setMessage("Input is not a valid number");
-        rateField.getValidators().add(validator);
+        
+        
+        RegexValidator regex = new RegexValidator();
+        regex.setRegexPattern("^[0-9]{1,10}([,.][0-9]{1,10})?$");
+        regex.setMessage("Input is not a valid number");
+        
+        rateField.getValidators().add(regex);
 
         nameField.textProperty().addListener((Observable, oldValue, newValue)
                 -> {
