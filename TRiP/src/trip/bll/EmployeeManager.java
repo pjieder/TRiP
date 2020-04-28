@@ -7,6 +7,8 @@ package trip.bll;
 
 import javafx.collections.ObservableList;
 import trip.be.Employee;
+import trip.dal.dbmanagers.dbdao.EmployeeDBDAO;
+import trip.dal.dbmanagers.dbdao.Interfaces.IEmployeeDBDAO;
 import trip.dal.dbmanagers.facades.DalFacade;
 import trip.dal.dbmanagers.facades.IDalFacade;
 
@@ -17,9 +19,11 @@ import trip.dal.dbmanagers.facades.IDalFacade;
 public class EmployeeManager {
 
     private IDalFacade dalFacade;
+    private IEmployeeDBDAO employeeDAO;
 
     public EmployeeManager() {
         dalFacade = new DalFacade();
+        employeeDAO = new EmployeeDBDAO();
     }
 
     /**
@@ -41,13 +45,28 @@ public class EmployeeManager {
         dalFacade.updateEmployee(employee);
     }
     
+    public void deleteEmployee(Employee employee) {
+        employeeDAO.deleteEmployee(employee);
+    }
+    
     public void updatePassword(String username, String password, int id) {
         dalFacade.updatePassword(username, password, id);
     }
     
-    public ObservableList<Employee> loadEmployees() {
-        return dalFacade.loadEmployees();
+    public ObservableList<Employee> loadActiveUsers() {
+        return dalFacade.loadActiveUsers();
     }
+    
+    public void updateEmployeeActive(int employeeId, boolean active)
+    {
+        employeeDAO.updateEmployeeActive(employeeId, active);
+    }
+    
+    public ObservableList<Employee> loadInactiveUsers()
+    {
+        return employeeDAO.loadInactiveUsers();
+    }
+    
     
     public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId)
     {

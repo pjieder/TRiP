@@ -35,7 +35,7 @@ public class AdminDBDAO implements IAdminDBDAO {
 
         try {
             con = DBSettings.getInstance().getConnection();
-            String sql = "SELECT * FROM Employees WHERE Employees.ID = ?;";
+            String sql = "SELECT * FROM Employees WHERE Employees.ID = ? AND Employees.isActive = 1;";
             PreparedStatement stmt = con.prepareStatement(sql);
 
             stmt.setInt(1, id);

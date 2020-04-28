@@ -47,7 +47,7 @@ public interface IDalFacade {
 
     public boolean DeleteTimeToTask(TaskTime taskTime);
 
-    public ObservableList<Employee> loadEmployees();
+    public ObservableList<Employee> loadActiveUsers();
 
     public ObservableList<Task> loadTasks(int userId, int projectId);
 

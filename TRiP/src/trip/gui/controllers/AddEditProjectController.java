@@ -139,7 +139,7 @@ public class AddEditProjectController implements Initializable {
     }
 
     private void updateCheckBox() {
-        ObservableList<Employee> updatedCombo = appModel.loadUsers();
+        ObservableList<Employee> updatedCombo = appModel.loadActiveUsers();
 
         for (Employee employee : activeUsersList.getItems()) {
             updatedCombo.remove(employee);
@@ -162,7 +162,7 @@ public class AddEditProjectController implements Initializable {
 
     public void setUpdateThread(Thread thread) {
         this.updateThread = thread;
-        activeUsersCBox.setItems(appModel.loadUsers());
+        activeUsersCBox.setItems(appModel.loadActiveUsers());
     }
 
     public void setProject(Thread thread, Project project) {

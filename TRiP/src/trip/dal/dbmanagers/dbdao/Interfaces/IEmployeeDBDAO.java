@@ -25,6 +25,8 @@ public interface IEmployeeDBDAO {
     public boolean createEmployee(Employee employee, String password);
 
     public boolean updateEmployee(Employee employee);
+    
+    public boolean deleteEmployee(Employee employee);
 
     public void createPassword(String userName, String password, int ID);
 
@@ -47,7 +49,11 @@ public interface IEmployeeDBDAO {
      */
     public Roles getRoleById(int id);
 
-    public ObservableList<Employee> loadEmployees();
+    public ObservableList<Employee> loadActiveUsers();
+    
+    public void updateEmployeeActive(int employeeId, boolean active);
+    
+    public ObservableList<Employee> loadInactiveUsers();
 
     public void addEmployeeToProject(int employeeID, int projID);
 

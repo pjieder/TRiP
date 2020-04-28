@@ -36,6 +36,10 @@ public class AppModel {
         employeeManager.createUser(employee, password);
     }
 
+    public void deleteEmployee(Employee employee) {
+        employeeManager.deleteEmployee(employee);
+    }
+
     public void updateEmployee(Employee employee) {
         employeeManager.updateEmployee(employee);
     }
@@ -44,8 +48,16 @@ public class AppModel {
         employeeManager.updatePassword(username, password, id);
     }
 
-    public ObservableList<Employee> loadUsers() {
-        return employeeManager.loadEmployees();
+    public ObservableList<Employee> loadActiveUsers() {
+        return employeeManager.loadActiveUsers();
+    }
+
+    public void updateEmployeeActive(int employeeId, boolean active) {
+        employeeManager.updateEmployeeActive(employeeId, active);
+    }
+
+    public ObservableList<Employee> loadInactiveUsers() {
+        return employeeManager.loadInactiveUsers();
     }
 
     public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId) {

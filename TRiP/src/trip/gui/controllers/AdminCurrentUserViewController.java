@@ -9,17 +9,23 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import trip.be.Employee;
+import trip.be.Project;
 import trip.gui.AppModel;
 
 /**
@@ -30,6 +36,7 @@ import trip.gui.AppModel;
 public class AdminCurrentUserViewController implements Initializable {
 
     private AppModel appModel = new AppModel();
+    private boolean isLastOnActive = true;
 
     @FXML
     private JFXListView<Employee> userList;
@@ -43,6 +50,10 @@ public class AdminCurrentUserViewController implements Initializable {
     private ImageView inactiveArrow;
     @FXML
     private JFXButton deleteButton;
+    @FXML
+    private JFXButton makeInactivebtn;
+    @FXML
+    private JFXButton makeActivebtn;
 
     /**
      * Initializes the controller class.
@@ -54,14 +65,23 @@ public class AdminCurrentUserViewController implements Initializable {
 
     public Thread getUpdateListThread() {
         Thread updateThread = new Thread(() -> {
-            loadUsers();
+
+            Platform.runLater(() -> {
+                if (isLastOnActive == true) {
+                    userList.setItems(appModel.loadActiveUsers());
+                } else {
+                    userList.setItems(appModel.loadInactiveUsers());
+                }
+                userList.refresh();
+            });
+
         });
 
         return updateThread;
     }
 
     public void loadUsers() {
-        userList.setItems(appModel.loadUsers());
+        userList.setItems(appModel.loadActiveUsers());
     }
 
     @FXML
@@ -124,7 +144,10 @@ public class AdminCurrentUserViewController implements Initializable {
         activeArrow.setVisible(false);
         inactiveArrow.setVisible(true);
         deleteButton.setVisible(true);
-//        userList.setItems(projectModel.loadAllInactiveProjects());
+        makeInactivebtn.setVisible(false);
+        makeActivebtn.setVisible(true);
+        isLastOnActive = false;
+        userList.setItems(appModel.loadInactiveUsers());
         userList.refresh();
     }
 
@@ -135,11 +158,50 @@ public class AdminCurrentUserViewController implements Initializable {
         activeArrow.setVisible(true);
         inactiveArrow.setVisible(false);
         deleteButton.setVisible(false);
-        userList.setItems(appModel.loadUsers());
+        makeInactivebtn.setVisible(true);
+        makeActivebtn.setVisible(false);
+        isLastOnActive = true;
+        userList.setItems(appModel.loadActiveUsers());
         userList.refresh();
     }
 
     @FXML
-    private void deleteProject(ActionEvent event) {
+    private void makeUserInactive(ActionEvent event) {
+
+        if (!userList.getSelectionModel().isEmpty()) {
+            appModel.updateEmployeeActive(userList.getSelectionModel().getSelectedItem().getId(), false);
+            getUpdateListThread().start();
+        }
+
+    }
+
+    @FXML
+    private void makeUserActive(ActionEvent event) {
+
+        if (!userList.getSelectionModel().isEmpty()) {
+            appModel.updateEmployeeActive(userList.getSelectionModel().getSelectedItem().getId(), true);
+            getUpdateListThread().start();
+        }
+    }
+
+    @FXML
+    private void deleteUser(ActionEvent event) {
+        if (!userList.getSelectionModel().isEmpty()) {
+
+            Employee selectedEmployee = userList.getSelectionModel().getSelectedItem();
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.initStyle(StageStyle.UTILITY);
+            alert.setTitle("Confirm delete");
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure you want to delete this project? All logged time will no longer be accessable. Proceed?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                userList.getItems().remove(selectedEmployee);
+                appModel.deleteEmployee(selectedEmployee);
+            } else {
+            }
+
+        }
     }
 }

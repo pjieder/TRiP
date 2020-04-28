@@ -40,8 +40,8 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
         Connection con = null;
         try {
             con = DBSettings.getInstance().getConnection();
-            String sql = "INSERT INTO Employees (fName, lName, email, isAdmin) "
-                    + "VALUES (?,?,?,?);";
+            String sql = "INSERT INTO Employees (fName, lName, email, isAdmin, isActive) "
+                    + "VALUES (?,?,?,?,?);";
             PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             stmt.setString(1, employee.getfName());
@@ -52,7 +52,7 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
             } else {
                 stmt.setBoolean(4, false);
             }
-
+            stmt.setBoolean(5, true);
             int updatedRows = stmt.executeUpdate();
 
             ResultSet generatedKeys = stmt.getGeneratedKeys();
@@ -87,6 +87,27 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
                 stmt.setBoolean(4, false);
             }
             stmt.setInt(5, employee.getId());
+
+            int updatedRows = stmt.executeUpdate();
+
+            return updatedRows > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteEmployee(Employee employee) {
+        Connection con = null;
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "DELETE FROM Employees WHERE ID = ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, employee.getId());
 
             int updatedRows = stmt.executeUpdate();
 
@@ -230,14 +251,14 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
     }
 
     @Override
-    public ObservableList<Employee> loadEmployees() {
+    public ObservableList<Employee> loadActiveUsers() {
 
         Connection con = null;
         ObservableList<Employee> employees = FXCollections.observableArrayList();
 
         try {
             con = DBSettings.getInstance().getConnection();
-            String sql = "SELECT * FROM Employees;";
+            String sql = "SELECT * FROM Employees WHERE Employees.isActive = 1;";
             PreparedStatement stmt = con.prepareStatement(sql);
 
             ResultSet rs = stmt.executeQuery();
@@ -269,6 +290,68 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
             DBSettings.getInstance().releaseConnection(con);
         }
 
+        return employees;
+    }
+
+    @Override
+    public void updateEmployeeActive(int employeeId, boolean active) {
+        Connection con = null;
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "UPDATE Employees SET isActive = ? WHERE ID = ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setBoolean(1, active);
+            stmt.setInt(2, employeeId);
+
+            stmt.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+    }
+
+    @Override
+    public ObservableList<Employee> loadInactiveUsers() {
+
+        Connection con = null;
+        ObservableList<Employee> employees = FXCollections.observableArrayList();
+
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "SELECT * FROM Employees WHERE Employees.isActive = 0;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                int id = rs.getInt("ID");
+                String fname = rs.getString("fName");
+                String lname = rs.getString("lName");
+                String email = rs.getString("email");
+                boolean isAdmin = rs.getBoolean("isAdmin");
+
+                Employee employee;
+
+                if (isAdmin == true) {
+                    employee = new Admin(fname, lname, email);
+                } else {
+                    employee = new User(fname, lname, email);
+                }
+                employee.setId(id);
+                employees.add(employee);
+            }
+
+            return employees;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
         return employees;
     }
 
@@ -356,4 +439,5 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
 
         return employees;
     }
+
 }

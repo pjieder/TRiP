@@ -56,7 +56,7 @@
             <Image url="@../images/plus%20(4).png" />
          </image>
       </ImageView>
-      <JFXListView fx:id="activeUsersList" layoutX="85.0" layoutY="384.0" prefHeight="206.0" prefWidth="296.0" />
+      <JFXListView fx:id="activeUsersList" layoutX="85.0" layoutY="384.0" prefHeight="206.0" prefWidth="296.0" stylesheets="@../styles/AddEditProjects.css" />
       <Label fx:id="removeUser" layoutX="305.0" layoutY="598.0" onMouseClicked="#removeUser" text="Remove User">
          <cursor>
             <Cursor fx:constant="HAND" />

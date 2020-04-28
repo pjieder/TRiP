@@ -155,7 +155,23 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <JFXButton fx:id="deleteButton" layoutX="210.0" layoutY="684.0" onAction="#deleteProject" prefHeight="31.0" prefWidth="114.0" stylesheets="@../styles/MainAdminView.css" text="Delete project" textFill="WHITE" visible="false">
+      <JFXButton fx:id="deleteButton" layoutX="328.0" layoutY="684.0" onAction="#deleteUser" prefHeight="31.0" prefWidth="114.0" stylesheets="@../styles/MainAdminView.css" text="Delete user" textFill="WHITE" visible="false">
+         <font>
+            <Font size="15.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton fx:id="makeInactivebtn" layoutX="210.0" layoutY="684.0" onAction="#makeUserInactive" stylesheets="@../styles/MainAdminView.css" text="Make Inactive" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton fx:id="makeActivebtn" layoutX="210.0" layoutY="684.0" onAction="#makeUserActive" prefHeight="31.0" prefWidth="112.0" stylesheets="@../styles/MainAdminView.css" text="Make Active" textFill="WHITE" visible="false">
          <font>
             <Font size="15.0" />
          </font>

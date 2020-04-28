@@ -41,6 +41,7 @@ public class MainAdminViewController implements Initializable {
 
     private AppModel appModel = new AppModel();
     private ProjectModel projectModel = new ProjectModel();
+    private boolean isLastOnActive = true;
 
     @FXML
     private TableView<Project> projectTable;
@@ -160,7 +161,11 @@ public class MainAdminViewController implements Initializable {
                 -> {
             Platform.runLater(()
                     -> {
-                projectTable.setItems(projectModel.loadAllActiveProjects());
+                if (isLastOnActive == true) {
+                    projectTable.setItems(projectModel.loadAllActiveProjects());
+                } else {
+                    projectTable.setItems(projectModel.loadAllInactiveProjects());
+                }
                 projectTable.refresh();
             });
         });
@@ -175,6 +180,7 @@ public class MainAdminViewController implements Initializable {
         activeArrow.setVisible(false);
         inactiveArrow.setVisible(true);
         deleteButton.setVisible(true);
+        isLastOnActive = false;
         projectTable.setItems(projectModel.loadAllInactiveProjects());
         projectTable.refresh();
     }
@@ -186,6 +192,7 @@ public class MainAdminViewController implements Initializable {
         activeArrow.setVisible(true);
         inactiveArrow.setVisible(false);
         deleteButton.setVisible(false);
+        isLastOnActive = true;
         projectTable.setItems(projectModel.loadAllActiveProjects());
         projectTable.refresh();
     }
@@ -194,9 +201,9 @@ public class MainAdminViewController implements Initializable {
     private void deleteProject(ActionEvent event) {
 
         if (!projectTable.getSelectionModel().isEmpty()) {
-            
+
             Project selectedProject = projectTable.getSelectionModel().getSelectedItem();
-            
+
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.initStyle(StageStyle.UTILITY);
             alert.setTitle("Confirm delete");

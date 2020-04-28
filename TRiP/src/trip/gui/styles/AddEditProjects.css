@@ -35,12 +35,21 @@ and open the template in the editor.
 .login-button
 {
     -fx-background-color: #9a80fe;
-
-
-   
 }
+
 .login-button:hover
 {
     -fx-background-color: #b49afd;
-    
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color: #9a80fe;
+}
+
+.jfx-rippler {
+    -jfx-rippler-fill: #b49afd;
+}
+
+.list-view {
+    -fx-border-color: #9a80fe;
 }

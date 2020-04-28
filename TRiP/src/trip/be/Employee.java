@@ -20,12 +20,14 @@ public abstract class Employee {
     private String lName;
     private String email;
     private ObservableList<Project> projects = FXCollections.observableArrayList();
+    private boolean Active;
 
     public Employee(String fName, String lName, String email, Roles role) {
         this.fName = fName;
         this.lName = lName;
         this.email = email;
         this.role = role;
+        this.Active = true;
     }
 
     public int getId() {
@@ -74,6 +76,14 @@ public abstract class Employee {
 
     public void setProjects(ObservableList<Project> projects) {
         this.projects = projects;
+    }
+
+    public boolean isActive() {
+        return Active;
+    }
+
+    public void setIsActive(boolean Active) {
+        this.Active = Active;
     }
 
     @Override
