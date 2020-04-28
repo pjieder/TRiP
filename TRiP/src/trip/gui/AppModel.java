@@ -63,4 +63,12 @@ public class AppModel {
     public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId) {
         return employeeManager.loadEmployeesAssignedToProject(projectId);
     }
+
+    public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId, boolean isActive) {
+        return employeeManager.loadEmployeesAssignedToProject(projectId, isActive);
+    }
+
+    public ObservableList<Employee> searchEmployee(String employeeName, ObservableList<Employee> employeeList) {
+        return employeeManager.searchEmployee(employeeName, employeeList);
+    }
 }

@@ -440,4 +440,49 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
         return employees;
     }
 
+    @Override
+    public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId, boolean isActive) {
+
+        Connection con = null;
+        ObservableList<Employee> employees = FXCollections.observableArrayList();
+
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "SELECT * FROM Employees JOIN Projects on Projects.employeeID = Employees.ID WHERE Projects.projID = ? AND Employees.isActive = ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, projectId);
+            stmt.setBoolean(2, isActive);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                int id = rs.getInt("ID");
+                String fname = rs.getString("fName");
+                String lname = rs.getString("lName");
+                String email = rs.getString("email");
+                boolean isAdmin = rs.getBoolean("isAdmin");
+
+                Employee employee;
+
+                if (isAdmin == true) {
+                    employee = new Admin(fname, lname, email);
+                } else {
+                    employee = new User(fname, lname, email);
+                }
+                employee.setId(id);
+                employees.add(employee);
+            }
+
+            return employees;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+
+        return employees;
+    }
+
 }

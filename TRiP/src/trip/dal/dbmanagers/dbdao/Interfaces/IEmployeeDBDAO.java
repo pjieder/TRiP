@@ -60,4 +60,6 @@ public interface IEmployeeDBDAO {
     public void removeAllEmployeesFromProject(int projID);
 
     public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId);
+    
+    public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId, boolean isActive);
 }

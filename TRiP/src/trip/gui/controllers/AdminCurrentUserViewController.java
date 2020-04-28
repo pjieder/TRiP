@@ -12,6 +12,8 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,14 +21,18 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import trip.be.Employee;
 import trip.be.Project;
 import trip.gui.AppModel;
+import trip.gui.models.ProjectModel;
 
 /**
  * FXML Controller class
@@ -36,7 +42,9 @@ import trip.gui.AppModel;
 public class AdminCurrentUserViewController implements Initializable {
 
     private AppModel appModel = new AppModel();
+    private ProjectModel projectModel = new ProjectModel();
     private boolean isLastOnActive = true;
+    private ObservableList<Employee> employees = FXCollections.observableArrayList();
 
     @FXML
     private JFXListView<Employee> userList;
@@ -54,6 +62,10 @@ public class AdminCurrentUserViewController implements Initializable {
     private JFXButton makeInactivebtn;
     @FXML
     private JFXButton makeActivebtn;
+    @FXML
+    private ComboBox<Project> projectComboBox;
+    @FXML
+    private TextField searchBar;
 
     /**
      * Initializes the controller class.
@@ -67,12 +79,8 @@ public class AdminCurrentUserViewController implements Initializable {
         Thread updateThread = new Thread(() -> {
 
             Platform.runLater(() -> {
-                if (isLastOnActive == true) {
-                    userList.setItems(appModel.loadActiveUsers());
-                } else {
-                    userList.setItems(appModel.loadInactiveUsers());
-                }
-                userList.refresh();
+              setProject();
+              search();
             });
 
         });
@@ -81,7 +89,11 @@ public class AdminCurrentUserViewController implements Initializable {
     }
 
     public void loadUsers() {
-        userList.setItems(appModel.loadActiveUsers());
+        employees = appModel.loadActiveUsers();
+        userList.setItems(employees);
+        projectComboBox.setItems(projectModel.loadAllActiveProjects());
+        projectComboBox.getItems().add(0, new Project("All projects", 0));
+        projectComboBox.getSelectionModel().select(0);
     }
 
     @FXML
@@ -147,8 +159,7 @@ public class AdminCurrentUserViewController implements Initializable {
         makeInactivebtn.setVisible(false);
         makeActivebtn.setVisible(true);
         isLastOnActive = false;
-        userList.setItems(appModel.loadInactiveUsers());
-        userList.refresh();
+        getUpdateListThread().start();
     }
 
     @FXML
@@ -161,8 +172,7 @@ public class AdminCurrentUserViewController implements Initializable {
         makeInactivebtn.setVisible(true);
         makeActivebtn.setVisible(false);
         isLastOnActive = true;
-        userList.setItems(appModel.loadActiveUsers());
-        userList.refresh();
+        getUpdateListThread().start();
     }
 
     @FXML
@@ -172,7 +182,6 @@ public class AdminCurrentUserViewController implements Initializable {
             appModel.updateEmployeeActive(userList.getSelectionModel().getSelectedItem().getId(), false);
             getUpdateListThread().start();
         }
-
     }
 
     @FXML
@@ -197,11 +206,48 @@ public class AdminCurrentUserViewController implements Initializable {
             alert.setContentText("Are you sure you want to delete this project? All logged time will no longer be accessable. Proceed?");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
-                userList.getItems().remove(selectedEmployee);
+                employees.remove(selectedEmployee);
                 appModel.deleteEmployee(selectedEmployee);
             } else {
             }
-
         }
     }
+
+    @FXML
+    private void sortProject(ActionEvent event) {
+        setProject();
+        search();
+    }
+
+     @FXML
+    private void userSearch(KeyEvent event) {
+        search();
+    }
+
+    private void setProject() {
+        Project project = projectComboBox.getValue();
+
+        if (project.getId() == 0) {
+            if (isLastOnActive) {
+                employees = appModel.loadActiveUsers();
+            } else {
+                employees = appModel.loadInactiveUsers();
+            }
+        } else {
+            employees = appModel.loadEmployeesAssignedToProject(project.getId(), isLastOnActive);
+        }
+    }
+
+    private void search() {
+        String userName = searchBar.getText();
+
+        if (userName.equalsIgnoreCase("")) {
+            userList.setItems(employees);
+        } else {
+            userList.setItems(appModel.searchEmployee(userName, employees));
+        }
+    }
+
+
+
 }

@@ -5,6 +5,7 @@
  */
 package trip.bll;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import trip.be.Employee;
 import trip.dal.dbmanagers.dbdao.EmployeeDBDAO;
@@ -44,33 +45,49 @@ public class EmployeeManager {
     public void updateEmployee(Employee employee) {
         dalFacade.updateEmployee(employee);
     }
-    
+
     public void deleteEmployee(Employee employee) {
         employeeDAO.deleteEmployee(employee);
     }
-    
+
     public void updatePassword(String username, String password, int id) {
         dalFacade.updatePassword(username, password, id);
     }
-    
+
     public ObservableList<Employee> loadActiveUsers() {
         return dalFacade.loadActiveUsers();
     }
-    
-    public void updateEmployeeActive(int employeeId, boolean active)
-    {
+
+    public void updateEmployeeActive(int employeeId, boolean active) {
         employeeDAO.updateEmployeeActive(employeeId, active);
     }
-    
-    public ObservableList<Employee> loadInactiveUsers()
-    {
+
+    public ObservableList<Employee> loadInactiveUsers() {
         return employeeDAO.loadInactiveUsers();
     }
-    
-    
-    public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId)
-    {
+
+    public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId) {
         return dalFacade.loadEmployeesAssignedToProject(projectId);
+    }
+
+    public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId, boolean isActive) {
+        return dalFacade.loadEmployeesAssignedToProject(projectId, isActive);
+    }
+
+    public ObservableList<Employee> searchEmployee(String employeeName, ObservableList<Employee> employeeList) {
+
+        ObservableList<Employee> searchEmployeeList = FXCollections.observableArrayList();
+
+        for (Employee employee : employeeList) {
+
+            String name = employee.getfName() + " " + employee.getlName();
+
+            if (name.toLowerCase().contains(employeeName.toLowerCase())) {
+
+                searchEmployeeList.add(employee);
+            }
+        }
+        return searchEmployeeList;
     }
 
 }

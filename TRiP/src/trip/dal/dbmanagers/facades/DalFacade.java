@@ -181,4 +181,9 @@ public class DalFacade implements IDalFacade {
     public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId) {
         return employeeManager.loadEmployeesAssignedToProject(projectId);
     }
+    
+        @Override
+    public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId, boolean isActive) {
+        return employeeManager.loadEmployeesAssignedToProject(projectId, isActive);
+    }
 }

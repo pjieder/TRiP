@@ -62,4 +62,6 @@ public interface IDalFacade {
     public void updateProject(Project project, List<Employee> allEmployees);
     
     public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId);
+    
+    public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId, boolean isActive);
 }
