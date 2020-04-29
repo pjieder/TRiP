@@ -31,6 +31,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -75,8 +76,6 @@ public class MainUserViewController implements Initializable {
     private TableColumn<TaskTime, String> startColumn;
     @FXML
     private TableColumn<TaskTime, String> endColumn;
-    @FXML
-    private VBox menuBar;
     @FXML
     private TextField newTaskTitle;
     @FXML
@@ -153,9 +152,6 @@ public class MainUserViewController implements Initializable {
         });
 
         loadProjects();
-        Platform.runLater(() -> {
-            setupCloseRequest();
-        });
     }
 
     public void setAdmin(Project project) {
@@ -217,10 +213,12 @@ public class MainUserViewController implements Initializable {
         } else {
             timer.startTimer(taskList.getSelectionModel().getSelectedItem().getId(), timerLabel);
         }
-
+        
         startTimer.setVisible(false);
         stopTimer.setVisible(true);
         cancelTimer.setVisible(true);
+        
+        setupCloseRequest();
     }
 
     @FXML
@@ -329,7 +327,8 @@ public class MainUserViewController implements Initializable {
     public void setupCloseRequest() {
 
         Stage appStage = (Stage) taskList.getScene().getWindow();
-
+        if (appStage.getOnCloseRequest() == null)
+        {
         appStage.setOnCloseRequest((e) -> {
             System.out.println("Closing thread");
             if (timer.isEnabled()) {
@@ -337,6 +336,7 @@ public class MainUserViewController implements Initializable {
                 System.out.println("Closed");
             }
         });
+        }
     }
 
     @FXML

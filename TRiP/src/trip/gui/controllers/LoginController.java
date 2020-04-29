@@ -139,26 +139,21 @@ public class LoginController implements Initializable {
                 loggedUser = employeeToValidate;
                 Platform.runLater(() -> {
 
-                    try
-                    {
-                    
-                    FXMLLoader fxmlLoader = new FXMLLoader();
-                    fxmlLoader.setLocation(AppModel.class.getResource("views/MenuBarView.fxml"));
-                    Scene scene = new Scene(fxmlLoader.load());
-                    Stage stage = (Stage) rememberMe.getScene().getWindow();
-                    MenuBarViewController controller = fxmlLoader.getController();
-                    
-                    if (employeeToValidate.getRole().equals(Roles.USER)) {
-                        controller.setUser();
-                    } else if (employeeToValidate.getRole().equals(Roles.ADMIN)) {
-                        controller.setAdmin();
+                    try {
+                        FXMLLoader fxmlLoader = new FXMLLoader();
+                        fxmlLoader.setLocation(AppModel.class.getResource("views/MenuBarView.fxml"));
+                        Scene scene = new Scene(fxmlLoader.load());
+                        Stage stage = (Stage) rememberMe.getScene().getWindow();
+                        MenuBarViewController controller = fxmlLoader.getController();
+
+                        if (employeeToValidate.getRole().equals(Roles.USER)) {
+                            controller.setUser(stage, scene);
+                        } else if (employeeToValidate.getRole().equals(Roles.ADMIN)) {
+                            controller.setAdmin(stage, scene);
+                        }
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
                     }
-                    
-                    stage.setScene(scene);
-                    stage.show();
-                    
-                    }
-                    catch (IOException ex){ex.printStackTrace();}
                 });
             }
         });

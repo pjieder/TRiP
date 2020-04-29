@@ -9,6 +9,9 @@ import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -59,68 +62,138 @@ public class MenuBarViewController implements Initializable {
         // TODO
     }
 
-    public void setAdmin() throws IOException {
+    public void setAdmin(Stage stage, Scene scene) throws IOException {
+        Thread thread = new Thread(() -> {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(AppModel.class.getResource("views/MainAdminView.fxml"));
+                Pane adminPane = fxmlLoader.load();
+                MainAdminViewController controller = fxmlLoader.getController();
+                controller.loadAllProjects();
+                pane.getChildren().add(adminPane);
 
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(AppModel.class.getResource("views/MainAdminView.fxml"));
-        Pane adminPane = fxmlLoader.load();
-        MainAdminViewController controller = fxmlLoader.getController();
-        controller.loadAllProjects();
-        pane.getChildren().add(adminPane);
-        viewPane = this.pane;
+                Platform.runLater(() -> {
+                    stage.setScene(scene);
+                    stage.show();
+                });
+                viewPane = this.pane;
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        thread.start();
     }
 
-    public void setUser() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(AppModel.class.getResource("views/MainUserView.fxml"));
-        Pane userPane = fxmlLoader.load();
-        pane.getChildren().add(userPane);
-        viewPane = this.pane;
-        vBox.getChildren().removeAll();
-        vBox.getChildren().setAll(logOutTab);
+    public void setUser(Stage stage, Scene scene) throws IOException {
+        Thread thread = new Thread(() -> {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(AppModel.class.getResource("views/MainUserView.fxml"));
+                Pane userPane = fxmlLoader.load();
+                pane.getChildren().add(userPane);
+                viewPane = this.pane;
+                vBox.getChildren().removeAll();
+                vBox.getChildren().setAll(logOutTab);
+
+                Platform.runLater(() -> {
+                    stage.setScene(scene);
+                    stage.show();
+                });
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        thread.start();
     }
 
     @FXML
     private void openProjectsView(MouseEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(AppModel.class.getResource("views/MainAdminView.fxml"));
-        Parent fxml = fxmlLoader.load();
-        MainAdminViewController controller = fxmlLoader.getController();
-        controller.loadAllProjects();
-        pane.getChildren().removeAll();
-        pane.getChildren().setAll(fxml);
+        Thread thread = new Thread(() -> {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(AppModel.class.getResource("views/MainAdminView.fxml"));
+                Parent fxml = fxmlLoader.load();
+                MainAdminViewController controller = fxmlLoader.getController();
+                controller.loadAllProjects();
+                Platform.runLater(() -> {
+                    pane.getChildren().removeAll();
+                    pane.getChildren().setAll(fxml);
+                });
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        thread.start();
     }
 
     @FXML
-    private void openCustomerView(MouseEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(AppModel.class.getResource("views/AdminCustomerView.fxml"));
-        Parent fxml = fxmlLoader.load();
-        AdminCustomerViewController controller = fxmlLoader.getController();
-        controller.loadAllCustomers();
-        pane.getChildren().removeAll();
-        pane.getChildren().setAll(fxml);
+    private void openCustomerView(MouseEvent event) {
+        Thread thread = new Thread(() -> {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(AppModel.class.getResource("views/AdminCustomerView.fxml"));
+                Parent fxml = fxmlLoader.load();
+                AdminCustomerViewController controller = fxmlLoader.getController();
+                controller.loadAllCustomers();
+                Platform.runLater(() -> {
+                    pane.getChildren().removeAll();
+                    pane.getChildren().setAll(fxml);
+                });
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        thread.start();
     }
 
     @FXML
     private void openUserView(MouseEvent event) throws IOException {
-        Parent fxml = FXMLLoader.load(AppModel.class.getResource("views/AdminCurrentUserView.fxml"));
-        pane.getChildren().removeAll();
-        pane.getChildren().setAll(fxml);
+        Thread thread = new Thread(() -> {
+            try {
+                Parent fxml = FXMLLoader.load(AppModel.class.getResource("views/AdminCurrentUserView.fxml"));
+                Platform.runLater(() -> {
+                    pane.getChildren().removeAll();
+                    pane.getChildren().setAll(fxml);
+                });
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        thread.start();
     }
 
     @FXML
     private void openStatisticsView(MouseEvent event) throws IOException, IOException {
-        Parent fxml = FXMLLoader.load(AppModel.class.getResource("views/AdminStatisticsView.fxml"));
-        pane.getChildren().removeAll();
-        pane.getChildren().setAll(fxml);
+        Thread thread = new Thread(() -> {
+            try {
+                Parent fxml = FXMLLoader.load(AppModel.class.getResource("views/AdminStatisticsView.fxml"));
+                Platform.runLater(() -> {
+                    pane.getChildren().removeAll();
+                    pane.getChildren().setAll(fxml);
+                });
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        thread.start();
     }
 
     @FXML
     private void openTimeTrackingView(MouseEvent event) throws IOException {
-        Parent fxml = FXMLLoader.load(AppModel.class.getResource("views/MainUserView.fxml"));
-        pane.getChildren().removeAll();
-        pane.getChildren().setAll(fxml);
+        Thread thread = new Thread(() -> {
+            try {
+                Parent fxml = FXMLLoader.load(AppModel.class.getResource("views/MainUserView.fxml"));
+                Platform.runLater(() -> {
+                    pane.getChildren().removeAll();
+                    pane.getChildren().setAll(fxml);
+                });
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        thread.start();
     }
 
     @FXML
@@ -130,12 +203,22 @@ public class MenuBarViewController implements Initializable {
 
     @FXML
     private void logOut(MouseEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(AppModel.class.getResource("views/Login.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage stage = (Stage) AP.getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        Thread thread = new Thread(() -> {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(AppModel.class.getResource("views/Login.fxml"));
+                Scene scene = new Scene(fxmlLoader.load());
+                Stage stage = (Stage) AP.getScene().getWindow();
+                Platform.runLater(() -> {
+
+                    stage.setScene(scene);
+                    stage.show();
+                });
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        thread.start();
     }
 
 }
