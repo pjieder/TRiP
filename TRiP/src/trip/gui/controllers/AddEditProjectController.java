@@ -18,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import trip.be.Customer;
@@ -87,6 +88,22 @@ public class AddEditProjectController implements Initializable {
             addUserToProject();
         });
 
+        activeUsersList.setCellFactory(param -> new ListCell<Employee>() {
+            @Override
+            protected void updateItem(Employee employee, boolean empty) {
+                super.updateItem(employee, empty);
+                if (empty || employee == null) {
+                    setText(null);
+                } else {
+                    if (employee.isActive() == false) {
+                        setText(employee.toString() + " [user inactive]");
+                    } else {
+                        setText(employee.toString());
+                    }
+                }
+            }
+        });
+        
     }
 
     private void validateInput() {

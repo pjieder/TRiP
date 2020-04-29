@@ -417,6 +417,7 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
                 String lname = rs.getString("lName");
                 String email = rs.getString("email");
                 boolean isAdmin = rs.getBoolean("isAdmin");
+                boolean isActive = rs.getBoolean("isActive");
 
                 Employee employee;
 
@@ -426,6 +427,7 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
                     employee = new User(fname, lname, email);
                 }
                 employee.setId(id);
+                employee.setIsActive(isActive);
                 employees.add(employee);
             }
 
