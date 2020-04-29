@@ -16,16 +16,14 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="735.0" prefWidth="1261.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.gui.controllers.MainUserViewController">
+<AnchorPane id="AnchorPane" prefHeight="735.0" prefWidth="972.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.gui.controllers.MainUserViewController">
    <children>
-      <TableView fx:id="taskList" layoutX="229.0" layoutY="243.0" onMouseClicked="#showTime" prefHeight="445.0" prefWidth="422.0" stylesheets="@../styles/MainUserViewCSS.css">
+      <TableView fx:id="taskList" layoutX="60.0" layoutY="236.0" onMouseClicked="#showTime" prefHeight="445.0" prefWidth="409.0" stylesheets="@../styles/MainUserViewCSS.css">
         <columns>
-          <TableColumn fx:id="nameColumn" prefWidth="302.0" text="Task">
+          <TableColumn fx:id="nameColumn" prefWidth="294.0" text="Task">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -33,7 +31,7 @@
                      </image>
                   </ImageView>
                </graphic></TableColumn>
-          <TableColumn fx:id="timeColumn" prefWidth="119.0" text="Time">
+          <TableColumn fx:id="timeColumn" prefWidth="114.0" text="Time">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -43,53 +41,24 @@
                </graphic></TableColumn>
         </columns>
       </TableView>
-      <VBox fx:id="menuBar" layoutY="2.0" prefHeight="735.0" prefWidth="139.0" style="-fx-background-color: #f9f9f9;">
-         <children>
-            <JFXButton alignment="BOTTOM_LEFT" onMouseClicked="#open_time_view" prefHeight="39.0" prefWidth="162.0" styleClass="menubar4" stylesheets="@../styles/MenuBarCSS.css" text=" Time Tracker">
-               <graphic>
-                  <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/calendar%20(3).png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </JFXButton>
-            <JFXButton alignment="BOTTOM_LEFT" onMouseClicked="#log_out" prefHeight="39.0" prefWidth="209.0" styleClass="menubar6" stylesheets="@../styles/MenuBarCSS.css" text=" Log out">
-               <graphic>
-                  <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/smart-key.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </JFXButton>
-         </children>
-      </VBox>
-      <StackPane layoutX="326.0" layoutY="120.0" prefHeight="150.0" prefWidth="200.0" />
-      <GridPane layoutX="229.0" layoutY="151.0" prefHeight="44.0" prefWidth="908.0">
+      <GridPane layoutX="60.0" layoutY="144.0" prefHeight="44.0" prefWidth="852.0">
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="426.0" minWidth="10.0" prefWidth="423.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="276.0" minWidth="10.0" prefWidth="20.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="480.0" minWidth="10.0" prefWidth="272.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="289.0" minWidth="0.0" prefWidth="10.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.0" minWidth="10.0" prefWidth="95.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.0" minWidth="10.0" prefWidth="90.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="426.0" minWidth="10.0" prefWidth="343.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="276.0" minWidth="10.0" prefWidth="19.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="480.0" minWidth="10.0" prefWidth="319.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="289.0" minWidth="0.0" prefWidth="9.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.0" minWidth="10.0" prefWidth="80.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.0" minWidth="10.0" prefWidth="82.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField fx:id="newTaskTitle" prefHeight="44.0" prefWidth="405.0" promptText="What are you working on?">
+            <TextField fx:id="newTaskTitle" prefHeight="66.0" prefWidth="311.0" promptText="What are you working on?">
                <font>
                   <Font size="15.0" />
                </font></TextField>
-            <ComboBox fx:id="projectComboBox" onAction="#switchProject" prefHeight="44.0" prefWidth="259.0" promptText="Project" style="-fx-background-color: #f1f1f1;" stylesheets="@../styles/MainUserViewCSS.css" GridPane.columnIndex="2" />
+            <ComboBox fx:id="projectComboBox" onAction="#switchProject" prefHeight="44.0" prefWidth="302.0" promptText="Project" style="-fx-background-color: #f1f1f1;" stylesheets="@../styles/MainUserViewCSS.css" GridPane.columnIndex="2" />
             <Line endX="-100.0" endY="26.0" opacity="0.35" startX="-100.0" startY="-9.0" GridPane.columnIndex="3" />
             <JFXButton fx:id="startTimer" disable="true" onAction="#startTimer" prefHeight="44.0" prefWidth="73.0" stylesheets="@../styles/MainUserViewCSS.css" text="Start" textFill="WHITE" GridPane.columnIndex="5">
                <font>
@@ -111,7 +80,7 @@
             </JFXButton>
          </children>
       </GridPane>
-      <GridPane fx:id="addTiimerPane" layoutX="229.0" layoutY="84.0" prefHeight="44.0" prefWidth="902.0">
+      <GridPane fx:id="addTiimerPane" layoutX="60.0" layoutY="77.0" prefHeight="44.0" prefWidth="852.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="426.0" minWidth="10.0" prefWidth="177.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="426.0" minWidth="0.0" prefWidth="9.0" />
@@ -120,15 +89,15 @@
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.0" minWidth="0.0" prefWidth="133.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.0" minWidth="10.0" prefWidth="126.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.0" minWidth="0.0" prefWidth="12.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.0" minWidth="0.0" prefWidth="97.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.0" minWidth="10.0" prefWidth="84.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.0" minWidth="0.0" prefWidth="85.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.0" minWidth="10.0" prefWidth="86.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
             <ComboBox fx:id="tasks" onAction="#validateAddTask" prefHeight="44.0" prefWidth="234.0" promptText="Task" style="-fx-background-color: #f1f1f1;" stylesheets="@../styles/MainUserViewCSS.css" />
-            <JFXButton fx:id="addTime" disable="true" onAction="#addTime" prefHeight="42.0" prefWidth="72.0" stylesheets="@../styles/MainUserViewCSS.css" text="Add" textFill="WHITE" GridPane.columnIndex="8">
+            <JFXButton fx:id="addTime" disable="true" onAction="#addTime" prefHeight="44.0" prefWidth="73.0" stylesheets="@../styles/MainUserViewCSS.css" text="Add" textFill="WHITE" GridPane.columnIndex="8">
                <font>
                   <Font size="15.0" />
                </font>
@@ -149,7 +118,7 @@
             <JFXDatePicker fx:id="dateStart" defaultColor="#9a80fe" onAction="#validateAddTask" prefHeight="30.0" prefWidth="129.0" promptText="Date" stylesheets="@../styles/MainUserViewCSS.css" GridPane.columnIndex="2" />
             <JFXDatePicker fx:id="dateEnd" defaultColor="#9a80fe" onAction="#validateAddTask" prefHeight="30.0" prefWidth="128.0" promptText="Date" showWeekNumbers="true" stylesheets="@../styles/MainUserViewCSS.css" GridPane.columnIndex="3" />
             <JFXTimePicker fx:id="timeEnd" defaultColor="#9a80fe" onAction="#validateAddTask" prefHeight="30.0" prefWidth="121.0" promptText="End Time" stylesheets="@../styles/MainUserViewCSS.css" GridPane.columnIndex="5" />
-            <JFXTimePicker fx:id="timeStart" defaultColor="#9a80fe" onAction="#validateAddTask" prefHeight="30.0" prefWidth="142.0" promptText="Start Time" stylesheets="@../styles/MainUserViewCSS.css" GridPane.columnIndex="4" />
+            <JFXTimePicker fx:id="timeStart" defaultColor="#9a80fe" onAction="#validateAddTask" prefHeight="30.0" prefWidth="121.0" promptText="Start Time" stylesheets="@../styles/MainUserViewCSS.css" GridPane.columnIndex="4" />
             <Line endX="-100.0" endY="26.0" opacity="0.35" startX="-100.0" startY="-9.0" GridPane.columnIndex="6" />
             <JFXTextField fx:id="timerField" focusColor="#405aa800" text="00:00:00" unFocusColor="#4d4d4d00" GridPane.columnIndex="7">
                <font>
@@ -158,29 +127,29 @@
             </JFXTextField>
          </children>
       </GridPane>
-      <ImageView fitHeight="17.0" fitWidth="17.0" layoutX="1129.0" layoutY="153.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="17.0" fitWidth="17.0" layoutX="914.0" layoutY="146.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/clock.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="17.0" fitWidth="20.0" layoutX="1129.0" layoutY="177.0" opacity="0.41" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="17.0" fitWidth="20.0" layoutX="914.0" layoutY="170.0" opacity="0.41" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/calendar%20(2).png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="17.0" fitWidth="17.0" layoutX="1129.0" layoutY="86.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="17.0" fitWidth="17.0" layoutX="914.0" layoutY="79.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/clock.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="17.0" fitWidth="20.0" layoutX="1129.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="17.0" fitWidth="20.0" layoutX="914.0" layoutY="103.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/calendar%20(2).png" />
          </image>
       </ImageView>
-      <TableView fx:id="taskTimerList" layoutX="724.0" layoutY="243.0" onMouseClicked="#openTaskTime" prefHeight="445.0" prefWidth="422.0" stylesheets="@../styles/MainUserViewCSS.css">
+      <TableView fx:id="taskTimerList" layoutX="522.0" layoutY="236.0" onMouseClicked="#openTaskTime" prefHeight="445.0" prefWidth="409.0" stylesheets="@../styles/MainUserViewCSS.css">
          <columns>
-            <TableColumn fx:id="durationColumn" prefWidth="121.0" text="Duration">
+            <TableColumn fx:id="durationColumn" prefWidth="144.0" text="Duration">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -188,7 +157,7 @@
                      </image>
                   </ImageView>
                </graphic></TableColumn>
-            <TableColumn fx:id="startColumn" prefWidth="171.0" sortable="false" text="Start time">
+            <TableColumn fx:id="startColumn" prefWidth="125.0" sortable="false" text="Start time">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -196,7 +165,7 @@
                      </image>
                   </ImageView>
                </graphic></TableColumn>
-            <TableColumn fx:id="endColumn" prefWidth="129.0" sortable="false" text="End time">
+            <TableColumn fx:id="endColumn" prefWidth="139.0" sortable="false" text="End time">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -206,7 +175,7 @@
                </graphic></TableColumn>
          </columns>
       </TableView>
-      <JFXButton fx:id="cancelTimer" layoutX="1060.0" layoutY="205.0" onAction="#cancelTime" prefHeight="17.0" prefWidth="49.0" stylesheets="@../styles/MainUserViewCSS.css" text="Cancel" textFill="WHITE" visible="false">
+      <JFXButton fx:id="cancelTimer" layoutX="845.0" layoutY="198.0" onAction="#cancelTime" prefHeight="17.0" prefWidth="49.0" stylesheets="@../styles/MainUserViewCSS.css" text="Cancel" textFill="WHITE" visible="false">
          <font>
             <Font size="10.0" />
          </font>

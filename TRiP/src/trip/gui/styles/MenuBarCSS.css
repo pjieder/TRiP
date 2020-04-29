@@ -49,3 +49,10 @@ and open the template in the editor.
     -fx-border-width: 0px 3px 0px 0px;
        
 }
+
+.menubar7:hover{
+    -fx-background-color: #f1f1f1;
+    -fx-border-color: #b4e0fa;
+    -fx-border-width: 0px 3px 0px 0px;
+       
+}
