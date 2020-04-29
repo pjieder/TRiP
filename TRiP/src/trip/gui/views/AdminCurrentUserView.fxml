@@ -13,13 +13,13 @@
 
 <AnchorPane id="AnchorPane" prefHeight="735.0" prefWidth="972.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.gui.controllers.AdminCurrentUserViewController">
    <children>
-      <ComboBox fx:id="projectComboBox" layoutX="473.0" layoutY="60.0" onAction="#sortProject" prefHeight="31.0" prefWidth="241.0" promptText="Projects" style="-fx-background-color: f1f1f1;" styleClass="combo-box" stylesheets="@../styles/AdminCurrentUserCSS.css" />
+      <ComboBox fx:id="projectComboBox" layoutX="442.0" layoutY="60.0" onAction="#sortProject" prefHeight="31.0" prefWidth="208.0" promptText="Projects" style="-fx-background-color: f1f1f1;" styleClass="combo-box" stylesheets="@../styles/AdminCurrentUserCSS.css" />
       <Label layoutX="62.0" layoutY="65.0" text="Current Users">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <JFXButton layoutX="871.0" layoutY="60.0" onAction="#openUpdateUser" prefHeight="31.0" prefWidth="114.0" stylesheets="@../styles/MainAdminView.css" text="Update user" textFill="WHITE">
+      <JFXButton layoutX="811.0" layoutY="60.0" onAction="#openUpdateUser" prefHeight="31.0" prefWidth="104.0" stylesheets="@../styles/MainAdminView.css" text="Update user" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
@@ -27,7 +27,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton layoutX="742.0" layoutY="60.0" onAction="#openAddUser" prefHeight="31.0" prefWidth="114.0" stylesheets="@../styles/MainAdminView.css" text="Register user" textFill="WHITE">
+      <JFXButton layoutX="681.0" layoutY="60.0" onAction="#openAddUser" prefHeight="31.0" prefWidth="114.0" stylesheets="@../styles/MainAdminView.css" text="Register user" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
@@ -40,17 +40,17 @@
             <Image url="@../images/team.png" />
          </image>
       </ImageView>
-      <JFXListView fx:id="userList" layoutX="62.0" layoutY="101.0" prefHeight="565.0" prefWidth="923.0" stylesheets="@../styles/AdminCurrentUserCSS.css" />
-      <TextField fx:id="searchBar" layoutX="210.0" layoutY="60.0" onKeyTyped="#userSearch" prefHeight="31.0" prefWidth="241.0" promptText="Search" style="-fx-background-color: f1f1f1;">
+      <JFXListView fx:id="userList" layoutX="67.0" layoutY="117.0" prefHeight="551.0" prefWidth="852.0" stylesheets="@../styles/AdminCurrentUserCSS.css" />
+      <TextField fx:id="searchBar" layoutX="210.0" layoutY="60.0" onKeyTyped="#userSearch" prefHeight="31.0" prefWidth="208.0" promptText="Search" style="-fx-background-color: f1f1f1;">
          <font>
             <Font size="15.0" />
          </font></TextField>
-      <ImageView fitHeight="21.0" fitWidth="21.0" layoutX="422.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="21.0" fitWidth="21.0" layoutX="391.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/magnifying-glass%20(6).png" />
          </image>
       </ImageView>
-      <Label fx:id="inactiveUsers" layoutX="873.0" layoutY="673.0" onMouseClicked="#showInactiveUsers" text="Inactive users">
+      <Label fx:id="inactiveUsers" layoutX="795.0" layoutY="680.0" onMouseClicked="#showInactiveUsers" text="Inactive users">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -58,7 +58,7 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <ImageView fx:id="activeArrow" fitHeight="19.0" fitWidth="14.0" layoutX="970.0" layoutY="676.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="activeArrow" fitHeight="19.0" fitWidth="14.0" layoutX="892.0" layoutY="684.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/next%20(5).png" />
          </image>
@@ -66,11 +66,11 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <Label fx:id="activeUsers" layoutX="953.0" layoutY="673.0" onMouseClicked="#showActiveUsers" prefHeight="21.0" prefWidth="90.0" text="Active Users" visible="false">
+      <Label fx:id="activeUsers" layoutX="795.0" layoutY="680.0" onMouseClicked="#showActiveUsers" prefHeight="21.0" prefWidth="90.0" text="Active Users" visible="false">
          <font>
             <Font size="14.0" />
          </font></Label>
-      <ImageView fx:id="inactiveArrow" fitHeight="19.0" fitWidth="14.0" layoutX="928.0" layoutY="676.0" pickOnBounds="true" preserveRatio="true" rotate="-180.0" visible="false">
+      <ImageView fx:id="inactiveArrow" fitHeight="19.0" fitWidth="14.0" layoutX="892.0" layoutY="684.0" pickOnBounds="true" preserveRatio="true" rotate="-180.0" visible="false">
          <image>
             <Image url="@../images/next%20(5).png" />
          </image>
@@ -78,7 +78,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <JFXButton fx:id="deleteButton" layoutX="167.0" layoutY="668.0" onAction="#deleteUser" prefHeight="31.0" prefWidth="114.0" stylesheets="@../styles/MainAdminView.css" text="Delete user" textFill="WHITE" visible="false">
+      <JFXButton fx:id="deleteButton" layoutX="193.0" layoutY="679.0" onAction="#deleteUser" prefHeight="31.0" prefWidth="114.0" stylesheets="@../styles/MainAdminView.css" text="Delete user" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
@@ -86,7 +86,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton fx:id="makeInactivebtn" layoutX="62.0" layoutY="675.0" onAction="#makeUserInactive" stylesheets="@../styles/MainAdminView.css" text="Make Inactive" textFill="WHITE">
+      <JFXButton fx:id="makeInactivebtn" layoutX="67.0" layoutY="679.0" onAction="#makeUserInactive" stylesheets="@../styles/MainAdminView.css" text="Make Inactive" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>

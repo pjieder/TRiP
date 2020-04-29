@@ -175,7 +175,7 @@
                </graphic></TableColumn>
          </columns>
       </TableView>
-      <JFXButton fx:id="cancelTimer" layoutX="845.0" layoutY="198.0" onAction="#cancelTime" prefHeight="17.0" prefWidth="49.0" stylesheets="@../styles/MainUserViewCSS.css" text="Cancel" textFill="WHITE" visible="false">
+      <JFXButton fx:id="cancelTimer" layoutX="842.0" layoutY="195.0" onAction="#cancelTime" prefHeight="17.0" prefWidth="49.0" stylesheets="@../styles/MainUserViewCSS.css" text="Cancel" textFill="WHITE">
          <font>
             <Font size="10.0" />
          </font>
