@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="735.0" prefWidth="972.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.gui.controllers.AdminCurrentUserViewController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="972.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.gui.controllers.AdminCurrentUserViewController">
    <children>
       <ComboBox fx:id="projectComboBox" layoutX="442.0" layoutY="60.0" onAction="#sortProject" prefHeight="31.0" prefWidth="208.0" promptText="Projects" style="-fx-background-color: f1f1f1;" styleClass="combo-box" stylesheets="@../styles/AdminCurrentUserCSS.css" />
       <Label layoutX="62.0" layoutY="65.0" text="Current Users">

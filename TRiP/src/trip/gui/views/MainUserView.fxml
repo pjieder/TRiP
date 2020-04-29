@@ -19,7 +19,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="735.0" prefWidth="972.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.gui.controllers.MainUserViewController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="972.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.gui.controllers.MainUserViewController">
    <children>
       <TableView fx:id="taskList" layoutX="60.0" layoutY="236.0" onMouseClicked="#showTime" prefHeight="445.0" prefWidth="409.0" stylesheets="@../styles/MainUserViewCSS.css">
         <columns>
@@ -175,7 +175,7 @@
                </graphic></TableColumn>
          </columns>
       </TableView>
-      <JFXButton fx:id="cancelTimer" layoutX="842.0" layoutY="195.0" onAction="#cancelTime" prefHeight="17.0" prefWidth="49.0" stylesheets="@../styles/MainUserViewCSS.css" text="Cancel" textFill="WHITE">
+      <JFXButton fx:id="cancelTimer" layoutX="842.0" layoutY="195.0" onAction="#cancelTime" prefHeight="17.0" prefWidth="49.0" stylesheets="@../styles/MainUserViewCSS.css" text="Cancel" textFill="WHITE" visible="false">
          <font>
             <Font size="10.0" />
          </font>
