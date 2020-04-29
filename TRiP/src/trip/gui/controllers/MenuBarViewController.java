@@ -8,15 +8,13 @@ package trip.gui.controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 
 /**
  * FXML Controller class
@@ -26,9 +24,9 @@ import javafx.scene.layout.BorderPane;
 public class MenuBarViewController implements Initializable {
 
     @FXML
-    private BorderPane BP;
-    @FXML
     private AnchorPane AP;
+    @FXML
+    private Pane pane;
 
     /**
      * Initializes the controller class.
@@ -39,43 +37,47 @@ public class MenuBarViewController implements Initializable {
     }    
 
     @FXML
-    private void openProjectsView(MouseEvent event) {
-        BP.setCenter(AP);
+    private void openProjectsView(MouseEvent event) throws IOException {
+        Parent fxml = FXMLLoader.load(getClass().getResource("MainAdminView.fxml"));
+        pane.getChildren().removeAll();
+        pane.getChildren().setAll(fxml);
     }
 
     @FXML
-    private void openUserView(MouseEvent event) {
-
+    private void openCustomerView(MouseEvent event) throws IOException {
+        Parent fxml = FXMLLoader.load(getClass().getResource("AdminCustomerView.fxml"));
+        pane.getChildren().removeAll();
+        pane.getChildren().setAll(fxml);
     }
 
     @FXML
-    private void openStatisticsView(MouseEvent event) {
-
+    private void openUserView(MouseEvent event) throws IOException {
+        Parent fxml = FXMLLoader.load(getClass().getResource("AdminCurrentUserView.fxml"));
+        pane.getChildren().removeAll();
+        pane.getChildren().setAll(fxml);
     }
 
     @FXML
-    private void openTimeTrackingView(MouseEvent event) {
-
+    private void openStatisticsView(MouseEvent event) throws IOException, IOException {
+        Parent fxml = FXMLLoader.load(getClass().getResource("AdminStatisticsView.fxml"));
+        pane.getChildren().removeAll();
+        pane.getChildren().setAll(fxml);
     }
 
     @FXML
-    private void openEconomyView(MouseEvent event) {
+    private void openTimeTrackingView(MouseEvent event) throws IOException {
+        Parent fxml = FXMLLoader.load(getClass().getResource("MainUserView.fxml"));
+        pane.getChildren().removeAll();
+        pane.getChildren().setAll(fxml);
+    }
+
+    @FXML
+    private void openEconomyView(MouseEvent event) throws IOException {
+        
     }
 
     @FXML
     private void logOut(MouseEvent event) {
     }
-    
-    private void loadPage(String page) {
-        Parent root = null;
-        
-        try {
-            root = FXMLLoader.load(getClass().getResource(page+".fxml"));
-        } catch (IOException ex) {
-            Logger.getLogger(MenuBarViewController.class.getName()).log(Level.SEVERE, null, ex);
-        BP.setCenter(root);
-    }
-    }
-           
     
 }

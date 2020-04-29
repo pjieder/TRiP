@@ -24,14 +24,14 @@ and open the template in the editor.
 
 #deleteButton
 {
-    -fx-background-color: #ff0000;
+    -fx-background-color: #fe6464;
 
 
    
 }
 #deleteButton:hover
 {
-    -fx-background-color: #b80202;
+    -fx-background-color: #ff8484;
     
 }
 

@@ -133,3 +133,15 @@ and open the template in the editor.
   -fx-padding: 0;
   -fx-shape: null;
 }
+
+#cancelTimer
+{
+    -fx-background-color: #fe6464;
+
+
+}
+#cancelTimer:hover
+{
+    -fx-background-color: #ff8484;
+    
+}

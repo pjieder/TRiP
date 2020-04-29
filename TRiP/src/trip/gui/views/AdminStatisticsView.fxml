@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
@@ -8,20 +7,14 @@
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="735.0" prefWidth="1261.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.gui.controllers.AdminStatisticsViewController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="972.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.gui.controllers.AdminStatisticsViewController">
    <children>
-      <AnchorPane layoutX="185.0" layoutY="136.0" prefHeight="551.0" prefWidth="1034.0">
+      <AnchorPane layoutX="76.0" layoutY="152.0" prefHeight="540.0" prefWidth="821.0">
          <children>
-            <BarChart layoutX="12.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="558.0" prefWidth="983.0" stylesheets="@../styles/StatisticsCSS.css" title="Turn over">
+            <BarChart layoutX="11.0" layoutY="14.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="503.0" prefWidth="800.0" stylesheets="@../styles/StatisticsCSS.css" title="Turn over">
               <xAxis>
                 <CategoryAxis prefWidth="876.0" side="BOTTOM" />
               </xAxis>
@@ -29,7 +22,7 @@
                 <NumberAxis side="LEFT" />
               </yAxis>
             </BarChart>
-            <LineChart layoutX="12.0" layoutY="35.0" prefHeight="558.0" prefWidth="983.0" stylesheets="@../styles/StatisticsCSS.css" title="Time " visible="false">
+            <LineChart layoutX="11.0" layoutY="14.0" prefHeight="503.0" prefWidth="800.0" stylesheets="@../styles/StatisticsCSS.css" title="Time " visible="false">
               <xAxis>
                 <CategoryAxis side="BOTTOM" />
               </xAxis>
@@ -37,132 +30,42 @@
                 <NumberAxis side="LEFT" />
               </yAxis>
             </LineChart>
-            <PieChart layoutX="12.0" prefHeight="558.0" prefWidth="983.0" stylesheets="@../styles/StatisticsCSS.css" title="Tasks" visible="false" />
-            <Label layoutX="72.0" layoutY="541.0" text="Total Tasks:">
+            <PieChart layoutX="11.0" layoutY="14.0" prefHeight="503.0" prefWidth="800.0" stylesheets="@../styles/StatisticsCSS.css" title="Tasks" visible="false" />
+            <Label layoutX="57.0" layoutY="507.0" text="Total Tasks:">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label layoutX="212.0" layoutY="541.0" text="Total Turn Over:">
+            <Label layoutX="197.0" layoutY="507.0" text="Total Turn Over:">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label layoutX="155.0" layoutY="541.0" text="40">
+            <Label layoutX="140.0" layoutY="507.0" text="40">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label layoutX="327.0" layoutY="541.0" text="5402£">
+            <Label layoutX="312.0" layoutY="507.0" text="5402£">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label layoutX="411.0" layoutY="541.0" text="Total Time Spent:">
+            <Label layoutX="396.0" layoutY="507.0" text="Total Time Spent:">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label layoutX="532.0" layoutY="541.0" text="242H">
+            <Label layoutX="517.0" layoutY="507.0" text="242H">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
-      <VBox prefHeight="735.0" prefWidth="139.0" style="-fx-background-color: #f9f9f9;">
-         <children>
-            <JFXButton alignment="BOTTOM_LEFT" onMouseClicked="#open_projects_view" prefHeight="39.0" prefWidth="164.0" styleClass="menubar1" stylesheets="@../styles/MenuBarCSS.css" text=" Projects">
-               <graphic>
-                  <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/rocket.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </JFXButton>
-            <JFXButton alignment="BOTTOM_LEFT" onMouseClicked="#open_users_view" prefHeight="39.0" prefWidth="162.0" styleClass="menubar2" stylesheets="@../styles/MenuBarCSS.css" text=" Users">
-               <graphic>
-                  <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/team.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </JFXButton>
-            <JFXButton alignment="BOTTOM_LEFT" onMouseClicked="#open_statistics_view" prefHeight="39.0" prefWidth="166.0" styleClass="menubar3" stylesheets="@../styles/MenuBarCSS.css" text=" Statistics">
-               <graphic>
-                  <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/pie-chart%20(2).png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </JFXButton>
-            <JFXButton alignment="BOTTOM_LEFT" onMouseClicked="#open_time_view" prefHeight="39.0" prefWidth="162.0" styleClass="menubar4" stylesheets="@../styles/MenuBarCSS.css" text=" Time Tracker">
-               <graphic>
-                  <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/calendar%20(3).png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </JFXButton>
-            <JFXButton alignment="BOTTOM_LEFT" prefHeight="39.0" prefWidth="162.0" styleClass="menubar5" stylesheets="@../styles/MenuBarCSS.css" text=" Economy">
-               <graphic>
-                  <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/euro.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </JFXButton>
-            <JFXButton alignment="BOTTOM_LEFT" onMouseClicked="#log_out" prefHeight="39.0" prefWidth="209.0" styleClass="menubar6" stylesheets="@../styles/MenuBarCSS.css" text=" Log out">
-               <graphic>
-                  <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/smart-key.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </JFXButton>
-         </children>
-      </VBox>
-      <GridPane layoutX="243.0" layoutY="75.0" prefHeight="30.0" prefWidth="995.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="171.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="355.0" minWidth="0.0" prefWidth="166.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="380.0" minWidth="0.0" prefWidth="169.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="410.0" minWidth="0.0" prefWidth="169.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="387.0" minWidth="10.0" prefWidth="322.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <ComboBox prefWidth="150.0" promptText="Statistic" stylesheets="@../styles/StatisticsCSS.css" />
-            <ComboBox prefHeight="31.0" prefWidth="146.0" promptText="Status" stylesheets="@../styles/StatisticsCSS.css" GridPane.columnIndex="1" />
-            <ComboBox prefWidth="150.0" promptText="Client" stylesheets="@../styles/StatisticsCSS.css" GridPane.columnIndex="2" />
-            <ComboBox prefWidth="150.0" promptText="Project" stylesheets="@../styles/StatisticsCSS.css" GridPane.columnIndex="3" />
-         </children>
-      </GridPane>
+      <ComboBox layoutX="128.0" layoutY="98.0" prefHeight="31.0" prefWidth="159.0" promptText="Statistic" stylesheets="@../styles/StatisticsCSS.css" />
+      <ComboBox layoutX="316.0" layoutY="98.0" prefHeight="31.0" prefWidth="159.0" promptText="Status" stylesheets="@../styles/StatisticsCSS.css" />
+      <ComboBox layoutX="500.0" layoutY="98.0" prefHeight="31.0" prefWidth="159.0" promptText="Client" stylesheets="@../styles/StatisticsCSS.css" />
+      <ComboBox layoutX="685.0" layoutY="98.0" prefHeight="31.0" prefWidth="159.0" promptText="Project" stylesheets="@../styles/StatisticsCSS.css" />
    </children>
 </AnchorPane>

@@ -9,100 +9,11 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="735.0" prefWidth="1261.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.gui.controllers.MainAdminViewController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="972.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.gui.controllers.MainAdminViewController">
    <children>
-      <VBox prefHeight="735.0" prefWidth="139.0" style="-fx-background-color: #f9f9f9;">
-         <children>
-            <JFXButton alignment="BOTTOM_LEFT" prefHeight="39.0" prefWidth="164.0" styleClass="menubar1" stylesheets="@../styles/MenuBarCSS.css" text=" Projects">
-               <graphic>
-                  <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/rocket.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </JFXButton>
-            <JFXButton alignment="BOTTOM_LEFT" onAction="#openUsers" prefHeight="39.0" prefWidth="162.0" styleClass="menubar2" stylesheets="@../styles/MenuBarCSS.css" text=" Users">
-               <graphic>
-                  <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/team.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </JFXButton>
-            <JFXButton alignment="BOTTOM_LEFT" prefHeight="39.0" prefWidth="166.0" styleClass="menubar3" stylesheets="@../styles/MenuBarCSS.css" text=" Statistics">
-               <graphic>
-                  <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/pie-chart%20(2).png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </JFXButton>
-            <JFXButton alignment="BOTTOM_LEFT" onMouseClicked="#openProjectMenu" prefHeight="39.0" prefWidth="162.0" styleClass="menubar4" stylesheets="@../styles/MenuBarCSS.css" text=" Time Tracker">
-               <graphic>
-                  <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/calendar%20(3).png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </JFXButton>
-            <JFXButton alignment="BOTTOM_LEFT" onAction="#openCustomers" prefHeight="39.0" prefWidth="162.0" styleClass="menubar5" stylesheets="@../styles/MenuBarCSS.css" text="Customers">
-               <graphic>
-                  <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/add%20(1).png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </JFXButton>
-            <JFXButton alignment="BOTTOM_LEFT" prefHeight="39.0" prefWidth="162.0" styleClass="menubar5" stylesheets="@../styles/MenuBarCSS.css" text=" Economy">
-               <graphic>
-                  <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/euro.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </JFXButton>
-            <JFXButton alignment="BOTTOM_LEFT" onMouseClicked="#log_out" prefHeight="39.0" prefWidth="209.0" styleClass="menubar6" stylesheets="@../styles/MenuBarCSS.css" text=" Log out">
-               <graphic>
-                  <ImageView fitHeight="19.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/smart-key.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </JFXButton>
-         </children>
-      </VBox>
-      <JFXButton layoutX="958.0" layoutY="63.0" onAction="#createProject" stylesheets="@../styles/MainAdminView.css" text="Create project" textFill="WHITE">
+      <JFXButton layoutX="813.0" layoutY="72.0" onAction="#createProject" stylesheets="@../styles/MainAdminView.css" text="Create project" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
@@ -110,7 +21,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton layoutX="1085.0" layoutY="63.0" onAction="#editProject" prefHeight="31.0" prefWidth="114.0" stylesheets="@../styles/MainAdminView.css" text="Edit project" textFill="WHITE">
+      <JFXButton layoutX="685.0" layoutY="72.0" onAction="#editProject" prefHeight="31.0" prefWidth="114.0" stylesheets="@../styles/MainAdminView.css" text="Edit project" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
@@ -118,17 +29,17 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <Label layoutX="204.0" layoutY="69.0" text="Current Projects">
+      <Label layoutX="41.0" layoutY="76.0" text="Current Projects">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <ImageView fitHeight="21.0" fitWidth="22.0" layoutX="318.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="21.0" fitWidth="22.0" layoutX="155.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/rocket.png" />
          </image>
       </ImageView>
-      <Label fx:id="inactiveProjects" layoutX="1066.0" layoutY="673.0" onMouseClicked="#showInactiveProjects" text="Inactive projects">
+      <Label fx:id="inactiveProjects" layoutX="785.0" layoutY="674.0" onMouseClicked="#showInactiveProjects" text="Inactive projects">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -136,7 +47,7 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <ImageView fx:id="activeArrow" fitHeight="19.0" fitWidth="14.0" layoutX="1185.0" layoutY="676.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="activeArrow" fitHeight="19.0" fitWidth="14.0" layoutX="900.0" layoutY="678.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/next%20(5).png" />
          </image>
@@ -144,7 +55,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <TableView fx:id="projectTable" layoutX="204.0" layoutY="112.0" onMouseClicked="#openProject" prefHeight="544.0" prefWidth="995.0" stylesheets="@../styles/MainAdminView.css">
+      <TableView fx:id="projectTable" layoutX="43.0" layoutY="124.0" onMouseClicked="#openProject" prefHeight="544.0" prefWidth="886.0" stylesheets="@../styles/MainAdminView.css">
         <columns>
           <TableColumn fx:id="projectColumn" prefWidth="227.0" text="Project">
                <graphic>
@@ -164,7 +75,7 @@
                </graphic></TableColumn>
             <TableColumn fx:id="rateColumn" prefWidth="272.0" text="Rate ">
                <graphic>
-                  <ImageView fitHeight="19.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="14.0" fitWidth="107.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/coin-stack.png" />
                      </image>
@@ -177,17 +88,17 @@
             <TableColumn fx:id="customerColumn" prefWidth="274.0" text="Customer" />
         </columns>
       </TableView>
-      <TextField fx:id="searchBar" layoutX="377.0" layoutY="63.0" onKeyTyped="#projectSearch" prefHeight="31.0" prefWidth="540.0" promptText="Search" style="-fx-background-color: f1f1f1;" stylesheets="@../styles/MainAdminView.css">
+      <TextField fx:id="searchBar" layoutX="202.0" layoutY="72.0" onKeyTyped="#projectSearch" prefHeight="31.0" prefWidth="458.0" promptText="Search" style="-fx-background-color: f1f1f1;" stylesheets="@../styles/MainAdminView.css">
          <font>
             <Font size="15.0" />
          </font>
       </TextField>
-      <ImageView fitHeight="83.0" fitWidth="21.0" layoutX="885.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="83.0" fitWidth="21.0" layoutX="635.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/magnifying-glass%20(6).png" />
          </image>
       </ImageView>
-      <Label fx:id="activeProjects" layoutX="1101.0" layoutY="673.0" onMouseClicked="#showActiveProjects" text="Active projects" visible="false">
+      <Label fx:id="activeProjects" layoutX="785.0" layoutY="674.0" onMouseClicked="#showActiveProjects" text="Active projects" visible="false">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -195,7 +106,7 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <ImageView fx:id="inactiveArrow" fitHeight="19.0" fitWidth="14.0" layoutX="1065.0" layoutY="677.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" visible="false">
+      <ImageView fx:id="inactiveArrow" fitHeight="19.0" fitWidth="14.0" layoutX="900.0" layoutY="678.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" visible="false">
          <image>
             <Image url="@../images/next%20(5).png" />
          </image>
@@ -203,7 +114,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <JFXButton fx:id="deleteButton" layoutX="204.0" layoutY="668.0" onAction="#deleteProject" prefHeight="31.0" prefWidth="114.0" stylesheets="@../styles/MainAdminView.css" text="Delete project" textFill="WHITE" visible="false">
+      <JFXButton fx:id="deleteButton" layoutX="34.0" layoutY="668.0" onAction="#deleteProject" prefHeight="31.0" prefWidth="114.0" stylesheets="@../styles/MainAdminView.css" text="Delete project" textFill="WHITE" visible="false">
          <font>
             <Font size="15.0" />
          </font>
