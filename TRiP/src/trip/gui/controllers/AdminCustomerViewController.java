@@ -29,7 +29,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import trip.be.Customer;
-import trip.be.Project;
 import trip.gui.AppModel;
 import trip.gui.models.CustomerModel;
 
@@ -86,21 +85,6 @@ public class AdminCustomerViewController implements Initializable
     {
         customers = customerModel.getAllCustomers();
         customerTable.setItems(customers);
-    }
-
-    @FXML
-    private void openUsers(ActionEvent event)
-    {
-    }
-
-    @FXML
-    private void openProjectMenu(MouseEvent event)
-    {
-    }
-
-    @FXML
-    private void log_out(MouseEvent event)
-    {
     }
 
     @FXML

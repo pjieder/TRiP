@@ -139,29 +139,30 @@ public class LoginController implements Initializable {
                 loggedUser = employeeToValidate;
                 Platform.runLater(() -> {
 
+                    try
+                    {
+                    
+                    FXMLLoader fxmlLoader = new FXMLLoader();
+                    fxmlLoader.setLocation(AppModel.class.getResource("views/MenuBarView.fxml"));
+                    Scene scene = new Scene(fxmlLoader.load());
+                    Stage stage = (Stage) rememberMe.getScene().getWindow();
+                    MenuBarViewController controller = fxmlLoader.getController();
+                    
                     if (employeeToValidate.getRole().equals(Roles.USER)) {
-                        StageOpener.changeStage("views/MainUserView.fxml", (Stage) (rememberMe.getScene().getWindow()));
+                        controller.setUser();
                     } else if (employeeToValidate.getRole().equals(Roles.ADMIN)) {
-                        loadAdminView();
+                        controller.setAdmin();
                     }
+                    
+                    stage.setScene(scene);
+                    stage.show();
+                    
+                    }
+                    catch (IOException ex){ex.printStackTrace();}
                 });
             }
         });
         return loginThread;
     }
 
-    private void loadAdminView() {
-
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(AppModel.class.getResource("views/MainAdminView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            Stage stage = (Stage) rememberMe.getScene().getWindow();
-            MainAdminViewController controller = fxmlLoader.getController();
-            controller.loadAllProjects();
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException ex) {
-        }
-    }
 }

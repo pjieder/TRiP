@@ -358,13 +358,4 @@ public class MainUserViewController implements Initializable {
         decideAddTimeEnabled();
     }
 
-    @FXML
-    private void open_time_view(MouseEvent event) {
-    }
-
-    @FXML
-    private void log_out(MouseEvent event) {
-        StageOpener.changeStage("views/Login.fxml", (Stage) taskList.getScene().getWindow());
-    }
-
 }

@@ -97,26 +97,6 @@ public class AdminCurrentUserViewController implements Initializable {
     }
 
     @FXML
-    private void open_projects_view(MouseEvent event) {
-    }
-
-    @FXML
-    private void open_users_view(MouseEvent event) {
-    }
-
-    @FXML
-    private void open_statistics_view(MouseEvent event) {
-    }
-
-    @FXML
-    private void open_time_view(MouseEvent event) {
-    }
-
-    @FXML
-    private void log_out(MouseEvent event) {
-    }
-
-    @FXML
     private void openAddUser(ActionEvent event) throws IOException {
 
         FXMLLoader fxmlLoader = new FXMLLoader();

@@ -28,9 +28,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import trip.be.Customer;
 import trip.be.Project;
 import trip.gui.AppModel;
 import trip.gui.models.ProjectModel;
@@ -127,28 +127,15 @@ public class MainAdminViewController implements Initializable {
         if (event.getClickCount() > 1 & !projectTable.getSelectionModel().isEmpty() & !event.isConsumed()) {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(AppModel.class.getResource("views/MainUserView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            Stage stage = (Stage) projectTable.getScene().getWindow();
+            
+            Pane pane =fxmlLoader.load();
             MainUserViewController controller = fxmlLoader.getController();
             controller.setAdmin(projectTable.getSelectionModel().getSelectedItem());
-            stage.setScene(scene);
-            stage.show();
+            
+            MenuBarViewController.viewPane.getChildren().clear();
+            MenuBarViewController.viewPane.getChildren().add(pane);
+            
         }
-    }
-
-    @FXML
-    private void openProjectMenu(MouseEvent event) {
-        StageOpener.changeStage("views/MainUserView.fxml", (Stage) projectTable.getScene().getWindow());
-    }
-
-    @FXML
-    private void log_out(MouseEvent event) {
-        StageOpener.changeStage("views/Login.fxml", (Stage) projectTable.getScene().getWindow());
-    }
-
-    @FXML
-    private void openUsers(ActionEvent event) {
-        StageOpener.changeStage("views/AdminCurrentUserView.fxml", (Stage) projectTable.getScene().getWindow());
     }
 
     @FXML
@@ -243,9 +230,7 @@ public class MainAdminViewController implements Initializable {
             } else {
                 alert.close();
             }
-
         }
-
     }
 
     @FXML
@@ -263,15 +248,4 @@ public class MainAdminViewController implements Initializable {
         }
     }
 
-    @FXML
-    private void openCustomers(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(AppModel.class.getResource("views/AdminCustomerView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage stage = (Stage) projectTable.getScene().getWindow();
-        AdminCustomerViewController controller = fxmlLoader.getController();
-        controller.loadAllCustomers();
-        stage.setScene(scene);
-        stage.show();
-    }
 }
