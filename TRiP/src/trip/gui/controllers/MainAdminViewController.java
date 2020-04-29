@@ -103,7 +103,7 @@ public class MainAdminViewController implements Initializable {
             Project project = data.getValue();
             if (project.getCustomer() == null)
             {
-                return new SimpleStringProperty("");
+                return new SimpleStringProperty("-");
             }
             return new SimpleStringProperty(project.getCustomer().toString());
         });
