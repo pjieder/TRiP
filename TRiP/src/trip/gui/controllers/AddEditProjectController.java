@@ -68,7 +68,7 @@ public class AddEditProjectController implements Initializable {
         
         
         RegexValidator regex = new RegexValidator();
-        regex.setRegexPattern("^[0-9]{1,10}([,.][0-9]{1,10})?$");
+        regex.setRegexPattern("^[0-9]{1,4}([,.][0-9]{1,2})?$");
         regex.setMessage("Input is not a valid number");
         
         rateField.getValidators().add(regex);
