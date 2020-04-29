@@ -15,48 +15,43 @@ import trip.bll.ProjectManager;
  *
  * @author Jacob
  */
-public class ProjectModel
-{
-    private final ProjectManager projectManager;
-    
+public class ProjectModel {
 
-    public ProjectModel()
-    {
+    private final ProjectManager projectManager;
+
+    public ProjectModel() {
         projectManager = new ProjectManager();
     }
 
-    public ObservableList<Project> getAllProjects()
-    {
+    public ObservableList<Project> getAllProjects() {
         return projectManager.getAllProjects();
     }
-    
-    public ObservableList<Project> loadAllActiveProjects()
-    {
+
+    public ObservableList<Project> loadAllActiveProjects() {
         return projectManager.loadAllActiveProjects();
     }
 
-    public ObservableList<Project> loadAllInactiveProjects()
-    {
+    public ObservableList<Project> loadAllInactiveProjects() {
         return projectManager.loadAllInactiveProjects();
     }
-    
-    public ObservableList<Project> loadAllUserProjects(int employeeId)
-    {
+
+    public ObservableList<Project> loadAllUserProjects(int employeeId) {
         return projectManager.loadUserProjects(employeeId);
     }
 
-    public void createProject(Project project, List<Employee> allEmployees)
-    {
+    public void createProject(Project project, List<Employee> allEmployees) {
         projectManager.createProject(project, allEmployees);
     }
 
-    public void updateProject(Project project, List<Employee> allEmployees)
-    {
+    public void updateProject(Project project, List<Employee> allEmployees) {
         projectManager.updateProject(project, allEmployees);
     }
 
-    public void deleteProject(Project project)
-    {
+    public void deleteProject(Project project) {
         projectManager.deleteProject(project);
+    }
+
+    public ObservableList<Project> searchProjects(String projectName, ObservableList<Project> projectList) {
+        return projectManager.searchProjects(projectName, projectList);
     }
 }

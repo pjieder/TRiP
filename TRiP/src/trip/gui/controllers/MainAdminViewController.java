@@ -12,6 +12,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,10 +24,13 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import trip.be.Employee;
 import trip.be.Project;
 import trip.gui.AppModel;
 import trip.gui.models.ProjectModel;
@@ -41,6 +46,7 @@ public class MainAdminViewController implements Initializable {
 
     private AppModel appModel = new AppModel();
     private ProjectModel projectModel = new ProjectModel();
+    private ObservableList<Project> projects = FXCollections.observableArrayList();
     private boolean isLastOnActive = true;
 
     @FXML
@@ -61,6 +67,8 @@ public class MainAdminViewController implements Initializable {
     private ImageView inactiveArrow;
     @FXML
     private JFXButton deleteButton;
+    @FXML
+    private TextField searchBar;
 
     /**
      * Initializes the controller class.
@@ -97,7 +105,8 @@ public class MainAdminViewController implements Initializable {
     }
 
     public void loadAllProjects() {
-        projectTable.setItems(projectModel.loadAllActiveProjects());
+        projects = projectModel.loadAllActiveProjects();
+        projectTable.setItems(projects);
     }
 
     @FXML
@@ -162,11 +171,13 @@ public class MainAdminViewController implements Initializable {
             Platform.runLater(()
                     -> {
                 if (isLastOnActive == true) {
-                    projectTable.setItems(projectModel.loadAllActiveProjects());
+                    projects = projectModel.loadAllActiveProjects();
                 } else {
-                    projectTable.setItems(projectModel.loadAllInactiveProjects());
+                    projects = projectModel.loadAllInactiveProjects();
                 }
+                projectTable.setItems(projects);
                 projectTable.refresh();
+                search();
             });
         });
 
@@ -181,8 +192,10 @@ public class MainAdminViewController implements Initializable {
         inactiveArrow.setVisible(true);
         deleteButton.setVisible(true);
         isLastOnActive = false;
-        projectTable.setItems(projectModel.loadAllInactiveProjects());
+        projects = projectModel.loadAllInactiveProjects();
+        projectTable.setItems(projects);
         projectTable.refresh();
+        search();
     }
 
     @FXML
@@ -193,8 +206,10 @@ public class MainAdminViewController implements Initializable {
         inactiveArrow.setVisible(false);
         deleteButton.setVisible(false);
         isLastOnActive = true;
-        projectTable.setItems(projectModel.loadAllActiveProjects());
+        projects = projectModel.loadAllActiveProjects();
+        projectTable.setItems(projects);
         projectTable.refresh();
+        search();
     }
 
     @FXML
@@ -218,5 +233,21 @@ public class MainAdminViewController implements Initializable {
 
         }
 
+    }
+
+    @FXML
+    private void projectSearch(KeyEvent event) {
+
+        search();
+    }
+
+    private void search() {
+        String projectName = searchBar.getText();
+
+        if (projectName.equalsIgnoreCase("")) {
+            projectTable.setItems(projects);
+        } else {
+            projectTable.setItems(projectModel.searchProjects(projectName, projects));
+        }
     }
 }

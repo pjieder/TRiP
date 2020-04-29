@@ -6,6 +6,7 @@
 package trip.bll;
 
 import java.util.List;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import trip.be.Employee;
 import trip.be.Project;
@@ -54,5 +55,19 @@ public class ProjectManager {
 
     public ObservableList<Project> loadUserProjects(int employeeId) {
         return dalFacade.loadUserProjects(employeeId);
+    }
+    
+        public ObservableList<Project> searchProjects(String projectName, ObservableList<Project> projectList) {
+
+        ObservableList<Project> searchProjectList = FXCollections.observableArrayList();
+
+        for (Project project : projectList) {
+
+            if (project.getName().toLowerCase().contains(projectName.toLowerCase())) {
+
+                searchProjectList.add(project);
+            }
+        }
+        return searchProjectList;
     }
 }
