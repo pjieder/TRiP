@@ -16,6 +16,7 @@ public class Project {
     private double rate;
     private boolean isActive = true;
     private int totalTime;
+    private Customer customer;
 
     public Project(String name, double rate) {
         this.name = name;
@@ -65,6 +66,14 @@ public class Project {
 
     public void setTotalTime(int totalTime) {
         this.totalTime = totalTime;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     @Override

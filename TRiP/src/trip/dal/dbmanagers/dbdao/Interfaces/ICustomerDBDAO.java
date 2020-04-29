@@ -12,13 +12,19 @@ import trip.be.Customer;
  *
  * @author Jacob
  */
-public interface ICustomerDBDAO
-{
+public interface ICustomerDBDAO {
+
     public ObservableList<Customer> getAllCustomers();
-    
+
     public void createCustomer(Customer customer);
-    
+
     public void updateCustomer(Customer customer);
-    
+
     public void deleteCustomer(Customer customer);
+
+    public Customer getCustomerForProject(int projectID);
+
+    public void addCustomerToProject(int customerID, int projectID);
+
+    public void removeCustomerFromProject(int projectID);
 }

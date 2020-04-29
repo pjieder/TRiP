@@ -6,26 +6,25 @@
 package trip.gui.controllers;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.validation.NumberValidator;
 import com.jfoenix.validation.RegexValidator;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import trip.be.Customer;
 import trip.be.Employee;
 import trip.be.Project;
 import trip.gui.AppModel;
+import trip.gui.models.CustomerModel;
 import trip.gui.models.ProjectModel;
 
 /**
@@ -40,11 +39,10 @@ public class AddEditProjectController implements Initializable {
 
     private ProjectModel projectModel = new ProjectModel();
     private AppModel appModel = new AppModel();
+    private CustomerModel customerModel = new CustomerModel();
 
     @FXML
     private JFXTextField nameField;
-    @FXML
-    private JFXTextField clientField;
     @FXML
     private JFXTextField rateField;
     @FXML
@@ -59,26 +57,22 @@ public class AddEditProjectController implements Initializable {
     private JFXButton cancelButton;
     @FXML
     private JFXButton updateButton;
+    @FXML
+    private JFXComboBox<Customer> customerComboBox;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        
+
         RegexValidator regex = new RegexValidator();
         regex.setRegexPattern("^[0-9]{1,4}([,.][0-9]{1,2})?$");
         regex.setMessage("Input is not a valid number");
-        
+
         rateField.getValidators().add(regex);
 
         nameField.textProperty().addListener((Observable, oldValue, newValue)
-                -> {
-            validateInput();
-        });
-
-        clientField.textProperty().addListener((Observable, oldValue, newValue)
                 -> {
             validateInput();
         });
@@ -96,10 +90,10 @@ public class AddEditProjectController implements Initializable {
     }
 
     private void validateInput() {
-        if (nameField.getText().equals("") || clientField.getText().equals("") || rateField.getText().equals("")) {
+        if (nameField.getText().equals("") || rateField.getText().equals("")) {
             registerButton.setDisable(true);
             updateButton.setDisable(true);
-        } else if (!rateField.validate()) {
+        } else if (!rateField.validate() || customerComboBox.getValue() == null) {
             registerButton.setDisable(true);
             updateButton.setDisable(true);
         } else {
@@ -113,6 +107,7 @@ public class AddEditProjectController implements Initializable {
         Project project = new Project();
         project.setName(nameField.getText());
         project.setRate(Double.parseDouble(rateField.getText().replace(",", ".")));
+        project.setCustomer(customerComboBox.getValue());
 
         if (activeUsersList.getItems().isEmpty()) {
             project.setIsActive(false);
@@ -168,6 +163,8 @@ public class AddEditProjectController implements Initializable {
     public void setUpdateThread(Thread thread) {
         this.updateThread = thread;
         activeUsersCBox.setItems(appModel.loadActiveUsers());
+        customerComboBox.setItems(customerModel.getAllCustomers());
+
     }
 
     public void setProject(Thread thread, Project project) {
@@ -177,11 +174,13 @@ public class AddEditProjectController implements Initializable {
         registerButton.setVisible(false);
         updateButton.setVisible(true);
 
+        customerComboBox.setItems(customerModel.getAllCustomers());
+        activeUsersList.setItems(appModel.loadEmployeesAssignedToProject(project.getId()));
+
         nameField.setText(projectToUpdate.getName());
-        clientField.setText("Client is not yet implemented bitch");
+        customerComboBox.getSelectionModel().select(project.getCustomer());
         rateField.setText(projectToUpdate.getRate() + "");
 
-        activeUsersList.setItems(appModel.loadEmployeesAssignedToProject(project.getId()));
         updateCheckBox();
 
     }
@@ -189,6 +188,11 @@ public class AddEditProjectController implements Initializable {
     private void closeScene() {
         Stage stage = (Stage) registerButton.getScene().getWindow();
         stage.close();
+    }
+
+    @FXML
+    private void validateCustomer(ActionEvent event) {
+        validateInput();
     }
 
 }

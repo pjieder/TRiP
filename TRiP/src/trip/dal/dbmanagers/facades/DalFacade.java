@@ -15,8 +15,10 @@ import trip.be.Task;
 import trip.be.TaskTime;
 import trip.be.Timer;
 import trip.dal.dbmanagers.dbdao.AdminDBDAO;
+import trip.dal.dbmanagers.dbdao.CustomerDBDAO;
 import trip.dal.dbmanagers.dbdao.EmployeeDBDAO;
 import trip.dal.dbmanagers.dbdao.Interfaces.IAdminDBDAO;
+import trip.dal.dbmanagers.dbdao.Interfaces.ICustomerDBDAO;
 import trip.dal.dbmanagers.dbdao.Interfaces.IEmployeeDBDAO;
 import trip.dal.dbmanagers.dbdao.Interfaces.IProjectDBDAO;
 import trip.dal.dbmanagers.dbdao.Interfaces.ITaskDBDAO;
@@ -36,6 +38,7 @@ public class DalFacade implements IDalFacade {
     private IAdminDBDAO adminManager;
     private IProjectDBDAO projectManager;
     private ITaskDBDAO taskManager;
+    private ICustomerDBDAO customerManager;
 
     public DalFacade() {
 
@@ -44,6 +47,7 @@ public class DalFacade implements IDalFacade {
         adminManager = new AdminDBDAO();
         projectManager = new ProjectDBDAO();
         taskManager = new TaskDBDAO();
+        customerManager = new CustomerDBDAO();
     }
 
     @Override
@@ -136,6 +140,7 @@ public class DalFacade implements IDalFacade {
         ObservableList<Project> allActiveProjects = projectManager.getAllActiveProjects();
         for (Project project : allActiveProjects) {
             project.setTotalTime(projectManager.getTotalProjectTime(project.getId()));
+            project.setCustomer(customerManager.getCustomerForProject(project.getId()));
         }
         return allActiveProjects;
     }
@@ -145,6 +150,7 @@ public class DalFacade implements IDalFacade {
         ObservableList<Project> allActiveProjects = projectManager.getAllInactiveProjects();
         for (Project project : allActiveProjects) {
             project.setTotalTime(projectManager.getTotalProjectTime(project.getId()));
+            project.setCustomer(customerManager.getCustomerForProject(project.getId()));
         }
         return allActiveProjects;
     }
@@ -161,7 +167,7 @@ public class DalFacade implements IDalFacade {
     @Override
     public void createProject(Project project, List<Employee> allEmployees) {
         projectManager.createProject(project);
-
+        customerManager.addCustomerToProject(project.getCustomer().getId(), project.getId());
         for (Employee employee : allEmployees) {
             employeeManager.addEmployeeToProject(employee.getId(), project.getId());
         }
@@ -170,6 +176,8 @@ public class DalFacade implements IDalFacade {
     @Override
     public void updateProject(Project project, List<Employee> allEmployees) {
         projectManager.updateProject(project);
+        customerManager.removeCustomerFromProject(project.getId());
+        customerManager.addCustomerToProject(project.getCustomer().getId(), project.getId());
         employeeManager.removeAllEmployeesFromProject(project.getId());
 
         for (Employee employee : allEmployees) {

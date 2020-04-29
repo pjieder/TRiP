@@ -146,7 +146,7 @@
       </ImageView>
       <TableView fx:id="projectTable" layoutX="204.0" layoutY="112.0" onMouseClicked="#openProject" prefHeight="544.0" prefWidth="995.0" stylesheets="@../styles/MainAdminView.css">
         <columns>
-          <TableColumn fx:id="projectColumn" prefWidth="341.0" text="Project">
+          <TableColumn fx:id="projectColumn" prefWidth="227.0" text="Project">
                <graphic>
                   <ImageView fitHeight="19.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -154,7 +154,7 @@
                      </image>
                   </ImageView>
                </graphic></TableColumn>
-          <TableColumn fx:id="timeColumn" prefWidth="323.0" text="Time">
+          <TableColumn fx:id="timeColumn" prefWidth="221.0" text="Time">
                <graphic>
                   <ImageView fitHeight="19.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -162,7 +162,7 @@
                      </image>
                   </ImageView>
                </graphic></TableColumn>
-            <TableColumn fx:id="rateColumn" prefWidth="330.0" text="Rate ">
+            <TableColumn fx:id="rateColumn" prefWidth="272.0" text="Rate ">
                <graphic>
                   <ImageView fitHeight="19.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -174,6 +174,7 @@
                   </ImageView>
                </graphic>
             </TableColumn>
+            <TableColumn fx:id="customerColumn" prefWidth="274.0" text="Customer" />
         </columns>
       </TableView>
       <TextField fx:id="searchBar" layoutX="377.0" layoutY="63.0" onKeyTyped="#projectSearch" prefHeight="31.0" prefWidth="540.0" promptText="Search" style="-fx-background-color: f1f1f1;" stylesheets="@../styles/MainAdminView.css">
