@@ -5,6 +5,8 @@
  */
 package trip.dal.dbmanagers.facades;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javafx.collections.ObservableList;
@@ -193,5 +195,18 @@ public class DalFacade implements IDalFacade {
         @Override
     public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId, boolean isActive) {
         return employeeManager.loadEmployeesAssignedToProject(projectId, isActive);
+    }
+
+    @Override
+    public List<Integer> loadTimeForDates(int projectID, List<LocalDate> dates) {
+        
+        List<Integer> dateTime = new ArrayList();
+        
+        for (LocalDate date : dates) {
+     
+            dateTime.add(projectManager.getProjectTimeForDay(projectID, date));
+        }
+        
+        return dateTime;
     }
 }

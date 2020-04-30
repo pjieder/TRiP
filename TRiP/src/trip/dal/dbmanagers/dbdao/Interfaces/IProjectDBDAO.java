@@ -5,6 +5,7 @@
  */
 package trip.dal.dbmanagers.dbdao.Interfaces;
 
+import java.time.LocalDate;
 import javafx.collections.ObservableList;
 import trip.be.Project;
 
@@ -31,4 +32,6 @@ public interface IProjectDBDAO
     public int getProjectTime(int employeeID, int projectID);
     
     public int getTotalProjectTime(int projectID);
+    
+    public int getProjectTimeForDay(int projectID, LocalDate date);
 }
