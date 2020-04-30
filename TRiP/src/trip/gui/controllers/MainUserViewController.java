@@ -30,6 +30,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -102,6 +103,12 @@ public class MainUserViewController implements Initializable {
     private JFXTextField timerField;
     @FXML
     private JFXButton addTime;
+    @FXML
+    private GridPane startTime;
+    @FXML
+    private ImageView startImage;
+    @FXML
+    private ImageView addImage;
 
     /**
      * Initializes the controller class.
@@ -356,6 +363,23 @@ public class MainUserViewController implements Initializable {
     @FXML
     private void validateAddTask(ActionEvent event) {
         decideAddTimeEnabled();
+    }
+
+    @FXML
+    private void showStartGrid(MouseEvent event) {
+        addTiimerPane.setVisible(false);
+        startTime.setVisible(true);
+        startImage.setVisible(false);
+        addImage.setVisible(true);
+        
+    }
+
+    @FXML
+    private void showAddGrid(MouseEvent event) {
+        addTiimerPane.setVisible(true);
+        startTime.setVisible(false);
+        startImage.setVisible(true);
+        addImage.setVisible(false);
     }
 
 }

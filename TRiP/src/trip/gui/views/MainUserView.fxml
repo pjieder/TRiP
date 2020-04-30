@@ -21,7 +21,7 @@
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="972.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.gui.controllers.MainUserViewController">
    <children>
-      <TableView fx:id="taskList" layoutX="60.0" layoutY="236.0" onMouseClicked="#showTime" prefHeight="445.0" prefWidth="409.0" stylesheets="@../styles/MainUserViewCSS.css">
+      <TableView fx:id="taskList" layoutX="60.0" layoutY="172.0" onMouseClicked="#showTime" prefHeight="509.0" prefWidth="409.0" stylesheets="@../styles/MainUserViewCSS.css">
         <columns>
           <TableColumn fx:id="nameColumn" prefWidth="294.0" text="Task">
                <graphic>
@@ -41,7 +41,7 @@
                </graphic></TableColumn>
         </columns>
       </TableView>
-      <GridPane layoutX="60.0" layoutY="144.0" prefHeight="44.0" prefWidth="852.0">
+      <GridPane fx:id="startTime" layoutX="60.0" layoutY="77.0" prefHeight="44.0" prefWidth="852.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="426.0" minWidth="10.0" prefWidth="343.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="276.0" minWidth="10.0" prefWidth="19.0" />
@@ -64,6 +64,9 @@
                <font>
                   <Font size="15.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
             <Label fx:id="timerLabel" stylesheets="@../styles/MainUserViewCSS.css" text="00:00:00" GridPane.columnIndex="4">
                <font>
@@ -80,7 +83,7 @@
             </JFXButton>
          </children>
       </GridPane>
-      <GridPane fx:id="addTiimerPane" layoutX="60.0" layoutY="77.0" prefHeight="44.0" prefWidth="852.0">
+      <GridPane fx:id="addTiimerPane" layoutX="60.0" layoutY="77.0" prefHeight="44.0" prefWidth="852.0" visible="false">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="426.0" minWidth="10.0" prefWidth="177.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="426.0" minWidth="0.0" prefWidth="9.0" />
@@ -127,27 +130,23 @@
             </JFXTextField>
          </children>
       </GridPane>
-      <ImageView fitHeight="17.0" fitWidth="17.0" layoutX="914.0" layoutY="146.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="startImage" fitHeight="17.0" fitWidth="17.0" layoutX="914.0" layoutY="91.0" onMouseClicked="#showStartGrid" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/clock.png" />
          </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </ImageView>
-      <ImageView fitHeight="17.0" fitWidth="20.0" layoutX="914.0" layoutY="170.0" opacity="0.41" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="addImage" fitHeight="17.0" fitWidth="20.0" layoutX="914.0" layoutY="91.0" onMouseClicked="#showAddGrid" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/calendar%20(2).png" />
          </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </ImageView>
-      <ImageView fitHeight="17.0" fitWidth="17.0" layoutX="914.0" layoutY="79.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/clock.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="17.0" fitWidth="20.0" layoutX="914.0" layoutY="103.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/calendar%20(2).png" />
-         </image>
-      </ImageView>
-      <TableView fx:id="taskTimerList" layoutX="522.0" layoutY="236.0" onMouseClicked="#openTaskTime" prefHeight="445.0" prefWidth="409.0" stylesheets="@../styles/MainUserViewCSS.css">
+      <TableView fx:id="taskTimerList" layoutX="522.0" layoutY="172.0" onMouseClicked="#openTaskTime" prefHeight="509.0" prefWidth="409.0" stylesheets="@../styles/MainUserViewCSS.css">
          <columns>
             <TableColumn fx:id="durationColumn" prefWidth="144.0" text="Duration">
                <graphic>
@@ -175,10 +174,13 @@
                </graphic></TableColumn>
          </columns>
       </TableView>
-      <JFXButton fx:id="cancelTimer" layoutX="842.0" layoutY="195.0" onAction="#cancelTime" prefHeight="17.0" prefWidth="49.0" stylesheets="@../styles/MainUserViewCSS.css" text="Cancel" textFill="WHITE" visible="false">
+      <JFXButton fx:id="cancelTimer" layoutX="841.0" layoutY="130.0" onAction="#cancelTime" prefHeight="17.0" prefWidth="49.0" stylesheets="@../styles/MainUserViewCSS.css" text="Cancel" textFill="WHITE" visible="false">
          <font>
             <Font size="10.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </JFXButton>
    </children>
 </AnchorPane>
