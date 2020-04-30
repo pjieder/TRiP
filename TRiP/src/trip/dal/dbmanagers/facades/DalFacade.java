@@ -191,22 +191,29 @@ public class DalFacade implements IDalFacade {
     public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId) {
         return employeeManager.loadEmployeesAssignedToProject(projectId);
     }
-    
-        @Override
+
+    @Override
     public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId, boolean isActive) {
         return employeeManager.loadEmployeesAssignedToProject(projectId, isActive);
     }
 
     @Override
     public List<Integer> loadTimeForDates(int projectID, List<LocalDate> dates) {
-        
+
         List<Integer> dateTime = new ArrayList();
-        
-        for (LocalDate date : dates) {
-     
-            dateTime.add(projectManager.getProjectTimeForDay(projectID, date));
+
+        if (projectID == 0) {
+            for (LocalDate date : dates) {
+
+                dateTime.add(projectManager.getAllProjectTimeForDay(date));
+            }
+        } else {
+            for (LocalDate date : dates) {
+
+                dateTime.add(projectManager.getProjectTimeForDay(projectID, date));
+            }
         }
-        
+
         return dateTime;
     }
 }

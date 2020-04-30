@@ -33,5 +33,7 @@ public interface IProjectDBDAO
     
     public int getTotalProjectTime(int projectID);
     
+    public int getAllProjectTimeForDay(LocalDate date);
+    
     public int getProjectTimeForDay(int projectID, LocalDate date);
 }

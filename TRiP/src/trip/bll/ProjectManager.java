@@ -81,17 +81,16 @@ public class ProjectManager {
         return searchProjectList;
     }
 
-    public XYChart.Series calculateGraph(int projectID, LocalDate date1, LocalDate date2) {
+    public XYChart.Series calculateGraph(int projectID, LocalDate dateStart, LocalDate dateEnd) {
 
-        List<LocalDate> datesX = TimeConverter.getDaysBetweenDates(date1, date2);
-        System.out.println(datesX.size());
+        List<LocalDate> datesX = TimeConverter.getDaysBetweenDates(dateStart, dateEnd);
         List<Integer> time = dalFacade.loadTimeForDates(projectID, datesX);
 
         XYChart.Series series = new XYChart.Series();
         
         for (int i = 0; i < datesX.size(); i++) {
-            System.out.println("Date: " + datesX.get(i).toString() + " - Time: " + time.get(i));
-            series.getData().add(new XYChart.Data<>(datesX.get(i).toString(), time.get(i)));
+            double value = (double) time.get(i)/3600;
+            series.getData().add(new XYChart.Data<>(datesX.get(i).toString(), value));
         }
         
         return series;

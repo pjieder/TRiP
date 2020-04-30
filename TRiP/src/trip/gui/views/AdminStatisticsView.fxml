@@ -26,7 +26,7 @@
             </BarChart>
             <LineChart fx:id="lineChart" layoutX="11.0" layoutY="14.0" prefHeight="503.0" prefWidth="800.0" stylesheets="@../styles/StatisticsCSS.css" title="Time ">
               <xAxis>
-                <CategoryAxis side="BOTTOM" />
+                <CategoryAxis animated="false" side="BOTTOM" />
               </xAxis>
               <yAxis>
                 <NumberAxis side="LEFT" />
@@ -65,11 +65,11 @@
             </Label>
          </children>
       </AnchorPane>
-      <ComboBox layoutX="233.0" layoutY="98.0" prefHeight="31.0" prefWidth="159.0" promptText="Statistic" stylesheets="@../styles/StatisticsCSS.css" />
-      <ComboBox layoutX="424.0" layoutY="98.0" prefHeight="31.0" prefWidth="159.0" promptText="Client" stylesheets="@../styles/StatisticsCSS.css" />
-      <ComboBox layoutX="614.0" layoutY="98.0" prefHeight="31.0" prefWidth="159.0" promptText="Project" stylesheets="@../styles/StatisticsCSS.css" />
-      <JFXButton fx:id="calculate" layoutX="827.0" layoutY="101.0" onAction="#calculate" text="Calculate" />
-      <JFXDatePicker fx:id="date1" layoutX="14.0" layoutY="47.0" />
-      <JFXDatePicker fx:id="date2" layoutX="14.0" layoutY="115.0" />
+      <ComboBox fx:id="statisticComboBox" layoutX="148.0" layoutY="98.0" onAction="#changeStatistic" prefHeight="31.0" prefWidth="159.0" promptText="Statistic" stylesheets="@../styles/StatisticsCSS.css" />
+      <ComboBox layoutX="424.0" layoutY="98.0" prefHeight="31.0" prefWidth="159.0" promptText="Client" stylesheets="@../styles/StatisticsCSS.css" visible="false" />
+      <ComboBox fx:id="projectComboBox" layoutX="644.0" layoutY="100.0" onAction="#validate" prefHeight="31.0" prefWidth="159.0" promptText="Project" stylesheets="@../styles/StatisticsCSS.css" />
+      <JFXButton fx:id="calculate" disable="true" layoutX="827.0" layoutY="101.0" onAction="#calculate" stylesheets="@../styles/MainUserViewCSS.css" text="Calculate" />
+      <JFXDatePicker fx:id="dateEnd" layoutX="501.0" layoutY="102.0" onAction="#validate" prefHeight="28.0" prefWidth="115.0" />
+      <JFXDatePicker fx:id="dateStart" layoutX="375.0" layoutY="102.0" onAction="#validate" prefHeight="28.0" prefWidth="115.0" />
    </children>
 </AnchorPane>

@@ -335,6 +335,37 @@ public class ProjectDBDAO implements IProjectDBDAO
         }
         return totalTime;
     }
+    
+    @Override
+    public int getAllProjectTimeForDay(LocalDate date)
+    {
+
+        Connection con = null;
+        int totalTime = 0;
+
+        try
+        {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "SELECT SUM(Tasks.time) AS TotalTime FROM Tasks WHERE Tasks.startTime like ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setString(1, date.toString() + "%");
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next())
+            {
+                totalTime = rs.getInt("TotalTime");
+            }
+
+            return totalTime;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+        return totalTime;
+    }
 
      @Override
     public int getTotalProjectTime(int projectID)

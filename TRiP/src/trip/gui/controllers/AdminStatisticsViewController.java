@@ -14,6 +14,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
+import javafx.scene.control.ComboBox;
+import trip.be.Project;
 import trip.gui.models.ProjectModel;
 
 /**
@@ -26,13 +28,17 @@ public class AdminStatisticsViewController implements Initializable {
     private ProjectModel projectModel = new ProjectModel();
     
     @FXML
-    private LineChart<String, Number> lineChart;
+    private LineChart<String, Double> lineChart;
     @FXML
     private JFXButton calculate;
     @FXML
-    private JFXDatePicker date1;
+    private ComboBox<?> statisticComboBox;
     @FXML
-    private JFXDatePicker date2;
+    private JFXDatePicker dateEnd;
+    @FXML
+    private JFXDatePicker dateStart;
+    @FXML
+    private ComboBox<Project> projectComboBox;
     
 
     /**
@@ -40,17 +46,40 @@ public class AdminStatisticsViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-              lineChart.getData().clear();
+
+        projectComboBox.setItems(projectModel.loadAllActiveProjects());
+        projectComboBox.getItems().add(0, new Project("All projects", 0));
+        projectComboBox.getSelectionModel().select(0);
+        
     }    
 
     @FXML
     private void calculate(ActionEvent event) {
         
-        LocalDate localDateFirst = date1.getValue();
-        LocalDate localDateLast = date2.getValue();
+        LocalDate localDateFirst = dateStart.getValue();
+        LocalDate localDateLast = dateEnd.getValue();
+        Project selectedProject = projectComboBox.getValue();
         lineChart.getData().clear();
-        lineChart.getData().add(projectModel.calculateGraph(1, localDateFirst, localDateLast));
+        lineChart.getData().add(projectModel.calculateGraph(selectedProject.getId(), localDateFirst, localDateLast));
         
+        
+    }
+
+    @FXML
+    private void changeStatistic(ActionEvent event) {
+    }
+
+    @FXML
+    private void validate(ActionEvent event) {
+        
+        if (dateStart.getValue() != null && dateEnd.getValue() != null)
+        {
+            calculate.setDisable(false);
+        }
+        else
+        {
+            calculate.setDisable(true);
+        }
         
     }
     
