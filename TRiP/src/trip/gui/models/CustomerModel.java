@@ -7,7 +7,6 @@ package trip.gui.models;
 
 import javafx.collections.ObservableList;
 import trip.be.Customer;
-import trip.be.Project;
 import trip.bll.CustomerManager;
 
 /**

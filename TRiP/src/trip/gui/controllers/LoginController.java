@@ -26,7 +26,6 @@ import javafx.stage.Stage;
 import trip.be.Employee;
 import trip.be.Roles;
 import trip.gui.AppModel;
-import trip.utilities.StageOpener;
 
 /**
  * FXML Controller class

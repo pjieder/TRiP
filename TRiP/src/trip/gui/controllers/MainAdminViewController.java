@@ -34,7 +34,6 @@ import javafx.stage.StageStyle;
 import trip.be.Project;
 import trip.gui.AppModel;
 import trip.gui.models.ProjectModel;
-import trip.utilities.StageOpener;
 import trip.utilities.TimeConverter;
 
 /**

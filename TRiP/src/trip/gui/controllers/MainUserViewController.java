@@ -32,9 +32,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import trip.be.Employee;
 import trip.be.Project;
@@ -45,7 +43,6 @@ import trip.be.Timer;
 import trip.gui.AppModel;
 import trip.gui.models.ProjectModel;
 import trip.gui.models.TaskModel;
-import trip.utilities.StageOpener;
 import trip.utilities.TimeConverter;
 
 /**

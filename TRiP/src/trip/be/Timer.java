@@ -11,8 +11,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.util.Duration;
 import trip.utilities.TimeConverter;
 
 /**

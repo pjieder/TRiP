@@ -19,7 +19,6 @@ import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import trip.be.Task;
-import trip.be.TaskTime;
 import trip.gui.models.TaskModel;
 
 /**
