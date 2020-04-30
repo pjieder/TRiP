@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -290,6 +291,38 @@ public class ProjectDBDAO implements IProjectDBDAO
             while (rs.next())
             {
 
+                totalTime = rs.getInt("TotalTime");
+            }
+
+            return totalTime;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+        return totalTime;
+    }
+    
+    @Override
+    public int getProjectTimeForDay(int projectID, LocalDate date)
+    {
+
+        Connection con = null;
+        int totalTime = 0;
+
+        try
+        {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "SELECT SUM(Tasks.time) AS TotalTime FROM Tasks JOIN Task on Tasks.taskID = Task.ID WHERE Task.projID = ?  AND Tasks.startTime like ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, projectID);
+            stmt.setString(2, date.toString() + "%");
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next())
+            {
                 totalTime = rs.getInt("TotalTime");
             }
 

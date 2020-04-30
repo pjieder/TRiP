@@ -5,6 +5,7 @@
  */
 package trip.dal.dbmanagers.facades;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import javafx.collections.ObservableList;
@@ -64,4 +65,6 @@ public interface IDalFacade {
     public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId);
     
     public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId, boolean isActive);
+    
+    public List<Integer> loadTimeForDates(int projectID, List<LocalDate> dates);
 }

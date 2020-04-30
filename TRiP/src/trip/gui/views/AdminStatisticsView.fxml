@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
@@ -14,7 +16,7 @@
    <children>
       <AnchorPane layoutX="76.0" layoutY="152.0" prefHeight="540.0" prefWidth="821.0">
          <children>
-            <BarChart layoutX="11.0" layoutY="14.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="503.0" prefWidth="800.0" stylesheets="@../styles/StatisticsCSS.css" title="Turn over">
+            <BarChart disable="true" layoutX="11.0" layoutY="14.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="503.0" prefWidth="800.0" stylesheets="@../styles/StatisticsCSS.css" title="Turn over" visible="false">
               <xAxis>
                 <CategoryAxis prefWidth="876.0" side="BOTTOM" />
               </xAxis>
@@ -22,7 +24,7 @@
                 <NumberAxis side="LEFT" />
               </yAxis>
             </BarChart>
-            <LineChart layoutX="11.0" layoutY="14.0" prefHeight="503.0" prefWidth="800.0" stylesheets="@../styles/StatisticsCSS.css" title="Time " visible="false">
+            <LineChart fx:id="lineChart" layoutX="11.0" layoutY="14.0" prefHeight="503.0" prefWidth="800.0" stylesheets="@../styles/StatisticsCSS.css" title="Time ">
               <xAxis>
                 <CategoryAxis side="BOTTOM" />
               </xAxis>
@@ -63,9 +65,11 @@
             </Label>
          </children>
       </AnchorPane>
-      <ComboBox layoutX="128.0" layoutY="98.0" prefHeight="31.0" prefWidth="159.0" promptText="Statistic" stylesheets="@../styles/StatisticsCSS.css" />
-      <ComboBox layoutX="316.0" layoutY="98.0" prefHeight="31.0" prefWidth="159.0" promptText="Status" stylesheets="@../styles/StatisticsCSS.css" />
-      <ComboBox layoutX="500.0" layoutY="98.0" prefHeight="31.0" prefWidth="159.0" promptText="Client" stylesheets="@../styles/StatisticsCSS.css" />
-      <ComboBox layoutX="685.0" layoutY="98.0" prefHeight="31.0" prefWidth="159.0" promptText="Project" stylesheets="@../styles/StatisticsCSS.css" />
+      <ComboBox layoutX="233.0" layoutY="98.0" prefHeight="31.0" prefWidth="159.0" promptText="Statistic" stylesheets="@../styles/StatisticsCSS.css" />
+      <ComboBox layoutX="424.0" layoutY="98.0" prefHeight="31.0" prefWidth="159.0" promptText="Client" stylesheets="@../styles/StatisticsCSS.css" />
+      <ComboBox layoutX="614.0" layoutY="98.0" prefHeight="31.0" prefWidth="159.0" promptText="Project" stylesheets="@../styles/StatisticsCSS.css" />
+      <JFXButton fx:id="calculate" layoutX="827.0" layoutY="101.0" onAction="#calculate" text="Calculate" />
+      <JFXDatePicker fx:id="date1" layoutX="14.0" layoutY="47.0" />
+      <JFXDatePicker fx:id="date2" layoutX="14.0" layoutY="115.0" />
    </children>
 </AnchorPane>

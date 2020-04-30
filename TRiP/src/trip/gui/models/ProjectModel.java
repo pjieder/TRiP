@@ -5,11 +5,14 @@
  */
 package trip.gui.models;
 
+import java.time.LocalDate;
 import java.util.List;
 import javafx.collections.ObservableList;
+import javafx.scene.chart.XYChart;
 import trip.be.Employee;
 import trip.be.Project;
 import trip.bll.ProjectManager;
+import trip.utilities.TimeConverter;
 
 /**
  *
@@ -53,5 +56,9 @@ public class ProjectModel {
 
     public ObservableList<Project> searchProjects(String projectName, ObservableList<Project> projectList) {
         return projectManager.searchProjects(projectName, projectList);
+    }
+    
+     public XYChart.Series calculateGraph(int projectID, LocalDate date1, LocalDate date2) {
+         return projectManager.calculateGraph(projectID, date1, date2);
     }
 }
