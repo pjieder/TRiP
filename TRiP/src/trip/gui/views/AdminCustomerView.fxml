@@ -68,7 +68,7 @@
             </TableColumn>
          </columns>
       </TableView>
-      <TextField fx:id="searchBar" layoutX="248.0" layoutY="60.0" onKeyTyped="#customerSearch" onMouseClicked="#searchBarClick" prefHeight="31.0" prefWidth="363.0" promptText="Search" style="-fx-background-color: f1f1f1;" stylesheets="@../styles/MainAdminView.css">
+      <TextField fx:id="searchBar" layoutX="248.0" layoutY="60.0" onKeyTyped="#customerSearch" prefHeight="31.0" prefWidth="363.0" promptText="Search" style="-fx-background-color: f1f1f1;" stylesheets="@../styles/MainAdminView.css">
          <font>
             <Font size="15.0" />
          </font>

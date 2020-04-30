@@ -24,6 +24,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -55,6 +56,8 @@ public class AdminCustomerViewController implements Initializable
     private TextField searchBar;
     @FXML
     private JFXButton deleteButton;
+    @FXML
+    private ImageView searchIcon;
 
     /**
      * Initializes the controller class.
