@@ -13,7 +13,7 @@
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="972.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.gui.controllers.AdminCustomerViewController">
    <children>
-      <JFXButton layoutX="666.0" layoutY="78.0" onAction="#createCustomer" stylesheets="@../styles/MainAdminView.css" text="Create customer" textFill="WHITE">
+      <JFXButton layoutX="635.0" layoutY="60.0" onAction="#createCustomer" stylesheets="@../styles/MainAdminView.css" text="Create customer" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
@@ -21,7 +21,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton layoutX="809.0" layoutY="77.0" onAction="#editCustomer" prefHeight="31.0" prefWidth="129.0" stylesheets="@../styles/MainAdminView.css" text="Edit customer" textFill="WHITE">
+      <JFXButton layoutX="790.0" layoutY="60.0" onAction="#editCustomer" prefHeight="31.0" prefWidth="129.0" stylesheets="@../styles/MainAdminView.css" text="Edit customer" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
@@ -29,12 +29,12 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <Label contentDisplay="RIGHT" layoutX="41.0" layoutY="84.0" text="Current Customers">
+      <Label contentDisplay="RIGHT" layoutX="69.0" layoutY="65.0" text="Current Customers">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <TableView fx:id="customerTable" layoutX="41.0" layoutY="127.0" prefHeight="544.0" prefWidth="897.0" stylesheets="@../styles/MainAdminView.css">
+      <TableView fx:id="customerTable" layoutX="67.0" layoutY="117.0" prefHeight="551.0" prefWidth="852.0" stylesheets="@../styles/MainAdminView.css">
          <columns>
             <TableColumn fx:id="nameColumn" prefWidth="279.0" text="Name">
                <graphic>
@@ -68,17 +68,17 @@
             </TableColumn>
          </columns>
       </TableView>
-      <TextField fx:id="searchBar" layoutX="214.0" layoutY="78.0" onKeyTyped="#customerSearch" prefHeight="31.0" prefWidth="425.0" promptText="Search" style="-fx-background-color: f1f1f1;" stylesheets="@../styles/MainAdminView.css">
+      <TextField fx:id="searchBar" layoutX="248.0" layoutY="60.0" onKeyTyped="#customerSearch" onMouseClicked="#searchBarClick" prefHeight="31.0" prefWidth="363.0" promptText="Search" style="-fx-background-color: f1f1f1;" stylesheets="@../styles/MainAdminView.css">
          <font>
             <Font size="15.0" />
          </font>
       </TextField>
-      <ImageView fitHeight="83.0" fitWidth="21.0" layoutX="612.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="searchIcon" fitHeight="83.0" fitWidth="21.0" layoutX="583.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/magnifying-glass%20(6).png" />
          </image>
       </ImageView>
-      <JFXButton fx:id="deleteButton" layoutX="41.0" layoutY="683.0" onAction="#deleteCustomer" prefHeight="31.0" prefWidth="129.0" stylesheets="@../styles/MainAdminView.css" text="Delete customer" textFill="WHITE">
+      <JFXButton fx:id="deleteButton" layoutX="67.0" layoutY="679.0" onAction="#deleteCustomer" prefHeight="31.0" prefWidth="129.0" stylesheets="@../styles/MainAdminView.css" text="Delete customer" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
@@ -86,7 +86,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <ImageView fitHeight="21.0" fitWidth="22.0" layoutX="170.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="21.0" fitWidth="22.0" layoutX="204.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/customer-service%20(2).png" />
          </image>

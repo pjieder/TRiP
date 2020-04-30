@@ -39,7 +39,7 @@
             <Image url="@../images/rocket.png" />
          </image>
       </ImageView>
-      <Label fx:id="inactiveProjects" layoutX="785.0" layoutY="674.0" onMouseClicked="#showInactiveProjects" text="Inactive projects">
+      <Label fx:id="inactiveProjects" layoutX="785.0" layoutY="685.0" onMouseClicked="#showInactiveProjects" text="Inactive projects">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -47,7 +47,7 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <ImageView fx:id="activeArrow" fitHeight="19.0" fitWidth="14.0" layoutX="900.0" layoutY="678.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="activeArrow" fitHeight="19.0" fitWidth="14.0" layoutX="900.0" layoutY="689.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/next%20(5).png" />
          </image>
@@ -98,7 +98,7 @@
             <Image url="@../images/magnifying-glass%20(6).png" />
          </image>
       </ImageView>
-      <Label fx:id="activeProjects" layoutX="785.0" layoutY="674.0" onMouseClicked="#showActiveProjects" text="Active projects" visible="false">
+      <Label fx:id="activeProjects" layoutX="785.0" layoutY="685.0" onMouseClicked="#showActiveProjects" text="Active projects" visible="false">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -106,7 +106,7 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <ImageView fx:id="inactiveArrow" fitHeight="19.0" fitWidth="14.0" layoutX="900.0" layoutY="678.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" visible="false">
+      <ImageView fx:id="inactiveArrow" fitHeight="19.0" fitWidth="14.0" layoutX="900.0" layoutY="689.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" visible="false">
          <image>
             <Image url="@../images/next%20(5).png" />
          </image>
@@ -114,7 +114,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <JFXButton fx:id="deleteButton" layoutX="34.0" layoutY="668.0" onAction="#deleteProject" prefHeight="31.0" prefWidth="114.0" stylesheets="@../styles/MainAdminView.css" text="Delete project" textFill="WHITE" visible="false">
+      <JFXButton fx:id="deleteButton" layoutX="43.0" layoutY="680.0" onAction="#deleteProject" prefHeight="31.0" prefWidth="114.0" stylesheets="@../styles/MainAdminView.css" text="Delete project" textFill="WHITE" visible="false">
          <font>
             <Font size="15.0" />
          </font>
