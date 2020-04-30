@@ -77,7 +77,12 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <ChoiceBox fx:id="activeUsersCBox" layoutX="134.0" layoutY="331.0" prefWidth="190.0" />
+      <ChoiceBox fx:id="activeUsersCBox" layoutX="85.0" layoutY="343.0" prefHeight="25.0" prefWidth="296.0" stylesheets="@../styles/AddEditProjects.css" />
       <JFXComboBox fx:id="customerComboBox" layoutX="85.0" layoutY="262.0" onAction="#validateCustomer" prefHeight="25.0" prefWidth="296.0" promptText="Customer" stylesheets="@../styles/RegisterFormCSS.css" />
+      <Label layoutX="165.0" layoutY="316.0" text="Select active users" textFill="#4d4d4d">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
