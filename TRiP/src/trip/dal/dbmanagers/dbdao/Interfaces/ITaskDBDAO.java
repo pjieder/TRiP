@@ -16,25 +16,23 @@ import trip.be.Timer;
  * @author ander
  */
 public interface ITaskDBDAO {
-   
-    public int addTask(int userId, int projectId, String taskName);
-    
-    public boolean updateTask(Task task); //
-    
-    public boolean deleteTask(int taskId); //
-    
-    public void addTimeToTask(int taskId, int time, Date startTime, Date stopTime);
-    
-    public boolean UpdateTimeToTask(TaskTime taskTime); //
-    
-    public boolean DeleteTimeToTask(TaskTime taskTime); //
-    
-    public int getTaskTime(int taskID);
-    
-    public ObservableList<Task> loadTasks(int userId, int projectId);
-    
-    public ObservableList<TaskTime> loadTimeForTask(int taskId);
-    
 
-    
+    public int addTask(int userId, int projectId, String taskName);
+
+    public ObservableList<Task> loadTasks(int userId, int projectId);
+
+    public boolean updateTask(Task task);
+
+    public boolean deleteTask(int taskId);
+
+    public void addTimeToTask(int taskId, int time, Date startTime, Date stopTime);
+
+    public int getTaskTime(int taskID);
+
+    public ObservableList<TaskTime> loadTimeForTask(int taskId);
+
+    public boolean UpdateTimeToTask(TaskTime taskTime);
+
+    public boolean DeleteTimeToTask(TaskTime taskTime);
+
 }

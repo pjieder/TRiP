@@ -170,7 +170,7 @@ public class RegisterFormController implements Initializable {
         
         if (employeeToUpdate == null)
         {
-            appModel.createUser(newEmployee, password);
+            appModel.createEmployee(newEmployee, password);
         } else
         {
             newEmployee.setId(employeeToUpdate.getId());

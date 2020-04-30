@@ -52,8 +52,42 @@ public class TaskDBDAO implements ITaskDBDAO {
         } finally {
             DBSettings.getInstance().releaseConnection(con);
         }
-
         return -1;
+    }
+
+    @Override
+    public ObservableList<Task> loadTasks(int userId, int projectId) {
+
+        Connection con = null;
+        ObservableList<Task> tasks = FXCollections.observableArrayList();
+
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "SELECT * FROM Task WHERE Task.employeeID = ? AND Task.projID = ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, userId);
+            stmt.setInt(2, projectId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                int id = rs.getInt("ID");
+                String name = rs.getString("name");
+
+                Task task = new Task(name);
+                task.setId(id);
+                tasks.add(task);
+            }
+
+            return tasks;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(TaskDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+        return tasks;
     }
 
     @Override
@@ -76,7 +110,6 @@ public class TaskDBDAO implements ITaskDBDAO {
         } finally {
             DBSettings.getInstance().releaseConnection(con);
         }
-
         return false;
     }
 
@@ -99,7 +132,6 @@ public class TaskDBDAO implements ITaskDBDAO {
         } finally {
             DBSettings.getInstance().releaseConnection(con);
         }
-
         return false;
     }
 
@@ -125,6 +157,69 @@ public class TaskDBDAO implements ITaskDBDAO {
         } finally {
             DBSettings.getInstance().releaseConnection(con);
         }
+    }
+
+    @Override
+    public int getTaskTime(int taskID) {
+
+        Connection con = null;
+        int totalTime = 0;
+
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "SELECT SUM(Tasks.time) AS TotalTime FROM Tasks WHERE Tasks.TaskID = ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, taskID);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                totalTime = rs.getInt("TotalTime");
+            }
+            return totalTime;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(TaskDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+        return totalTime;
+    }
+
+    @Override
+    public ObservableList<TaskTime> loadTimeForTask(int taskId) {
+
+        Connection con = null;
+        ObservableList<TaskTime> tasks = FXCollections.observableArrayList();
+
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "SELECT * FROM Tasks WHERE Tasks.taskID = ? ORDER BY Tasks.startTime asc";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, taskId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                int id = rs.getInt("ID");
+                int time = rs.getInt("time");
+                Date startTime = TimeConverter.convertStringToDateDB(rs.getString("startTime"));
+                Date stopTime = TimeConverter.convertStringToDateDB(rs.getString("stopTime"));
+
+                TaskTime taskTime = new TaskTime(time, startTime, stopTime);
+                taskTime.setId(id);
+                tasks.add(taskTime);
+            }
+            return tasks;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(TaskDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+        return tasks;
     }
 
     @Override
@@ -172,107 +267,6 @@ public class TaskDBDAO implements ITaskDBDAO {
             DBSettings.getInstance().releaseConnection(con);
         }
         return false;
-    }
-
-    @Override
-    public int getTaskTime(int taskID) {
-
-        Connection con = null;
-        int totalTime = 0;
-
-        try {
-            con = DBSettings.getInstance().getConnection();
-            String sql = "SELECT SUM(Tasks.time) AS TotalTime FROM Tasks WHERE Tasks.TaskID = ?;";
-            PreparedStatement stmt = con.prepareStatement(sql);
-
-            stmt.setInt(1, taskID);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-
-                totalTime = rs.getInt("TotalTime");
-            }
-
-            return totalTime;
-
-        } catch (SQLException ex) {
-            Logger.getLogger(TaskDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            DBSettings.getInstance().releaseConnection(con);
-        }
-        return totalTime;
-    }
-
-    @Override
-    public ObservableList<Task> loadTasks(int userId, int projectId) {
-
-        Connection con = null;
-        ObservableList<Task> tasks = FXCollections.observableArrayList();
-
-        try {
-            con = DBSettings.getInstance().getConnection();
-            String sql = "SELECT * FROM Task WHERE Task.employeeID = ? AND Task.projID = ?;";
-            PreparedStatement stmt = con.prepareStatement(sql);
-
-            stmt.setInt(1, userId);
-            stmt.setInt(2, projectId);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-
-                int id = rs.getInt("ID");
-                String name = rs.getString("name");
-
-                Task task = new Task(name);
-                task.setId(id);
-                tasks.add(task);
-            }
-
-            return tasks;
-
-        } catch (SQLException ex) {
-            Logger.getLogger(TaskDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            DBSettings.getInstance().releaseConnection(con);
-        }
-        return tasks;
-    }
-
-    @Override
-    public ObservableList<TaskTime> loadTimeForTask(int taskId) {
-
-        Connection con = null;
-        ObservableList<TaskTime> tasks = FXCollections.observableArrayList();
-
-        try {
-            con = DBSettings.getInstance().getConnection();
-            String sql = "SELECT * FROM Tasks WHERE Tasks.taskID = ? ORDER BY Tasks.startTime asc";
-            PreparedStatement stmt = con.prepareStatement(sql);
-
-            stmt.setInt(1, taskId);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-
-                int id = rs.getInt("ID");
-                int time = rs.getInt("time");
-                Date startTime = TimeConverter.convertStringToDateDB(rs.getString("startTime"));
-                Date stopTime = TimeConverter.convertStringToDateDB(rs.getString("stopTime"));
-
-                TaskTime taskTime = new TaskTime(time, startTime, stopTime);
-                taskTime.setId(id);
-                tasks.add(taskTime);
-
-            }
-
-            return tasks;
-
-        } catch (SQLException ex) {
-            Logger.getLogger(TaskDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            DBSettings.getInstance().releaseConnection(con);
-        }
-        return tasks;
     }
 
 }

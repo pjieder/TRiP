@@ -51,7 +51,6 @@ public class UserDBDAO implements IUserDBDAO {
                 user.setId(id);
 
             }
-
             return user;
 
         } catch (SQLException ex) {

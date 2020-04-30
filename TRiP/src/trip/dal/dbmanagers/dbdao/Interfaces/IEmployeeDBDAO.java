@@ -16,23 +16,6 @@ import trip.be.Roles;
 public interface IEmployeeDBDAO {
 
     /**
-     * adds employee to Employees Table in SQL
-     *
-     * @param employee The employee to add
-     * @param password the password wanted stored
-     * @return
-     */
-    public boolean createEmployee(Employee employee, String password);
-
-    public boolean updateEmployee(Employee employee);
-    
-    public boolean deleteEmployee(Employee employee);
-
-    public void createPassword(String userName, String password, int ID);
-
-    public void updatePassword(String username, String password, int ID);
-
-    /**
      * Returns the ID of the user based on whether the login information given is valid or not.
      *
      * @param userName The username of the account
@@ -42,6 +25,27 @@ public interface IEmployeeDBDAO {
     public int isLoginCorrect(String userName, String password);
 
     /**
+     * adds employee to Employees Table in SQL
+     *
+     * @param employee The employee to add
+     * @param password the password wanted stored
+     * @return
+     */
+    public boolean createEmployee(Employee employee, String password);
+
+    public void createPassword(String userName, String password, int ID);
+
+    public void addEmployeeToProject(int employeeID, int projID);
+
+    public ObservableList<Employee> loadActiveEmployees();
+
+    public ObservableList<Employee> loadInactiveEmployees();
+
+    public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId);
+
+    public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId, boolean isActive);
+
+    /**
      * Returns the role of the person containing a specific ID.
      *
      * @param id The ID of the person being searched for
@@ -49,17 +53,14 @@ public interface IEmployeeDBDAO {
      */
     public Roles getRoleById(int id);
 
-    public ObservableList<Employee> loadActiveUsers();
-    
-    public void updateEmployeeActive(int employeeId, boolean active);
-    
-    public ObservableList<Employee> loadInactiveUsers();
+    public boolean updateEmployee(Employee employee);
 
-    public void addEmployeeToProject(int employeeID, int projID);
+    public void updateEmployeeActive(int employeeId, boolean active);
+
+    public void updatePassword(String username, String password, int ID);
+
+    public boolean deleteEmployee(Employee employee);
 
     public void removeAllEmployeesFromProject(int projID);
 
-    public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId);
-    
-    public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId, boolean isActive);
 }

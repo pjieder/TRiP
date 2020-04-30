@@ -8,8 +8,6 @@ package trip.bll;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import trip.be.Employee;
-import trip.dal.dbmanagers.dbdao.EmployeeDBDAO;
-import trip.dal.dbmanagers.dbdao.Interfaces.IEmployeeDBDAO;
 import trip.dal.dbmanagers.facades.DalFacade;
 import trip.dal.dbmanagers.facades.IDalFacade;
 
@@ -20,11 +18,9 @@ import trip.dal.dbmanagers.facades.IDalFacade;
 public class EmployeeManager {
 
     private IDalFacade dalFacade;
-    private IEmployeeDBDAO employeeDAO;
 
     public EmployeeManager() {
         dalFacade = new DalFacade();
-        employeeDAO = new EmployeeDBDAO();
     }
 
     /**
@@ -38,32 +34,16 @@ public class EmployeeManager {
         return dalFacade.login(username, password);
     }
 
-    public void createUser(Employee employee, String password) {
-        dalFacade.createUser(employee, password);
+    public void createEmployee(Employee employee, String password) {
+        dalFacade.createEmployee(employee, password);
     }
 
-    public void updateEmployee(Employee employee) {
-        dalFacade.updateEmployee(employee);
+    public ObservableList<Employee> loadActiveEmployees() {
+        return dalFacade.loadActiveEmployees();
     }
 
-    public void deleteEmployee(Employee employee) {
-        employeeDAO.deleteEmployee(employee);
-    }
-
-    public void updatePassword(String username, String password, int id) {
-        dalFacade.updatePassword(username, password, id);
-    }
-
-    public ObservableList<Employee> loadActiveUsers() {
-        return dalFacade.loadActiveUsers();
-    }
-
-    public void updateEmployeeActive(int employeeId, boolean active) {
-        employeeDAO.updateEmployeeActive(employeeId, active);
-    }
-
-    public ObservableList<Employee> loadInactiveUsers() {
-        return employeeDAO.loadInactiveUsers();
+    public ObservableList<Employee> loadInactiveEmployees() {
+        return dalFacade.loadInactiveEmployees();
     }
 
     public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId) {
@@ -72,6 +52,22 @@ public class EmployeeManager {
 
     public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId, boolean isActive) {
         return dalFacade.loadEmployeesAssignedToProject(projectId, isActive);
+    }
+
+    public void updateEmployee(Employee employee) {
+        dalFacade.updateEmployee(employee);
+    }
+
+    public void updateEmployeeActive(int employeeId, boolean active) {
+        dalFacade.updateEmployeeActive(employeeId, active);
+    }
+
+    public void updatePassword(String username, String password, int id) {
+        dalFacade.updatePassword(username, password, id);
+    }
+
+    public void deleteEmployee(Employee employee) {
+        dalFacade.deleteEmployee(employee);
     }
 
     public ObservableList<Employee> searchEmployee(String employeeName, ObservableList<Employee> employeeList) {

@@ -29,152 +29,6 @@ import trip.utilities.HashAlgorithm;
 public class EmployeeDBDAO implements IEmployeeDBDAO {
 
     /**
-     * adds employee to Employees Table in SQL
-     *
-     * @param employee The employee to add
-     * @param password the password wanted stored
-     * @return
-     */
-    @Override
-    public boolean createEmployee(Employee employee, String password) {
-        Connection con = null;
-        try {
-            con = DBSettings.getInstance().getConnection();
-            String sql = "INSERT INTO Employees (fName, lName, email, isAdmin, isActive) "
-                    + "VALUES (?,?,?,?,?);";
-            PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
-            stmt.setString(1, employee.getfName());
-            stmt.setString(2, employee.getlName());
-            stmt.setString(3, employee.getEmail());
-            if (employee.getRole() == Roles.ADMIN) {
-                stmt.setBoolean(4, true);
-            } else {
-                stmt.setBoolean(4, false);
-            }
-            stmt.setBoolean(5, true);
-            int updatedRows = stmt.executeUpdate();
-
-            ResultSet generatedKeys = stmt.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                createPassword(employee.getEmail(), password, generatedKeys.getInt(1));
-
-            }
-
-            return updatedRows > 0;
-        } catch (SQLException ex) {
-            Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            DBSettings.getInstance().releaseConnection(con);
-        }
-        return false;
-    }
-
-    @Override
-    public boolean updateEmployee(Employee employee) {
-        Connection con = null;
-        try {
-            con = DBSettings.getInstance().getConnection();
-            String sql = "UPDATE Employees SET fName = ?, lName = ?, email = ?, isAdmin = ? WHERE id = ?;";
-            PreparedStatement stmt = con.prepareStatement(sql);
-
-            stmt.setString(1, employee.getfName());
-            stmt.setString(2, employee.getlName());
-            stmt.setString(3, employee.getEmail());
-            if (employee.getRole() == Roles.ADMIN) {
-                stmt.setBoolean(4, true);
-            } else {
-                stmt.setBoolean(4, false);
-            }
-            stmt.setInt(5, employee.getId());
-
-            int updatedRows = stmt.executeUpdate();
-
-            return updatedRows > 0;
-        } catch (SQLException ex) {
-            Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            DBSettings.getInstance().releaseConnection(con);
-        }
-        return false;
-    }
-
-    @Override
-    public boolean deleteEmployee(Employee employee) {
-        Connection con = null;
-        try {
-            con = DBSettings.getInstance().getConnection();
-            String sql = "DELETE FROM Employees WHERE ID = ?;";
-            PreparedStatement stmt = con.prepareStatement(sql);
-
-            stmt.setInt(1, employee.getId());
-
-            int updatedRows = stmt.executeUpdate();
-
-            return updatedRows > 0;
-        } catch (SQLException ex) {
-            Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            DBSettings.getInstance().releaseConnection(con);
-        }
-        return false;
-    }
-
-    @Override
-    public void createPassword(String username, String password, int ID) {
-
-        Connection con = null;
-        try {
-            con = DBSettings.getInstance().getConnection();
-            String sql = "INSERT INTO Login (employeeID, username, hashedPassword, salt) "
-                    + "VALUES (?,?,?,?);";
-            PreparedStatement stmt = con.prepareStatement(sql);
-
-            String salt = HashAlgorithm.generateSalt();
-            String hashedPassword = HashAlgorithm.generateHash(password, salt);
-            stmt.setInt(1, ID);
-            stmt.setString(2, username);
-            stmt.setString(3, hashedPassword);
-            stmt.setString(4, salt);
-
-            int updatedRows = stmt.executeUpdate();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            DBSettings.getInstance().releaseConnection(con);
-        }
-
-    }
-
-    @Override
-    public void updatePassword(String username, String password, int ID) {
-
-        Connection con = null;
-        try {
-            con = DBSettings.getInstance().getConnection();
-            String sql = "UPDATE Login SET username = ?, hashedPassword = ?, salt = ? WHERE employeeID = ?;";
-            PreparedStatement stmt = con.prepareStatement(sql);
-
-            String salt = HashAlgorithm.generateSalt();
-            String hashedPassword = HashAlgorithm.generateHash(password, salt);
-
-            stmt.setString(1, username);
-            stmt.setString(2, hashedPassword);
-            stmt.setString(3, salt);
-            stmt.setInt(4, ID);
-
-            int updatedRows = stmt.executeUpdate();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            DBSettings.getInstance().releaseConnection(con);
-        }
-
-    }
-
-    /**
      * Returns the ID of the user based on whether the login information given is valid or not.
      *
      * @param userName The username of the account
@@ -212,46 +66,95 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
     }
 
     /**
-     * Returns the role of the person containing a specific ID.
+     * adds employee to Employees Table in SQL
      *
-     * @param id The ID of the person being searched for
-     * @return The role of the person entered
+     * @param employee The employee to add
+     * @param password the password wanted stored
+     * @return
      */
     @Override
-    public Roles getRoleById(int id) {
-
+    public boolean createEmployee(Employee employee, String password) {
         Connection con = null;
-
         try {
             con = DBSettings.getInstance().getConnection();
-            String sql = "SELECT isAdmin FROM Employees WHERE Employees.ID = ?;";
-            PreparedStatement stmt = con.prepareStatement(sql);
+            String sql = "INSERT INTO Employees (fName, lName, email, isAdmin, isActive) "
+                    + "VALUES (?,?,?,?,?);";
+            PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-            stmt.setInt(1, id);
-
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-
-                boolean isAdmin = rs.getBoolean("isAdmin");
-
-                if (isAdmin == true) {
-                    return Roles.ADMIN;
-                } else {
-                    return Roles.USER;
-                }
+            stmt.setString(1, employee.getfName());
+            stmt.setString(2, employee.getlName());
+            stmt.setString(3, employee.getEmail());
+            if (employee.getRole() == Roles.ADMIN) {
+                stmt.setBoolean(4, true);
+            } else {
+                stmt.setBoolean(4, false);
             }
+            stmt.setBoolean(5, true);
+            int updatedRows = stmt.executeUpdate();
+
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                createPassword(employee.getEmail(), password, generatedKeys.getInt(1));
+            }
+
+            return updatedRows > 0;
         } catch (SQLException ex) {
             Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
         }
-
-        return null;
+        return false;
     }
 
     @Override
-    public ObservableList<Employee> loadActiveUsers() {
+    public void createPassword(String username, String password, int ID) {
+
+        Connection con = null;
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "INSERT INTO Login (employeeID, username, hashedPassword, salt) "
+                    + "VALUES (?,?,?,?);";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            String salt = HashAlgorithm.generateSalt();
+            String hashedPassword = HashAlgorithm.generateHash(password, salt);
+            stmt.setInt(1, ID);
+            stmt.setString(2, username);
+            stmt.setString(3, hashedPassword);
+            stmt.setString(4, salt);
+
+            int updatedRows = stmt.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+    }
+
+    @Override
+    public void addEmployeeToProject(int employeeID, int projID) {
+
+        Connection con = null;
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "INSERT INTO Projects (employeeID, projID) VALUES (?,?);";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, employeeID);
+            stmt.setInt(2, projID);
+
+            int updatedRows = stmt.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+    }
+
+    @Override
+    public ObservableList<Employee> loadActiveEmployees() {
 
         Connection con = null;
         ObservableList<Employee> employees = FXCollections.observableArrayList();
@@ -289,32 +192,11 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
         } finally {
             DBSettings.getInstance().releaseConnection(con);
         }
-
         return employees;
     }
 
     @Override
-    public void updateEmployeeActive(int employeeId, boolean active) {
-        Connection con = null;
-        try {
-            con = DBSettings.getInstance().getConnection();
-            String sql = "UPDATE Employees SET isActive = ? WHERE ID = ?;";
-            PreparedStatement stmt = con.prepareStatement(sql);
-
-            stmt.setBoolean(1, active);
-            stmt.setInt(2, employeeId);
-
-            stmt.executeUpdate();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            DBSettings.getInstance().releaseConnection(con);
-        }
-    }
-
-    @Override
-    public ObservableList<Employee> loadInactiveUsers() {
+    public ObservableList<Employee> loadInactiveEmployees() {
 
         Connection con = null;
         ObservableList<Employee> employees = FXCollections.observableArrayList();
@@ -353,47 +235,6 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
             DBSettings.getInstance().releaseConnection(con);
         }
         return employees;
-    }
-
-    @Override
-    public void addEmployeeToProject(int employeeID, int projID) {
-
-        Connection con = null;
-        try {
-            con = DBSettings.getInstance().getConnection();
-            String sql = "INSERT INTO Projects (employeeID, projID) VALUES (?,?);";
-            PreparedStatement stmt = con.prepareStatement(sql);
-
-            stmt.setInt(1, employeeID);
-            stmt.setInt(2, projID);
-
-            int updatedRows = stmt.executeUpdate();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            DBSettings.getInstance().releaseConnection(con);
-        }
-    }
-
-    @Override
-    public void removeAllEmployeesFromProject(int projID) {
-
-        Connection con = null;
-        try {
-            con = DBSettings.getInstance().getConnection();
-            String sql = "DELETE FROM Projects WHERE Projects.projID = ?;";
-            PreparedStatement stmt = con.prepareStatement(sql);
-
-            stmt.setInt(1, projID);
-
-            int updatedRows = stmt.executeUpdate();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            DBSettings.getInstance().releaseConnection(con);
-        }
     }
 
     @Override
@@ -438,7 +279,6 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
         } finally {
             DBSettings.getInstance().releaseConnection(con);
         }
-
         return employees;
     }
 
@@ -483,8 +323,161 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
         } finally {
             DBSettings.getInstance().releaseConnection(con);
         }
-
         return employees;
+    }
+
+    /**
+     * Returns the role of the person containing a specific ID.
+     *
+     * @param id The ID of the person being searched for
+     * @return The role of the person entered
+     */
+    @Override
+    public Roles getRoleById(int id) {
+
+        Connection con = null;
+
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "SELECT isAdmin FROM Employees WHERE Employees.ID = ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, id);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                boolean isAdmin = rs.getBoolean("isAdmin");
+
+                if (isAdmin == true) {
+                    return Roles.ADMIN;
+                } else {
+                    return Roles.USER;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+        return null;
+    }
+
+    @Override
+    public boolean updateEmployee(Employee employee) {
+        Connection con = null;
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "UPDATE Employees SET fName = ?, lName = ?, email = ?, isAdmin = ? WHERE id = ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setString(1, employee.getfName());
+            stmt.setString(2, employee.getlName());
+            stmt.setString(3, employee.getEmail());
+            if (employee.getRole() == Roles.ADMIN) {
+                stmt.setBoolean(4, true);
+            } else {
+                stmt.setBoolean(4, false);
+            }
+            stmt.setInt(5, employee.getId());
+
+            int updatedRows = stmt.executeUpdate();
+
+            return updatedRows > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+        return false;
+    }
+
+    @Override
+    public void updateEmployeeActive(int employeeId, boolean active) {
+        Connection con = null;
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "UPDATE Employees SET isActive = ? WHERE ID = ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setBoolean(1, active);
+            stmt.setInt(2, employeeId);
+
+            stmt.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+    }
+
+    @Override
+    public void updatePassword(String username, String password, int ID) {
+
+        Connection con = null;
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "UPDATE Login SET username = ?, hashedPassword = ?, salt = ? WHERE employeeID = ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            String salt = HashAlgorithm.generateSalt();
+            String hashedPassword = HashAlgorithm.generateHash(password, salt);
+
+            stmt.setString(1, username);
+            stmt.setString(2, hashedPassword);
+            stmt.setString(3, salt);
+            stmt.setInt(4, ID);
+
+            int updatedRows = stmt.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+    }
+
+    @Override
+    public boolean deleteEmployee(Employee employee) {
+        Connection con = null;
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "DELETE FROM Employees WHERE ID = ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, employee.getId());
+
+            int updatedRows = stmt.executeUpdate();
+
+            return updatedRows > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+        return false;
+    }
+
+    @Override
+    public void removeAllEmployeesFromProject(int projID) {
+
+        Connection con = null;
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "DELETE FROM Projects WHERE Projects.projID = ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, projID);
+
+            int updatedRows = stmt.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
     }
 
 }

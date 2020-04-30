@@ -16,7 +16,6 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import trip.be.Customer;
-import trip.be.Project;
 import trip.dal.dbaccess.DBSettings;
 import trip.dal.dbmanagers.dbdao.Interfaces.ICustomerDBDAO;
 
@@ -33,6 +32,51 @@ public class CustomerDBDAO implements ICustomerDBDAO {
             dbCon = new DBSettings();
         } catch (IOException ex) {
             Logger.getLogger(CustomerDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public void createCustomer(Customer customer) {
+        Connection con = null;
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "INSERT INTO Customer (name, phoneNumber, email) VALUES (?,?,?);";
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            ps.setString(1, customer.getName());
+            ps.setString(2, customer.getPhoneNumber());
+            ps.setString(3, customer.getEmail());
+
+            int affectedRows = ps.executeUpdate();
+            if (affectedRows < 1) {
+                throw new SQLException();
+            }
+
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                customer.setId(rs.getInt(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+    }
+
+    @Override
+    public void addCustomerToProject(int customerID, int projectID) {
+        Connection con = null;
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "INSERT INTO CustomerProjects (CustomerProjects.customerID, CustomerProjects.projectID) VALUES (?,?);";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, customerID);
+            ps.setInt(2, projectID);
+            ps.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
         }
     }
 
@@ -64,31 +108,31 @@ public class CustomerDBDAO implements ICustomerDBDAO {
     }
 
     @Override
-    public void createCustomer(Customer customer) {
+    public Customer getCustomerForProject(int projectID) {
         Connection con = null;
+        Customer customer = null;
         try {
             con = DBSettings.getInstance().getConnection();
-            String sql = "INSERT INTO Customer (name, phoneNumber, email) VALUES (?,?,?);";
-            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            String sql = "SELECT * FROM Customer JOIN CustomerProjects on Customer.ID = CustomerProjects.customerID WHERE "
+                    + "CustomerProjects.projectID = ?;";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, projectID);
 
-            ps.setString(1, customer.getName());
-            ps.setString(2, customer.getPhoneNumber());
-            ps.setString(3, customer.getEmail());
-
-            int affectedRows = ps.executeUpdate();
-            if (affectedRows < 1) {
-                throw new SQLException();
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                customer = new Customer();
+                customer.setId(rs.getInt("id"));
+                customer.setName(rs.getString("name"));
+                customer.setPhoneNumber(rs.getString("phoneNumber"));
+                customer.setEmail(rs.getString("email"));
             }
-
-            ResultSet rs = ps.getGeneratedKeys();
-            if (rs.next()) {
-                customer.setId(rs.getInt(1));
-            }
+            return customer;
         } catch (SQLException ex) {
             Logger.getLogger(CustomerDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
         }
+        return customer;
     }
 
     @Override
@@ -123,51 +167,6 @@ public class CustomerDBDAO implements ICustomerDBDAO {
             String sql = "DELETE FROM Customer WHERE id=?;";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, customer.getId());
-            ps.execute();
-        } catch (SQLException ex) {
-            Logger.getLogger(CustomerDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            DBSettings.getInstance().releaseConnection(con);
-        }
-    }
-
-    @Override
-    public Customer getCustomerForProject(int projectID) {
-        Connection con = null;
-        Customer customer = null;
-        try {
-            con = DBSettings.getInstance().getConnection();
-            String sql = "SELECT * FROM Customer JOIN CustomerProjects on Customer.ID = CustomerProjects.customerID WHERE "
-                    + "CustomerProjects.projectID = ?;";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, projectID);
-            
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                customer = new Customer();
-                customer.setId(rs.getInt("id"));
-                customer.setName(rs.getString("name"));
-                customer.setPhoneNumber(rs.getString("phoneNumber"));
-                customer.setEmail(rs.getString("email"));
-            }
-            return customer;
-        } catch (SQLException ex) {
-            Logger.getLogger(CustomerDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            DBSettings.getInstance().releaseConnection(con);
-        }
-        return customer;
-    }
-
-    @Override
-    public void addCustomerToProject(int customerID, int projectID) {
-        Connection con = null;
-        try {
-            con = DBSettings.getInstance().getConnection();
-            String sql = "INSERT INTO CustomerProjects (CustomerProjects.customerID, CustomerProjects.projectID) VALUES (?,?);";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, customerID);
-            ps.setInt(2, projectID);
             ps.execute();
         } catch (SQLException ex) {
             Logger.getLogger(CustomerDBDAO.class.getName()).log(Level.SEVERE, null, ex);

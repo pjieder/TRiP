@@ -39,7 +39,7 @@ public class ProjectModel {
     }
 
     public ObservableList<Project> loadAllUserProjects(int employeeId) {
-        return projectManager.loadUserProjects(employeeId);
+        return projectManager.loadEmployeeProjects(employeeId);
     }
 
     public void createProject(Project project, List<Employee> allEmployees) {

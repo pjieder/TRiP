@@ -27,6 +27,10 @@ public class TaskModel {
         return taskManager.addTask(userId, projectId, taskName);
     }
 
+    public ObservableList<Task> loadTasks(int userId, int projectId) {
+        return taskManager.loadTasks(userId, projectId);
+    }
+
     public boolean updateTask(Task task) {
         return taskManager.updateTask(task);
     }
@@ -45,10 +49,6 @@ public class TaskModel {
 
     public boolean DeleteTimeToTask(TaskTime taskTime) {
         return taskManager.DeleteTimeToTask(taskTime);
-    }
-
-    public ObservableList<Task> loadTasks(int userId, int projectId) {
-        return taskManager.loadTasks(userId, projectId);
     }
 
 }

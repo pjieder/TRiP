@@ -5,9 +5,6 @@
  */
 package trip.be;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 /**
  *
  * @author ander

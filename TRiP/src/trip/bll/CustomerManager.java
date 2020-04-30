@@ -8,54 +8,44 @@ package trip.bll;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import trip.be.Customer;
-import trip.be.Project;
-import trip.dal.dbmanagers.dbdao.CustomerDBDAO;
-import trip.dal.dbmanagers.dbdao.Interfaces.ICustomerDBDAO;
+import trip.dal.dbmanagers.facades.DalFacade;
+import trip.dal.dbmanagers.facades.IDalFacade;
 
 /**
  *
  * @author Jacob
  */
-public class CustomerManager
-{
+public class CustomerManager {
 
-    private ICustomerDBDAO customerDao;
+    private IDalFacade dalFacade;
 
-    public CustomerManager()
-    {
-        customerDao = new CustomerDBDAO();
+    public CustomerManager() {
+        dalFacade = new DalFacade();
     }
 
-    public ObservableList<Customer> getAllCustomers()
-    {
-        return customerDao.getAllCustomers();
+    public void createCustomer(Customer customer) {
+        dalFacade.createCustomer(customer);
     }
 
-    public void createCustomer(Customer customer)
-    {
-        customerDao.createCustomer(customer);
+    public ObservableList<Customer> getAllCustomers() {
+        return dalFacade.getAllCustomers();
     }
 
-    public void updateCustomer(Customer customer)
-    {
-        customerDao.updateCustomer(customer);
+    public void updateCustomer(Customer customer) {
+        dalFacade.updateCustomer(customer);
     }
 
-    public void deleteCustomer(Customer customer)
-    {
-        customerDao.deleteCustomer(customer);
+    public void deleteCustomer(Customer customer) {
+        dalFacade.deleteCustomer(customer);
     }
 
-    public ObservableList<Customer> searchCustomers(String customerName, ObservableList<Customer> customerList)
-    {
+    public ObservableList<Customer> searchCustomers(String customerName, ObservableList<Customer> customerList) {
 
         ObservableList<Customer> searchCustomerList = FXCollections.observableArrayList();
 
-        for (Customer customer : customerList)
-        {
+        for (Customer customer : customerList) {
 
-            if (customer.getName().toLowerCase().contains(customerName.toLowerCase()))
-            {
+            if (customer.getName().toLowerCase().contains(customerName.toLowerCase())) {
                 searchCustomerList.add(customer);
             }
         }

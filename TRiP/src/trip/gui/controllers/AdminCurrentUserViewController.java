@@ -89,7 +89,7 @@ public class AdminCurrentUserViewController implements Initializable {
     }
 
     public void loadUsers() {
-        employees = appModel.loadActiveUsers();
+        employees = appModel.loadActiveEmployees();
         userList.setItems(employees);
         projectComboBox.setItems(projectModel.loadAllActiveProjects());
         projectComboBox.getItems().add(0, new Project("All projects", 0));
@@ -209,9 +209,9 @@ public class AdminCurrentUserViewController implements Initializable {
 
         if (project.getId() == 0) {
             if (isLastOnActive) {
-                employees = appModel.loadActiveUsers();
+                employees = appModel.loadActiveEmployees();
             } else {
-                employees = appModel.loadInactiveUsers();
+                employees = appModel.loadInactiveEmployees();
             }
         } else {
             employees = appModel.loadEmployeesAssignedToProject(project.getId(), isLastOnActive);

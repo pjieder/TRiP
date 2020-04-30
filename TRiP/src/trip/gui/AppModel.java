@@ -32,32 +32,16 @@ public class AppModel {
         return employeeManager.validateEmployee(username, password);
     }
 
-    public void createUser(Employee employee, String password) {
-        employeeManager.createUser(employee, password);
+    public void createEmployee(Employee employee, String password) {
+        employeeManager.createEmployee(employee, password);
     }
 
-    public void deleteEmployee(Employee employee) {
-        employeeManager.deleteEmployee(employee);
+    public ObservableList<Employee> loadActiveEmployees() {
+        return employeeManager.loadActiveEmployees();
     }
 
-    public void updateEmployee(Employee employee) {
-        employeeManager.updateEmployee(employee);
-    }
-
-    public void updatePassword(String username, String password, int id) {
-        employeeManager.updatePassword(username, password, id);
-    }
-
-    public ObservableList<Employee> loadActiveUsers() {
-        return employeeManager.loadActiveUsers();
-    }
-
-    public void updateEmployeeActive(int employeeId, boolean active) {
-        employeeManager.updateEmployeeActive(employeeId, active);
-    }
-
-    public ObservableList<Employee> loadInactiveUsers() {
-        return employeeManager.loadInactiveUsers();
+    public ObservableList<Employee> loadInactiveEmployees() {
+        return employeeManager.loadInactiveEmployees();
     }
 
     public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId) {
@@ -66,6 +50,22 @@ public class AppModel {
 
     public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId, boolean isActive) {
         return employeeManager.loadEmployeesAssignedToProject(projectId, isActive);
+    }
+
+    public void updateEmployee(Employee employee) {
+        employeeManager.updateEmployee(employee);
+    }
+
+    public void updateEmployeeActive(int employeeId, boolean active) {
+        employeeManager.updateEmployeeActive(employeeId, active);
+    }
+
+    public void updatePassword(String username, String password, int id) {
+        employeeManager.updatePassword(username, password, id);
+    }
+
+    public void deleteEmployee(Employee employee) {
+        employeeManager.deleteEmployee(employee);
     }
 
     public ObservableList<Employee> searchEmployee(String employeeName, ObservableList<Employee> employeeList) {

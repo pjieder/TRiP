@@ -9,11 +9,11 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import javafx.collections.ObservableList;
+import trip.be.Customer;
 import trip.be.Employee;
 import trip.be.Project;
 import trip.be.Task;
 import trip.be.TaskTime;
-import trip.be.Timer;
 
 /**
  *
@@ -30,13 +30,43 @@ public interface IDalFacade {
      */
     public Employee login(String username, String password);
 
-    public void createUser(Employee employee, String password);
+    public void createEmployee(Employee employee, String password);
+
+    public ObservableList<Employee> loadActiveEmployees();
+
+    public ObservableList<Employee> loadInactiveEmployees();
+
+    public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId);
+
+    public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId, boolean isActive);
 
     public void updateEmployee(Employee employee);
 
+    public void updateEmployeeActive(int employeeId, boolean active);
+
     public void updatePassword(String username, String password, int id);
 
+    public void deleteEmployee(Employee employee);
+    
+
+    public void createProject(Project project, List<Employee> allEmployees);
+
+    public ObservableList<Project> getAllProjects();
+
+    public ObservableList<Project> loadAllActiveProjects();
+
+    public ObservableList<Project> loadAllInactiveProjects();
+
+    public ObservableList<Project> loadEmployeeProjects(int employeeId);
+
+    public void updateProject(Project project, List<Employee> allEmployees);
+
+    public void deleteProject(Project project);
+    
+
     public int addTask(int userId, int projectId, String taskName);
+
+    public ObservableList<Task> loadTasks(int userId, int projectId);
 
     public boolean updateTask(Task task);
 
@@ -44,27 +74,19 @@ public interface IDalFacade {
 
     public void saveTimeForTask(int taskId, int time, Date startTime, Date stopTime);
 
+    public List<Integer> loadTimeForDates(int projectID, List<LocalDate> dates);
+
     public boolean UpdateTimeToTask(TaskTime taskTime);
 
     public boolean DeleteTimeToTask(TaskTime taskTime);
-
-    public ObservableList<Employee> loadActiveUsers();
-
-    public ObservableList<Task> loadTasks(int userId, int projectId);
-
-    public ObservableList<Project> loadAllActiveProjects();
     
-    public ObservableList<Project> loadAllInactiveProjects();
 
-    public ObservableList<Project> loadUserProjects(int employeeId);
+    public void createCustomer(Customer customer);
 
-    public void createProject(Project project, List<Employee> allEmployees);
+    public ObservableList<Customer> getAllCustomers();
 
-    public void updateProject(Project project, List<Employee> allEmployees);
-    
-    public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId);
-    
-    public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId, boolean isActive);
-    
-    public List<Integer> loadTimeForDates(int projectID, List<LocalDate> dates);
+    public void updateCustomer(Customer customer);
+
+    public void deleteCustomer(Customer customer);
+
 }
