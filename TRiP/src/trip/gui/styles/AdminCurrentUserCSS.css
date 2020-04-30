@@ -34,13 +34,32 @@ and open the template in the editor.
 
 .combo-box{
     -fx-border-width:1;
-    -fx-font-size: 15px;
     -fx-background-color: #f1f1f1;
+    -fx-font-size: 15px;
+
+}
+
+
+.combo-box-popup .list-cell {    
+    -fx-background-color: white;    
+    -fx-text-fill: #333333;
+}
+
+.combo-box-popup .list-cell:filled:hover {
+    -fx-background-color: #9a80fe;
+    -fx-text-fill: #ffffff;
+}
+
+.combo-box-popup .list-cell:filled:selected {
+  -fx-background-color: #9a80fe;
+  -fx-background-insets: 0 ;
+  -fx-text-fill: #ffffff;
 }
 
 .list-view{
--fx-border-color: #f1f1f1;
+-fx-border-color: #ffffff;
 -fx-focus-color: transparent;
+-fx-background-color: transparent;
 }
 
 .list-cell:even { /* <=== changed to even */

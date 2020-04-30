@@ -57,7 +57,7 @@ and open the template in the editor.
 
 .combo-box{
     -fx-border-width:1;
-    -fx-background-color: #f3f3f3;
+    -fx-background-color: #f1f1f1;
     -fx-font-size: 15px;
 
 }
@@ -69,12 +69,12 @@ and open the template in the editor.
 }
 
 .combo-box-popup .list-cell:filled:hover {
-    -fx-background-color: #EBBA16;
+    -fx-background-color: #9a80fe;
     -fx-text-fill: #ffffff;
 }
 
 .combo-box-popup .list-cell:filled:selected {
-  -fx-background-color: #EBBA16;
+  -fx-background-color: #9a80fe;
   -fx-background-insets: 0 ;
   -fx-text-fill: #ffffff;
 }
@@ -145,3 +145,4 @@ and open the template in the editor.
     -fx-background-color: #ff8484;
     
 }
+

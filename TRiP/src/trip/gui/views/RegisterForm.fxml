@@ -66,11 +66,11 @@
          <font>
             <Font size="15.0" />
          </font></JFXTextField>
-      <JFXPasswordField fx:id="passwordField" layoutX="75.0" layoutY="346.0" prefHeight="25.0" prefWidth="296.0" promptText="Password">
+      <JFXPasswordField fx:id="passwordField" focusColor="#9a80fe" layoutX="75.0" layoutY="346.0" prefHeight="25.0" prefWidth="296.0" promptText="Password">
          <font>
             <Font size="15.0" />
          </font></JFXPasswordField>
-      <JFXPasswordField fx:id="passwordFieldTwo" layoutX="75.0" layoutY="413.0" prefHeight="25.0" prefWidth="296.0" promptText="Re-enter Password">
+      <JFXPasswordField fx:id="passwordFieldTwo" focusColor="#9a80fe" layoutX="75.0" layoutY="413.0" prefHeight="25.0" prefWidth="296.0" promptText="Re-enter Password">
          <font>
             <Font size="15.0" />
          </font></JFXPasswordField>

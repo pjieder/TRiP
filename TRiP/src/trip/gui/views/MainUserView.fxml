@@ -58,7 +58,7 @@
                <font>
                   <Font size="15.0" />
                </font></TextField>
-            <ComboBox fx:id="projectComboBox" onAction="#switchProject" prefHeight="44.0" prefWidth="302.0" promptText="Project" style="-fx-background-color: #f1f1f1;" stylesheets="@../styles/MainUserViewCSS.css" GridPane.columnIndex="2" />
+            <ComboBox fx:id="projectComboBox" onAction="#switchProject" prefHeight="44.0" prefWidth="302.0" promptText="Project" stylesheets="@../styles/MainUserViewCSS.css" GridPane.columnIndex="2" />
             <Line endX="-100.0" endY="26.0" opacity="0.35" startX="-100.0" startY="-9.0" GridPane.columnIndex="3" />
             <JFXButton fx:id="startTimer" disable="true" onAction="#startTimer" prefHeight="44.0" prefWidth="73.0" stylesheets="@../styles/MainUserViewCSS.css" text="Start" textFill="WHITE" GridPane.columnIndex="5">
                <font>

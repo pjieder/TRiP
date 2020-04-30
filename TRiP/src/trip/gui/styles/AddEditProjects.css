@@ -47,8 +47,9 @@ and open the template in the editor.
 }
 
 .list-view{
--fx-border-color: #f1f1f1;
+-fx-border-color: f1f1f1;
 -fx-focus-color: transparent;
+-fx-background-color: transparent
 }
 
 .list-cell:even { /* <=== changed to even */
@@ -71,4 +72,16 @@ and open the template in the editor.
 
 .choice-box > * {
     -fx-background-color: #f1f1f1;
+    -fx-font-size: 15px;
+    -fx-background-radius: 0;
 }
+
+.cb .menu-item:focused {
+  -fx-background-color: #9a80fe; /* for example */
+  -fx-text-fill: white;
+}
+
+.cb .context-menu {
+    -fx-background-color: white;
+}
+
