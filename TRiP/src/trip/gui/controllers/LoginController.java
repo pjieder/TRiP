@@ -116,6 +116,17 @@ public class LoginController implements Initializable {
         preferences.putBoolean("rememberActivated", false);
     }
 
+    /**
+     * Creates a new thread that will try to login
+     * with the entered username and password.
+     * If correct login is entered, the stage will switch
+     * to either the teacher- or student view depending on
+     * the login information given.
+     * @return Returns the login thread to be executed.
+     * @throws InterruptedException
+     * @throws ExecutionException
+     * @throws IOException 
+     */
     public Thread loadPerson() throws InterruptedException, ExecutionException, IOException {
 
         Thread loginThread = new Thread(() -> {

@@ -100,8 +100,7 @@ public class MainAdminViewController implements Initializable {
         customerColumn.setCellValueFactory((data)
                 -> {
             Project project = data.getValue();
-            if (project.getCustomer() == null)
-            {
+            if (project.getCustomer() == null) {
                 return new SimpleStringProperty("-");
             }
             return new SimpleStringProperty(project.getCustomer().toString());
@@ -115,28 +114,43 @@ public class MainAdminViewController implements Initializable {
         loadAllProjects();
     }
 
+    /**
+     * Loads all active projects and diplays them in the project table together with the information stored.
+     */
     public void loadAllProjects() {
         projects = projectModel.loadAllActiveProjects();
         projectTable.setItems(projects);
     }
 
+    /**
+     * Opens the MainUserView FXML with the selected project already loaded and ready for time tracking.
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
     private void openProject(MouseEvent event) throws IOException {
 
         if (event.getClickCount() > 1 & !projectTable.getSelectionModel().isEmpty() & !event.isConsumed()) {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(AppModel.class.getResource("views/MainUserView.fxml"));
-            
-            Pane pane =fxmlLoader.load();
+
+            Pane pane = fxmlLoader.load();
             MainUserViewController controller = fxmlLoader.getController();
             controller.setAdmin(projectTable.getSelectionModel().getSelectedItem());
-            
+
             MenuBarViewController.viewPane.getChildren().clear();
             MenuBarViewController.viewPane.getChildren().add(pane);
-            
+
         }
     }
 
+    /**
+     * Opens the AddEditProject FXML view as a new stage in order to create projects.
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
     private void createProject(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -149,6 +163,12 @@ public class MainAdminViewController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Opens the AddEditProject FXML view as a new stage and inserts the data already stored about the selected project.
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
     private void editProject(ActionEvent event) throws IOException {
         if (!projectTable.getSelectionModel().isEmpty()) {
@@ -163,6 +183,11 @@ public class MainAdminViewController implements Initializable {
         }
     }
 
+    /**
+     * Creates a new Thread that updates the data stored in the project table.
+     *
+     * @return the update Thread to be executed
+     */
     private Thread updateView() {
         Thread updateThread = new Thread(()
                 -> {
@@ -182,6 +207,11 @@ public class MainAdminViewController implements Initializable {
         return updateThread;
     }
 
+    /**
+     * Loads all inactive projects and inserts them into the project table.
+     *
+     * @param event
+     */
     @FXML
     private void showInactiveProjects(MouseEvent event) {
         inactiveProjects.setVisible(false);
@@ -196,6 +226,11 @@ public class MainAdminViewController implements Initializable {
         search();
     }
 
+    /**
+     * Loads all active projects and inserts them into the project table.
+     *
+     * @param event
+     */
     @FXML
     private void showActiveProjects(MouseEvent event) {
         inactiveProjects.setVisible(true);
@@ -210,6 +245,11 @@ public class MainAdminViewController implements Initializable {
         search();
     }
 
+    /**
+     * Deletes the selected inactive project from the system together with registered time and tasks for the selected project.
+     *
+     * @param event
+     */
     @FXML
     private void deleteProject(ActionEvent event) {
 
@@ -232,11 +272,19 @@ public class MainAdminViewController implements Initializable {
         }
     }
 
+    /**
+     * Event handler for the search bar. Runs method search in order to update the view.
+     *
+     * @param event
+     */
     @FXML
     private void projectSearch(KeyEvent event) {
         search();
     }
 
+    /**
+     * Searches through the project table and displays projects mathing the name of the search term.
+     */
     private void search() {
         String projectName = searchBar.getText();
 

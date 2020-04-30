@@ -23,10 +23,10 @@ import trip.gui.models.CustomerModel;
  *
  * @author Jacob
  */
-public class AddEditCustomerController implements Initializable
-{
+public class AddEditCustomerController implements Initializable {
+
     private CustomerModel customerModel = new CustomerModel();
-    
+
     private Thread updateThread;
     private Customer customerToUpdate;
 
@@ -49,70 +49,86 @@ public class AddEditCustomerController implements Initializable
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
         RegexValidator regex = new RegexValidator();
         regex.setRegexPattern("^.+@[^\\.].*\\.[a-z]{2,}$");
         regex.setMessage("Input is not a valid email");
 
-        nameField.textProperty().addListener((Observable, oldValue, newValue) ->
-        {
+        nameField.textProperty().addListener((Observable, oldValue, newValue)
+                -> {
             validateInput();
         });
 
-        phoneNumberField.textProperty().addListener((Observable, oldValue, newValue) ->
-        {
+        phoneNumberField.textProperty().addListener((Observable, oldValue, newValue)
+                -> {
             validateInput();
         });
 
         emailField.getValidators().add(regex);
-        emailField.textProperty().addListener((observable, oldValue, newValue) ->
-        {
+        emailField.textProperty().addListener((observable, oldValue, newValue)
+                -> {
             emailField.validate();
             validateInput();
         });
     }
 
-    private void validateInput()
-    {
+    /**
+     * Validates the entered information and enables the register- or update button if sufficient information is given.
+     */
+    private void validateInput() {
         String name = nameField.getText().trim();
 
-        if (name.equals(""))
-        {
+        if (name.equals("")) {
             registerButton.setDisable(true);
             updateButton.setDisable(true);
-        } 
-         else
-        {
+        } else {
             registerButton.setDisable(false);
             updateButton.setDisable(false);
         }
     }
 
+    /**
+     * This methods runs when the AddEditCustomer FXML is opened by the "add" button. It takes the update statistics thread and stores as instance variables.
+     *
+     * @param thread the Thread returned by method updateView in the AdminCustomerViewController
+     */
     public void setUpdateThread(Thread thread) {
         this.updateThread = thread;
     }
-    
+
+    /**
+     * This methods runs when the AddEditCustomer FXML is opened by the "edit" button. It takes the selected customer and the update thread and stores as instance variables.
+     * 
+     * @param customer The customer to be updated
+     * @param thread The Thread returned by method updateView in the AdminCustomerViewController
+     */
     public void setCustomer(Customer customer, Thread thread) {
         title.setText("Update Customer");
-        
+
         this.updateThread = thread;
         this.customerToUpdate = customer;
-        
+
         registerButton.setVisible(false);
         updateButton.setVisible(true);
-        
+
         nameField.setText(customer.getName());
-        if (!customer.getPhoneNumber().equals("")){phoneNumberField.setText(customer.getPhoneNumber());}
-        if (!customer.getEmail().equals("")){emailField.setText(customer.getEmail());}
+        if (!customer.getPhoneNumber().equals("")) {
+            phoneNumberField.setText(customer.getPhoneNumber());
+        }
+        if (!customer.getEmail().equals("")) {
+            emailField.setText(customer.getEmail());
+        }
         validateInput();
     }
-    
+
+    /**
+     * Saves or updates the customer based on what button was pressed when opening the FXML.
+     * @param event 
+     */
     @FXML
-    private void registerCustomer(ActionEvent event)
-    {
+    private void registerCustomer(ActionEvent event) {
         Customer customer = new Customer();
-        
+
         customer.setName(nameField.getText());
         customer.setPhoneNumber(phoneNumberField.getText());
         customer.setEmail(emailField.getText());
@@ -129,9 +145,12 @@ public class AddEditCustomerController implements Initializable
         currentStage.close();
     }
 
+    /**
+     * Cancels all actions and closes the scene.
+     * @param event 
+     */
     @FXML
-    private void cancelScene(ActionEvent event)
-    {
+    private void cancelScene(ActionEvent event) {
         Stage currentStage = (Stage) nameField.getScene().getWindow();
         currentStage.close();
     }

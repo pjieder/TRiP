@@ -37,8 +37,7 @@ import trip.gui.models.CustomerModel;
  *
  * @author Jacob
  */
-public class AdminCustomerViewController implements Initializable
-{
+public class AdminCustomerViewController implements Initializable {
 
     private CustomerModel customerModel = new CustomerModel();
     private ObservableList<Customer> customers = FXCollections.observableArrayList();
@@ -62,36 +61,42 @@ public class AdminCustomerViewController implements Initializable
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
-        nameColumn.setCellValueFactory((data) ->
-        {
+    public void initialize(URL url, ResourceBundle rb) {
+        nameColumn.setCellValueFactory((data)
+                -> {
             Customer customer = data.getValue();
             return new SimpleStringProperty(customer.getName());
         });
 
-        phoneNumberColumn.setCellValueFactory((data) ->
-        {
+        phoneNumberColumn.setCellValueFactory((data)
+                -> {
             Customer customer = data.getValue();
             return new SimpleStringProperty(customer.getPhoneNumber());
         });
 
-        emailColumn.setCellValueFactory((data) ->
-        {
+        emailColumn.setCellValueFactory((data)
+                -> {
             Customer customer = data.getValue();
             return new SimpleStringProperty(customer.getEmail());
         });
     }
 
-    public void loadAllCustomers()
-    {
+    /**
+     * Loads all customers and diplays them in the customer table together with the information stored.
+     */
+    public void loadAllCustomers() {
         customers = customerModel.getAllCustomers();
         customerTable.setItems(customers);
     }
 
+    /**
+     * Opens the AddEditCustomer FXML view as a new stage in order to create customers.
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
-    private void createCustomer(ActionEvent event) throws IOException
-    {
+    private void createCustomer(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(AppModel.class.getResource("views/AddEditCustomer.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
@@ -102,11 +107,15 @@ public class AdminCustomerViewController implements Initializable
         stage.show();
     }
 
+    /**
+     * Opens the AddEditCustomer FXML view as a new stage and inserts the data already stored about the selected customer.
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
-    private void editCustomer(ActionEvent event) throws IOException
-    {
-        if (!customerTable.getSelectionModel().isEmpty())
-        {
+    private void editCustomer(ActionEvent event) throws IOException {
+        if (!customerTable.getSelectionModel().isEmpty()) {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(AppModel.class.getResource("views/AddEditCustomer.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
@@ -118,11 +127,14 @@ public class AdminCustomerViewController implements Initializable
         }
     }
 
+    /**
+     * Deletes the selected customer from the system and removes the customer from all registered projects.
+     *
+     * @param event
+     */
     @FXML
-    private void deleteCustomer(ActionEvent event)
-    {
-        if (!customerTable.getSelectionModel().isEmpty())
-        {
+    private void deleteCustomer(ActionEvent event) {
+        if (!customerTable.getSelectionModel().isEmpty()) {
 
             Customer selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
 
@@ -132,24 +144,25 @@ public class AdminCustomerViewController implements Initializable
             alert.setHeaderText(null);
             alert.setContentText("Are you sure you want to delete " + selectedCustomer.getName() + "?");
             Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK)
-            {
+            if (result.get() == ButtonType.OK) {
                 customerTable.getItems().remove(selectedCustomer);
                 customerModel.deleteCustomer(selectedCustomer);
-            } else
-            {
+            } else {
                 alert.close();
             }
-
         }
     }
 
-    private Thread updateView()
-    {
-        Thread updateThread = new Thread(() ->
-        {
-            Platform.runLater(() ->
-            {
+    /**
+     * Creates a new Thread that updates the data stored in the customer table.
+     *
+     * @return the update Thread to be executed
+     */
+    private Thread updateView() {
+        Thread updateThread = new Thread(()
+                -> {
+            Platform.runLater(()
+                    -> {
                 customers = customerModel.getAllCustomers();
                 customerTable.setItems(customers);
                 customerTable.refresh();
@@ -159,21 +172,25 @@ public class AdminCustomerViewController implements Initializable
         return updateThread;
     }
 
+    /**
+     * Event handler for the search bar. Runs method search in order to update the view.
+     *
+     * @param event
+     */
     @FXML
-    private void customerSearch(KeyEvent event)
-    {
+    private void customerSearch(KeyEvent event) {
         search();
     }
 
-    public void search()
-    {
+    /**
+     * Searches through the customer table and displays customers mathing the name of the search term.
+     */
+    public void search() {
         String customerName = searchBar.getText();
 
-        if (customerName.equalsIgnoreCase(""))
-        {
+        if (customerName.equalsIgnoreCase("")) {
             customerTable.setItems(customers);
-        } else
-        {
+        } else {
             customerTable.setItems(customerModel.searchCustomers(customerName, customers));
         }
     }

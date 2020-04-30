@@ -103,10 +103,4 @@ public class Timer implements Runnable{
         this.stopTime = stopTime;
     }
     
-    
-    public static void main(String[] args) {
-        Date date = new Date();
-        System.out.println(TimeConverter.convertDateToString(date));
-    }
-    
 }

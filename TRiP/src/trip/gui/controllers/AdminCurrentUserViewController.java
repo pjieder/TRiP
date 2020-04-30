@@ -75,6 +75,10 @@ public class AdminCurrentUserViewController implements Initializable {
         loadUsers();
     }
 
+     /**
+     * Creates a new Thread that updates the data stored in the project list.
+     * @return the update Thread to be executed
+     */
     public Thread getUpdateListThread() {
         Thread updateThread = new Thread(() -> {
 
@@ -82,12 +86,13 @@ public class AdminCurrentUserViewController implements Initializable {
               setProject();
               search();
             });
-
         });
-
         return updateThread;
     }
 
+    /**
+     * Loads the active employees into the user list and loads the combobox with all active projects.
+     */
     public void loadUsers() {
         employees = appModel.loadActiveEmployees();
         userList.setItems(employees);
@@ -96,6 +101,11 @@ public class AdminCurrentUserViewController implements Initializable {
         projectComboBox.getSelectionModel().select(0);
     }
 
+    /**
+     * Opens the RegisterForm FXML view as a new stage in order to create users.
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     private void openAddUser(ActionEvent event) throws IOException {
 
@@ -111,6 +121,11 @@ public class AdminCurrentUserViewController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Opens the RegisterForm FXML view as a new stage and inserts the data already stored about the employee
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     private void openUpdateUser(ActionEvent event) throws IOException {
 
@@ -129,6 +144,10 @@ public class AdminCurrentUserViewController implements Initializable {
         }
     }
 
+    /**
+     * Loads all inactive employees and inserts them into the user list.
+     * @param event 
+     */
     @FXML
     private void showInactiveUsers(MouseEvent event) {
         inactiveUsers.setVisible(false);
@@ -142,6 +161,10 @@ public class AdminCurrentUserViewController implements Initializable {
         getUpdateListThread().start();
     }
 
+    /**
+     * Loads all active employees and inserts them into the user list.
+     * @param event 
+     */
     @FXML
     private void showActiveUsers(MouseEvent event) {
         inactiveUsers.setVisible(true);
@@ -155,6 +178,10 @@ public class AdminCurrentUserViewController implements Initializable {
         getUpdateListThread().start();
     }
 
+    /**
+     * Disables the selected employee making them inactive.
+     * @param event 
+     */
     @FXML
     private void makeUserInactive(ActionEvent event) {
 
@@ -164,6 +191,10 @@ public class AdminCurrentUserViewController implements Initializable {
         }
     }
 
+    /**
+     * Activates the selected employee making them active.
+     * @param event 
+     */
     @FXML
     private void makeUserActive(ActionEvent event) {
 
@@ -173,6 +204,10 @@ public class AdminCurrentUserViewController implements Initializable {
         }
     }
 
+    /**
+     * Deletes the selected employee from the system together with registered time, project and tasks for the selected employee.
+     * @param event 
+     */
     @FXML
     private void deleteUser(ActionEvent event) {
         if (!userList.getSelectionModel().isEmpty()) {
@@ -193,17 +228,28 @@ public class AdminCurrentUserViewController implements Initializable {
         }
     }
 
+    /**
+     * Event handler for the project combobox. Runs method setProject and search in order to update the view.
+     * @param event 
+     */
     @FXML
     private void sortProject(ActionEvent event) {
         setProject();
         search();
     }
 
+    /**
+     * Event handler for the search bar. Runs method search in order to update the view.
+     * @param event 
+     */
      @FXML
     private void userSearch(KeyEvent event) {
         search();
     }
 
+    /**
+     * Loads all employees in the userlist that works on the selected project.
+     */
     private void setProject() {
         Project project = projectComboBox.getValue();
 
@@ -218,6 +264,9 @@ public class AdminCurrentUserViewController implements Initializable {
         }
     }
 
+    /**
+     * Searches through the userlist and displays employees mathing the name of the search term.
+     */
     private void search() {
         String userName = searchBar.getText();
 
