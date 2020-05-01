@@ -8,6 +8,7 @@ package trip.gui.controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXProgressBar;
+import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
@@ -16,12 +17,14 @@ import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import trip.be.Employee;
 import trip.be.Project;
 import trip.gui.AppModel;
@@ -62,6 +65,10 @@ public class AdminStatisticsViewController implements Initializable {
     private Label totalPriceLabel;
     @FXML
     private Label totalTimeLabel;
+    @FXML
+    private JFXButton openEmployeeBtn;
+    @FXML
+    private ComboBox<Employee> employeeSelection;
 
     /**
      * Initializes the controller class.
@@ -78,6 +85,7 @@ public class AdminStatisticsViewController implements Initializable {
         statisticComboBox.getSelectionModel().select(0);
 
         employeeComboBox.setItems(appModel.loadActiveEmployees());
+        employeeSelection.setItems(appModel.loadActiveEmployees());
 
     }
 
@@ -225,6 +233,26 @@ public class AdminStatisticsViewController implements Initializable {
             totalPriceLabel.setText(totalPriceString);
         });
 
+    }
+
+    @FXML
+    private void openEmployee(ActionEvent event) {
+        if(employeeSelection.getValue() != null)
+        {
+            try{
+            
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(AppModel.class.getResource("views/MainUserView.fxml"));
+
+            Pane pane = fxmlLoader.load();
+            MainUserViewController controller = fxmlLoader.getController();
+            controller.setEmployee(employeeSelection.getSelectionModel().getSelectedItem());
+
+            MenuBarViewController.viewPane.getChildren().clear();
+            MenuBarViewController.viewPane.getChildren().add(pane);
+            }
+            catch(IOException ex){}
+        }
     }
 
 }

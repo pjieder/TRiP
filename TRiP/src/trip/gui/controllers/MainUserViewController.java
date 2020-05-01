@@ -114,8 +114,6 @@ public class MainUserViewController implements Initializable {
     private Tooltip ttTrackTime;
     @FXML
     private Tooltip ttAddTime;
-    
-    
 
     /**
      * Initializes the controller class.
@@ -166,26 +164,31 @@ public class MainUserViewController implements Initializable {
         });
 
         loadProjects();
-        
+
         final Tooltip tooltipButton = new Tooltip();
         tooltipButton.setText("Add Time");
         addButton.setTooltip(tooltipButton);
         tooltipButton.setStyle("-fx-font-size: 15px; -fx-background-color: rgb(154, 128, 254, .8);");
-        
-        
+
         final Tooltip tooltipButton2 = new Tooltip();
         tooltipButton2.setText("Track Time");
         startButton.setTooltip(tooltipButton2);
         tooltipButton2.setStyle("-fx-font-size: 15px; -fx-background-color: rgb(154, 128, 254, .8);");
-        
-        
- 
+
     }
 
     public void setAdmin(Project project) {
         projectComboBox.getSelectionModel().select(project);
         taskList.setItems(taskModel.loadTasks(loggedUser.getId(), project.getId()));
         tasks.setItems(taskModel.loadTasks(loggedUser.getId(), project.getId()));
+    }
+
+    public void setEmployee(Employee employee) {
+        loggedUser = employee;
+        startTime.getChildren().clear();
+        startTime.add(projectComboBox, 0, 0);
+        addButton.setVisible(false);
+        loadProjects();
     }
 
     public void loadProjects() {
@@ -241,11 +244,11 @@ public class MainUserViewController implements Initializable {
         } else {
             timer.startTimer(taskList.getSelectionModel().getSelectedItem().getId(), timerLabel);
         }
-        
+
         startTimer.setVisible(false);
         stopTimer.setVisible(true);
         cancelTimer.setVisible(true);
-        
+
         setupCloseRequest();
     }
 
@@ -355,15 +358,14 @@ public class MainUserViewController implements Initializable {
     public void setupCloseRequest() {
 
         Stage appStage = (Stage) taskList.getScene().getWindow();
-        if (appStage.getOnCloseRequest() == null)
-        {
-        appStage.setOnCloseRequest((e) -> {
-            System.out.println("Closing thread");
-            if (timer.isEnabled()) {
-                timer.stopTimer();
-                System.out.println("Closed");
-            }
-        });
+        if (appStage.getOnCloseRequest() == null) {
+            appStage.setOnCloseRequest((e) -> {
+                System.out.println("Closing thread");
+                if (timer.isEnabled()) {
+                    timer.stopTimer();
+                    System.out.println("Closed");
+                }
+            });
         }
     }
 
@@ -386,26 +388,17 @@ public class MainUserViewController implements Initializable {
         decideAddTimeEnabled();
     }
 
-
     @FXML
     private void switchToStart(MouseEvent event) {
-        
-        
-        
         addTiimerPane.setVisible(false);
         startTime.setVisible(true);
         startButton.setVisible(false);
         addButton.setVisible(true);
 
-        
     }
 
     @FXML
     private void switchToAdd(MouseEvent event) {
-        
-        
-        
-        
         addTiimerPane.setVisible(true);
         startTime.setVisible(false);
         startButton.setVisible(true);
