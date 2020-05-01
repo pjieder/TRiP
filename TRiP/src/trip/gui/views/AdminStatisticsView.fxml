@@ -56,7 +56,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <ComboBox fx:id="statisticComboBox" layoutX="148.0" layoutY="98.0" onAction="#changeStatistic" prefHeight="31.0" prefWidth="159.0" promptText="Statistic" stylesheets="@../styles/StatisticsCSS.css" />
+      <ComboBox fx:id="statisticComboBox" layoutX="93.0" layoutY="67.0" onAction="#changeStatistic" prefHeight="31.0" prefWidth="159.0" promptText="Statistic" stylesheets="@../styles/StatisticsCSS.css" />
       <ComboBox layoutX="424.0" layoutY="98.0" prefHeight="31.0" prefWidth="159.0" promptText="Client" stylesheets="@../styles/StatisticsCSS.css" visible="false" />
       <ComboBox fx:id="projectComboBox" layoutX="644.0" layoutY="100.0" onAction="#validate" prefHeight="31.0" prefWidth="159.0" promptText="Project" stylesheets="@../styles/StatisticsCSS.css" />
       <JFXButton fx:id="calculateLine" disable="true" layoutX="819.0" layoutY="100.0" onAction="#calculateLine" prefHeight="31.0" prefWidth="93.0" stylesheets="@../styles/MainUserViewCSS.css" text="Calculate" />

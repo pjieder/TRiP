@@ -25,11 +25,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -102,10 +104,18 @@ public class MainUserViewController implements Initializable {
     private JFXButton addTime;
     @FXML
     private GridPane startTime;
-    @FXML
     private ImageView startImage;
-    @FXML
     private ImageView addImage;
+    @FXML
+    private Button startButton;
+    @FXML
+    private Button addButton;
+    @FXML
+    private Tooltip ttTrackTime;
+    @FXML
+    private Tooltip ttAddTime;
+    
+    
 
     /**
      * Initializes the controller class.
@@ -156,6 +166,20 @@ public class MainUserViewController implements Initializable {
         });
 
         loadProjects();
+        
+        final Tooltip tooltipButton = new Tooltip();
+        tooltipButton.setText("Add Time");
+        addButton.setTooltip(tooltipButton);
+        tooltipButton.setStyle("-fx-font-size: 15px; -fx-background-color: rgb(154, 128, 254, .8);");
+        
+        
+        final Tooltip tooltipButton2 = new Tooltip();
+        tooltipButton2.setText("Track Time");
+        startButton.setTooltip(tooltipButton2);
+        tooltipButton2.setStyle("-fx-font-size: 15px; -fx-background-color: rgb(154, 128, 254, .8);");
+        
+        
+ 
     }
 
     public void setAdmin(Project project) {
@@ -362,21 +386,30 @@ public class MainUserViewController implements Initializable {
         decideAddTimeEnabled();
     }
 
+
     @FXML
-    private void showStartGrid(MouseEvent event) {
+    private void switchToStart(MouseEvent event) {
+        
+        
+        
         addTiimerPane.setVisible(false);
         startTime.setVisible(true);
-        startImage.setVisible(false);
-        addImage.setVisible(true);
+        startButton.setVisible(false);
+        addButton.setVisible(true);
+
         
     }
 
     @FXML
-    private void showAddGrid(MouseEvent event) {
+    private void switchToAdd(MouseEvent event) {
+        
+        
+        
+        
         addTiimerPane.setVisible(true);
         startTime.setVisible(false);
-        startImage.setVisible(true);
-        addImage.setVisible(false);
+        startButton.setVisible(true);
+        addButton.setVisible(false);
     }
 
 }

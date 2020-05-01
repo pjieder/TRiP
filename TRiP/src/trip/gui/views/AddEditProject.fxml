@@ -83,7 +83,7 @@
             <String fx:value="cb" />
             <String fx:value="choice-box" />
          </styleClass></ChoiceBox>
-      <JFXComboBox fx:id="customerComboBox" layoutX="85.0" layoutY="262.0" onAction="#validateCustomer" prefHeight="25.0" prefWidth="296.0" promptText="Customer" stylesheets="@../styles/RegisterFormCSS.css" />
+      <JFXComboBox fx:id="customerComboBox" focusColor="#9a80fe" layoutX="85.0" layoutY="262.0" onAction="#validateCustomer" prefHeight="25.0" prefWidth="296.0" promptText="Customer" stylesheets="@../styles/RegisterFormCSS.css" />
       <Label layoutX="84.0" layoutY="316.0" text="Select active users" textFill="#4d4d4d">
          <font>
             <Font size="15.0" />
