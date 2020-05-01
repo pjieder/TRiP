@@ -157,6 +157,7 @@ public class MainAdminViewController implements Initializable {
         fxmlLoader.setLocation(AppModel.class.getResource("views/AddEditProject.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
+        stage.setResizable(false);
         AddEditProjectController controller = fxmlLoader.getController();
         controller.setUpdateThread(updateView());
         stage.setScene(scene);
@@ -176,6 +177,7 @@ public class MainAdminViewController implements Initializable {
             fxmlLoader.setLocation(AppModel.class.getResource("views/AddEditProject.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
+            stage.setResizable(false);
             AddEditProjectController controller = fxmlLoader.getController();
             controller.setProject(updateView(), projectTable.getSelectionModel().getSelectedItem());
             stage.setScene(scene);

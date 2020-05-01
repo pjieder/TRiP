@@ -113,6 +113,7 @@ public class AdminCurrentUserViewController implements Initializable {
         fxmlLoader.setLocation(AppModel.class.getResource("views/RegisterForm.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
+        stage.setResizable(false);
 
         RegisterFormController controller = fxmlLoader.getController();
         controller.setUpdateThread(getUpdateListThread());
@@ -135,6 +136,7 @@ public class AdminCurrentUserViewController implements Initializable {
             fxmlLoader.setLocation(AppModel.class.getResource("views/RegisterForm.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
+            stage.setResizable(false);
 
             RegisterFormController controller = fxmlLoader.getController();
             controller.setEmployee(userList.getSelectionModel().getSelectedItem(), getUpdateListThread());
