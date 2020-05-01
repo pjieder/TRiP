@@ -25,7 +25,7 @@
                 <NumberAxis side="LEFT" />
               </yAxis>
             </BarChart>
-            <LineChart fx:id="lineChart" layoutX="11.0" layoutY="14.0" prefHeight="503.0" prefWidth="800.0" stylesheets="@../styles/StatisticsCSS.css" title="Time ">
+            <LineChart fx:id="lineChart" layoutX="-27.0" layoutY="-24.0" prefHeight="580.0" prefWidth="876.0" stylesheets="@../styles/StatisticsCSS.css" title="Time ">
               <xAxis>
                 <CategoryAxis animated="false" side="BOTTOM" />
               </xAxis>
@@ -34,47 +34,47 @@
               </yAxis>
             </LineChart>
             <PieChart layoutX="11.0" layoutY="14.0" prefHeight="503.0" prefWidth="800.0" stylesheets="@../styles/StatisticsCSS.css" title="Tasks" visible="false" />
-            <Label layoutX="57.0" layoutY="507.0" text="Total Tasks:">
+            <Label layoutX="24.0" layoutY="521.0" text="Total Tasks:">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label layoutX="197.0" layoutY="507.0" text="Total Turn Over:">
+            <Label layoutX="164.0" layoutY="521.0" text="Total Turn Over:">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label layoutX="140.0" layoutY="507.0" text="40">
+            <Label layoutX="107.0" layoutY="521.0" text="40">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label layoutX="312.0" layoutY="507.0" text="5402£">
+            <Label layoutX="279.0" layoutY="521.0" text="5402£">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label layoutX="396.0" layoutY="507.0" text="Total Time Spent:">
+            <Label layoutX="363.0" layoutY="521.0" text="Total Time Spent:">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label layoutX="517.0" layoutY="507.0" text="242H">
+            <Label layoutX="484.0" layoutY="521.0" text="242H">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
-      <ComboBox fx:id="statisticComboBox" layoutX="110.0" layoutY="99.0" onAction="#changeStatistic" prefHeight="31.0" prefWidth="159.0" promptText="Statistic" stylesheets="@../styles/StatisticsCSS.css" />
+      <ComboBox fx:id="statisticComboBox" layoutX="93.0" layoutY="67.0" onAction="#changeStatistic" prefHeight="31.0" prefWidth="159.0" promptText="Statistic" stylesheets="@../styles/StatisticsCSS.css" />
       <ComboBox layoutX="424.0" layoutY="98.0" prefHeight="31.0" prefWidth="159.0" promptText="Client" stylesheets="@../styles/StatisticsCSS.css" visible="false" />
-      <ComboBox fx:id="projectComboBox" layoutX="629.0" layoutY="98.0" onAction="#validate" prefHeight="31.0" prefWidth="159.0" promptText="Project" stylesheets="@../styles/StatisticsCSS.css" />
-      <JFXButton fx:id="calculate" disable="true" layoutX="804.0" layoutY="98.0" onAction="#calculate" prefHeight="31.0" prefWidth="93.0" stylesheets="@../styles/MainUserViewCSS.css" text="Calculate" textFill="WHITE">
+      <ComboBox fx:id="projectComboBox" layoutX="612.0" layoutY="66.0" onAction="#validate" prefHeight="31.0" prefWidth="159.0" promptText="Project" stylesheets="@../styles/StatisticsCSS.css" />
+      <JFXButton fx:id="calculate" disable="true" layoutX="787.0" layoutY="66.0" onAction="#calculate" prefHeight="31.0" prefWidth="93.0" stylesheets="@../styles/MainUserViewCSS.css" text="Calculate" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font></JFXButton>
-      <JFXDatePicker fx:id="dateEnd" defaultColor="#9a80fe" layoutX="471.0" layoutY="99.0" onAction="#validate" prefHeight="31.0" prefWidth="137.0" stylesheets="@../styles/MainUserViewCSS.css" />
-      <JFXDatePicker fx:id="dateStart" defaultColor="#9a80fe" layoutX="302.0" layoutY="99.0" onAction="#validate" prefHeight="31.0" prefWidth="137.0" stylesheets="@../styles/MainUserViewCSS.css" />
+      <JFXDatePicker fx:id="dateEnd" defaultColor="#9a80fe" layoutX="454.0" layoutY="67.0" onAction="#validate" prefHeight="31.0" prefWidth="137.0" stylesheets="@../styles/MainUserViewCSS.css" />
+      <JFXDatePicker fx:id="dateStart" defaultColor="#9a80fe" layoutX="285.0" layoutY="67.0" onAction="#validate" prefHeight="31.0" prefWidth="137.0" stylesheets="@../styles/MainUserViewCSS.css" />
       <JFXProgressBar fx:id="progress" layoutX="819.0" layoutY="144.0" prefHeight="7.0" prefWidth="93.0" visible="false" />
    </children>
 </AnchorPane>
