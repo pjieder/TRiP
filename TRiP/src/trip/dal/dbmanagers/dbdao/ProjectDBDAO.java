@@ -13,12 +13,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.chart.XYChart;
 import trip.be.Project;
 import trip.dal.dbaccess.DBSettings;
+import trip.utilities.TimeConverter;
 
 /**
  *
@@ -184,7 +188,7 @@ public class ProjectDBDAO implements IProjectDBDAO {
                 projects.add(project);
             }
             return projects;
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -209,10 +213,8 @@ public class ProjectDBDAO implements IProjectDBDAO {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-
                 totalTime = rs.getInt("TotalTime");
             }
-
             return totalTime;
 
         } catch (SQLException ex) {
@@ -225,7 +227,6 @@ public class ProjectDBDAO implements IProjectDBDAO {
 
     @Override
     public int loadTotalProjectTime(int projectID) {
-
         Connection con = null;
         int totalTime = 0;
 
@@ -239,6 +240,64 @@ public class ProjectDBDAO implements IProjectDBDAO {
 
             while (rs.next()) {
 
+                totalTime = rs.getInt("TotalTime");
+            }
+            return totalTime;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+        return totalTime;
+    }
+
+    @Override
+    public int loadAllProjectTimeBetweenDates(int projectID, LocalDate startDate, LocalDate endDate) {
+        Connection con = null;
+        int totalTime = 0;
+
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "SELECT SUM(Tasks.time) AS TotalTime FROM Tasks JOIN Task on Tasks.taskID = Task.ID WHERE Task.projID = ?  AND Tasks.startTime BETWEEN ? AND ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, projectID);
+            stmt.setString(2, startDate.toString());
+            stmt.setString(3, TimeConverter.addDays(endDate, 1).toString());
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                totalTime = rs.getInt("TotalTime");
+            }
+
+            return totalTime;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+        return totalTime;
+    }
+    
+    @Override
+    public int loadAllEmployeeProjectTimeBetweenDates(int employeeID, int projectID, LocalDate startDate, LocalDate endDate)
+    {
+    Connection con = null;
+        int totalTime = 0;
+
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "SELECT SUM(Tasks.time) AS TotalTime FROM Tasks JOIN Task on Tasks.taskID = Task.ID WHERE Task.projID = ? And Task.employeeID = ? AND Tasks.startTime BETWEEN ? AND ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, projectID);
+            stmt.setInt(2, employeeID);
+            stmt.setString(3, startDate.toString());
+            stmt.setString(4, TimeConverter.addDays(endDate, 1).toString());
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
                 totalTime = rs.getInt("TotalTime");
             }
 
@@ -307,6 +366,76 @@ public class ProjectDBDAO implements IProjectDBDAO {
             DBSettings.getInstance().releaseConnection(con);
         }
         return totalTime;
+    }
+
+    @Override
+    public List<Project> loadWorkedOnProjectsBetweenDates(LocalDate startDate, LocalDate endDate, int employeeID) {
+        Connection con = null;
+        List<Project> allWorkedOnProjects = new ArrayList();
+
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "WITH x AS (SELECT Tasks.*, Task.employeeID, Task.projID FROM Tasks JOIN Task ON Tasks.taskID = Task.ID WHERE Tasks.startTime BETWEEN ? AND ? AND Task.employeeID = ?)"
+                    + "SELECT DISTINCT Project.* FROM x JOIN Project ON x.projID = Project.ID;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setString(1, startDate.toString());
+            stmt.setString(2, TimeConverter.addDays(endDate, 1).toString());
+            stmt.setInt(3, employeeID);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Project project = new Project();
+                project.setId(rs.getInt("ID"));
+                project.setName(rs.getString("name"));
+                project.setRate(rs.getDouble("rate"));
+                project.setIsActive(rs.getBoolean("isActive"));
+
+                allWorkedOnProjects.add(project);
+            }
+
+            return allWorkedOnProjects;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+        return allWorkedOnProjects;
+    }
+
+    @Override
+    public XYChart.Series loadTimeForUsersProjects(LocalDate startDate, LocalDate endDate, int employeeID) {
+
+        Connection con = null;
+        XYChart.Series series = new XYChart.Series();
+
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "WITH x AS (SELECT Tasks.*, Task.employeeID, Task.projID FROM Tasks JOIN Task ON Tasks.taskID = Task.ID WHERE Tasks.startTime BETWEEN ? AND ? AND Task.employeeID = ?)"
+                    + "SELECT DISTINCT x.employeeID, Project.*, SUM(x.time) over (partition by projID) as totalTime FROM x JOIN Project ON x.projID = Project.ID;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setString(1, startDate.toString());
+            stmt.setString(2, TimeConverter.addDays(endDate, 1).toString());
+            stmt.setInt(3, employeeID);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                int totalTime = rs.getInt("totalTime");
+                String projectName = rs.getString("name");
+
+                series.getData().add(new XYChart.Data<>(projectName, totalTime));
+            }
+
+            return series;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+        return series;
     }
 
     @Override

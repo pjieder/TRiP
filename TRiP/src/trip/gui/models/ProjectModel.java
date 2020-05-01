@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Label;
 import trip.be.Employee;
 import trip.be.Project;
 import trip.bll.ProjectManager;
@@ -39,6 +40,19 @@ public class ProjectModel {
 
     public ObservableList<Project> loadAllUserProjects(int employeeId) {
         return projectManager.loadEmployeeProjects(employeeId);
+
+    }
+
+    public List<Project> loadWorkedOnProjectsBetweenDates(LocalDate startDate, LocalDate endDate, int employeeID) {
+        return projectManager.loadWorkedOnProjectsBetweenDates(startDate, endDate, employeeID);
+    }
+
+    public int loadAllProjectTimeBetweenDates(int projectID, LocalDate startDate, LocalDate endDate) {
+        return projectManager.loadAllProjectTimeBetweenDates(projectID, startDate, endDate);
+    }
+
+    public int loadAllEmployeeProjectTimeBetweenDates(int employeeID, int projectID, LocalDate startDate, LocalDate endDate) {
+        return projectManager.loadAllEmployeeProjectTimeBetweenDates(employeeID, projectID, startDate, endDate);
     }
 
     public void createProject(Project project, List<Employee> allEmployees) {
@@ -56,8 +70,12 @@ public class ProjectModel {
     public ObservableList<Project> searchProjects(String projectName, ObservableList<Project> projectList) {
         return projectManager.searchProjects(projectName, projectList);
     }
-    
-     public XYChart.Series calculateGraph(int projectID, LocalDate date1, LocalDate date2) {
-         return projectManager.calculateGraph(projectID, date1, date2);
+
+    public XYChart.Series calculateGraphLine(int projectID, LocalDate startDate, LocalDate endDate) {
+        return projectManager.calculateGraphLine(projectID, startDate, endDate);
+    }
+
+    public XYChart.Series calculateGraphBar(LocalDate startDate, LocalDate endDate, int employeeID) {
+        return projectManager.calculateGraphBar(startDate, endDate, employeeID);
     }
 }

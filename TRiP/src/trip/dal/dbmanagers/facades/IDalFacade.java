@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import javafx.collections.ObservableList;
+import javafx.scene.chart.XYChart;
 import trip.be.Customer;
 import trip.be.Employee;
 import trip.be.Project;
@@ -75,6 +76,14 @@ public interface IDalFacade {
     public void saveTimeForTask(int taskId, int time, Date startTime, Date stopTime);
 
     public List<Integer> loadTimeForDates(int projectID, List<LocalDate> dates);
+    
+    public List<Project> loadWorkedOnProjectsBetweenDates(LocalDate startDate, LocalDate endDate, int employeeID);
+    
+    public XYChart.Series loadTimeForUsersProjects(LocalDate startDate, LocalDate endDate, int userID);
+    
+    public int loadAllProjectTimeBetweenDates(int projectID, LocalDate startDate, LocalDate endDate);
+    
+    public int loadAllEmployeeProjectTimeBetweenDates(int employeeID, int projectID, LocalDate startDate, LocalDate endDate);
 
     public boolean UpdateTimeToTask(TaskTime taskTime);
 

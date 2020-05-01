@@ -6,7 +6,9 @@
 package trip.dal.dbmanagers.dbdao.Interfaces;
 
 import java.time.LocalDate;
+import java.util.List;
 import javafx.collections.ObservableList;
+import javafx.scene.chart.XYChart;
 import trip.be.Project;
 
 /**
@@ -28,10 +30,18 @@ public interface IProjectDBDAO {
     public int loadProjectTime(int employeeID, int projectID);
 
     public int loadTotalProjectTime(int projectID);
+    
+    public int loadAllProjectTimeBetweenDates(int projectID, LocalDate startDate, LocalDate endDate);
 
+    public int loadAllEmployeeProjectTimeBetweenDates(int employeeID, int projectID, LocalDate startDate, LocalDate endDate);
+    
     public int loadAllProjectTimeForDay(LocalDate date);
 
     public int loadProjectTimeForDay(int projectID, LocalDate date);
+    
+    public List<Project> loadWorkedOnProjectsBetweenDates(LocalDate startDate, LocalDate endDate, int userID);
+    
+    public XYChart.Series loadTimeForUsersProjects(LocalDate startDate, LocalDate endDate, int userID);
 
     public void updateProject(Project project);
 

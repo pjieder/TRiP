@@ -5,17 +5,25 @@
  */
 package trip.dal.dbmanagers.facades;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.ObservableList;
+import javafx.scene.chart.XYChart;
 import trip.be.Customer;
 import trip.be.Employee;
 import trip.be.Project;
 import trip.be.Roles;
 import trip.be.Task;
 import trip.be.TaskTime;
+import trip.dal.dbaccess.DBSettings;
 import trip.dal.dbmanagers.dbdao.AdminDBDAO;
 import trip.dal.dbmanagers.dbdao.CustomerDBDAO;
 import trip.dal.dbmanagers.dbdao.EmployeeDBDAO;
@@ -28,6 +36,7 @@ import trip.dal.dbmanagers.dbdao.Interfaces.IUserDBDAO;
 import trip.dal.dbmanagers.dbdao.ProjectDBDAO;
 import trip.dal.dbmanagers.dbdao.TaskDBDAO;
 import trip.dal.dbmanagers.dbdao.UserDBDAO;
+import trip.utilities.TimeConverter;
 
 /**
  *
@@ -230,6 +239,28 @@ public class DalFacade implements IDalFacade {
         return dateTime;
     }
 
+    @Override
+    public List<Project> loadWorkedOnProjectsBetweenDates(LocalDate startDate, LocalDate endDate, int employeeID)
+    {
+        return projectManager.loadWorkedOnProjectsBetweenDates(startDate, endDate, employeeID);
+    }
+    
+    @Override
+    public XYChart.Series loadTimeForUsersProjects(LocalDate startDate, LocalDate endDate, int employeeID)
+    {
+        return projectManager.loadTimeForUsersProjects(startDate, endDate, employeeID);
+    }
+    
+    @Override
+    public int loadAllProjectTimeBetweenDates(int projectID, LocalDate startDate, LocalDate endDate) {
+        return projectManager.loadAllProjectTimeBetweenDates(projectID, startDate, endDate);
+    }
+    
+    @Override
+    public int loadAllEmployeeProjectTimeBetweenDates(int employeeID, int projectID, LocalDate startDate, LocalDate endDate){
+        return projectManager.loadAllEmployeeProjectTimeBetweenDates(employeeID, projectID, startDate, endDate);
+    }
+    
     @Override
     public boolean UpdateTimeToTask(TaskTime taskTime) {
         return taskManager.UpdateTimeToTask(taskTime);
