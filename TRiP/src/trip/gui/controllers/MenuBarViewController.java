@@ -60,6 +60,9 @@ public class MenuBarViewController implements Initializable {
         // TODO
     }
 
+    /*
+    If an admin logs in, the pane view within the MenuBarView is set to MainAdminView
+    */
     public void setAdmin(Stage stage, Scene scene) throws IOException {
         Thread thread = new Thread(() -> {
             try {
@@ -82,6 +85,9 @@ public class MenuBarViewController implements Initializable {
         thread.start();
     }
 
+    /*
+    If a user logs in, the pane view within the MenuBarView is set to MainUserView
+    */
     public void setUser(Stage stage, Scene scene) throws IOException {
         Thread thread = new Thread(() -> {
             try {
@@ -105,6 +111,9 @@ public class MenuBarViewController implements Initializable {
         thread.start();
     }
 
+    /*
+    Opens the MainAdminView view within the menubar view.
+    */
     @FXML
     private void openProjectsView(MouseEvent event) throws IOException {
         Thread thread = new Thread(() -> {
@@ -125,6 +134,9 @@ public class MenuBarViewController implements Initializable {
         thread.start();
     }
 
+    /*
+    Opens the AdminCustomerView view within the menubar view.
+    */
     @FXML
     private void openCustomerView(MouseEvent event) {
         Thread thread = new Thread(() -> {
@@ -146,6 +158,9 @@ public class MenuBarViewController implements Initializable {
         thread.start();
     }
 
+    /*
+    Opens the AdminCurrentUserView view within the menubar view.
+    */
     @FXML
     private void openUserView(MouseEvent event) throws IOException {
         Thread thread = new Thread(() -> {
@@ -162,6 +177,9 @@ public class MenuBarViewController implements Initializable {
         thread.start();
     }
 
+    /*
+    Opens the AdminStatisticsView view within the menubar view.
+    */
     @FXML
     private void openStatisticsView(MouseEvent event) throws IOException, IOException {
         Thread thread = new Thread(() -> {
@@ -178,6 +196,9 @@ public class MenuBarViewController implements Initializable {
         thread.start();
     }
 
+    /*
+    Opens the MainUserView view within the menubar view.
+    */
     @FXML
     private void openTimeTrackingView(MouseEvent event) throws IOException {
         Thread thread = new Thread(() -> {
@@ -194,11 +215,17 @@ public class MenuBarViewController implements Initializable {
         thread.start();
     }
 
+    /*
+    Opens the EconomyView view within the menubar view.
+    */
     @FXML
     private void openEconomyView(MouseEvent event) throws IOException {
 
     }
 
+    /*
+    Logs the current user/admin out.
+    */
     @FXML
     private void logOut(MouseEvent event) throws IOException {
         Thread thread = new Thread(() -> {
