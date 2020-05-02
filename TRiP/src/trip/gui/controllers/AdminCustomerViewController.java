@@ -24,12 +24,14 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import trip.be.Customer;
 import trip.gui.AppModel;
+import trip.gui.TRiP;
 import trip.gui.models.CustomerModel;
 
 /**
@@ -102,6 +104,8 @@ public class AdminCustomerViewController implements Initializable {
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
         stage.setResizable(false);
+        stage.setTitle("TRiP");
+        stage.getIcons().add(new Image(TRiP.class.getResourceAsStream("images/time.png")));
         AddEditCustomerController controller = fxmlLoader.getController();
         controller.setUpdateThread(updateView());
         stage.setScene(scene);
@@ -122,6 +126,8 @@ public class AdminCustomerViewController implements Initializable {
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
             stage.setResizable(false);
+            stage.setTitle("TRiP");
+            stage.getIcons().add(new Image(TRiP.class.getResourceAsStream("images/time.png")));
             AddEditCustomerController controller = fxmlLoader.getController();
             controller.setCustomer(customerTable.getSelectionModel().getSelectedItem(), updateView());
             stage.setScene(scene);

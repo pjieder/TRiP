@@ -24,6 +24,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -32,6 +33,7 @@ import javafx.stage.StageStyle;
 import trip.be.Employee;
 import trip.be.Project;
 import trip.gui.AppModel;
+import trip.gui.TRiP;
 import trip.gui.models.ProjectModel;
 
 /**
@@ -114,6 +116,9 @@ public class AdminCurrentUserViewController implements Initializable {
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
         stage.setResizable(false);
+        stage.setTitle("TRiP");
+        stage.getIcons().add(new Image(TRiP.class.getResourceAsStream("images/time.png")));
+        
 
         RegisterFormController controller = fxmlLoader.getController();
         controller.setUpdateThread(getUpdateListThread());
@@ -137,6 +142,8 @@ public class AdminCurrentUserViewController implements Initializable {
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
             stage.setResizable(false);
+            stage.setTitle("TRiP");
+            stage.getIcons().add(new Image(TRiP.class.getResourceAsStream("images/time.png")));
 
             RegisterFormController controller = fxmlLoader.getController();
             controller.setEmployee(userList.getSelectionModel().getSelectedItem(), getUpdateListThread());

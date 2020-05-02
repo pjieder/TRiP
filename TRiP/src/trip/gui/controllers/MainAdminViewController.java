@@ -25,6 +25,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -33,6 +34,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import trip.be.Project;
 import trip.gui.AppModel;
+import trip.gui.TRiP;
 import trip.gui.models.ProjectModel;
 import trip.utilities.TimeConverter;
 
@@ -158,6 +160,8 @@ public class MainAdminViewController implements Initializable {
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
         stage.setResizable(false);
+        stage.setTitle("TRiP");
+        stage.getIcons().add(new Image(TRiP.class.getResourceAsStream("images/time.png")));
         AddEditProjectController controller = fxmlLoader.getController();
         controller.setUpdateThread(updateView());
         stage.setScene(scene);
@@ -178,6 +182,8 @@ public class MainAdminViewController implements Initializable {
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
             stage.setResizable(false);
+            stage.setTitle("TRiP");
+            stage.getIcons().add(new Image(TRiP.class.getResourceAsStream("images/time.png")));
             AddEditProjectController controller = fxmlLoader.getController();
             controller.setProject(updateView(), projectTable.getSelectionModel().getSelectedItem());
             stage.setScene(scene);

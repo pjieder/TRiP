@@ -30,12 +30,12 @@ and open the template in the editor.
 }
 
 .combo-box-popup .list-cell:filled:hover {
-    -fx-background-color: #EBBA16;
+    -fx-background-color: #9a80fe;
     -fx-text-fill: #ffffff;
 }
 
 .combo-box-popup .list-cell:filled:selected {
-  -fx-background-color: #EBBA16;
+  -fx-background-color: #9a80fe;
   -fx-background-insets: 0 ;
   -fx-text-fill: #ffffff;
 }
