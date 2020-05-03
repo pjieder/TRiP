@@ -75,3 +75,6 @@ and open the template in the editor.
 .default-color0.chart-line-symbol {
     -fx-background-color: #0000ff, white;
 }
+.text-field {
+    -fx-accent: #9a80fe;
+}

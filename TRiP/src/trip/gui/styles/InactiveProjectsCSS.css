@@ -70,3 +70,7 @@ and open the template in the editor.
   -fx-padding: 0;
   -fx-shape: null;
 }
+
+.text-field {
+    -fx-accent: #9a80fe;
+}

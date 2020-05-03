@@ -58,19 +58,19 @@
          <font>
             <Font size="15.0" />
          </font></JFXTextField>
-      <JFXTextField fx:id="lastNameField" focusColor="#9a80fe" layoutX="75.0" layoutY="208.0" prefHeight="25.0" prefWidth="296.0" promptText="Last Name">
+      <JFXTextField fx:id="lastNameField" focusColor="#9a80fe" layoutX="75.0" layoutY="208.0" prefHeight="25.0" prefWidth="296.0" promptText="Last Name" stylesheets="@../styles/RegisterFormCSS.css">
          <font>
             <Font size="15.0" />
          </font></JFXTextField>
-      <JFXTextField fx:id="emailField" focusColor="#9a80fe" layoutX="75.0" layoutY="278.0" prefHeight="25.0" prefWidth="296.0" promptText="Email">
+      <JFXTextField fx:id="emailField" focusColor="#9a80fe" layoutX="75.0" layoutY="278.0" prefHeight="25.0" prefWidth="296.0" promptText="Email" stylesheets="@../styles/RegisterFormCSS.css">
          <font>
             <Font size="15.0" />
          </font></JFXTextField>
-      <JFXPasswordField fx:id="passwordField" focusColor="#9a80fe" layoutX="75.0" layoutY="346.0" prefHeight="25.0" prefWidth="296.0" promptText="Password">
+      <JFXPasswordField fx:id="passwordField" focusColor="#9a80fe" layoutX="75.0" layoutY="346.0" prefHeight="25.0" prefWidth="296.0" promptText="Password" stylesheets="@../styles/RegisterFormCSS.css">
          <font>
             <Font size="15.0" />
          </font></JFXPasswordField>
-      <JFXPasswordField fx:id="passwordFieldTwo" focusColor="#9a80fe" layoutX="75.0" layoutY="413.0" prefHeight="25.0" prefWidth="296.0" promptText="Re-enter Password">
+      <JFXPasswordField fx:id="passwordFieldTwo" focusColor="#9a80fe" layoutX="75.0" layoutY="413.0" prefHeight="25.0" prefWidth="296.0" promptText="Re-enter Password" stylesheets="@../styles/RegisterFormCSS.css">
          <font>
             <Font size="15.0" />
          </font></JFXPasswordField>

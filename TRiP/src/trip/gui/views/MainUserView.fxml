@@ -56,7 +56,7 @@
           <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField fx:id="newTaskTitle" prefHeight="66.0" prefWidth="311.0" promptText="What are you working on?" style="-fx-faint-focus-color: transparent; -fx-focus-color: #9a80fe;">
+            <TextField fx:id="newTaskTitle" prefHeight="66.0" prefWidth="311.0" promptText="What are you working on?" style="-fx-faint-focus-color: transparent; -fx-focus-color: #9a80fe; -fx-accent: #9a80fe;">
                <font>
                   <Font size="15.0" />
                </font></TextField>

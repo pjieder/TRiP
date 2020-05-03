@@ -41,7 +41,7 @@
          </image>
       </ImageView>
       <JFXListView fx:id="userList" layoutX="67.0" layoutY="117.0" prefHeight="551.0" prefWidth="852.0" stylesheets="@../styles/AdminCurrentUserCSS.css" />
-      <TextField fx:id="searchBar" layoutX="230.0" layoutY="60.0" onKeyTyped="#userSearch" prefHeight="31.0" prefWidth="207.0" promptText="Search" style="-fx-background-color: f1f1f1;">
+      <TextField fx:id="searchBar" layoutX="230.0" layoutY="60.0" onKeyTyped="#userSearch" prefHeight="31.0" prefWidth="207.0" promptText="Search" style="-fx-background-color: f1f1f1;" stylesheets="@../styles/AdminCurrentUserCSS.css">
          <font>
             <Font size="15.0" />
          </font></TextField>
@@ -69,7 +69,10 @@
       <Label fx:id="activeUsers" layoutX="795.0" layoutY="680.0" onMouseClicked="#showActiveUsers" prefHeight="21.0" prefWidth="90.0" text="Active Users" visible="false">
          <font>
             <Font size="15.0" />
-         </font></Label>
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Label>
       <ImageView fx:id="inactiveArrow" fitHeight="19.0" fitWidth="14.0" layoutX="892.0" layoutY="684.0" pickOnBounds="true" preserveRatio="true" rotate="-180.0" visible="false">
          <image>
             <Image url="@../images/next%20(5).png" />

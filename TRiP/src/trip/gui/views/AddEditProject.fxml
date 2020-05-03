@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="711.0" prefWidth="451.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.gui.controllers.AddEditProjectController">
+<AnchorPane id="AnchorPane" prefHeight="711.0" prefWidth="451.0" style="-fx-background-color: ffffff;" stylesheets="@../styles/AddEditProjects.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.gui.controllers.AddEditProjectController">
    <children>
       <ImageView fitHeight="162.0" fitWidth="147.0" layoutX="35.0" layoutY="478.0" opacity="0.08" pickOnBounds="true" preserveRatio="true" rotate="-147.1">
          <image>
@@ -35,7 +35,7 @@
             <Font size="15.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="rateField" focusColor="#9a80fe" layoutX="85.0" layoutY="205.0" prefHeight="25.0" prefWidth="296.0" promptText="Hourly Rate $" stylesheets="@../styles/RegisterFormCSS.css">
+      <JFXTextField fx:id="rateField" focusColor="#9a80fe" layoutX="85.0" layoutY="205.0" prefHeight="25.0" prefWidth="296.0" promptText="Hourly Rate $" stylesheets="@../styles/AddEditProjects.css">
          <font>
             <Font size="15.0" />
          </font>

@@ -39,6 +39,7 @@ and open the template in the editor.
 
 .jfx-date-picker {
     -fx-font-size: 15px;
+    -fx-accent: #9a80fe;
 }
 
 .jfx-time-picker .input-line {
@@ -50,6 +51,7 @@ and open the template in the editor.
 
 .jfx-time-picker {
     -fx-font-size: 15px;
+    -fx-accent: #9a80fe;
 }
 
 .input .text-field {
