@@ -25,14 +25,14 @@ public interface ITaskDBDAO {
 
     public boolean deleteTask(int taskId);
 
-    public void addTimeToTask(int taskId, int time, Date startTime, Date stopTime);
+    public void addTimeForTask(int taskId, int time, Date startTime, Date stopTime);
 
     public int getTaskTime(int taskID);
 
     public ObservableList<TaskTime> loadTimeForTask(int taskId);
 
-    public boolean UpdateTimeToTask(TaskTime taskTime);
+    public boolean UpdateTimeForTask(TaskTime taskTime);
 
-    public boolean DeleteTimeToTask(TaskTime taskTime);
+    public boolean DeleteTimeForTask(TaskTime taskTime);
 
 }

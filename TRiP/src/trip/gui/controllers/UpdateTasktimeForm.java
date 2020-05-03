@@ -115,7 +115,7 @@ public class UpdateTasktimeForm implements Initializable {
         taskTime.setStartTime(startDate);
         taskTime.setStopTime(endDate);
 
-        taskModel.UpdateTimeToTask(taskTime);
+        taskModel.UpdateTimeForTask(taskTime);
         updateThread.start();
         closeStage();
     }
@@ -137,7 +137,7 @@ public class UpdateTasktimeForm implements Initializable {
      */
     @FXML
     private void deleteTasktime(ActionEvent event) {
-        taskModel.DeleteTimeToTask(taskTime);
+        taskModel.DeleteTimeForTask(taskTime);
         updateThread.start();
         closeStage();
     }

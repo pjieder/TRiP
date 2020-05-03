@@ -24,32 +24,79 @@ public class TaskManager {
         dalFacade = new DalFacade();
     }
 
+    /**
+     * Saves the newly created task in the database.
+     *
+     * @param userId The ID of the user working on the task.
+     * @param projectId The ID of the project that the task is associated to.
+     * @param taskName The name of the task.
+     * @return The ID of the newly created task.
+     */
     public int addTask(int userId, int projectId, String taskName) {
         return dalFacade.addTask(userId, projectId, taskName);
     }
 
+    /**
+     * Loads all tasks stored in the database by the specified user on the specified project.
+     *
+     * @param userId The ID of
+     * @param projectId
+     * @return
+     */
+    public ObservableList<Task> loadTasks(int userId, int projectId) {
+        return dalFacade.loadTasks(userId, projectId);
+    }
+
+    /**
+     * Updates the specified task in the database.
+     *
+     * @param task The task that will update the previous task with the same ID.
+     * @return A boolean value representing whether or not the task was updated.
+     */
     public boolean updateTask(Task task) {
         return dalFacade.updateTask(task);
     }
 
+    /**
+     * Deletes the specified task from the database.
+     *
+     * @param taskId The ID of the task to be deleted.
+     * @return A boolean value representing whether or not the task was deleted.
+     */
     public boolean deleteTask(int taskId) {
         return dalFacade.deleteTask(taskId);
     }
 
+    /**
+     * Saves the time having been worked on the task in the database.
+     *
+     * @param taskId The ID of the task being worked on.
+     * @param time The total amount of time having been worked on the task in seconds.
+     * @param startTime The starttime of when the work began.
+     * @param stopTime The endtime of when the work ended.
+     */
     public void saveTimeForTask(int taskId, int time, Date startTime, Date stopTime) {
         dalFacade.saveTimeForTask(taskId, time, startTime, stopTime);
     }
 
-    public boolean UpdateTimeToTask(TaskTime taskTime) {
-        return dalFacade.UpdateTimeToTask(taskTime);
+    /**
+     * Updates the specified time having been worked on the task in the database.
+     *
+     * @param taskTime The taskTime that will update the previous taskTime with the same ID.
+     * @return A boolean value representing whether or not the update was successful.
+     */
+    public boolean UpdateTimeForTask(TaskTime taskTime) {
+        return dalFacade.UpdateTimeForTask(taskTime);
     }
 
-    public boolean DeleteTimeToTask(TaskTime taskTime) {
-        return dalFacade.DeleteTimeToTask(taskTime);
-    }
-
-    public ObservableList<Task> loadTasks(int userId, int projectId) {
-        return dalFacade.loadTasks(userId, projectId);
+    /**
+     * Deletes the specified time registered to the task in the database.
+     *
+     * @param taskTime The taskTime to be deleted.
+     * @return A boolean value representing whether or not the delete was successful.
+     */
+    public boolean DeleteTimeForTask(TaskTime taskTime) {
+        return dalFacade.DeleteTimeForTask(taskTime);
     }
 
 }

@@ -22,11 +22,11 @@ public class AppModel {
     }
 
     /**
-     * If correct username and password is entered, the stored person will be returned.
+     * Returns the employee found by the entered username and password.
      *
-     * @param username The username of the account
-     * @param password The password of the account
-     * @return
+     * @param username The username of the employee
+     * @param password The password of the employee
+     * @return The employee found based on the username and password
      */
     public Employee validateEmployee(String username, String password) {
         return employeeManager.validateEmployee(username, password);

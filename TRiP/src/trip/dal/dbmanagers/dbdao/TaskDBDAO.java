@@ -136,7 +136,7 @@ public class TaskDBDAO implements ITaskDBDAO {
     }
 
     @Override
-    public void addTimeToTask(int taskId, int time, Date startTime, Date stopTime) {
+    public void addTimeForTask(int taskId, int time, Date startTime, Date stopTime) {
         Connection con = null;
         try {
             con = DBSettings.getInstance().getConnection();
@@ -223,7 +223,7 @@ public class TaskDBDAO implements ITaskDBDAO {
     }
 
     @Override
-    public boolean UpdateTimeToTask(TaskTime taskTime) {
+    public boolean UpdateTimeForTask(TaskTime taskTime) {
         Connection con = null;
         try {
             con = DBSettings.getInstance().getConnection();
@@ -248,7 +248,7 @@ public class TaskDBDAO implements ITaskDBDAO {
     }
 
     @Override
-    public boolean DeleteTimeToTask(TaskTime taskTime) {
+    public boolean DeleteTimeForTask(TaskTime taskTime) {
         Connection con = null;
         try {
             con = DBSettings.getInstance().getConnection();

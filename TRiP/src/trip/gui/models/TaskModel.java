@@ -84,8 +84,8 @@ public class TaskModel {
      * @param taskTime The taskTime that will update the previous taskTime with the same ID.
      * @return A boolean value representing whether or not the update was successful.
      */
-    public boolean UpdateTimeToTask(TaskTime taskTime) {
-        return taskManager.UpdateTimeToTask(taskTime);
+    public boolean UpdateTimeForTask(TaskTime taskTime) {
+        return taskManager.UpdateTimeForTask(taskTime);
     }
 
     /**
@@ -94,8 +94,8 @@ public class TaskModel {
      * @param taskTime The taskTime to be deleted.
      * @return A boolean value representing whether or not the delete was successful.
      */
-    public boolean DeleteTimeToTask(TaskTime taskTime) {
-        return taskManager.DeleteTimeToTask(taskTime);
+    public boolean DeleteTimeForTask(TaskTime taskTime) {
+        return taskManager.DeleteTimeForTask(taskTime);
     }
 
 }

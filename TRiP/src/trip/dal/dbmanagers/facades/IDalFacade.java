@@ -85,9 +85,9 @@ public interface IDalFacade {
     
     public int loadAllEmployeeProjectTimeBetweenDates(int employeeID, int projectID, LocalDate startDate, LocalDate endDate);
 
-    public boolean UpdateTimeToTask(TaskTime taskTime);
+    public boolean UpdateTimeForTask(TaskTime taskTime);
 
-    public boolean DeleteTimeToTask(TaskTime taskTime);
+    public boolean DeleteTimeForTask(TaskTime taskTime);
     
 
     public void createCustomer(Customer customer);
