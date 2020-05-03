@@ -57,8 +57,8 @@ public class UpdateTaskForm implements Initializable {
     }
 
     /**
-     * This method runs when the updateTaskForm FXML is opened by from the MainUserViewController. It takes the selected task and update thread and stores them as instance variables.
-     * @param updateThread the Thread returned by method updateView  in the MainUserViewController.
+     * This method runs when the updateTaskForm FXML is opened from the MainUserViewController. It takes the selected task and update thread and stores them as instance variables.
+     * @param updateThread the Thread returned by method updateView in the MainUserViewController.
      * @param task the selected task to be updated.
      */
     public void setTask(Thread updateThread, Task task)

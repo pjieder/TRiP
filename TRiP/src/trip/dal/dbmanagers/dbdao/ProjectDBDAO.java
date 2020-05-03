@@ -424,8 +424,9 @@ public class ProjectDBDAO implements IProjectDBDAO {
             while (rs.next()) {
                 int totalTime = rs.getInt("totalTime");
                 String projectName = rs.getString("name");
-
-                series.getData().add(new XYChart.Data<>(projectName, totalTime));
+                double value = (double) totalTime / 3600;
+                
+                series.getData().add(new XYChart.Data<>(projectName, value));
             }
 
             return series;

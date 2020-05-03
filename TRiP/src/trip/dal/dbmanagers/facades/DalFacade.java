@@ -108,6 +108,7 @@ public class DalFacade implements IDalFacade {
     @Override
     public void updateEmployee(Employee employee) {
         employeeDBDAO.updateEmployee(employee);
+        employeeDBDAO.updateUsername(employee.getEmail(), employee.getId());
     }
 
     @Override
@@ -116,8 +117,8 @@ public class DalFacade implements IDalFacade {
     }
 
     @Override
-    public void updatePassword(String username, String password, int id) {
-        employeeDBDAO.updatePassword(username, password, id);
+    public void updatePassword(String password, int id) {
+        employeeDBDAO.updatePassword(password, id);
     }
 
     @Override

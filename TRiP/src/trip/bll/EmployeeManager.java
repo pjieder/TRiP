@@ -24,16 +24,21 @@ public class EmployeeManager {
     }
 
     /**
-     * Returns the person found by the entered username and password.
+     * Returns the employee found by the entered username and password.
      *
-     * @param username The username of the person
-     * @param password The password of the person
-     * @return The person found based on the username and password
+     * @param username The username of the employee
+     * @param password The password of the employee
+     * @return The employee found based on the username and password
      */
     public Employee validateEmployee(String username, String password) {
         return dalFacade.login(username, password);
     }
 
+    /**
+     * Saves the newly created employee in the database.
+     * @param employee The employee to be saved.
+     * @param password 
+     */
     public void createEmployee(Employee employee, String password) {
         dalFacade.createEmployee(employee, password);
     }
@@ -62,8 +67,8 @@ public class EmployeeManager {
         dalFacade.updateEmployeeActive(employeeId, active);
     }
 
-    public void updatePassword(String username, String password, int id) {
-        dalFacade.updatePassword(username, password, id);
+    public void updatePassword(String password, int id) {
+        dalFacade.updatePassword(password, id);
     }
 
     public void deleteEmployee(Employee employee) {

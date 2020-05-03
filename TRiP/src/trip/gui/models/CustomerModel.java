@@ -13,38 +13,58 @@ import trip.bll.CustomerManager;
  *
  * @author Jacob
  */
-public class CustomerModel
-{
+public class CustomerModel {
 
     private final CustomerManager customerManager;
 
-    public CustomerModel()
-    {
+    public CustomerModel() {
         customerManager = new CustomerManager();
     }
 
-    public ObservableList<Customer> getAllCustomers()
-    {
-        return customerManager.getAllCustomers();
-    }
-
-    public void createCustomer(Customer customer)
-    {
+    /**
+     * Saves the newly created customer in the database.
+     *
+     * @param customer The customer to be saved.
+     */
+    public void createCustomer(Customer customer) {
         customerManager.createCustomer(customer);
     }
 
-    public void updateCustomer(Customer customer)
-    {
+    /**
+     * Loads all customers stored in the database.
+     *
+     * @return Returns an observablelist containing all the stored customers.
+     */
+    public ObservableList<Customer> getAllCustomers() {
+        return customerManager.getAllCustomers();
+    }
+
+    /**
+     * Updates the specified customer in the database.
+     *
+     * @param customer The customer that will update the previous customer with the same ID.
+     */
+    public void updateCustomer(Customer customer) {
         customerManager.updateCustomer(customer);
     }
 
-    public void deleteCustomer(Customer customer)
-    {
+    /**
+     * Deletes the specified customer from the database.
+     *
+     * @param customer The customer to be deleted.
+     */
+    public void deleteCustomer(Customer customer) {
         customerManager.deleteCustomer(customer);
     }
 
-    public ObservableList<Customer> searchCustomers(String customerName, ObservableList<Customer> customerList)
-    {
+    /**
+     * Searches for customers matching the search term.
+     *
+     * @param customerName The name of the customer being searched for.
+     * @param customerList The List of all customers the search should be based on.
+     * @return An observablelist of all the customers found matching the search term.
+     */
+    public ObservableList<Customer> searchCustomers(String customerName, ObservableList<Customer> customerList) {
         return customerManager.searchCustomers(customerName, customerList);
     }
 }

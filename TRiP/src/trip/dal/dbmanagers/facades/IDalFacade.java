@@ -45,7 +45,7 @@ public interface IDalFacade {
 
     public void updateEmployeeActive(int employeeId, boolean active);
 
-    public void updatePassword(String username, String password, int id);
+    public void updatePassword(String password, int id);
 
     public void deleteEmployee(Employee employee);
     

@@ -384,6 +384,7 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
 
             int updatedRows = stmt.executeUpdate();
 
+            // UPDATE THE FUCKING EMAIL AS WELL
             return updatedRows > 0;
         } catch (SQLException ex) {
             Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -414,21 +415,40 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
     }
 
     @Override
-    public void updatePassword(String username, String password, int ID) {
+    public void updateUsername(String username, int ID) {
+        Connection con = null;
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "UPDATE Login SET username = ? WHERE employeeID = ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setString(1, username);
+            stmt.setInt(2, ID);
+
+            int updatedRows = stmt.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+    }
+
+    @Override
+    public void updatePassword(String password, int ID) {
 
         Connection con = null;
         try {
             con = DBSettings.getInstance().getConnection();
-            String sql = "UPDATE Login SET username = ?, hashedPassword = ?, salt = ? WHERE employeeID = ?;";
+            String sql = "UPDATE Login SET hashedPassword = ?, salt = ? WHERE employeeID = ?;";
             PreparedStatement stmt = con.prepareStatement(sql);
 
             String salt = HashAlgorithm.generateSalt();
             String hashedPassword = HashAlgorithm.generateHash(password, salt);
 
-            stmt.setString(1, username);
-            stmt.setString(2, hashedPassword);
-            stmt.setString(3, salt);
-            stmt.setInt(4, ID);
+            stmt.setString(1, hashedPassword);
+            stmt.setString(2, salt);
+            stmt.setInt(3, ID);
 
             int updatedRows = stmt.executeUpdate();
 

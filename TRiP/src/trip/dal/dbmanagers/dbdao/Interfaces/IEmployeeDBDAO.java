@@ -56,8 +56,10 @@ public interface IEmployeeDBDAO {
     public boolean updateEmployee(Employee employee);
 
     public void updateEmployeeActive(int employeeId, boolean active);
+    
+    public void updateUsername(String username, int ID);
 
-    public void updatePassword(String username, String password, int ID);
+    public void updatePassword(String password, int ID);
 
     public boolean deleteEmployee(Employee employee);
 
