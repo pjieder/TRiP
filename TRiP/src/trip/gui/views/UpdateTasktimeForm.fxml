@@ -47,7 +47,7 @@
       <JFXDatePicker fx:id="dateStart" defaultColor="#9a80fe" layoutX="109.0" layoutY="171.0" onAction="#validateAddTask" prefHeight="30.0" prefWidth="126.0" promptText="3" stylesheets="@../styles/MainUserViewCSS.css" />
       <JFXDatePicker fx:id="dateStop" defaultColor="#9a80fe" layoutX="240.0" layoutY="171.0" onAction="#validateAddTask" prefHeight="30.0" prefWidth="126.0" promptText="3" stylesheets="@../styles/MainUserViewCSS.css" />
       <JFXTimePicker fx:id="timeStart" defaultColor="#9a80fe" layoutX="107.0" layoutY="245.0" onAction="#validateAddTask" prefHeight="28.0" prefWidth="126.0" promptText="2" stylesheets="@../styles/MainUserViewCSS.css" />
-      <JFXTextField fx:id="timerField" focusColor="#9a80fe00" layoutX="230.0" layoutY="298.0" prefHeight="31.0" prefWidth="210.0" text="00:00:00" unFocusColor="#4d4d4d00">
+      <JFXTextField fx:id="timerField" focusColor="#9a80fe00" layoutX="230.0" layoutY="298.0" prefHeight="21.0" prefWidth="210.0" text="00:00:00" unFocusColor="#4d4d4d00">
          <font>
             <Font size="15.0" />
          </font>
