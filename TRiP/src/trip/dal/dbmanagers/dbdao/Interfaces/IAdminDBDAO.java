@@ -12,8 +12,13 @@ import trip.be.Admin;
  * @author ander
  */
 public interface IAdminDBDAO {
- 
+
+    /**
+     * Returns the adnun based on the specified ID.
+     *
+     * @param id the ID of the admin
+     * @return The admin with the specified ID
+     */
     public Admin getAdminById(int id);
-    
-    
+
 }

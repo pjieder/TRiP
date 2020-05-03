@@ -35,6 +35,11 @@ public class CustomerDBDAO implements ICustomerDBDAO {
         }
     }
 
+    /**
+     * Saves the newly created customer in the database.
+     *
+     * @param customer The customer to be saved.
+     */
     @Override
     public void createCustomer(Customer customer) {
         Connection con = null;
@@ -63,6 +68,12 @@ public class CustomerDBDAO implements ICustomerDBDAO {
         }
     }
 
+    /**
+     * Adds the customer to the project.
+     *
+     * @param customerID The ID of the customer.
+     * @param projectID The ID of the project.
+     */
     @Override
     public void addCustomerToProject(int customerID, int projectID) {
         Connection con = null;
@@ -80,6 +91,11 @@ public class CustomerDBDAO implements ICustomerDBDAO {
         }
     }
 
+    /**
+     * Loads all customers stored in the database.
+     *
+     * @return Returns an observablelist containing all the stored customers.
+     */
     @Override
     public ObservableList<Customer> getAllCustomers() {
         Connection con = null;
@@ -107,6 +123,12 @@ public class CustomerDBDAO implements ICustomerDBDAO {
         return null;
     }
 
+    /**
+     * Returns the customer for the specified project.
+     *
+     * @param projectID The project ID of the specified project.
+     * @return The customer on the project.
+     */
     @Override
     public Customer getCustomerForProject(int projectID) {
         Connection con = null;
@@ -135,6 +157,11 @@ public class CustomerDBDAO implements ICustomerDBDAO {
         return customer;
     }
 
+    /**
+     * Updates the specified customer in the database.
+     *
+     * @param customer The customer that will update the previous customer with the same ID.
+     */
     @Override
     public void updateCustomer(Customer customer) {
         Connection con = null;
@@ -159,6 +186,11 @@ public class CustomerDBDAO implements ICustomerDBDAO {
         }
     }
 
+    /**
+     * Deletes the specified customer from the database.
+     *
+     * @param customer The customer to be deleted.
+     */
     @Override
     public void deleteCustomer(Customer customer) {
         Connection con = null;
@@ -175,6 +207,11 @@ public class CustomerDBDAO implements ICustomerDBDAO {
         }
     }
 
+    /**
+     * Deletes the customer from the specified project.
+     *
+     * @param projectID The ID of the project that the costumer should be removed from.
+     */
     @Override
     public void removeCustomerFromProject(int projectID) {
         Connection con = null;

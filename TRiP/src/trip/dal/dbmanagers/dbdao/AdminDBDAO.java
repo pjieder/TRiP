@@ -22,10 +22,10 @@ import trip.be.Admin;
 public class AdminDBDAO implements IAdminDBDAO {
 
     /**
-     * Returns the user based on the specified ID.
+     * Returns the adnun based on the specified ID.
      *
-     * @param id the ID of the user
-     * @return The user with the specified ID
+     * @param id the ID of the admin
+     * @return The admin with the specified ID
      */
     @Override
     public Admin getAdminById(int id) {

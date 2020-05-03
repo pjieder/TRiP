@@ -246,6 +246,13 @@ public class DalFacade implements IDalFacade {
         return allUserProjects;
     }
 
+    /**
+     * Loads the overall time used on the specified project on the specified days
+     *
+     * @param projectID The ID of the project searching for.
+     * @param dates A list of all dates that the total time is wanted for.
+     * @return A list of all time used each day of the specified days in seconds.
+     */
     @Override
     public List<Integer> loadTimeForDates(int projectID, List<LocalDate> dates) {
 
@@ -360,16 +367,16 @@ public class DalFacade implements IDalFacade {
     }
 
     /**
-     * Loads all tasks stored in the database by the specified user on the specified project.
+     * Loads all tasks stored in the database by the specified employee on the specified project.
      *
-     * @param userId The ID of
-     * @param projectId
-     * @return
+     * @param employeeId The ID of the specified employee.
+     * @param projectId The ID of the specified project.
+     * @return An observablelist containing all stored tasks for the specified user and project.
      */
     @Override
-    public ObservableList<Task> loadTasks(int userId, int projectId) {
+    public ObservableList<Task> loadTasks(int employeeId, int projectId) {
 
-        ObservableList<Task> tasks = taskManager.loadTasks(userId, projectId);
+        ObservableList<Task> tasks = taskManager.loadTasks(employeeId, projectId);
 
         for (Task task : tasks) {
 
