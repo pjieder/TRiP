@@ -16,12 +16,12 @@
             <Image url="@../images/plus%20(4).png" />
          </image>
       </ImageView>
-      <Label layoutX="80.0" layoutY="90.0" text="Edit Task" textFill="#4d4d4d">
+      <Label layoutX="106.0" layoutY="88.0" text="Edit Task" textFill="#4d4d4d">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <JFXButton fx:id="updateButton" disable="true" layoutX="106.0" layoutY="251.0" onAction="#updateTask" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Update" textFill="WHITE">
+      <JFXButton fx:id="updateButton" disable="true" layoutX="108.0" layoutY="226.0" onAction="#updateTask" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Update" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
@@ -29,7 +29,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton fx:id="cancelButton" layoutX="271.0" layoutY="251.0" onAction="#cancelScene" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Cancel" textFill="WHITE">
+      <JFXButton fx:id="cancelButton" layoutX="273.0" layoutY="226.0" onAction="#cancelScene" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Cancel" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
@@ -37,7 +37,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton fx:id="deleteButton" layoutX="190.0" layoutY="251.0" onAction="#deleteTask" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Delete" textFill="WHITE">
+      <JFXButton fx:id="deleteButton" layoutX="192.0" layoutY="226.0" onAction="#deleteTask" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Delete" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
@@ -45,6 +45,9 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXTextField fx:id="taskNameField" focusColor="#9a80fe" layoutX="106.0" layoutY="186.0" prefHeight="35.0" prefWidth="241.0" promptText="Enter Task Name" />
+      <JFXTextField fx:id="taskNameField" focusColor="#9a80fe" layoutX="107.0" layoutY="150.0" prefHeight="35.0" prefWidth="241.0" promptText="Enter Task Name">
+         <font>
+            <Font size="15.0" />
+         </font></JFXTextField>
    </children>
 </AnchorPane>

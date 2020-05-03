@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="438.0" prefWidth="451.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.gui.controllers.UpdateTasktimeForm">
+<AnchorPane id="AnchorPane" prefHeight="448.0" prefWidth="451.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.gui.controllers.UpdateTasktimeForm">
    <children>
       <ImageView fitHeight="277.0" fitWidth="282.0" layoutX="-74.0" layoutY="-63.0" opacity="0.09" pickOnBounds="true" preserveRatio="true" rotate="122.5">
          <image>
@@ -23,12 +23,12 @@
             <Image url="@../images/plus%20(4).png" />
          </image>
       </ImageView>
-      <Label layoutX="69.0" layoutY="76.0" text="Edit Time" textFill="#4d4d4d">
+      <Label layoutX="105.0" layoutY="76.0" text="Edit Time" textFill="#4d4d4d">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <JFXButton fx:id="updateButton" disable="true" layoutX="105.0" layoutY="336.0" onAction="#updateTasktime" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Update" textFill="WHITE">
+      <JFXButton fx:id="updateButton" disable="true" layoutX="106.0" layoutY="367.0" onAction="#updateTasktime" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Update" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
@@ -36,7 +36,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton fx:id="cancelButton" layoutX="270.0" layoutY="336.0" onAction="#cancelScene" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Cancel" textFill="WHITE">
+      <JFXButton fx:id="cancelButton" layoutX="271.0" layoutY="367.0" onAction="#cancelScene" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Cancel" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
@@ -44,16 +44,16 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXDatePicker fx:id="dateStart" defaultColor="#9a80fe" layoutX="105.0" layoutY="168.0" onAction="#validateAddTask" prefHeight="30.0" prefWidth="126.0" promptText="Start Date" stylesheets="@../styles/MainUserViewCSS.css" />
-      <JFXDatePicker fx:id="dateStop" defaultColor="#9a80fe" layoutX="236.0" layoutY="168.0" onAction="#validateAddTask" prefHeight="30.0" prefWidth="126.0" promptText="Stop Date" stylesheets="@../styles/MainUserViewCSS.css" />
-      <JFXTimePicker fx:id="timeStart" defaultColor="#9a80fe" layoutX="105.0" layoutY="217.0" onAction="#validateAddTask" prefHeight="28.0" prefWidth="126.0" promptText="Start Time" />
-      <JFXTextField fx:id="timerField" focusColor="#405aa800" layoutX="181.0" layoutY="276.0" text="00:00:00" unFocusColor="#4d4d4d00">
+      <JFXDatePicker fx:id="dateStart" defaultColor="#9a80fe" layoutX="109.0" layoutY="171.0" onAction="#validateAddTask" prefHeight="30.0" prefWidth="126.0" promptText="3" stylesheets="@../styles/MainUserViewCSS.css" />
+      <JFXDatePicker fx:id="dateStop" defaultColor="#9a80fe" layoutX="240.0" layoutY="171.0" onAction="#validateAddTask" prefHeight="30.0" prefWidth="126.0" promptText="3" stylesheets="@../styles/MainUserViewCSS.css" />
+      <JFXTimePicker fx:id="timeStart" defaultColor="#9a80fe" layoutX="107.0" layoutY="245.0" onAction="#validateAddTask" prefHeight="28.0" prefWidth="126.0" promptText="2" stylesheets="@../styles/MainUserViewCSS.css" />
+      <JFXTextField fx:id="timerField" focusColor="#9a80fe00" layoutX="230.0" layoutY="298.0" prefHeight="31.0" prefWidth="210.0" text="00:00:00" unFocusColor="#4d4d4d00">
          <font>
-            <Font size="20.0" />
+            <Font size="15.0" />
          </font>
       </JFXTextField>
-      <JFXTimePicker fx:id="timeStop" defaultColor="#9a80fe" layoutX="236.0" layoutY="217.0" onAction="#validateAddTask" prefHeight="28.0" prefWidth="126.0" promptText="Start Time" />
-      <JFXButton fx:id="deleteButton" layoutX="189.0" layoutY="336.0" onAction="#deleteTasktime" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Delete" textFill="WHITE">
+      <JFXTimePicker fx:id="timeStop" defaultColor="#9a80fe" layoutX="238.0" layoutY="245.0" onAction="#validateAddTask" prefHeight="28.0" prefWidth="126.0" promptText="3" stylesheets="@../styles/MainUserViewCSS.css" />
+      <JFXButton fx:id="deleteButton" layoutX="190.0" layoutY="367.0" onAction="#deleteTasktime" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Delete" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
@@ -61,5 +61,30 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
+      <Label layoutX="110.0" layoutY="150.0" text="Start Date">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="241.0" layoutY="150.0" text="Stop Date">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="110.0" layoutY="224.0" text="Start Time">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="241.0" layoutY="224.0" text="Stop Time">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="160.0" layoutY="303.0" text="Duration:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
