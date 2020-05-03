@@ -44,10 +44,18 @@ public class Timer implements Runnable{
         }
     }
 
+    /**
+     * Displays the current amount of time that the timer has run.
+     */
     public void displayTime() {
         numberLabel.setText(TimeConverter.convertSecondsToString(time));
     }
 
+    /**
+     * Stores the taskID and number label as instance variables and starts the timer.
+     * @param taskId The ID of the task being timed.
+     * @param numberLabel The label to display the amount of time the timer has run.
+     */
     public void startTimer(int taskId, Label numberLabel) {
         this.taskId = taskId;
         this.numberLabel = numberLabel;
@@ -57,6 +65,10 @@ public class Timer implements Runnable{
         executor.submit(this);
     }
     
+    /**
+     * Stops the timer and resets the label.
+     * @return Returns the amount of time that the timer has been running.
+     */
     public int stopTimer()
     {
         this.stopTime = new Date();
@@ -65,6 +77,10 @@ public class Timer implements Runnable{
         return time;
     }
     
+    /**
+     * Checks whether or not the timer is still running.
+     * @return A boolean representing whether or not the timer is still running.
+     */
     public boolean isEnabled()
     {
         if (executor == null)
