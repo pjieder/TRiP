@@ -72,6 +72,12 @@ public class UpdateTasktimeForm implements Initializable {
         });
     }
 
+    /**
+     * This method runs when the updateTasktimeForm is opened from the MainUserviewController. It takes the selected taskTime and update thread and stores them as instance variables.
+     *
+     * @param thread the Thread returned by method updateView in the MainUserViewController.
+     * @param taskTime the selected taskTime to be updated.
+     */
     public void setTaskTime(Thread thread, TaskTime taskTime) {
         this.taskTime = taskTime;
         this.updateThread = thread;
@@ -84,6 +90,11 @@ public class UpdateTasktimeForm implements Initializable {
         timerField.setText(TimeConverter.convertSecondsToString(taskTime.getTime()));
     }
 
+    /**
+     * Updates the selected taskTime with the newly entered information and closes the stage.
+     *
+     * @param event
+     */
     @FXML
     private void updateTasktime(ActionEvent event) {
 
@@ -109,11 +120,21 @@ public class UpdateTasktimeForm implements Initializable {
         closeStage();
     }
 
+    /**
+     * Cancels all actions and closes the stage.
+     *
+     * @param event
+     */
     @FXML
     private void cancelScene(ActionEvent event) {
         closeStage();
     }
 
+    /**
+     * Deletes the selected taskTime. This will result in the registered time for the task being deleted as well.
+     *
+     * @param event
+     */
     @FXML
     private void deleteTasktime(ActionEvent event) {
         taskModel.DeleteTimeToTask(taskTime);
@@ -121,16 +142,27 @@ public class UpdateTasktimeForm implements Initializable {
         closeStage();
     }
 
+    /**
+     * Validates the entered information and enables the updateButton is sufficient information is given.
+     *
+     * @param event
+     */
     @FXML
     private void validateAddTask(ActionEvent event) {
         decideUpdateTimeEnabled();
     }
 
+    /**
+     * Closes the stage without saving any information.
+     */
     private void closeStage() {
         Stage currentStage = (Stage) timeStart.getScene().getWindow();
         currentStage.close();
     }
 
+    /**
+     * Validates the entered information and enables the updateButton is sufficient information is given.
+     */
     private void decideUpdateTimeEnabled() {
         if (dateStart.getValue() != null && dateStop.getValue() != null && timeStart.getValue() != null
                 && timeStop.getValue() != null && timerField.validate()) {

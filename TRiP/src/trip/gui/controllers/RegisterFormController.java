@@ -100,6 +100,9 @@ public class RegisterFormController implements Initializable {
         
     }
     
+    /**
+     * Validates the entered information and enables the register- or update button if sufficient information is given.
+     */
     private void validateInput() {
         
         String fName = firstNameField.getText().trim();
@@ -138,6 +141,10 @@ public class RegisterFormController implements Initializable {
         }
     }
     
+    /**
+     * Validates whether or not the passwords entered are identical.
+     * @return boolean representing whether or not the intered passwords are identical.
+     */
     private boolean validateIdenticalPassword() {
         if (!passwordField.getText().equals(passwordFieldTwo.getText()))
         {
@@ -150,6 +157,11 @@ public class RegisterFormController implements Initializable {
         }
     }
     
+    /**
+     * Saves or updates the employee based on what button was pressed when opening the FXML.
+     *
+     * @param event
+     */
     @FXML
     private void registerEmployee(ActionEvent event) {
         Employee newEmployee;
@@ -187,13 +199,22 @@ public class RegisterFormController implements Initializable {
         currentStage.close();
     }
 
-    
+    /**
+     * Cancels all actions and closes the stage.
+     *
+     * @param event
+     */
     @FXML
     private void cancelScene(ActionEvent event) {
         Stage currentStage = (Stage) firstNameField.getScene().getWindow();
         currentStage.close();
     }
     
+    /**
+     * Enables or disables the two password fields based on whether or not the admin wants to update the passwords
+     * when making changes to the selected user.
+     * @param event 
+     */
     @FXML
     private void makePasswordVisible(ActionEvent event) {
         
@@ -209,10 +230,20 @@ public class RegisterFormController implements Initializable {
         validateInput();
     }
     
+    /**
+     * This methods runs when the RegisterForm FXML is opened by the "add" button. It takes the update statistics thread and stores it as an instance variable.
+     *
+     * @param thread the Thread returned by method getUpdateListThread in the AdminCurrentUserViewController
+     */
     public void setUpdateThread(Thread thread) {
         this.updateThread = thread;
     }
     
+    /**
+     * This method runs when the RegisterForm FXML is opened by the "update" button. It takes the selected employee and update thread and stores them as instance variables.
+     * @param employee The employee to be updated
+     * @param thread the Thread returned by method getUpdateListThread in the AdminCurrentUserViewController.
+     */
     public void setEmployee(Employee employee, Thread thread) {
         this.updateThread = thread;
         this.employeeToUpdate = employee;
@@ -232,6 +263,10 @@ public class RegisterFormController implements Initializable {
         validateInput();
     }
     
+    /**
+     * Selectes the userCheckBox based on whether or not the adminCheckBox is selected.
+     * @param event 
+     */
     @FXML
     private void doAdmin(ActionEvent event) {
         
@@ -245,6 +280,10 @@ public class RegisterFormController implements Initializable {
         
     }
     
+    /**
+     * Selects the adminCheckBox based on whether or not the userCheckBox is selected.
+     * @param event 
+     */
     @FXML
     private void doUser(ActionEvent event) {
         

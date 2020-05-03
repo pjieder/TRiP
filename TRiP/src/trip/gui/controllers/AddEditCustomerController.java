@@ -88,7 +88,7 @@ public class AddEditCustomerController implements Initializable {
     }
 
     /**
-     * This methods runs when the AddEditCustomer FXML is opened by the "add" button. It takes the update statistics thread and stores as instance variables.
+     * This methods runs when the AddEditCustomer FXML is opened by the "create" button. It takes the update statistics thread and stores it as an instance variable.
      *
      * @param thread the Thread returned by method updateView in the AdminCustomerViewController
      */
@@ -97,7 +97,7 @@ public class AddEditCustomerController implements Initializable {
     }
 
     /**
-     * This methods runs when the AddEditCustomer FXML is opened by the "edit" button. It takes the selected customer and the update thread and stores as instance variables.
+     * This methods runs when the AddEditCustomer FXML is opened by the "edit" button. It takes the selected customer and  update thread and stores them as instance variables.
      * 
      * @param customer The customer to be updated
      * @param thread The Thread returned by method updateView in the AdminCustomerViewController

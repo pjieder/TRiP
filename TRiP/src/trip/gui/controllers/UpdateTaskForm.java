@@ -56,6 +56,11 @@ public class UpdateTaskForm implements Initializable {
         });
     }
 
+    /**
+     * This method runs when the updateTaskForm FXML is opened by from the MainUserViewController. It takes the selected task and update thread and stores them as instance variables.
+     * @param updateThread the Thread returned by method updateView  in the MainUserViewController.
+     * @param task the selected task to be updated.
+     */
     public void setTask(Thread updateThread, Task task)
     {
         this.updateThread = updateThread;
@@ -63,6 +68,10 @@ public class UpdateTaskForm implements Initializable {
         taskNameField.setText(task.getName());
     }
     
+    /**
+     * Updates the selected task with the newly entered information and closes the stage.
+     * @param event 
+     */
     @FXML
     private void updateTask(ActionEvent event) {
         task.setName(taskNameField.getText());
@@ -71,11 +80,21 @@ public class UpdateTaskForm implements Initializable {
         closeStage();
     }
 
+    /**
+     * Cancels all actions and closes the stage.
+     *
+     * @param event
+     */
     @FXML
     private void cancelScene(ActionEvent event) {
         closeStage();
     }
 
+    /**
+     * Deletes the selected task. This will result in all registered time for the task being deleted as well. A warning will pop up, warning the user if they really
+     * want to delete the selected task.
+     * @param event 
+     */
     @FXML
     private void deleteTask(ActionEvent event) {
 
@@ -94,6 +113,9 @@ public class UpdateTaskForm implements Initializable {
         }
     }
 
+    /**
+     * Closes the stage without saving any information.
+     */
     private void closeStage() {
         Stage currentStage = (Stage) taskNameField.getScene().getWindow();
         currentStage.close();

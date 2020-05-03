@@ -89,6 +89,11 @@ public class AdminStatisticsViewController implements Initializable {
 
     }
 
+    /**
+     * Changes the statistics shown based on what is selected in the statistics combo box.
+     *
+     * @param event
+     */
     @FXML
     private void changeStatistic(ActionEvent event) {
         if (statisticComboBox.getSelectionModel().getSelectedIndex() == 0) {
@@ -112,6 +117,11 @@ public class AdminStatisticsViewController implements Initializable {
         }
     }
 
+    /**
+     * Validates whether or not the calculateBar- or calculateLine button is enabled or disabled when a change happens.
+     *
+     * @param event
+     */
     @FXML
     private void validate(ActionEvent event) {
         validate();
@@ -131,6 +141,11 @@ public class AdminStatisticsViewController implements Initializable {
         }
     }
 
+    /**
+     * Calculates the statistics shown in the linechart based on the information entered.
+     *
+     * @param event
+     */
     @FXML
     private void calculateLine(ActionEvent event) {
         progress.setVisible(true);
@@ -154,6 +169,11 @@ public class AdminStatisticsViewController implements Initializable {
         thread.start();
     }
 
+    /**
+     * Calculates the statistics shown in the barchart based on the information entered.
+     *
+     * @param event
+     */
     @FXML
     private void calculateBar(ActionEvent event) {
         progress.setVisible(true);
@@ -177,6 +197,13 @@ public class AdminStatisticsViewController implements Initializable {
         thread.start();
     }
 
+    /**
+     * Calculates the total hours worked in the period and the total amount of money earned based on the rate of the different projects.
+     *
+     * @param startDate The startdate of the period the statistics should be calculated upon.
+     * @param endDate The enddate of the period the statistics should be calculated upon.
+     * @param projectID The ID of the selected project.
+     */
     private void calculatePriceForLine(LocalDate startDate, LocalDate endDate, int projectID) {
         int totalTime = 0;
         double totalPrice = 0;
@@ -208,6 +235,13 @@ public class AdminStatisticsViewController implements Initializable {
         });
     }
 
+    /**
+     * Calculates the total hours worked in the period and the total amount of money earned based on the rate of the different projects.
+     *
+     * @param startDate The startdate of the period the statistics should be calculated upon.
+     * @param endDate The enddate of the period the statistics should be calculated upon.
+     * @param employeeeID The ID of the selected employee.
+     */
     private void calculatePriceForBar(LocalDate startDate, LocalDate endDate, int employeeID) {
 
         int totalTime = 0;
@@ -235,23 +269,27 @@ public class AdminStatisticsViewController implements Initializable {
 
     }
 
+    /**
+     * Opens the time tracking of the selected employee. This enables the admin looking at what the users has been working on and the logged time.
+     *
+     * @param event
+     */
     @FXML
     private void openEmployee(ActionEvent event) {
-        if(employeeSelection.getValue() != null)
-        {
-            try{
-            
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(AppModel.class.getResource("views/MainUserView.fxml"));
+        if (employeeSelection.getValue() != null) {
+            try {
 
-            Pane pane = fxmlLoader.load();
-            MainUserViewController controller = fxmlLoader.getController();
-            controller.setEmployee(employeeSelection.getSelectionModel().getSelectedItem());
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(AppModel.class.getResource("views/MainUserView.fxml"));
 
-            MenuBarViewController.viewPane.getChildren().clear();
-            MenuBarViewController.viewPane.getChildren().add(pane);
+                Pane pane = fxmlLoader.load();
+                MainUserViewController controller = fxmlLoader.getController();
+                controller.setEmployee(employeeSelection.getSelectionModel().getSelectedItem());
+
+                MenuBarViewController.viewPane.getChildren().clear();
+                MenuBarViewController.viewPane.getChildren().add(pane);
+            } catch (IOException ex) {
             }
-            catch(IOException ex){}
         }
     }
 

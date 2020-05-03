@@ -202,7 +202,7 @@ public class AddEditProjectController implements Initializable {
     }
 
    /**
-     * This methods runs when the AddEditProject FXML is opened by the "add" button. It takes the update statistics thread and stores as instance variables.
+     * This methods runs when the AddEditProject FXML is opened by the "create" button. It takes the update statistics thread and stores it as an instance variable.
      *
      * @param thread the Thread returned by method updateView in the MainAdminViewController
      */
@@ -214,7 +214,7 @@ public class AddEditProjectController implements Initializable {
     }
 
     /**
-     * This methods runs when the AddEditProject FXML is opened by the "edit" button. It takes the selected project and the update thread and stores as instance variables.
+     * This methods runs when the AddEditProject FXML is opened by the "edit" button. It takes the selected project and update thread and stores them as instance variables.
      * @param thread The Thread returned by method updateView in the MainAdminViewController
      * @param project The project to be updated 
      */
