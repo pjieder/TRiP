@@ -7,6 +7,7 @@ package trip.dal.dbmanagers.dbdao.Interfaces;
 
 import javafx.collections.ObservableList;
 import trip.be.Employee;
+import trip.be.Project;
 import trip.be.Roles;
 
 /**
@@ -36,19 +37,19 @@ public interface IEmployeeDBDAO {
     /**
      * Hashes and salts the password entered by the user and saves it to the database.
      *
-     * @param username The entered username for the employee.
+     * @param employee The employee the password should be created for.
      * @param password The entered password for the employee.
      * @param ID The ID of the employee.
      */
-    public void createPassword(String username, String password, int ID);
+    public void createPassword(Employee employee, String password, int ID);
 
     /**
      * Adds the employee to the project.
      *
-     * @param employeeID The ID of the employee.
-     * @param projID The ID of the project.
+     * @param employee The employee to be added.
+     * @param project The project the employee should be added to.
      */
-    public void addEmployeeToProject(int employeeID, int projID);
+    public void addEmployeeToProject(Employee employee, Project project);
 
     /**
      * Loads all active employees
@@ -100,26 +101,26 @@ public interface IEmployeeDBDAO {
     /**
      * Updates whether or not the specified employee is active.
      *
-     * @param employeeId The ID of the employee to update.
+     * @param employee The employee to be updated.
      * @param active Boolean representing whether or not the user should be active or inactive.
      */
-    public void updateEmployeeActive(int employeeId, boolean active);
+    public void updateEmployeeActive(Employee employee, boolean active);
 
     /**
      * Updates the username of the employee.
      *
      * @param username The new username wished for the employee.
-     * @param ID The ID of the employee.
+     * @param employee The employee to be updated.
      */
-    public void updateUsername(String username, int ID);
+    public void updateUsername(String username, Employee employee);
 
-    /**
-     * Updates the password of the specified user.
+      /**
+     * Updates the password of the specified employee.
      *
      * @param password The new password to be hashed and stored.
-     * @param ID The ID of the employee to update.
+     * @param employee The employee to be updated.
      */
-    public void updatePassword(String password, int ID);
+    public void updatePassword(String password, Employee employee);
 
     /**
      * Deletes the specified employee from the database.
@@ -132,8 +133,8 @@ public interface IEmployeeDBDAO {
     /**
      * Removes all employees working on the project.
      *
-     * @param projID The ID of the project.
+     * @param project The project all users should be removed from.
      */
-    public void removeAllEmployeesFromProject(int projID);
+    public void removeAllEmployeesFromProject(Project project);
 
 }

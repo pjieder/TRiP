@@ -195,7 +195,7 @@ public class AdminCurrentUserViewController implements Initializable {
     private void makeUserInactive(ActionEvent event) {
 
         if (!userList.getSelectionModel().isEmpty()) {
-            appModel.updateEmployeeActive(userList.getSelectionModel().getSelectedItem().getId(), false);
+            appModel.updateEmployeeActive(userList.getSelectionModel().getSelectedItem(), false);
             getUpdateListThread().start();
         }
     }
@@ -208,7 +208,7 @@ public class AdminCurrentUserViewController implements Initializable {
     private void makeUserActive(ActionEvent event) {
 
         if (!userList.getSelectionModel().isEmpty()) {
-            appModel.updateEmployeeActive(userList.getSelectionModel().getSelectedItem().getId(), true);
+            appModel.updateEmployeeActive(userList.getSelectionModel().getSelectedItem(), true);
             getUpdateListThread().start();
         }
     }

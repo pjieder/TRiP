@@ -16,8 +16,10 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import trip.be.Customer;
+import trip.be.Project;
 import trip.dal.dbaccess.DBSettings;
 import trip.dal.dbmanagers.dbdao.Interfaces.ICustomerDBDAO;
+import trip.dal.dbmanagers.dbdao.utilities.DatabaseLogger;
 
 /**
  *
@@ -43,6 +45,7 @@ public class CustomerDBDAO implements ICustomerDBDAO {
     @Override
     public void createCustomer(Customer customer) {
         Connection con = null;
+        int ID = 0;
         try {
             con = DBSettings.getInstance().getConnection();
             String sql = "INSERT INTO Customer (name, phoneNumber, email) VALUES (?,?,?);";
@@ -59,35 +62,37 @@ public class CustomerDBDAO implements ICustomerDBDAO {
 
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
-                customer.setId(rs.getInt(1));
+                ID = rs.getInt(1);
             }
         } catch (SQLException ex) {
             Logger.getLogger(CustomerDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
+            DatabaseLogger.logAction("Created customer with ID: " + ID + "(" +customer.getName() + ")");
         }
     }
 
     /**
      * Adds the customer to the project.
      *
-     * @param customerID The ID of the customer.
-     * @param projectID The ID of the project.
+     * @param customer The customer to be added.
+     * @param project The project to be added.
      */
     @Override
-    public void addCustomerToProject(int customerID, int projectID) {
+    public void addCustomerToProject(Customer customer, Project project) {
         Connection con = null;
         try {
             con = DBSettings.getInstance().getConnection();
             String sql = "INSERT INTO CustomerProjects (CustomerProjects.customerID, CustomerProjects.projectID) VALUES (?,?);";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, customerID);
-            ps.setInt(2, projectID);
+            ps.setInt(1, customer.getId());
+            ps.setInt(2, project.getId());
             ps.execute();
         } catch (SQLException ex) {
             Logger.getLogger(CustomerDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
+            DatabaseLogger.logAction("Added customer with ID" +  customer.getId() + " ("+customer.getName() + ")" + " to project with ID " + project.getId() + " (" + project.getName() + ")");
         }
     }
 
@@ -183,6 +188,7 @@ public class CustomerDBDAO implements ICustomerDBDAO {
             Logger.getLogger(CustomerDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
+            DatabaseLogger.logAction("Updated customer with ID: " + customer.getId() + " ("+customer.getName() + ")");
         }
     }
 
@@ -204,6 +210,7 @@ public class CustomerDBDAO implements ICustomerDBDAO {
             Logger.getLogger(CustomerDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
+            DatabaseLogger.logAction("Deleted customer with ID: " + customer.getId() + " (" + customer.getName() + ")");
         }
     }
 
@@ -225,6 +232,7 @@ public class CustomerDBDAO implements ICustomerDBDAO {
             Logger.getLogger(CustomerDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
+            DatabaseLogger.logAction("Removed all customers from project with ID: " + projectID);
         }
     }
 }

@@ -22,6 +22,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
 import trip.be.Project;
 import trip.dal.dbaccess.DBSettings;
+import trip.dal.dbmanagers.dbdao.utilities.DatabaseLogger;
 import trip.utilities.TimeConverter;
 
 /**
@@ -70,6 +71,7 @@ public class ProjectDBDAO implements IProjectDBDAO {
             Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
+            DatabaseLogger.logAction("Created project with ID: " + project.getId() + " (" + project.getName() + ")");
         }
     }
 
@@ -539,6 +541,7 @@ public class ProjectDBDAO implements IProjectDBDAO {
             Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
+            DatabaseLogger.logAction("Updated project with ID: " + project.getId() + " (" + project.getName() + ")");
         }
     }
 
@@ -560,6 +563,7 @@ public class ProjectDBDAO implements IProjectDBDAO {
             Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
+            DatabaseLogger.logAction("Deleted project with ID: " + project.getId() + " (" + project.getName() + ")");
         }
     }
 

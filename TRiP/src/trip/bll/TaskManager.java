@@ -30,9 +30,9 @@ public class TaskManager {
      * @param userId The ID of the user working on the task.
      * @param projectId The ID of the project that the task is associated to.
      * @param taskName The name of the task.
-     * @return The ID of the newly created task.
+     * @return The newly created task.
      */
-    public int addTask(int userId, int projectId, String taskName) {
+    public Task addTask(int userId, int projectId, String taskName) {
         return dalFacade.addTask(userId, projectId, taskName);
     }
 
@@ -60,23 +60,23 @@ public class TaskManager {
     /**
      * Deletes the specified task from the database.
      *
-     * @param taskId The ID of the task to be deleted.
+     * @param task The task to be deleted.
      * @return A boolean value representing whether or not the task was deleted.
      */
-    public boolean deleteTask(int taskId) {
-        return dalFacade.deleteTask(taskId);
+    public boolean deleteTask(Task task) {
+        return dalFacade.deleteTask(task);
     }
 
     /**
      * Saves the time having been worked on the task in the database.
      *
-     * @param taskId The ID of the task being worked on.
+     * @param task The task being worked on.
      * @param time The total amount of time having been worked on the task in seconds.
      * @param startTime The starttime of when the work began.
      * @param stopTime The endtime of when the work ended.
      */
-    public void saveTimeForTask(int taskId, int time, Date startTime, Date stopTime) {
-        dalFacade.saveTimeForTask(taskId, time, startTime, stopTime);
+    public void saveTimeForTask(Task task, int time, Date startTime, Date stopTime) {
+        dalFacade.saveTimeForTask(task, time, startTime, stopTime);
     }
 
     /**

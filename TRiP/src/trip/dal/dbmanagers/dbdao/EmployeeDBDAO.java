@@ -18,8 +18,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import trip.be.Admin;
 import trip.be.Employee;
+import trip.be.Project;
 import trip.be.Roles;
 import trip.be.User;
+import trip.dal.dbmanagers.dbdao.utilities.DatabaseLogger;
 import trip.utilities.HashAlgorithm;
 
 /**
@@ -75,6 +77,7 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
     @Override
     public boolean createEmployee(Employee employee, String password) {
         Connection con = null;
+        int ID = 0;
         try {
             con = DBSettings.getInstance().getConnection();
             String sql = "INSERT INTO Employees (fName, lName, email, isAdmin, isActive) "
@@ -94,7 +97,8 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
 
             ResultSet generatedKeys = stmt.getGeneratedKeys();
             if (generatedKeys.next()) {
-                createPassword(employee.getEmail(), password, generatedKeys.getInt(1));
+                ID = generatedKeys.getInt(1);
+                createPassword(employee, password, ID);
             }
 
             return updatedRows > 0;
@@ -102,6 +106,7 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
             Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
+            DatabaseLogger.logAction("Created employee with ID: " + ID + " (" + employee.getfName() + ")");
         }
         return false;
     }
@@ -109,12 +114,12 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
     /**
      * Hashes and salts the password entered by the user and saves it to the database.
      *
-     * @param username The entered username for the employee.
+     * @param employee The employee to be saved.ed username for the employee.
      * @param password The entered password for the employee.
      * @param ID The ID of the employee.
      */
     @Override
-    public void createPassword(String username, String password, int ID) {
+    public void createPassword(Employee employee, String password, int ID) {
 
         Connection con = null;
         try {
@@ -126,7 +131,7 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
             String salt = HashAlgorithm.generateSalt();
             String hashedPassword = HashAlgorithm.generateHash(password, salt);
             stmt.setInt(1, ID);
-            stmt.setString(2, username);
+            stmt.setString(2, employee.getEmail());
             stmt.setString(3, hashedPassword);
             stmt.setString(4, salt);
 
@@ -136,17 +141,18 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
             Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
+            DatabaseLogger.logAction("Created password for employee with ID: " + ID + " (" + employee.getfName() + ")");
         }
     }
 
     /**
      * Adds the employee to the project.
      *
-     * @param employeeID The ID of the employee.
-     * @param projID The ID of the project.
+     * @param employee The employee to be added.
+     * @param project The project the employee should be added to.
      */
     @Override
-    public void addEmployeeToProject(int employeeID, int projID) {
+    public void addEmployeeToProject(Employee employee, Project project) {
 
         Connection con = null;
         try {
@@ -154,8 +160,8 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
             String sql = "INSERT INTO Projects (employeeID, projID) VALUES (?,?);";
             PreparedStatement stmt = con.prepareStatement(sql);
 
-            stmt.setInt(1, employeeID);
-            stmt.setInt(2, projID);
+            stmt.setInt(1, employee.getId());
+            stmt.setInt(2, project.getId());
 
             int updatedRows = stmt.executeUpdate();
 
@@ -163,6 +169,7 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
             Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
+            DatabaseLogger.logAction("Added employee with ID" +  employee.getId() + " ("+employee.getfName() + ")" + " to project with ID " + project.getId() + " (" + project.getName() + ")");
         }
     }
 
@@ -432,6 +439,7 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
             Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
+           DatabaseLogger.logAction("Updated employee with ID: " + employee.getId() + " (" + employee.getfName() + ")");
         }
         return false;
     }
@@ -439,11 +447,11 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
     /**
      * Updates whether or not the specified employee is active.
      *
-     * @param employeeId The ID of the employee to update.
+     * @param employee The employee to be updated.
      * @param active Boolean representing whether or not the user should be active or inactive.
      */
     @Override
-    public void updateEmployeeActive(int employeeId, boolean active) {
+    public void updateEmployeeActive(Employee employee, boolean active) {
         Connection con = null;
         try {
             con = DBSettings.getInstance().getConnection();
@@ -451,7 +459,7 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
             PreparedStatement stmt = con.prepareStatement(sql);
 
             stmt.setBoolean(1, active);
-            stmt.setInt(2, employeeId);
+            stmt.setInt(2, employee.getId());
 
             stmt.executeUpdate();
 
@@ -459,6 +467,7 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
             Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
+            DatabaseLogger.logAction("Updated employee with ID: " + employee.getId() + " (" + employee.getfName() + ") to active: " + active);
         }
     }
 
@@ -466,10 +475,10 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
      * Updates the username of the employee.
      *
      * @param username The new username wished for the employee.
-     * @param ID The ID of the employee.
+     * @param employee The employee to be updated.
      */
     @Override
-    public void updateUsername(String username, int ID) {
+    public void updateUsername(String username, Employee employee) {
         Connection con = null;
         try {
             con = DBSettings.getInstance().getConnection();
@@ -477,7 +486,7 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
             PreparedStatement stmt = con.prepareStatement(sql);
 
             stmt.setString(1, username);
-            stmt.setInt(2, ID);
+            stmt.setInt(2, employee.getId());
 
             int updatedRows = stmt.executeUpdate();
 
@@ -485,17 +494,18 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
             Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
+            DatabaseLogger.logAction("Updated username of employee with ID: " + employee.getId() + " (" + employee.getfName() + ")" + " to " + username);
         }
     }
 
     /**
-     * Updates the password of the specified user.
+     * Updates the password of the specified employee.
      *
      * @param password The new password to be hashed and stored.
-     * @param ID The ID of the employee to update.
+     * @param employee The employee to be updated.
      */
     @Override
-    public void updatePassword(String password, int ID) {
+    public void updatePassword(String password, Employee employee) {
 
         Connection con = null;
         try {
@@ -508,7 +518,7 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
 
             stmt.setString(1, hashedPassword);
             stmt.setString(2, salt);
-            stmt.setInt(3, ID);
+            stmt.setInt(3, employee.getId());
 
             int updatedRows = stmt.executeUpdate();
 
@@ -516,6 +526,7 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
             Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
+            DatabaseLogger.logAction("Updated password of employee with ID: " + employee.getId() + " (" + employee.getfName() + ")");
         }
     }
 
@@ -542,6 +553,7 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
             Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
+            DatabaseLogger.logAction("Deleted employee with ID: " + employee.getId() + " (" + employee.getfName() + ")");
         }
         return false;
     }
@@ -549,10 +561,10 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
     /**
      * Removes all employees working on the project.
      *
-     * @param projID The ID of the project.
+     * @param project The project all users should be removed from.
      */
     @Override
-    public void removeAllEmployeesFromProject(int projID) {
+    public void removeAllEmployeesFromProject(Project project) {
 
         Connection con = null;
         try {
@@ -560,7 +572,7 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
             String sql = "DELETE FROM Projects WHERE Projects.projID = ?;";
             PreparedStatement stmt = con.prepareStatement(sql);
 
-            stmt.setInt(1, projID);
+            stmt.setInt(1, project.getId());
 
             int updatedRows = stmt.executeUpdate();
 
@@ -568,6 +580,7 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
             Logger.getLogger(EmployeeDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
+            DatabaseLogger.logAction("Removed all employees from project with ID: " + project.getId() + " (" + project.getName() + ")");
         }
     }
 

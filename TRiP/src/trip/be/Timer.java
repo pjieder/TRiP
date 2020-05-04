@@ -20,7 +20,7 @@ import trip.utilities.TimeConverter;
 public class Timer implements Runnable{
     
     private int time = 0;
-    private int taskId = 0;
+    private Task task;
     private Date startTime;
     private Date stopTime;
     private Label numberLabel;
@@ -53,11 +53,11 @@ public class Timer implements Runnable{
 
     /**
      * Stores the taskID and number label as instance variables and starts the timer.
-     * @param taskId The ID of the task being timed.
+     * @param task The task being timed.
      * @param numberLabel The label to display the amount of time the timer has run.
      */
-    public void startTimer(int taskId, Label numberLabel) {
-        this.taskId = taskId;
+    public void startTimer(Task task, Label numberLabel) {
+        this.task = task;
         this.numberLabel = numberLabel;
         this.startTime = new Date();
         time = 0;
@@ -90,9 +90,9 @@ public class Timer implements Runnable{
         return !executor.isShutdown();
     }
 
-    public int getTaskId ()
+    public Task getTask ()
     {
-        return taskId;
+        return task;
     }
 
     public int getTime() {

@@ -141,29 +141,29 @@ public class DalFacade implements IDalFacade {
     @Override
     public void updateEmployee(Employee employee) {
         employeeDBDAO.updateEmployee(employee);
-        employeeDBDAO.updateUsername(employee.getEmail(), employee.getId());
+        employeeDBDAO.updateUsername(employee.getEmail(), employee);
     }
 
     /**
      * Updates whether or not the specified employee is active.
      *
-     * @param employeeId The ID of the employee to update.
+     * @param employee The employee to be updated.
      * @param active Boolean representing whether or not the user should be active or inactive.
      */
     @Override
-    public void updateEmployeeActive(int employeeId, boolean active) {
-        employeeDBDAO.updateEmployeeActive(employeeId, active);
+    public void updateEmployeeActive(Employee employee, boolean active) {
+        employeeDBDAO.updateEmployeeActive(employee, active);
     }
 
     /**
-     * Updates the password of the specified user.
+     * Updates the password of the specified employee.
      *
      * @param password The new password to be hashed and stored.
-     * @param id The ID of the employee to update.
+     * @param employee The employee to be updated.
      */
     @Override
-    public void updatePassword(String password, int id) {
-        employeeDBDAO.updatePassword(password, id);
+    public void updatePassword(String password, Employee employee) {
+        employeeDBDAO.updatePassword(password, employee);
     }
 
     /**
@@ -185,9 +185,9 @@ public class DalFacade implements IDalFacade {
     @Override
     public void createProject(Project project, List<Employee> allEmployees) {
         projectManager.createProject(project);
-        customerManager.addCustomerToProject(project.getCustomer().getId(), project.getId());
+        customerManager.addCustomerToProject(project.getCustomer(), project);
         for (Employee employee : allEmployees) {
-            employeeDBDAO.addEmployeeToProject(employee.getId(), project.getId());
+            employeeDBDAO.addEmployeeToProject(employee, project);
         }
     }
 
@@ -335,11 +335,11 @@ public class DalFacade implements IDalFacade {
     public void updateProject(Project project, List<Employee> allEmployees) {
         projectManager.updateProject(project);
         customerManager.removeCustomerFromProject(project.getId());
-        customerManager.addCustomerToProject(project.getCustomer().getId(), project.getId());
-        employeeDBDAO.removeAllEmployeesFromProject(project.getId());
+        customerManager.addCustomerToProject(project.getCustomer(), project);
+        employeeDBDAO.removeAllEmployeesFromProject(project);
 
         for (Employee employee : allEmployees) {
-            employeeDBDAO.addEmployeeToProject(employee.getId(), project.getId());
+            employeeDBDAO.addEmployeeToProject(employee, project);
         }
     }
 
@@ -359,10 +359,10 @@ public class DalFacade implements IDalFacade {
      * @param userId The ID of the user working on the task.
      * @param projectId The ID of the project that the task is associated to.
      * @param taskName The name of the task.
-     * @return The ID of the newly created task.
+     * @return The newly created task.
      */
     @Override
-    public int addTask(int userId, int projectId, String taskName) {
+    public Task addTask(int userId, int projectId, String taskName) {
         return taskManager.addTask(userId, projectId, taskName);
     }
 
@@ -400,25 +400,25 @@ public class DalFacade implements IDalFacade {
     /**
      * Deletes the specified task from the database.
      *
-     * @param taskId The ID of the task to be deleted.
+     * @param task The task to be deleted.
      * @return A boolean value representing whether or not the task was deleted.
      */
     @Override
-    public boolean deleteTask(int taskId) {
-        return taskManager.deleteTask(taskId);
+    public boolean deleteTask(Task task) {
+        return taskManager.deleteTask(task);
     }
 
     /**
      * Saves the time having been worked on the task in the database.
      *
-     * @param taskId The ID of the task being worked on.
+     * @param task The task being worked on.
      * @param time The total amount of time having been worked on the task in seconds.
      * @param startTime The starttime of when the work began.
      * @param stopTime The endtime of when the work ended.
      */
     @Override
-    public void saveTimeForTask(int taskId, int time, Date startTime, Date stopTime) {
-        taskManager.addTimeForTask(taskId, time, startTime, stopTime);
+    public void saveTimeForTask(Task task, int time, Date startTime, Date stopTime) {
+        taskManager.addTimeForTask(task, time, startTime, stopTime);
     }
 
     /**

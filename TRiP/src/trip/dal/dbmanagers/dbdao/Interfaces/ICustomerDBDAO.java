@@ -7,6 +7,7 @@ package trip.dal.dbmanagers.dbdao.Interfaces;
 
 import javafx.collections.ObservableList;
 import trip.be.Customer;
+import trip.be.Project;
 
 /**
  *
@@ -24,10 +25,10 @@ public interface ICustomerDBDAO {
     /**
      * Adds the customer to the project.
      *
-     * @param customerID The ID of the customer.
-     * @param projectID The ID of the project.
+     * @param customer The customer to be added.
+     * @param project The project to be added.
      */
-    public void addCustomerToProject(int customerID, int projectID);
+    public void addCustomerToProject(Customer customer, Project project);
 
     /**
      * Loads all customers stored in the database.

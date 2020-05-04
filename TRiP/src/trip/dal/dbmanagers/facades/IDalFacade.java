@@ -80,18 +80,18 @@ public interface IDalFacade {
     /**
      * Updates whether or not the specified employee is active.
      *
-     * @param employeeId The ID of the employee to update.
+     * @param employee The employee to be updated.
      * @param active Boolean representing whether or not the user should be active or inactive.
      */
-    public void updateEmployeeActive(int employeeId, boolean active);
+    public void updateEmployeeActive(Employee employee, boolean active);
 
     /**
-     * Updates the password of the specified user.
+     * Updates the password of the specified employee.
      *
      * @param password The new password to be hashed and stored.
-     * @param id The ID of the employee to update.
+     * @param employee The employee to be updated.
      */
-    public void updatePassword(String password, int id);
+    public void updatePassword(String password, Employee employee);
 
     /**
      * Deletes the specified employee from the database.
@@ -208,9 +208,9 @@ public interface IDalFacade {
      * @param userId The ID of the user working on the task.
      * @param projectId The ID of the project that the task is associated to.
      * @param taskName The name of the task.
-     * @return The ID of the newly created task.
+     * @return The newly created task.
      */
-    public int addTask(int userId, int projectId, String taskName);
+    public Task addTask(int userId, int projectId, String taskName);
 
     /**
      * Loads all tasks stored in the database by the specified employee on the specified project.
@@ -232,20 +232,20 @@ public interface IDalFacade {
     /**
      * Deletes the specified task from the database.
      *
-     * @param taskId The ID of the task to be deleted.
+     * @param task The task to be deleted.
      * @return A boolean value representing whether or not the task was deleted.
      */
-    public boolean deleteTask(int taskId);
+    public boolean deleteTask(Task task);
 
     /**
      * Saves the time having been worked on the task in the database.
      *
-     * @param taskId The ID of the task being worked on.
+     * @param task The task being worked on.
      * @param time The total amount of time having been worked on the task in seconds.
      * @param startTime The starttime of when the work began.
      * @param stopTime The endtime of when the work ended.
      */
-    public void saveTimeForTask(int taskId, int time, Date startTime, Date stopTime);
+    public void saveTimeForTask(Task task, int time, Date startTime, Date stopTime);
 
     /**
      * Updates the specified time having been worked on the task in the database.

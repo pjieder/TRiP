@@ -280,11 +280,11 @@ public class MainUserViewController implements Initializable {
      *
      * @return The id of the newly inserted task.
      */
-    private int addTask() {
+    private Task addTask() {
         String taskName = newTaskTitle.getText().trim();
-        int id = taskModel.addTask(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId(), taskName);
+        Task task = taskModel.addTask(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId(), taskName);
         updateView().start();
-        return id;
+        return task;
     }
 
     /**
@@ -296,11 +296,11 @@ public class MainUserViewController implements Initializable {
     private void startTimer(ActionEvent event) {
 
         if (!newTaskTitle.getText().trim().isEmpty()) {
-            int id = addTask();
+            Task task = addTask();
             newTaskTitle.clear();
-            timer.startTimer(id, timerLabel);
+            timer.startTimer(task, timerLabel);
         } else {
-            timer.startTimer(taskList.getSelectionModel().getSelectedItem().getId(), timerLabel);
+            timer.startTimer(taskList.getSelectionModel().getSelectedItem(), timerLabel);
         }
 
         startTimer.setVisible(false);
@@ -319,7 +319,7 @@ public class MainUserViewController implements Initializable {
     @FXML
     private void stopTimer(ActionEvent event) {
         timer.stopTimer();
-        taskModel.saveTimeForTask(timer.getTaskId(), timer.getTime(), timer.getStartTime(), timer.getStopTime());
+        taskModel.saveTimeForTask(timer.getTask(), timer.getTime(), timer.getStartTime(), timer.getStopTime());
         startTimer.setVisible(true);
         stopTimer.setVisible(false);
         cancelTimer.setVisible(false);
@@ -350,7 +350,7 @@ public class MainUserViewController implements Initializable {
     private void addTime(ActionEvent event) {
 
         Task selectedTask = tasks.getSelectionModel().getSelectedItem();
-        int taskId = (selectedTask != null) ? selectedTask.getId() : taskList.getSelectionModel().getSelectedItem().getId();
+        Task task = (selectedTask != null) ? selectedTask : taskList.getSelectionModel().getSelectedItem();
 
         int time = TimeConverter.convertStringToSeconds(timerField.getText());
         LocalDate localStart = dateStart.getValue();
@@ -367,7 +367,7 @@ public class MainUserViewController implements Initializable {
 
         TaskTime taskTime = new TaskTime(time, startDate, endDate);
 
-        taskModel.saveTimeForTask(taskId, time, startDate, endDate);
+        taskModel.saveTimeForTask(task, time, startDate, endDate);
 
         timerField.setText("00:00:00");
         dateStart.setValue(null);

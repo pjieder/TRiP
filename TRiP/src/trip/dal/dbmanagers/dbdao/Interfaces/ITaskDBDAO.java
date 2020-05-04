@@ -22,9 +22,9 @@ public interface ITaskDBDAO {
      * @param userId The ID of the user working on the task.
      * @param projectId The ID of the project that the task is associated to.
      * @param taskName The name of the task.
-     * @return The ID of the newly created task.
+     * @return The newly created task.
      */
-    public int addTask(int userId, int projectId, String taskName);
+    public Task addTask(int userId, int projectId, String taskName);
 
     /**
      * Loads all tasks stored in the database by the specified user on the specified project.
@@ -46,20 +46,20 @@ public interface ITaskDBDAO {
     /**
      * Deletes the specified task from the database.
      *
-     * @param taskId The ID of the task to be deleted.
+     * @param task The task to be deleted.
      * @return A boolean value representing whether or not the task was deleted.
      */
-    public boolean deleteTask(int taskId);
+    public boolean deleteTask(Task task);
 
     /**
      * Saves the time having been worked on the task in the database.
      *
-     * @param taskId The ID of the task being worked on.
+     * @param task The task being worked on.
      * @param time The total amount of time having been worked on the task in seconds.
      * @param startTime The starttime of when the work began.
      * @param stopTime The endtime of when the work ended.
      */
-    public void addTimeForTask(int taskId, int time, Date startTime, Date stopTime);
+    public void addTimeForTask(Task task, int time, Date startTime, Date stopTime);
 
     /**
      * Returns the total amount of time having been used on the specified task in seconds.

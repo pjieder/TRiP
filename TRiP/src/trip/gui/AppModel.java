@@ -93,21 +93,21 @@ public class AppModel {
     /**
      * Updates whether or not the specified employee is active.
      *
-     * @param employeeId The ID of the employee to update.
+     * @param employee The employee to be updated.
      * @param active Boolean representing whether or not the user should be active or inactive.
      */
-    public void updateEmployeeActive(int employeeId, boolean active) {
-        employeeManager.updateEmployeeActive(employeeId, active);
+    public void updateEmployeeActive(Employee employee, boolean active) {
+        employeeManager.updateEmployeeActive(employee, active);
     }
 
     /**
-     * Updates the password of the specified user.
+     * Updates the password of the specified employee.
      *
      * @param password The new password to be hashed and stored.
-     * @param id The ID of the employee to update.
+     * @param employee The employee to be updated.
      */
-    public void updatePassword(String password, int id) {
-        employeeManager.updatePassword(password, id);
+    public void updatePassword(String password, Employee employee) {
+        employeeManager.updatePassword(password, employee);
     }
 
     /**

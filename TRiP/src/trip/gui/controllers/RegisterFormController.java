@@ -190,7 +190,7 @@ public class RegisterFormController implements Initializable {
             
             if (passwordVisibility.isSelected())
             {
-                appModel.updatePassword(password, newEmployee.getId());
+                appModel.updatePassword(password, newEmployee);
             }
         }
         

@@ -105,7 +105,7 @@ public class UpdateTaskForm implements Initializable {
         alert.setContentText("Are you sure you want to delete this task? This will remove all associated time for the task.");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
-            taskModel.deleteTask(task.getId());
+            taskModel.deleteTask(task);
             updateThread.start();
             closeStage();
         } else {
