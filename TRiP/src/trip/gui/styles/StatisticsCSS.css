@@ -78,3 +78,23 @@ and open the template in the editor.
 .text-field {
     -fx-accent: #9a80fe;
 }
+
+.default-color0.chart-bar { -fx-bar-fill: #9a80fe; }
+
+.chart-bar-title {
+    -fx-text-fill: black;
+}
+
+.default-color0.chart-series-line { 
+    -fx-stroke: #9a80fe; 
+    -fx-stroke-width: 2px
+}
+
+.default-color0.chart-line-symbol { 
+    -fx-background-color: #FF9F00; 
+    -fx-opacity: 0.7;
+}
+
+.jfx-progress-bar > .bar {
+    -fx-background-color: #FF9F00;
+}

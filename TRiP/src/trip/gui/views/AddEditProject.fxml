@@ -35,7 +35,7 @@
             <Font size="15.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="rateField" focusColor="#9a80fe" layoutX="85.0" layoutY="205.0" prefHeight="25.0" prefWidth="296.0" promptText="Hourly Rate $" stylesheets="@../styles/AddEditProjects.css">
+      <JFXTextField fx:id="rateField" focusColor="#9a80fe" layoutX="85.0" layoutY="205.0" prefHeight="25.0" prefWidth="296.0" promptText="Hourly Rate (DKK)" stylesheets="@../styles/AddEditProjects.css">
          <font>
             <Font size="15.0" />
          </font>
