@@ -83,6 +83,14 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </JFXButton>
+            <JFXButton fx:id="addTask" disable="true" onAction="#addTaskToUser" prefHeight="44.0" prefWidth="73.0" stylesheets="@../styles/MainUserViewCSS.css" text="Add" textFill="WHITE" visible="false" GridPane.columnIndex="4">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
          </children>
       </GridPane>
       <GridPane fx:id="addTiimerPane" layoutX="60.0" layoutY="77.0" prefHeight="44.0" prefWidth="852.0" visible="false">

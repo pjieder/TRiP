@@ -111,6 +111,8 @@ public class MainUserViewController implements Initializable {
     private Tooltip ttTrackTime;
     @FXML
     private Tooltip ttAddTime;
+    @FXML
+    private JFXButton addTask;
 
     /**
      * Initializes the controller class.
@@ -151,7 +153,7 @@ public class MainUserViewController implements Initializable {
         timeEnd.set24HourView(true);
 
         RegexValidator regex = new RegexValidator();
-        regex.setRegexPattern("^([0-5][0-9]|[2][0-3]):([0-5][0-9]):([0-5][0-9])$");
+        regex.setRegexPattern("^([0-9][0-9]|[2][0-3]):([0-5][0-9]):([0-5][0-9])$");
         regex.setMessage("Input is not a valid time");
         timerField.getValidators().add(regex);
 
@@ -175,30 +177,38 @@ public class MainUserViewController implements Initializable {
     }
 
     /**
-     * This method runs when a project is openened in the MainAdminViewController. This method loads and displays the selected project.
+     * This method runs when a project is openened in the
+     * MainAdminViewController. This method loads and displays the selected
+     * project.
+     *
      * @param project The selected project to be loaded.
      */
     public void setAdmin(Project project) {
         projectComboBox.getSelectionModel().select(project);
         taskList.setItems(taskModel.loadTasks(loggedUser.getId(), project.getId()));
         tasks.setItems(taskModel.loadTasks(loggedUser.getId(), project.getId()));
+        tasks.getSelectionModel().select(0);
     }
 
     /**
-     * This method runs when a employee is selected from the AdminStatisticsViewController. This method loads the time tracking as the selected user, 
-     * disabling the timer option. This makes it possible for an admin to check individual users- and the registered time.
+     * This method runs when a employee is selected from the
+     * AdminStatisticsViewController. This method loads the time tracking as the
+     * selected user, disabling the timer option. This makes it possible for an
+     * admin to check individual users- and the registered time.
+     *
      * @param employee The employee the view should be based upon.
      */
     public void setEmployee(Employee employee) {
         loggedUser = employee;
-        startTime.getChildren().clear();
-        startTime.add(projectComboBox, 0, 0);
-        addButton.setVisible(false);
+        timerLabel.setVisible(false);
+        startTimer.setVisible(false);
+        addTask.setVisible(true);
         loadProjects();
     }
 
     /**
-     * Loads all active projects or the projects which the logged user is assigned to, based on the role of the user.
+     * Loads all active projects or the projects which the logged user is
+     * assigned to, based on the role of the user.
      */
     public void loadProjects() {
 
@@ -207,30 +217,45 @@ public class MainUserViewController implements Initializable {
         } else {
             projectComboBox.setItems(projectModel.loadAllEmployeeProjects(loggedUser.getId()));
         }
+
+        projectComboBox.getSelectionModel().select(0);
+        if (projectComboBox.getValue() != null) {
+            taskList.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getValue().getId()));
+            tasks.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getValue().getId()));
+            tasks.getSelectionModel().select(0);
+        }
+
     }
 
     /**
-     * Displays the tasks of the selected project, displaying the name and the total registered time by the user.
-     * @param event 
+     * Displays the tasks of the selected project, displaying the name and the
+     * total registered time by the user.
+     *
+     * @param event
      */
     @FXML
     private void switchProject(ActionEvent event) {
         taskList.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
         tasks.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
+        tasks.getSelectionModel().select(0);
         decideTimerEnabled();
     }
 
     /**
      * Displays the logged time for the task clicked on.
+     *
      * @param event
-     * @throws IOException 
+     * @throws IOException
      */
     @FXML
     private void showTime(MouseEvent event) throws IOException {
 
         if (!taskList.getSelectionModel().isEmpty()) {
             taskTimerList.setItems(taskList.getSelectionModel().getSelectedItem().getTimeTasks());
+            tasks.getSelectionModel().select(taskList.getSelectionModel().getSelectedItem());
             decideTimerEnabled();
+            decideAddTimeEnabled();
+
         }
 
         if (event.getClickCount() > 1 & !taskList.getSelectionModel().isEmpty() & !event.isConsumed()) {
@@ -247,6 +272,7 @@ public class MainUserViewController implements Initializable {
 
     /**
      * Adds a task to the selected project and displays it in the list of tasks.
+     *
      * @return The id of the newly inserted task.
      */
     private int addTask() {
@@ -258,7 +284,8 @@ public class MainUserViewController implements Initializable {
 
     /**
      * Starts the timer for the selected or just created task.
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     private void startTimer(ActionEvent event) {
@@ -279,8 +306,10 @@ public class MainUserViewController implements Initializable {
     }
 
     /**
-     * Event handler for the stop timr button. Stops the timer and saves the registered time.
-     * @param event 
+     * Event handler for the stop timr button. Stops the timer and saves the
+     * registered time.
+     *
+     * @param event
      */
     @FXML
     private void stopTimer(ActionEvent event) {
@@ -293,8 +322,10 @@ public class MainUserViewController implements Initializable {
     }
 
     /**
-     * Event handler for the cancel button. Stops the timer without saving the registered time.
-     * @param event 
+     * Event handler for the cancel button. Stops the timer without saving the
+     * registered time.
+     *
+     * @param event
      */
     @FXML
     private void cancelTime(ActionEvent event) {
@@ -305,8 +336,10 @@ public class MainUserViewController implements Initializable {
     }
 
     /**
-     * Event handler for the add time button. Takes the entered data and saves it to the database.
-     * @param event 
+     * Event handler for the add time button. Takes the entered data and saves
+     * it to the database.
+     *
+     * @param event
      */
     @FXML
     private void addTime(ActionEvent event) {
@@ -340,7 +373,9 @@ public class MainUserViewController implements Initializable {
     }
 
     /**
-     * Creates a new thread that updates the view based on what is selected and currently displaying.
+     * Creates a new thread that updates the view based on what is selected and
+     * currently displaying.
+     *
      * @return the update thread to be executed.
      */
     private Thread updateView() {
@@ -379,20 +414,24 @@ public class MainUserViewController implements Initializable {
     }
 
     /**
-     * Disables or enables the start timer button based on what information is entered.
+     * Disables or enables the start timer button based on what information is
+     * entered.
      */
     private void decideTimerEnabled() {
         if (!taskList.getSelectionModel().isEmpty()) {
             startTimer.setDisable(false);
         } else if (!newTaskTitle.getText().trim().isEmpty() && projectComboBox.getSelectionModel().getSelectedItem() != null) {
             startTimer.setDisable(false);
+            addTask.setDisable(false);
         } else {
             startTimer.setDisable(true);
+            addTask.setDisable(true);
         }
     }
 
     /**
-     * Disables or enables the add time button based on what information is entered.
+     * Disables or enables the add time button based on what information is
+     * entered.
      */
     private void decideAddTimeEnabled() {
         if ((tasks.getSelectionModel().getSelectedItem() != null || !taskList.getSelectionModel().isEmpty()) && dateStart.getValue() != null && dateEnd.getValue() != null
@@ -404,8 +443,10 @@ public class MainUserViewController implements Initializable {
     }
 
     /**
-     * Adds a on close request to the stage which will cancel the timer if the stage is closed without disabling the timer. This insures that the timer does not run as a thread in the background 
-     * when the application is closed.
+     * Adds a on close request to the stage which will cancel the timer if the
+     * stage is closed without disabling the timer. This insures that the timer
+     * does not run as a thread in the background when the application is
+     * closed.
      */
     public void setupCloseRequest() {
 
@@ -422,10 +463,13 @@ public class MainUserViewController implements Initializable {
     }
 
     /**
-     * Event handler for the taskTimerList. If a time is selected by double-clicking, the selected time will be opened in the UpdateTaskTimeForm
-     * so that the user can change the saved data if changes needs to be made.
+     * Event handler for the taskTimerList. If a time is selected by
+     * double-clicking, the selected time will be opened in the
+     * UpdateTaskTimeForm so that the user can change the saved data if changes
+     * needs to be made.
+     *
      * @param event
-     * @throws IOException 
+     * @throws IOException
      */
     @FXML
     private void openTaskTime(MouseEvent event) throws IOException {
@@ -442,8 +486,10 @@ public class MainUserViewController implements Initializable {
     }
 
     /**
-     * Validates whether or not the add time button is enabled or disabled when a change happens.
-     * @param event 
+     * Validates whether or not the add time button is enabled or disabled when
+     * a change happens.
+     *
+     * @param event
      */
     @FXML
     private void validateAddTask(ActionEvent event) {
@@ -451,8 +497,10 @@ public class MainUserViewController implements Initializable {
     }
 
     /**
-     * Hides the pane for adding time and displays the pane for starting the timer instead.
-     * @param event 
+     * Hides the pane for adding time and displays the pane for starting the
+     * timer instead.
+     *
+     * @param event
      */
     @FXML
     private void switchToStart(MouseEvent event) {
@@ -464,8 +512,10 @@ public class MainUserViewController implements Initializable {
     }
 
     /**
-     * Hides the pane for starting the timer and displays the pane for adding time instead.
-     * @param event 
+     * Hides the pane for starting the timer and displays the pane for adding
+     * time instead.
+     *
+     * @param event
      */
     @FXML
     private void switchToAdd(MouseEvent event) {
@@ -473,6 +523,17 @@ public class MainUserViewController implements Initializable {
         startTime.setVisible(false);
         startButton.setVisible(true);
         addButton.setVisible(false);
+    }
+
+    /**
+     * Event handler for the "add task" buttonn. Gives an admin the ability to
+     * add tasks to existing users.
+     *
+     * @param event
+     */
+    @FXML
+    private void addTaskToUser(ActionEvent event) {
+        addTask();
     }
 
 }
