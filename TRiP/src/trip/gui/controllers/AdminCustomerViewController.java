@@ -9,7 +9,6 @@ import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -20,8 +19,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -30,7 +27,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import trip.be.Customer;
 import trip.gui.AppModel;
 import trip.gui.TRiP;
@@ -98,7 +94,7 @@ public class AdminCustomerViewController implements Initializable {
             customers = customerModel.getAllCustomers();
             customerTable.setItems(customers);
         } catch (SQLException ex) {
-            JFXAlert.openError(stackPane, "Error loading customers.");
+            Platform.runLater(()->{JFXAlert.openError(stackPane, "Error loading customers.");});
         }
     }
 
@@ -109,18 +105,22 @@ public class AdminCustomerViewController implements Initializable {
      * @throws IOException
      */
     @FXML
-    private void createCustomer(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(AppModel.class.getResource("views/AddEditCustomer.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage stage = new Stage();
-        stage.setResizable(false);
-        stage.setTitle("TRiP");
-        stage.getIcons().add(new Image(TRiP.class.getResourceAsStream("images/time.png")));
-        AddEditCustomerController controller = fxmlLoader.getController();
-        controller.setUpdateThread(updateView());
-        stage.setScene(scene);
-        stage.show();
+    private void createCustomer(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(AppModel.class.getResource("views/AddEditCustomer.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+            stage.setResizable(false);
+            stage.setTitle("TRiP");
+            stage.getIcons().add(new Image(TRiP.class.getResourceAsStream("images/time.png")));
+            AddEditCustomerController controller = fxmlLoader.getController();
+            controller.setUpdateThread(updateView());
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException ex) {
+            JFXAlert.openError(stackPane, "Error opening create form.");
+        }
     }
 
     /**
@@ -130,19 +130,23 @@ public class AdminCustomerViewController implements Initializable {
      * @throws IOException
      */
     @FXML
-    private void editCustomer(ActionEvent event) throws IOException {
+    private void editCustomer(ActionEvent event) {
         if (!customerTable.getSelectionModel().isEmpty()) {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(AppModel.class.getResource("views/AddEditCustomer.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            Stage stage = new Stage();
-            stage.setResizable(false);
-            stage.setTitle("TRiP");
-            stage.getIcons().add(new Image(TRiP.class.getResourceAsStream("images/time.png")));
-            AddEditCustomerController controller = fxmlLoader.getController();
-            controller.setCustomer(customerTable.getSelectionModel().getSelectedItem(), updateView());
-            stage.setScene(scene);
-            stage.show();
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(AppModel.class.getResource("views/AddEditCustomer.fxml"));
+                Scene scene = new Scene(fxmlLoader.load());
+                Stage stage = new Stage();
+                stage.setResizable(false);
+                stage.setTitle("TRiP");
+                stage.getIcons().add(new Image(TRiP.class.getResourceAsStream("images/time.png")));
+                AddEditCustomerController controller = fxmlLoader.getController();
+                controller.setCustomer(customerTable.getSelectionModel().getSelectedItem(), updateView());
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException ex) {
+                JFXAlert.openError(stackPane, "Error opening edit form.");
+            }
         }
     }
 
@@ -160,7 +164,9 @@ public class AdminCustomerViewController implements Initializable {
             String message = "Are you sure you want to delete " + selectedCustomer.getName() + "?";
             Thread confirmExecuteThread = new Thread(() -> {
                 try {
-                    customerTable.getItems().remove(selectedCustomer);
+                    Platform.runLater(() -> {
+                        customerTable.getItems().remove(selectedCustomer);
+                    });
                     customerModel.deleteCustomer(selectedCustomer);
                 } catch (SQLException ex) {
                     Platform.runLater(() -> {

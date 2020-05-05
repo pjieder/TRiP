@@ -80,18 +80,20 @@ public class AdminStatisticsViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-try{
-        projectComboBox.setItems(projectModel.loadAllActiveProjects());
-        projectComboBox.getItems().add(0, new Project("All projects", 0));
-        projectComboBox.getSelectionModel().select(0);
+        try {
+            projectComboBox.setItems(projectModel.loadAllActiveProjects());
+            projectComboBox.getItems().add(0, new Project("All projects", 0));
+            projectComboBox.getSelectionModel().select(0);
 
-        statisticComboBox.getItems().add("Project chart");
-        statisticComboBox.getItems().add("Employee chart");
-        statisticComboBox.getSelectionModel().select(0);
+            statisticComboBox.getItems().add("Project chart");
+            statisticComboBox.getItems().add("Employee chart");
+            statisticComboBox.getSelectionModel().select(0);
 
-        employeeComboBox.setItems(appModel.loadActiveEmployees());
-        employeeSelection.setItems(appModel.loadActiveEmployees());
-         }catch(SQLException ex){JFXAlert.openError(stackPane, "Error intitializing.");}
+            employeeComboBox.setItems(appModel.loadActiveEmployees());
+            employeeSelection.setItems(appModel.loadActiveEmployees());
+        } catch (SQLException ex) {
+            JFXAlert.openError(stackPane, "Error intitializing.");
+        }
 
     }
 
@@ -158,21 +160,24 @@ try{
         calculateLine.setDisable(true);
 
         Thread thread = new Thread(() -> {
-            try{
-            LocalDate localDateFirst = dateStart.getValue();
-            LocalDate localDateLast = dateEnd.getValue();
-            Project selectedProject = projectComboBox.getValue();
-            XYChart.Series series = projectModel.calculateGraphLine(selectedProject.getId(), localDateFirst, localDateLast);
-            calculatePriceForLine(localDateFirst, localDateLast, selectedProject.getId());
-            Platform.runLater(() -> {
-                lineChart.getData().clear();
-                lineChart.getData().add(series);
-                progress.setVisible(false);
-                validate();
-            });
-                 }catch(SQLException ex){JFXAlert.openError(stackPane, "Error Calculating Statistics.");}
+            try {
+                LocalDate localDateFirst = dateStart.getValue();
+                LocalDate localDateLast = dateEnd.getValue();
+                Project selectedProject = projectComboBox.getValue();
+                XYChart.Series series = projectModel.calculateGraphLine(selectedProject.getId(), localDateFirst, localDateLast);
+                calculatePriceForLine(localDateFirst, localDateLast, selectedProject.getId());
+                Platform.runLater(() -> {
+                    lineChart.getData().clear();
+                    lineChart.getData().add(series);
+                    progress.setVisible(false);
+                    validate();
+                });
+            } catch (SQLException ex) {
+                Platform.runLater(() -> {
+                    JFXAlert.openError(stackPane, "Error Calculating Statistics.");
+                });
+            }
         });
-
         thread.start();
     }
 
@@ -187,21 +192,24 @@ try{
         calculateBar.setDisable(true);
 
         Thread thread = new Thread(() -> {
-            try{
-            LocalDate localDateFirst = dateStart.getValue();
-            LocalDate localDateLast = dateEnd.getValue();
-            Employee selectedEmployee = employeeComboBox.getValue();
-            XYChart.Series series = projectModel.calculateGraphBar(localDateFirst, localDateLast, selectedEmployee.getId());
-            calculatePriceForBar(localDateFirst, localDateLast, selectedEmployee.getId());
-            Platform.runLater(() -> {
-                barChart.getData().clear();
-                barChart.getData().add(series);
-                progress.setVisible(false);
-                validate();
-            });
-             }catch(SQLException ex){JFXAlert.openError(stackPane, "Error Calculating Statistics.");}
+            try {
+                LocalDate localDateFirst = dateStart.getValue();
+                LocalDate localDateLast = dateEnd.getValue();
+                Employee selectedEmployee = employeeComboBox.getValue();
+                XYChart.Series series = projectModel.calculateGraphBar(localDateFirst, localDateLast, selectedEmployee.getId());
+                calculatePriceForBar(localDateFirst, localDateLast, selectedEmployee.getId());
+                Platform.runLater(() -> {
+                    barChart.getData().clear();
+                    barChart.getData().add(series);
+                    progress.setVisible(false);
+                    validate();
+                });
+            } catch (SQLException ex) {
+                Platform.runLater(() -> {
+                    JFXAlert.openError(stackPane, "Error Calculating Statistics.");
+                });
+            }
         });
-
         thread.start();
     }
 
@@ -220,29 +228,29 @@ try{
 
         DecimalFormat df = new DecimalFormat("0.0#");
 
-        try{
-        if (projectID == 0) {
+        try {
+            if (projectID == 0) {
 
-            for (Project project : projectModel.loadAllActiveProjects()) {
+                for (Project project : projectModel.loadAllActiveProjects()) {
 
-                double timeForProject = projectModel.loadAllProjectTimeBetweenDates(project.getId(), startDate, endDate);
-                totalPrice += (timeForProject / 3600) * project.getRate();
-                totalTime += timeForProject;
+                    double timeForProject = projectModel.loadAllProjectTimeBetweenDates(project.getId(), startDate, endDate);
+                    totalPrice += (timeForProject / 3600) * project.getRate();
+                    totalTime += timeForProject;
+                }
+            } else {
+                totalTime = projectModel.loadAllProjectTimeBetweenDates(projectID, startDate, endDate);
+                totalPrice = ((double) totalTime / 3600) * projectComboBox.getValue().getRate();
             }
+            totalTimeString = TimeConverter.convertSecondsToString(totalTime);
+            totalPriceString = df.format(totalPrice) + " DKK";
 
-        } else {
-
-            totalTime = projectModel.loadAllProjectTimeBetweenDates(projectID, startDate, endDate);
-            totalPrice = ((double) totalTime / 3600) * projectComboBox.getValue().getRate();
+            Platform.runLater(() -> {
+                totalTimeLabel.setText(totalTimeString);
+                totalPriceLabel.setText(totalPriceString);
+            });
+        } catch (SQLException ex) {
+            Platform.runLater(()->{JFXAlert.openError(stackPane, "Error Calculating Price.");});
         }
-        totalTimeString = TimeConverter.convertSecondsToString(totalTime);
-        totalPriceString = df.format(totalPrice) + " DKK";
-
-        Platform.runLater(() -> {
-            totalTimeLabel.setText(totalTimeString);
-            totalPriceLabel.setText(totalPriceString);
-        });
-         }catch(SQLException ex){JFXAlert.openError(stackPane, "Error Calculating Price.");}
     }
 
     /**
@@ -259,25 +267,27 @@ try{
         String totalTimeString;
         String totalPriceString;
 
-        try{
-        DecimalFormat df = new DecimalFormat("0.0#");
-        List<Project> allWorkedOnProjects = projectModel.loadWorkedOnProjectsBetweenDates(startDate, endDate, employeeID);
+        try {
+            DecimalFormat df = new DecimalFormat("0.0#");
+            List<Project> allWorkedOnProjects = projectModel.loadWorkedOnProjectsBetweenDates(startDate, endDate, employeeID);
 
-        for (Project project : allWorkedOnProjects) {
+            for (Project project : allWorkedOnProjects) {
 
-            double timeForProject = projectModel.loadAllEmployeeProjectTimeBetweenDates(employeeID, project.getId(), startDate, endDate);
-            totalPrice += (timeForProject / 3600) * project.getRate();
-            totalTime += timeForProject;
+                double timeForProject = projectModel.loadAllEmployeeProjectTimeBetweenDates(employeeID, project.getId(), startDate, endDate);
+                totalPrice += (timeForProject / 3600) * project.getRate();
+                totalTime += timeForProject;
+            }
+
+            totalTimeString = TimeConverter.convertSecondsToString(totalTime);
+            totalPriceString = df.format(totalPrice) + " DKK";
+
+            Platform.runLater(() -> {
+                totalTimeLabel.setText(totalTimeString);
+                totalPriceLabel.setText(totalPriceString);
+            });
+        } catch (SQLException ex) {
+           Platform.runLater(()->{JFXAlert.openError(stackPane, "Error Calculating Price.");});
         }
-
-        totalTimeString = TimeConverter.convertSecondsToString(totalTime);
-        totalPriceString = df.format(totalPrice) + " DKK";
-
-        Platform.runLater(() -> {
-            totalTimeLabel.setText(totalTimeString);
-            totalPriceLabel.setText(totalPriceString);
-        });
-         }catch(SQLException ex){JFXAlert.openError(stackPane, "Error Calculating Price.");}
     }
 
     /**
@@ -289,7 +299,6 @@ try{
     private void openEmployee(ActionEvent event) {
         if (employeeSelection.getValue() != null) {
             try {
-
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(AppModel.class.getResource("views/MainUserView.fxml"));
 
@@ -299,8 +308,7 @@ try{
 
                 MenuBarViewController.viewPane.getChildren().clear();
                 MenuBarViewController.viewPane.getChildren().add(pane);
-            } catch (IOException ex) {
-            }
+            } catch (IOException ex) {JFXAlert.openError(stackPane, "Error loading main user view.");}
         }
     }
 

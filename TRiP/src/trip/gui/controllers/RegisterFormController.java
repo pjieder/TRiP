@@ -198,10 +198,10 @@ public class RegisterFormController implements Initializable {
                 appModel.updatePassword(password, newEmployee);
             }
         }
-        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error registering or updating employee.");}
         updateThread.start();
         Stage currentStage = (Stage) firstNameField.getScene().getWindow();
         currentStage.close();
+        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error registering or updating employee.");}
     }
 
     /**
@@ -276,12 +276,9 @@ public class RegisterFormController implements Initializable {
     private void doAdmin(ActionEvent event) {
         
         if (adminCheckbox.isSelected())
-        {
-            userCheckbox.setSelected(false);
-        } else
-        {
-            userCheckbox.setSelected(true);
-        }
+        {userCheckbox.setSelected(false);} 
+        else
+        {userCheckbox.setSelected(true);}
         
     }
     
@@ -299,7 +296,6 @@ public class RegisterFormController implements Initializable {
         {
             adminCheckbox.setSelected(true);
         }
-        
     }
 
 }

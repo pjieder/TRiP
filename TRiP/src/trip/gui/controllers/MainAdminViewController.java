@@ -127,7 +127,7 @@ public class MainAdminViewController implements Initializable {
             projects = projectModel.loadAllActiveProjects();
             projectTable.setItems(projects);
         } catch (SQLException ex) {
-            JFXAlert.openError(stackPane, "Error loading all projects.");
+            Platform.runLater(()->{JFXAlert.openError(stackPane, "Error loading all projects.");});
         }
     }
 
@@ -138,19 +138,22 @@ public class MainAdminViewController implements Initializable {
      * @throws IOException
      */
     @FXML
-    private void openProject(MouseEvent event) throws IOException {
+    private void openProject(MouseEvent event) {
 
         if (event.getClickCount() > 1 & !projectTable.getSelectionModel().isEmpty() & !event.isConsumed()) {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(AppModel.class.getResource("views/MainUserView.fxml"));
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(AppModel.class.getResource("views/MainUserView.fxml"));
 
-            Pane pane = fxmlLoader.load();
-            MainUserViewController controller = fxmlLoader.getController();
-            controller.setAdmin(projectTable.getSelectionModel().getSelectedItem());
+                Pane pane = fxmlLoader.load();
+                MainUserViewController controller = fxmlLoader.getController();
+                controller.setAdmin(projectTable.getSelectionModel().getSelectedItem());
 
-            MenuBarViewController.viewPane.getChildren().clear();
-            MenuBarViewController.viewPane.getChildren().add(pane);
-
+                MenuBarViewController.viewPane.getChildren().clear();
+                MenuBarViewController.viewPane.getChildren().add(pane);
+            } catch (IOException ex) {
+                JFXAlert.openError(stackPane, "Error opening timer window.");
+            }
         }
     }
 
@@ -161,18 +164,22 @@ public class MainAdminViewController implements Initializable {
      * @throws IOException
      */
     @FXML
-    private void createProject(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(AppModel.class.getResource("views/AddEditProject.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage stage = new Stage();
-        stage.setResizable(false);
-        stage.setTitle("TRiP");
-        stage.getIcons().add(new Image(TRiP.class.getResourceAsStream("images/time.png")));
-        AddEditProjectController controller = fxmlLoader.getController();
-        controller.setUpdateThread(updateView());
-        stage.setScene(scene);
-        stage.show();
+    private void createProject(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(AppModel.class.getResource("views/AddEditProject.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+            stage.setResizable(false);
+            stage.setTitle("TRiP");
+            stage.getIcons().add(new Image(TRiP.class.getResourceAsStream("images/time.png")));
+            AddEditProjectController controller = fxmlLoader.getController();
+            controller.setUpdateThread(updateView());
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException ex) {
+            JFXAlert.openError(stackPane, "Error opening create form.");
+        }
     }
 
     /**
@@ -182,19 +189,23 @@ public class MainAdminViewController implements Initializable {
      * @throws IOException
      */
     @FXML
-    private void editProject(ActionEvent event) throws IOException {
+    private void editProject(ActionEvent event) {
         if (!projectTable.getSelectionModel().isEmpty()) {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(AppModel.class.getResource("views/AddEditProject.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            Stage stage = new Stage();
-            stage.setResizable(false);
-            stage.setTitle("TRiP");
-            stage.getIcons().add(new Image(TRiP.class.getResourceAsStream("images/time.png")));
-            AddEditProjectController controller = fxmlLoader.getController();
-            controller.setProject(updateView(), projectTable.getSelectionModel().getSelectedItem());
-            stage.setScene(scene);
-            stage.show();
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(AppModel.class.getResource("views/AddEditProject.fxml"));
+                Scene scene = new Scene(fxmlLoader.load());
+                Stage stage = new Stage();
+                stage.setResizable(false);
+                stage.setTitle("TRiP");
+                stage.getIcons().add(new Image(TRiP.class.getResourceAsStream("images/time.png")));
+                AddEditProjectController controller = fxmlLoader.getController();
+                controller.setProject(updateView(), projectTable.getSelectionModel().getSelectedItem());
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException ex) {
+                JFXAlert.openError(stackPane, "Error opening update form.");
+            }
         }
     }
 
@@ -222,7 +233,6 @@ public class MainAdminViewController implements Initializable {
                 }
             });
         });
-
         return updateThread;
     }
 
@@ -287,7 +297,9 @@ public class MainAdminViewController implements Initializable {
 
             Thread confirmExecuteThread = new Thread(() -> {
                 try {
-                    projectTable.getItems().remove(selectedProject);
+                    Platform.runLater(() -> {
+                        projectTable.getItems().remove(selectedProject);
+                    });
                     projectModel.deleteProject(selectedProject);
                 } catch (SQLException ex) {
                     Platform.runLater(() -> {

@@ -82,9 +82,9 @@ public class LoginController implements Initializable {
      * @throws ExecutionException
      */
     @FXML
-    private void login(MouseEvent event) throws IOException, InterruptedException, ExecutionException {
-       loadPerson().start();
-       rememberMe.requestFocus();
+    private void login(MouseEvent event){
+        loadPerson().start();
+        rememberMe.requestFocus();
     }
 
     /**
@@ -124,56 +124,54 @@ public class LoginController implements Initializable {
     }
 
     /**
-     * Creates a new thread that will try to login
-     * with the entered username and password.
-     * If correct login is entered, the stage will switch
-     * to either the teacher- or student view depending on
-     * the login information given.
+     * Creates a new thread that will try to login with the entered username and password. If correct login is entered, the stage will switch to either the teacher- or student view depending on the login information given.
+     *
      * @return Returns the login thread to be executed.
      */
-    public Thread loadPerson()  {
+    public Thread loadPerson() {
 
         Thread loginThread = new Thread(() -> {
 
             String username = usernameField.getText();
             String password = passwordField.getText();
             showLoading();
-            
-            try{
-            Employee employeeToValidate = appModel.validateEmployee(username, password);
-            
-            if (employeeToValidate == null) {
-                hideLoading();
-            } else {
 
-                if (rememberMe.isSelected()) {
-                    saveLogin();
+            try {
+                Employee employeeToValidate = appModel.validateEmployee(username, password);
+                if (employeeToValidate == null) {
+                    hideLoading();
                 } else {
-                    forgetLogin();
-                }
-                loggedUser = employeeToValidate;
-                
-                Platform.runLater(() -> {
-
-                    try {
-                        FXMLLoader fxmlLoader = new FXMLLoader();
-                        fxmlLoader.setLocation(AppModel.class.getResource("views/MenuBarView.fxml"));
-                        Scene scene = new Scene(fxmlLoader.load());
-                        Stage stage = (Stage) rememberMe.getScene().getWindow();
-                        MenuBarViewController controller = fxmlLoader.getController();
-
-                        if (employeeToValidate.getRole().equals(Roles.USER)) {
-                            controller.setUser(stage, scene);
-                        } else if (employeeToValidate.getRole().equals(Roles.ADMIN)) {
-                            controller.setAdmin(stage, scene);
-                        }
-                    } catch (IOException ex) {
-                        JFXAlert.openError(stackPane, "Error loading menu.");
+                    if (rememberMe.isSelected()) {
+                        saveLogin();
+                    } else {
+                        forgetLogin();
                     }
+                    loggedUser = employeeToValidate;
+
+                    Platform.runLater(() -> {
+                        try {
+                            FXMLLoader fxmlLoader = new FXMLLoader();
+                            fxmlLoader.setLocation(AppModel.class.getResource("views/MenuBarView.fxml"));
+                            Scene scene = new Scene(fxmlLoader.load());
+                            Stage stage = (Stage) rememberMe.getScene().getWindow();
+                            MenuBarViewController controller = fxmlLoader.getController();
+
+                            if (employeeToValidate.getRole().equals(Roles.USER)) {
+                                controller.setUser(stage, scene);
+                            } else if (employeeToValidate.getRole().equals(Roles.ADMIN)) {
+                                controller.setAdmin(stage, scene);
+                            }
+                        } catch (IOException ex) {
+                            JFXAlert.openError(stackPane, "Error loading menu.");
+                        }
+                    });
+                }
+            } catch (SQLException ex) {
+                Platform.runLater(() -> {
+                    JFXAlert.openError(stackPane, "Error loading data.");
+                    hideLoading();
                 });
             }
-            }
-            catch(SQLException ex){JFXAlert.openError(stackPane, "Error loading data.");}
         });
         return loginThread;
     }

@@ -108,7 +108,6 @@ public class AddEditProjectController implements Initializable {
                 }
             }
         });
-
     }
 
     /**
@@ -152,10 +151,9 @@ public class AddEditProjectController implements Initializable {
             project.setId(projectToUpdate.getId());
             projectModel.updateProject(project, activeUsersList.getItems());
         }
-        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error creating or updating project.");}
-        
         updateThread.start();
         closeScene();
+        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error creating or updating project.");}
     }
 
     /**
@@ -169,7 +167,6 @@ public class AddEditProjectController implements Initializable {
             activeUsersCBox.getItems().clear();
             activeUsersList.getItems().add(selectedItem);
             updateCheckBox();
-
         }
     }
 
@@ -246,7 +243,6 @@ public class AddEditProjectController implements Initializable {
 
         updateCheckBox();
         }catch(SQLException ex){JFXAlert.openError(stackPane, "Error loading.");}
-
     }
 
     /**

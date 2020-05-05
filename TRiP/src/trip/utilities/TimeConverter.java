@@ -12,6 +12,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javafx.application.Platform;
 import javafx.util.Duration;
 
 /**
@@ -22,6 +23,7 @@ public class TimeConverter {
 
     /**
      * Converts an amount of seconds to a string representing the time.
+     *
      * @param seconds The seconds to be represented as a string.
      * @return A string representing the amount of time in a HH:mm:ss format.
      */
@@ -33,11 +35,12 @@ public class TimeConverter {
                 (int) duration.toSeconds() % 60);
         return timeString;
     }
-    
+
     /**
      * Converts a string value representing time to an int value containing the total amount of time in seconds.
+     *
      * @param string The string representing the amount of time in a HH:mm:ss format.
-     * @return 
+     * @return
      */
     public static int convertStringToSeconds(String string) {
         String[] time = string.split(":");
@@ -50,6 +53,7 @@ public class TimeConverter {
 
     /**
      * Converts a date object to a string based on the format dd-MM-yyyy HH:mm
+     *
      * @param date The date to be converted
      * @return A string representing the date.
      */
@@ -60,6 +64,7 @@ public class TimeConverter {
 
     /**
      * Converts a string to a date object based on the format dd-MM-yyyy HH:mm
+     *
      * @param dateString The string to be converted
      * @return A date object of the entered date.
      */
@@ -68,14 +73,16 @@ public class TimeConverter {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
             return simpleDateFormat.parse(dateString);
         } catch (ParseException exception) {
-
+            Platform.runLater(() -> {
+                JFXAlert.openUtilityError("Error parsing string to date");
+            });
         }
         return null;
     }
 
     /**
-     * Converts a date object to a string based on the format yyyy-MM-dd HH:mm for easier sorting in
-     * the database.
+     * Converts a date object to a string based on the format yyyy-MM-dd HH:mm for easier sorting in the database.
+     *
      * @param date The date to be converted.
      * @return A string representing the date..
      */
@@ -86,6 +93,7 @@ public class TimeConverter {
 
     /**
      * Converts a string to a date object based on the format yyyy-MM-dd HH:mm.
+     *
      * @param dateString The string to be converted.
      * @return A date object of the entered date.
      */
@@ -94,16 +102,19 @@ public class TimeConverter {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             return simpleDateFormat.parse(dateString);
         } catch (ParseException exception) {
-
+            Platform.runLater(() -> {
+                JFXAlert.openUtilityError("Error parsing string to date");
+            });
         }
         return null;
     }
 
     /**
      * Adds the amount of to the localdate object.
+     *
      * @param date The date that the calculation is based upon.
      * @param days The amount of days to be added (or subtracted).
-     * @return 
+     * @return
      */
     public static LocalDate addDays(LocalDate date, int days) {
         return date.plusDays(days);
@@ -111,12 +122,13 @@ public class TimeConverter {
 
     /**
      * Returns a list containing all the days between and indcluding the entered days.
+     *
      * @param date1 The first day.
      * @param date2 The last day.
      * @return A list containing all days between and uncluding the entered days.
      */
     public static List<LocalDate> getDaysBetweenDates(LocalDate date1, LocalDate date2) {
-        
+
         List<LocalDate> datesBetween = new ArrayList();
         datesBetween.add(date1);
 
@@ -136,7 +148,7 @@ public class TimeConverter {
             }
             datesBetween.add(date2);
         }
-        
+
         return datesBetween;
     }
 }

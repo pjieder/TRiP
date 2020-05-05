@@ -118,34 +118,8 @@ public class AdminCurrentUserViewController implements Initializable {
      * @throws IOException
      */
     @FXML
-    private void openAddUser(ActionEvent event) throws IOException {
-
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(AppModel.class.getResource("views/RegisterForm.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage stage = new Stage();
-        stage.setResizable(false);
-        stage.setTitle("TRiP");
-        stage.getIcons().add(new Image(TRiP.class.getResourceAsStream("images/time.png")));
-
-        RegisterFormController controller = fxmlLoader.getController();
-        controller.setUpdateThread(getUpdateListThread());
-
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    /**
-     * Opens the RegisterForm FXML view as a new stage and inserts the data already stored about the employee
-     *
-     * @param event
-     * @throws IOException
-     */
-    @FXML
-    private void openUpdateUser(ActionEvent event) throws IOException {
-
-        if (!userList.getSelectionModel().isEmpty()) {
-
+    private void openAddUser(ActionEvent event) {
+        try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(AppModel.class.getResource("views/RegisterForm.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
@@ -155,10 +129,44 @@ public class AdminCurrentUserViewController implements Initializable {
             stage.getIcons().add(new Image(TRiP.class.getResourceAsStream("images/time.png")));
 
             RegisterFormController controller = fxmlLoader.getController();
-            controller.setEmployee(userList.getSelectionModel().getSelectedItem(), getUpdateListThread());
+            controller.setUpdateThread(getUpdateListThread());
 
             stage.setScene(scene);
             stage.show();
+        } catch (IOException ex) {
+            JFXAlert.openError(stackPane, "Error opening create form.");
+        }
+    }
+
+    /**
+     * Opens the RegisterForm FXML view as a new stage and inserts the data already stored about the employee
+     *
+     * @param event
+     * @throws IOException
+     */
+    @FXML
+    private void openUpdateUser(ActionEvent event) {
+
+        if (!userList.getSelectionModel().isEmpty()) {
+
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(AppModel.class.getResource("views/RegisterForm.fxml"));
+                Scene scene = new Scene(fxmlLoader.load());
+                Stage stage = new Stage();
+                stage.setResizable(false);
+                stage.setTitle("TRiP");
+                stage.getIcons().add(new Image(TRiP.class.getResourceAsStream("images/time.png")));
+
+                RegisterFormController controller = fxmlLoader.getController();
+                controller.setEmployee(userList.getSelectionModel().getSelectedItem(), getUpdateListThread());
+
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (IOException ex) {
+                 JFXAlert.openError(stackPane, "Error opening update form.");
+            }
         }
     }
 
@@ -247,7 +255,9 @@ public class AdminCurrentUserViewController implements Initializable {
 
             Thread confirmExecuteThread = new Thread(() -> {
                 try {
-                    employees.remove(selectedEmployee);
+                    Platform.runLater(() -> {
+                        employees.remove(selectedEmployee);
+                    });
                     appModel.deleteEmployee(selectedEmployee);
                 } catch (SQLException ex) {
                     Platform.runLater(() -> {
@@ -255,7 +265,7 @@ public class AdminCurrentUserViewController implements Initializable {
                     });
                 }
             });
-             JFXAlert.openConfirm(stackPaneDelete, message, confirmExecuteThread);
+            JFXAlert.openConfirm(stackPaneDelete, message, confirmExecuteThread);
         }
     }
 

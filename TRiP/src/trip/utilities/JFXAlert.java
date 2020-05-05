@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import java.util.List;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
@@ -64,6 +65,17 @@ public class JFXAlert {
         });
         dialogContent.setActions(confirm,cancel);
         dialog.show();
+    }
+    
+    public static void openUtilityError(String errorMessage){
+    
+        Alert errAlert = new Alert(Alert.AlertType.ERROR);
+        errAlert.setTitle("Error Dialog");
+        errAlert.setHeaderText("Utility Error");
+        errAlert.setContentText(errorMessage);
+        errAlert.showAndWait();
+    
+    
     }
 
 }

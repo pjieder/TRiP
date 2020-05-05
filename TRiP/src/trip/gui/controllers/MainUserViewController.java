@@ -184,26 +184,23 @@ public class MainUserViewController implements Initializable {
     }
 
     /**
-     * This method runs when a project is openened in the
-     * MainAdminViewController. This method loads and displays the selected
-     * project.
+     * This method runs when a project is openened in the MainAdminViewController. This method loads and displays the selected project.
      *
      * @param project The selected project to be loaded.
      */
     public void setAdmin(Project project) {
         try {
-        projectComboBox.getSelectionModel().select(project);
-        taskList.setItems(taskModel.loadTasks(loggedUser.getId(), project.getId()));
-        tasks.setItems(taskModel.loadTasks(loggedUser.getId(), project.getId()));
-        tasks.getSelectionModel().select(0);
-        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error while attempting to set Admin.");}
+            projectComboBox.getSelectionModel().select(project);
+            taskList.setItems(taskModel.loadTasks(loggedUser.getId(), project.getId()));
+            tasks.setItems(taskModel.loadTasks(loggedUser.getId(), project.getId()));
+            tasks.getSelectionModel().select(0);
+        } catch (SQLException ex) {
+            JFXAlert.openError(stackPane, "Error while attempting to set Admin.");
+        }
     }
 
     /**
-     * This method runs when a employee is selected from the
-     * AdminStatisticsViewController. This method loads the time tracking as the
-     * selected user, disabling the timer option. This makes it possible for an
-     * admin to check individual users- and the registered time.
+     * This method runs when a employee is selected from the AdminStatisticsViewController. This method loads the time tracking as the selected user, disabling the timer option. This makes it possible for an admin to check individual users- and the registered time.
      *
      * @param employee The employee the view should be based upon.
      */
@@ -216,41 +213,42 @@ public class MainUserViewController implements Initializable {
     }
 
     /**
-     * Loads all active projects or the projects which the logged user is
-     * assigned to, based on the role of the user.
+     * Loads all active projects or the projects which the logged user is assigned to, based on the role of the user.
      */
     public void loadProjects() {
-
         try {
-        if (loggedUser.getRole() == Roles.ADMIN) {
-            projectComboBox.setItems(projectModel.loadAllActiveProjects());
-        } else {
-            projectComboBox.setItems(projectModel.loadAllEmployeeProjects(loggedUser.getId()));
-        }
+            if (loggedUser.getRole() == Roles.ADMIN) {
+                projectComboBox.setItems(projectModel.loadAllActiveProjects());
+            } else {
+                projectComboBox.setItems(projectModel.loadAllEmployeeProjects(loggedUser.getId()));
+            }
 
-        projectComboBox.getSelectionModel().select(0);
-        if (projectComboBox.getValue() != null) {
-            taskList.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getValue().getId()));
-            tasks.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getValue().getId()));
-            tasks.getSelectionModel().select(0);
+            projectComboBox.getSelectionModel().select(0);
+            if (projectComboBox.getValue() != null) {
+                taskList.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getValue().getId()));
+                tasks.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getValue().getId()));
+                tasks.getSelectionModel().select(0);
+            }
+        } catch (SQLException ex) {
+            JFXAlert.openError(stackPane, "Error while attempting to load Projects.");
         }
-        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error while attempting to load Projects.");}
     }
 
     /**
-     * Displays the tasks of the selected project, displaying the name and the
-     * total registered time by the user.
+     * Displays the tasks of the selected project, displaying the name and the total registered time by the user.
      *
      * @param event
      */
     @FXML
     private void switchProject(ActionEvent event) {
         try {
-        taskList.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
-        tasks.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
-        tasks.getSelectionModel().select(0);
-        decideTimerEnabled();
-        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error while attempting to switch Project.");}
+            taskList.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
+            tasks.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
+            tasks.getSelectionModel().select(0);
+            decideTimerEnabled();
+        } catch (SQLException ex) {
+            JFXAlert.openError(stackPane, "Error while attempting to switch Project.");
+        }
     }
 
     /**
@@ -260,28 +258,31 @@ public class MainUserViewController implements Initializable {
      * @throws IOException
      */
     @FXML
-    private void showTime(MouseEvent event) throws IOException {
+    private void showTime(MouseEvent event) {
 
         if (!taskList.getSelectionModel().isEmpty()) {
             taskTimerList.setItems(taskList.getSelectionModel().getSelectedItem().getTimeTasks());
             tasks.getSelectionModel().select(taskList.getSelectionModel().getSelectedItem());
             decideTimerEnabled();
             decideAddTimeEnabled();
-
         }
 
         if (event.getClickCount() > 1 & !taskList.getSelectionModel().isEmpty() & !event.isConsumed()) {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(AppModel.class.getResource("views/UpdateTaskForm.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            Stage stage = new Stage();
-            stage.setTitle("TRiP");
-            stage.getIcons().add(new Image(TRiP.class.getResourceAsStream("images/time.png")));
-            stage.setResizable(false);
-            UpdateTaskForm controller = fxmlLoader.getController();
-            controller.setTask(updateView(), taskList.getSelectionModel().getSelectedItem());
-            stage.setScene(scene);
-            stage.show();
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(AppModel.class.getResource("views/UpdateTaskForm.fxml"));
+                Scene scene = new Scene(fxmlLoader.load());
+                Stage stage = new Stage();
+                stage.setTitle("TRiP");
+                stage.getIcons().add(new Image(TRiP.class.getResourceAsStream("images/time.png")));
+                stage.setResizable(false);
+                UpdateTaskForm controller = fxmlLoader.getController();
+                controller.setTask(updateView(), taskList.getSelectionModel().getSelectedItem());
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException ex) {
+                JFXAlert.openError(stackPane, "Error loading update form.");
+            }
         }
     }
 
@@ -292,11 +293,13 @@ public class MainUserViewController implements Initializable {
      */
     private Task addTask() {
         try {
-        String taskName = newTaskTitle.getText().trim();
-        Task task = taskModel.addTask(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId(), taskName);
-        updateView().start();
-        return task;
-        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error while attempting to add Task.");}
+            String taskName = newTaskTitle.getText().trim();
+            Task task = taskModel.addTask(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId(), taskName);
+            updateView().start();
+            return task;
+        } catch (SQLException ex) {
+            JFXAlert.openError(stackPane, "Error while attempting to add Task.");
+        }
         return null;
     }
 
@@ -324,26 +327,26 @@ public class MainUserViewController implements Initializable {
     }
 
     /**
-     * Event handler for the stop timr button. Stops the timer and saves the
-     * registered time.
+     * Event handler for the stop timr button. Stops the timer and saves the registered time.
      *
      * @param event
      */
     @FXML
     private void stopTimer(ActionEvent event) {
-        try{
-        timer.stopTimer();
-        taskModel.saveTimeForTask(timer.getTask(), timer.getTime(), timer.getStartTime(), timer.getStopTime());
-        startTimer.setVisible(true);
-        stopTimer.setVisible(false);
-        cancelTimer.setVisible(false);
-        updateView().start();
-        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error stopping timer.");}
+        try {
+            timer.stopTimer();
+            taskModel.saveTimeForTask(timer.getTask(), timer.getTime(), timer.getStartTime(), timer.getStopTime());
+            startTimer.setVisible(true);
+            stopTimer.setVisible(false);
+            cancelTimer.setVisible(false);
+            updateView().start();
+        } catch (SQLException ex) {
+            JFXAlert.openError(stackPane, "Error stopping timer.");
+        }
     }
 
     /**
-     * Event handler for the cancel button. Stops the timer without saving the
-     * registered time.
+     * Event handler for the cancel button. Stops the timer without saving the registered time.
      *
      * @param event
      */
@@ -356,8 +359,7 @@ public class MainUserViewController implements Initializable {
     }
 
     /**
-     * Event handler for the add time button. Takes the entered data and saves
-     * it to the database.
+     * Event handler for the add time button. Takes the entered data and saves it to the database.
      *
      * @param event
      */
@@ -382,9 +384,11 @@ public class MainUserViewController implements Initializable {
 
         TaskTime taskTime = new TaskTime(time, startDate, endDate);
 
-        try{
-        taskModel.saveTimeForTask(task, time, startDate, endDate);
-        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error saving time for task.");}
+        try {
+            taskModel.saveTimeForTask(task, time, startDate, endDate);
+        } catch (SQLException ex) {
+            JFXAlert.openError(stackPane, "Error saving time for task.");
+        }
 
         timerField.setText("00:00:00");
         dateStart.setValue(null);
@@ -395,8 +399,7 @@ public class MainUserViewController implements Initializable {
     }
 
     /**
-     * Creates a new thread that updates the view based on what is selected and
-     * currently displaying.
+     * Creates a new thread that updates the view based on what is selected and currently displaying.
      *
      * @return the update thread to be executed.
      */
@@ -405,41 +408,41 @@ public class MainUserViewController implements Initializable {
         Thread updateThread = new Thread(() -> {
 
             Platform.runLater(() -> {
-                try{
-                if (!taskList.getSelectionModel().isEmpty()) {
+                try {
+                    if (!taskList.getSelectionModel().isEmpty()) {
 
-                    Task selectedTask = taskList.getSelectionModel().getSelectedItem();
-                    taskList.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
-                    taskList.refresh();
-                    taskList.getSelectionModel().select(selectedTask);
-                    taskTimerList.getItems().clear();
+                        Task selectedTask = taskList.getSelectionModel().getSelectedItem();
+                        taskList.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
+                        taskList.refresh();
+                        taskList.getSelectionModel().select(selectedTask);
+                        taskTimerList.getItems().clear();
 
-                    if (taskList.getSelectionModel().getSelectedItem() != null) {
-
-                        taskTimerList.setItems(taskList.getSelectionModel().getSelectedItem().getTimeTasks());
+                        if (taskList.getSelectionModel().getSelectedItem() != null) {
+                            taskTimerList.setItems(taskList.getSelectionModel().getSelectedItem().getTimeTasks());
+                        }
+                        taskTimerList.refresh();
+                    } else {
+                        taskList.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
+                        taskList.refresh();
                     }
-                    taskTimerList.refresh();
-                } else {
-                    taskList.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
-                    taskList.refresh();
-                }
-                Task selectedItem = tasks.getSelectionModel().getSelectedItem();
-                tasks.setItems(taskList.getItems());
+                    Task selectedItem = tasks.getSelectionModel().getSelectedItem();
+                    tasks.setItems(taskList.getItems());
 
-                if (taskList.getItems().contains(selectedItem)) {
-                    tasks.getSelectionModel().select(selectedItem);
-                } else {
-                    tasks.getSelectionModel().selectLast();
+                    if (taskList.getItems().contains(selectedItem)) {
+                        tasks.getSelectionModel().select(selectedItem);
+                    } else {
+                        tasks.getSelectionModel().selectLast();
+                    }
+                } catch (SQLException ex) {
+                    JFXAlert.openError(stackPane, "Error updating view.");
                 }
-                }catch(SQLException ex){JFXAlert.openError(stackPane, "Error updating view.");}
             });
         });
         return updateThread;
     }
 
     /**
-     * Disables or enables the start timer button based on what information is
-     * entered.
+     * Disables or enables the start timer button based on what information is entered.
      */
     private void decideTimerEnabled() {
         if (!taskList.getSelectionModel().isEmpty()) {
@@ -454,8 +457,7 @@ public class MainUserViewController implements Initializable {
     }
 
     /**
-     * Disables or enables the add time button based on what information is
-     * entered.
+     * Disables or enables the add time button based on what information is entered.
      */
     private void decideAddTimeEnabled() {
         if ((tasks.getSelectionModel().getSelectedItem() != null || !taskList.getSelectionModel().isEmpty()) && dateStart.getValue() != null && dateEnd.getValue() != null
@@ -467,10 +469,7 @@ public class MainUserViewController implements Initializable {
     }
 
     /**
-     * Adds a on close request to the stage which will cancel the timer if the
-     * stage is closed without disabling the timer. This insures that the timer
-     * does not run as a thread in the background when the application is
-     * closed.
+     * Adds a on close request to the stage which will cancel the timer if the stage is closed without disabling the timer. This insures that the timer does not run as a thread in the background when the application is closed.
      */
     public void setupCloseRequest() {
 
@@ -487,34 +486,34 @@ public class MainUserViewController implements Initializable {
     }
 
     /**
-     * Event handler for the taskTimerList. If a time is selected by
-     * double-clicking, the selected time will be opened in the
-     * UpdateTaskTimeForm so that the user can change the saved data if changes
-     * needs to be made.
+     * Event handler for the taskTimerList. If a time is selected by double-clicking, the selected time will be opened in the UpdateTaskTimeForm so that the user can change the saved data if changes needs to be made.
      *
      * @param event
      * @throws IOException
      */
     @FXML
-    private void openTaskTime(MouseEvent event) throws IOException {
+    private void openTaskTime(MouseEvent event) {
         if (event.getClickCount() > 1 & !taskTimerList.getSelectionModel().isEmpty() & !event.isConsumed()) {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(AppModel.class.getResource("views/UpdateTasktimeForm.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            Stage stage = new Stage();
-            stage.setTitle("TRiP");
-            stage.getIcons().add(new Image(TRiP.class.getResourceAsStream("images/time.png")));
-            stage.setResizable(false);
-            UpdateTasktimeForm controller = fxmlLoader.getController();
-            controller.setTaskTime(updateView(), taskTimerList.getSelectionModel().getSelectedItem());
-            stage.setScene(scene);
-            stage.show();
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(AppModel.class.getResource("views/UpdateTasktimeForm.fxml"));
+                Scene scene = new Scene(fxmlLoader.load());
+                Stage stage = new Stage();
+                stage.setTitle("TRiP");
+                stage.getIcons().add(new Image(TRiP.class.getResourceAsStream("images/time.png")));
+                stage.setResizable(false);
+                UpdateTasktimeForm controller = fxmlLoader.getController();
+                controller.setTaskTime(updateView(), taskTimerList.getSelectionModel().getSelectedItem());
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException ex) {
+                JFXAlert.openError(stackPane, "Error opening update form.");
+            }
         }
     }
 
     /**
-     * Validates whether or not the add time button is enabled or disabled when
-     * a change happens.
+     * Validates whether or not the add time button is enabled or disabled when a change happens.
      *
      * @param event
      */
@@ -524,8 +523,7 @@ public class MainUserViewController implements Initializable {
     }
 
     /**
-     * Hides the pane for adding time and displays the pane for starting the
-     * timer instead.
+     * Hides the pane for adding time and displays the pane for starting the timer instead.
      *
      * @param event
      */
@@ -539,8 +537,7 @@ public class MainUserViewController implements Initializable {
     }
 
     /**
-     * Hides the pane for starting the timer and displays the pane for adding
-     * time instead.
+     * Hides the pane for starting the timer and displays the pane for adding time instead.
      *
      * @param event
      */
@@ -553,8 +550,7 @@ public class MainUserViewController implements Initializable {
     }
 
     /**
-     * Event handler for the "add task" buttonn. Gives an admin the ability to
-     * add tasks to existing users.
+     * Event handler for the "add task" buttonn. Gives an admin the ability to add tasks to existing users.
      *
      * @param event
      */

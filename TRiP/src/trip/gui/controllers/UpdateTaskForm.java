@@ -116,7 +116,6 @@ public class UpdateTaskForm implements Initializable {
                 Platform.runLater(()->{
                   closeStage();
                 });
-              
             } catch (SQLException ex) {
                 Platform.runLater(() -> {
                     JFXAlert.openError(stackPane, "Error deleting user.");

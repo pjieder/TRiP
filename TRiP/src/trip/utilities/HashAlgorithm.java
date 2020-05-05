@@ -9,6 +9,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Random;
+import javafx.application.Platform;
 
 /**
  *
@@ -38,9 +39,8 @@ public class HashAlgorithm {
                 hash.append(Integer.toHexString(b & 0x0f)); //Does the same and uses a max size of 15 again. Though, this hex is different from the other to ensure a longer length
             }
         } catch (NoSuchAlgorithmException e) {
-            // handle error here.
+            Platform.runLater(()->{JFXAlert.openUtilityError("No such hashing algorithm was found");});
         }
-
         return hash.toString();
     }
 

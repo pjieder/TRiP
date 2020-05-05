@@ -8,7 +8,6 @@ package trip.gui.controllers;
 import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -65,8 +64,8 @@ public class MenuBarViewController implements Initializable {
 
     /*
     If an admin logs in, the pane view within the MenuBarView is set to MainAdminView
-    */
-    public void setAdmin(Stage stage, Scene scene) throws IOException {
+     */
+    public void setAdmin(Stage stage, Scene scene){
         Thread thread = new Thread(() -> {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
@@ -82,7 +81,9 @@ public class MenuBarViewController implements Initializable {
                 });
                 viewPane = this.pane;
             } catch (IOException ex) {
-                JFXAlert.openError(stackPane, "Error loading Admin view.");
+                Platform.runLater(() -> {
+                    JFXAlert.openError(stackPane, "Error loading Admin view.");
+                });
             }
         });
         thread.start();
@@ -90,8 +91,8 @@ public class MenuBarViewController implements Initializable {
 
     /*
     If a user logs in, the pane view within the MenuBarView is set to MainUserView
-    */
-    public void setUser(Stage stage, Scene scene) throws IOException {
+     */
+    public void setUser(Stage stage, Scene scene){
         Thread thread = new Thread(() -> {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
@@ -108,7 +109,9 @@ public class MenuBarViewController implements Initializable {
                 });
 
             } catch (IOException ex) {
-                JFXAlert.openError(stackPane, "Error loading user view.");
+                Platform.runLater(() -> {
+                    JFXAlert.openError(stackPane, "Error loading user view.");
+                });
             }
         });
         thread.start();
@@ -116,9 +119,9 @@ public class MenuBarViewController implements Initializable {
 
     /*
     Opens the MainAdminView view within the menubar view.
-    */
+     */
     @FXML
-    private void openProjectsView(MouseEvent event) throws IOException {
+    private void openProjectsView(MouseEvent event){
         Thread thread = new Thread(() -> {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
@@ -131,7 +134,9 @@ public class MenuBarViewController implements Initializable {
                     pane.getChildren().setAll(fxml);
                 });
             } catch (IOException ex) {
-                JFXAlert.openError(stackPane, "Error loading main Admin view.");
+                Platform.runLater(() -> {
+                    JFXAlert.openError(stackPane, "Error loading main Admin view.");
+                });
             }
         });
         thread.start();
@@ -139,9 +144,9 @@ public class MenuBarViewController implements Initializable {
 
     /*
     Opens the AdminCustomerView view within the menubar view.
-    */
+     */
     @FXML
-    private void openCustomerView(MouseEvent event) {
+    private void openCustomerView(MouseEvent event){
         Thread thread = new Thread(() -> {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
@@ -153,9 +158,11 @@ public class MenuBarViewController implements Initializable {
                     pane.getChildren().removeAll();
                     pane.getChildren().setAll(fxml);
                 });
-
             } catch (IOException ex) {
-                JFXAlert.openError(stackPane, "Error loading customer view.");
+                Platform.runLater(() -> {
+                    JFXAlert.openError(stackPane, "Error loading customer view.");
+                });
+
             }
         });
         thread.start();
@@ -163,9 +170,9 @@ public class MenuBarViewController implements Initializable {
 
     /*
     Opens the AdminCurrentUserView view within the menubar view.
-    */
+     */
     @FXML
-    private void openUserView(MouseEvent event) throws IOException {
+    private void openUserView(MouseEvent event){
         Thread thread = new Thread(() -> {
             try {
                 Parent fxml = FXMLLoader.load(AppModel.class.getResource("views/AdminCurrentUserView.fxml"));
@@ -174,7 +181,7 @@ public class MenuBarViewController implements Initializable {
                     pane.getChildren().setAll(fxml);
                 });
             } catch (IOException ex) {
-                JFXAlert.openError(stackPane, "Error loading main user view.");
+                Platform.runLater(()->{JFXAlert.openError(stackPane, "Error loading main user view.");});
             }
         });
         thread.start();
@@ -182,9 +189,9 @@ public class MenuBarViewController implements Initializable {
 
     /*
     Opens the AdminStatisticsView view within the menubar view.
-    */
+     */
     @FXML
-    private void openStatisticsView(MouseEvent event) throws IOException, IOException {
+    private void openStatisticsView(MouseEvent event){
         Thread thread = new Thread(() -> {
             try {
                 Parent fxml = FXMLLoader.load(AppModel.class.getResource("views/AdminStatisticsView.fxml"));
@@ -193,7 +200,7 @@ public class MenuBarViewController implements Initializable {
                     pane.getChildren().setAll(fxml);
                 });
             } catch (IOException ex) {
-                JFXAlert.openError(stackPane, "Error loading statistics view.");
+                Platform.runLater(()->{JFXAlert.openError(stackPane, "Error loading statistics view.");});
             }
         });
         thread.start();
@@ -201,9 +208,9 @@ public class MenuBarViewController implements Initializable {
 
     /*
     Opens the MainUserView view within the menubar view.
-    */
+     */
     @FXML
-    private void openTimeTrackingView(MouseEvent event) throws IOException {
+    private void openTimeTrackingView(MouseEvent event){
         Thread thread = new Thread(() -> {
             try {
                 Parent fxml = FXMLLoader.load(AppModel.class.getResource("views/MainUserView.fxml"));
@@ -212,7 +219,7 @@ public class MenuBarViewController implements Initializable {
                     pane.getChildren().setAll(fxml);
                 });
             } catch (IOException ex) {
-                JFXAlert.openError(stackPane, "Error loading time tracking view.");
+                Platform.runLater(()->{JFXAlert.openError(stackPane, "Error loading time tracking view.");});
             }
         });
         thread.start();
@@ -221,9 +228,9 @@ public class MenuBarViewController implements Initializable {
 
     /*
     Logs the current user/admin out.
-    */
+     */
     @FXML
-    private void logOut(MouseEvent event) throws IOException {
+    private void logOut(MouseEvent event){
         Thread thread = new Thread(() -> {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
@@ -236,7 +243,7 @@ public class MenuBarViewController implements Initializable {
                     stage.show();
                 });
             } catch (IOException ex) {
-                JFXAlert.openError(stackPane, "Error logging out.");
+                Platform.runLater(()->{JFXAlert.openError(stackPane, "Error logging out.");});
             }
         });
         thread.start();
