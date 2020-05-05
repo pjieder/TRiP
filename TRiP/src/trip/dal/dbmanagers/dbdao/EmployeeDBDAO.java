@@ -417,7 +417,6 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
             stmt.setInt(5, employee.getId());
 
             int updatedRows = stmt.executeUpdate();
-            updateUsername(employee.getEmail(), employee);
             
             return updatedRows > 0;
         } finally {

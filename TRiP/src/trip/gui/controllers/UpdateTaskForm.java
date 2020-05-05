@@ -10,16 +10,13 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import trip.be.Task;
 import trip.gui.models.TaskModel;
 import trip.utilities.JFXAlert;
@@ -46,6 +43,8 @@ public class UpdateTaskForm implements Initializable {
     private JFXTextField taskNameField;
     @FXML
     private StackPane stackPane;
+    @FXML
+    private StackPane stackPaneDelete;
 
     /**
      * Initializes the controller class.
@@ -63,28 +62,31 @@ public class UpdateTaskForm implements Initializable {
 
     /**
      * This method runs when the updateTaskForm FXML is opened from the MainUserViewController. It takes the selected task and update thread and stores them as instance variables.
+     *
      * @param updateThread the Thread returned by method updateView in the MainUserViewController.
      * @param task the selected task to be updated.
      */
-    public void setTask(Thread updateThread, Task task)
-    {
+    public void setTask(Thread updateThread, Task task) {
         this.updateThread = updateThread;
         this.task = task;
         taskNameField.setText(task.getName());
     }
-    
+
     /**
      * Updates the selected task with the newly entered information and closes the stage.
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     private void updateTask(ActionEvent event) {
-        try{
-        task.setName(taskNameField.getText());
-        taskModel.updateTask(task);
-        updateThread.start();
-        closeStage();
-        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error updating task.");}
+        try {
+            task.setName(taskNameField.getText());
+            taskModel.updateTask(task);
+            updateThread.start();
+            closeStage();
+        } catch (SQLException ex) {
+            JFXAlert.openError(stackPane, "Error updating task.");
+        }
     }
 
     /**
@@ -98,28 +100,30 @@ public class UpdateTaskForm implements Initializable {
     }
 
     /**
-     * Deletes the selected task. This will result in all registered time for the task being deleted as well. A warning will pop up, warning the user if they really
-     * want to delete the selected task.
-     * @param event 
+     * Deletes the selected task. This will result in all registered time for the task being deleted as well. A warning will pop up, warning the user if they really want to delete the selected task.
+     *
+     * @param event
      */
     @FXML
     private void deleteTask(ActionEvent event) {
 
-        try{
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.initStyle(StageStyle.UTILITY);
-        alert.setTitle("Confirm delete");
-        alert.setHeaderText(null);
-        alert.setContentText("Are you sure you want to delete this task? This will remove all associated time for the task.");
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
-            taskModel.deleteTask(task);
-            updateThread.start();
-            closeStage();
-        } else {
-            alert.close();
-        }
-        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error occured while trying to delete task.");}
+        String message = "Are you sure you want to delete this task? \nThis will remove all associated time for the task.";
+
+        Thread confirmExecuteThread = new Thread(() -> {
+            try {
+                taskModel.deleteTask(task);
+                updateThread.start();
+                Platform.runLater(()->{
+                  closeStage();
+                });
+              
+            } catch (SQLException ex) {
+                Platform.runLater(() -> {
+                    JFXAlert.openError(stackPane, "Error deleting user.");
+                });
+            }
+        });
+        JFXAlert.openConfirm(stackPaneDelete, message, confirmExecuteThread);
     }
 
     /**

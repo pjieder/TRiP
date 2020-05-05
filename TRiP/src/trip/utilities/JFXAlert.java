@@ -8,6 +8,8 @@ package trip.utilities;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
+import java.util.List;
+import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
@@ -20,15 +22,15 @@ public class JFXAlert {
     public static void openError(StackPane stackPane, String errorMessage) {
         String title = "Alert";
         stackPane.setVisible(true);
-        
+
         JFXDialogLayout dialogContent = new JFXDialogLayout();
         dialogContent.setHeading(new Text(title));
         dialogContent.setBody(new Text(errorMessage));
         JFXButton close = new JFXButton("Close");
         JFXDialog dialog = new JFXDialog(stackPane, dialogContent, JFXDialog.DialogTransition.CENTER, false);
 
-        close.setOnMouseClicked((event) ->
-        {
+        close.setOnMouseClicked((event)
+                -> {
             dialog.close();
             stackPane.setVisible(false);
         });
@@ -37,6 +39,30 @@ public class JFXAlert {
         //TODO set style css
         dialogContent.setActions(close);
 
+        dialog.show();
+    }
+
+    public static void openConfirm(StackPane stackPane, String deleteMessage, Thread confirmAction) {
+        stackPane.setVisible(true);
+        JFXDialogLayout dialogContent = new JFXDialogLayout();
+        dialogContent.setHeading(new Text("Confirm delete"));
+        dialogContent.setBody(new Text(deleteMessage));
+        JFXDialog dialog = new JFXDialog(stackPane, dialogContent, JFXDialog.DialogTransition.CENTER, false);
+
+        JFXButton confirm = new JFXButton("Confirm");
+        JFXButton cancel = new JFXButton("Cancel");
+
+        confirm.setOnMouseClicked((event)->{
+        confirmAction.start();
+        dialog.close();
+        });
+ 
+        cancel.setOnMouseClicked((event)
+                -> {
+            dialog.close();
+            stackPane.setVisible(false);
+        });
+        dialogContent.setActions(confirm,cancel);
         dialog.show();
     }
 

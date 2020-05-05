@@ -63,6 +63,8 @@ public class AdminCustomerViewController implements Initializable {
     private ImageView searchIcon;
     @FXML
     private StackPane stackPane;
+    @FXML
+    private StackPane stackPaneDelete;
 
     /**
      * Initializes the controller class.
@@ -92,10 +94,12 @@ public class AdminCustomerViewController implements Initializable {
      * Loads all customers and diplays them in the customer table together with the information stored.
      */
     public void loadAllCustomers() {
-        try{
-        customers = customerModel.getAllCustomers();
-        customerTable.setItems(customers);
-        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error loading customers.");}
+        try {
+            customers = customerModel.getAllCustomers();
+            customerTable.setItems(customers);
+        } catch (SQLException ex) {
+            JFXAlert.openError(stackPane, "Error loading customers.");
+        }
     }
 
     /**
@@ -149,25 +153,23 @@ public class AdminCustomerViewController implements Initializable {
      */
     @FXML
     private void deleteCustomer(ActionEvent event) {
-        try{
+
         if (!customerTable.getSelectionModel().isEmpty()) {
 
             Customer selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
-
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.initStyle(StageStyle.UTILITY);
-            alert.setTitle("Confirm delete");
-            alert.setHeaderText(null);
-            alert.setContentText("Are you sure you want to delete " + selectedCustomer.getName() + "?");
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK) {
-                customerTable.getItems().remove(selectedCustomer);
-                customerModel.deleteCustomer(selectedCustomer);
-            } else {
-                alert.close();
-            }
+            String message = "Are you sure you want to delete " + selectedCustomer.getName() + "?";
+            Thread confirmExecuteThread = new Thread(() -> {
+                try {
+                    customerTable.getItems().remove(selectedCustomer);
+                    customerModel.deleteCustomer(selectedCustomer);
+                } catch (SQLException ex) {
+                    Platform.runLater(() -> {
+                        JFXAlert.openError(stackPane, "Error deleting customer.");
+                    });
+                }
+            });
+            JFXAlert.openConfirm(stackPaneDelete, message, confirmExecuteThread);
         }
-         }catch(SQLException ex){JFXAlert.openError(stackPane, "Error deleting customer.");}
     }
 
     /**
@@ -180,12 +182,14 @@ public class AdminCustomerViewController implements Initializable {
                 -> {
             Platform.runLater(()
                     -> {
-                try{
-                customers = customerModel.getAllCustomers();
-                customerTable.setItems(customers);
-                customerTable.refresh();
-                search();
-                 }catch(SQLException ex){JFXAlert.openError(stackPane, "Error updating view .");}
+                try {
+                    customers = customerModel.getAllCustomers();
+                    customerTable.setItems(customers);
+                    customerTable.refresh();
+                    search();
+                } catch (SQLException ex) {
+                    JFXAlert.openError(stackPane, "Error updating view .");
+                }
             });
         });
         return updateThread;
