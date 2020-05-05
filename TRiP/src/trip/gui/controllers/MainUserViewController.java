@@ -12,6 +12,7 @@ import com.jfoenix.controls.JFXTimePicker;
 import com.jfoenix.validation.RegexValidator;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -35,6 +36,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import trip.be.Employee;
 import trip.be.Project;
@@ -46,6 +48,7 @@ import trip.gui.AppModel;
 import trip.gui.TRiP;
 import trip.gui.models.ProjectModel;
 import trip.gui.models.TaskModel;
+import trip.utilities.JFXAlert;
 import trip.utilities.TimeConverter;
 
 /**
@@ -115,6 +118,8 @@ public class MainUserViewController implements Initializable {
     private Tooltip ttAddTime;
     @FXML
     private JFXButton addTask;
+    @FXML
+    private StackPane stackPane;
 
     /**
      * Initializes the controller class.
@@ -186,10 +191,12 @@ public class MainUserViewController implements Initializable {
      * @param project The selected project to be loaded.
      */
     public void setAdmin(Project project) {
+        try {
         projectComboBox.getSelectionModel().select(project);
         taskList.setItems(taskModel.loadTasks(loggedUser.getId(), project.getId()));
         tasks.setItems(taskModel.loadTasks(loggedUser.getId(), project.getId()));
         tasks.getSelectionModel().select(0);
+        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error while attempting to set Admin.");}
     }
 
     /**
@@ -214,6 +221,7 @@ public class MainUserViewController implements Initializable {
      */
     public void loadProjects() {
 
+        try {
         if (loggedUser.getRole() == Roles.ADMIN) {
             projectComboBox.setItems(projectModel.loadAllActiveProjects());
         } else {
@@ -226,7 +234,7 @@ public class MainUserViewController implements Initializable {
             tasks.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getValue().getId()));
             tasks.getSelectionModel().select(0);
         }
-
+        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error while attempting to load Projects.");}
     }
 
     /**
@@ -237,10 +245,12 @@ public class MainUserViewController implements Initializable {
      */
     @FXML
     private void switchProject(ActionEvent event) {
+        try {
         taskList.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
         tasks.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
         tasks.getSelectionModel().select(0);
         decideTimerEnabled();
+        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error while attempting to switch Project.");}
     }
 
     /**
@@ -281,10 +291,13 @@ public class MainUserViewController implements Initializable {
      * @return The id of the newly inserted task.
      */
     private Task addTask() {
+        try {
         String taskName = newTaskTitle.getText().trim();
         Task task = taskModel.addTask(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId(), taskName);
         updateView().start();
         return task;
+        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error while attempting to add Task.");}
+        return null;
     }
 
     /**
@@ -318,12 +331,14 @@ public class MainUserViewController implements Initializable {
      */
     @FXML
     private void stopTimer(ActionEvent event) {
+        try{
         timer.stopTimer();
         taskModel.saveTimeForTask(timer.getTask(), timer.getTime(), timer.getStartTime(), timer.getStopTime());
         startTimer.setVisible(true);
         stopTimer.setVisible(false);
         cancelTimer.setVisible(false);
         updateView().start();
+        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error stopping timer.");}
     }
 
     /**
@@ -367,7 +382,9 @@ public class MainUserViewController implements Initializable {
 
         TaskTime taskTime = new TaskTime(time, startDate, endDate);
 
+        try{
         taskModel.saveTimeForTask(task, time, startDate, endDate);
+        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error saving time for task.");}
 
         timerField.setText("00:00:00");
         dateStart.setValue(null);
@@ -388,6 +405,7 @@ public class MainUserViewController implements Initializable {
         Thread updateThread = new Thread(() -> {
 
             Platform.runLater(() -> {
+                try{
                 if (!taskList.getSelectionModel().isEmpty()) {
 
                     Task selectedTask = taskList.getSelectionModel().getSelectedItem();
@@ -413,6 +431,7 @@ public class MainUserViewController implements Initializable {
                 } else {
                     tasks.getSelectionModel().selectLast();
                 }
+                }catch(SQLException ex){JFXAlert.openError(stackPane, "Error updating view.");}
             });
         });
         return updateThread;

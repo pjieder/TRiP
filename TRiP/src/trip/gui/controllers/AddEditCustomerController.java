@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import trip.be.Customer;
 import trip.gui.models.CustomerModel;
 import trip.utilities.JFXAlert;
+import java.sql.SQLException;
 
 /**
  * FXML Controller class
@@ -131,6 +132,7 @@ public class AddEditCustomerController implements Initializable {
      */
     @FXML
     private void registerCustomer(ActionEvent event) {
+        try{
         Customer customer = new Customer();
 
         customer.setName(nameField.getText());
@@ -143,10 +145,12 @@ public class AddEditCustomerController implements Initializable {
             customer.setId(customerToUpdate.getId());
             customerModel.updateCustomer(customer);
         }
-
+        
         updateThread.start();
         Stage currentStage = (Stage) nameField.getScene().getWindow();
         currentStage.close();
+        }
+        catch(SQLException ex){JFXAlert.openError(stackPane, "Error creating or updating user.");}
     }
 
     /**
@@ -155,9 +159,8 @@ public class AddEditCustomerController implements Initializable {
      */
     @FXML
     private void cancelScene(ActionEvent event) {
-       // Stage currentStage = (Stage) nameField.getScene().getWindow();
-        //currentStage.close();
-        JFXAlert.openError(stackPane, "Login failed ya' cunt.");
+        Stage currentStage = (Stage) nameField.getScene().getWindow();
+        currentStage.close();
     }
 
 }

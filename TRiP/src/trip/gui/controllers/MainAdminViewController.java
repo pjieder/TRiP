@@ -8,6 +8,7 @@ package trip.gui.controllers;
 import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -30,12 +31,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import trip.be.Project;
 import trip.gui.AppModel;
 import trip.gui.TRiP;
 import trip.gui.models.ProjectModel;
+import trip.utilities.JFXAlert;
 import trip.utilities.TimeConverter;
 
 /**
@@ -72,6 +75,8 @@ public class MainAdminViewController implements Initializable {
     private JFXButton deleteButton;
     @FXML
     private TextField searchBar;
+    @FXML
+    private StackPane stackPane;
 
     /**
      * Initializes the controller class.
@@ -120,8 +125,10 @@ public class MainAdminViewController implements Initializable {
      * Loads all active projects and diplays them in the project table together with the information stored.
      */
     public void loadAllProjects() {
+        try{
         projects = projectModel.loadAllActiveProjects();
         projectTable.setItems(projects);
+         }catch(SQLException ex){JFXAlert.openError(stackPane, "Error loading all projects.");}
     }
 
     /**
@@ -201,6 +208,7 @@ public class MainAdminViewController implements Initializable {
                 -> {
             Platform.runLater(()
                     -> {
+                try{
                 if (isLastOnActive == true) {
                     projects = projectModel.loadAllActiveProjects();
                 } else {
@@ -209,6 +217,7 @@ public class MainAdminViewController implements Initializable {
                 projectTable.setItems(projects);
                 projectTable.refresh();
                 search();
+                 }catch(SQLException ex){JFXAlert.openError(stackPane, "Error occured while updating view.");}
             });
         });
 
@@ -222,6 +231,7 @@ public class MainAdminViewController implements Initializable {
      */
     @FXML
     private void showInactiveProjects(MouseEvent event) {
+        try{
         inactiveProjects.setVisible(false);
         activeProjects.setVisible(true);
         activeArrow.setVisible(false);
@@ -232,6 +242,7 @@ public class MainAdminViewController implements Initializable {
         projectTable.setItems(projects);
         projectTable.refresh();
         search();
+         }catch(SQLException ex){JFXAlert.openError(stackPane, "Error occured while attempting to show inactive projects.");}
     }
 
     /**
@@ -241,6 +252,7 @@ public class MainAdminViewController implements Initializable {
      */
     @FXML
     private void showActiveProjects(MouseEvent event) {
+        try{
         inactiveProjects.setVisible(true);
         activeProjects.setVisible(false);
         activeArrow.setVisible(true);
@@ -251,6 +263,7 @@ public class MainAdminViewController implements Initializable {
         projectTable.setItems(projects);
         projectTable.refresh();
         search();
+        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error occured while attempting to show active projects.");}
     }
 
     /**
@@ -261,6 +274,7 @@ public class MainAdminViewController implements Initializable {
     @FXML
     private void deleteProject(ActionEvent event) {
 
+        try {
         if (!projectTable.getSelectionModel().isEmpty()) {
 
             Project selectedProject = projectTable.getSelectionModel().getSelectedItem();
@@ -277,7 +291,8 @@ public class MainAdminViewController implements Initializable {
             } else {
                 alert.close();
             }
-        }
+        } 
+        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error occured while trying to delete project.");}
     }
 
     /**

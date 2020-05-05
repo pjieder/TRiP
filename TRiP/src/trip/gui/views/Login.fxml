@@ -78,7 +78,7 @@
                   <Font size="15.0" />
                </font>
             </JFXTextField>
-            <StackPane fx:id="stackPane" prefHeight="150.0" prefWidth="393.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+            <StackPane fx:id="stackPane" prefHeight="71.0" prefWidth="273.0" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="9" />
          </children>
       </GridPane>
    </children>

@@ -8,6 +8,7 @@ package trip.gui.controllers;
 import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -27,12 +28,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import trip.be.Customer;
 import trip.gui.AppModel;
 import trip.gui.TRiP;
 import trip.gui.models.CustomerModel;
+import trip.utilities.JFXAlert;
 
 /**
  * FXML Controller class
@@ -58,6 +61,8 @@ public class AdminCustomerViewController implements Initializable {
     private JFXButton deleteButton;
     @FXML
     private ImageView searchIcon;
+    @FXML
+    private StackPane stackPane;
 
     /**
      * Initializes the controller class.
@@ -87,8 +92,10 @@ public class AdminCustomerViewController implements Initializable {
      * Loads all customers and diplays them in the customer table together with the information stored.
      */
     public void loadAllCustomers() {
+        try{
         customers = customerModel.getAllCustomers();
         customerTable.setItems(customers);
+        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error loading customers.");}
     }
 
     /**
@@ -142,6 +149,7 @@ public class AdminCustomerViewController implements Initializable {
      */
     @FXML
     private void deleteCustomer(ActionEvent event) {
+        try{
         if (!customerTable.getSelectionModel().isEmpty()) {
 
             Customer selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
@@ -159,6 +167,7 @@ public class AdminCustomerViewController implements Initializable {
                 alert.close();
             }
         }
+         }catch(SQLException ex){JFXAlert.openError(stackPane, "Error deleting customer.");}
     }
 
     /**
@@ -171,10 +180,12 @@ public class AdminCustomerViewController implements Initializable {
                 -> {
             Platform.runLater(()
                     -> {
+                try{
                 customers = customerModel.getAllCustomers();
                 customerTable.setItems(customers);
                 customerTable.refresh();
                 search();
+                 }catch(SQLException ex){JFXAlert.openError(stackPane, "Error updating view .");}
             });
         });
         return updateThread;

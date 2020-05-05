@@ -11,17 +11,20 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RegexValidator;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import trip.be.Admin;
 import trip.be.Employee;
 import trip.be.Roles;
 import trip.be.User;
 import trip.gui.AppModel;
+import trip.utilities.JFXAlert;
 
 /**
  * FXML Controller class
@@ -58,6 +61,8 @@ public class RegisterFormController implements Initializable {
     private JFXButton cancelButton;
     @FXML
     private JFXCheckBox passwordVisibility;
+    @FXML
+    private StackPane stackPane;
 
     /**
      * Initializes the controller class.
@@ -170,7 +175,7 @@ public class RegisterFormController implements Initializable {
         String lName = lastNameField.getText().trim();
         String email = emailField.getText().trim();
         String password = passwordField.getText().trim();
-        
+        try{
         if (adminCheckbox.isSelected())
         {
             newEmployee = new Admin(fName, lName, email);
@@ -193,7 +198,7 @@ public class RegisterFormController implements Initializable {
                 appModel.updatePassword(password, newEmployee);
             }
         }
-        
+        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error registering or updating employee.");}
         updateThread.start();
         Stage currentStage = (Stage) firstNameField.getScene().getWindow();
         currentStage.close();

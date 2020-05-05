@@ -25,12 +25,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import trip.be.Employee;
 import trip.be.Roles;
 import trip.gui.AppModel;
 import trip.utilities.JFXAlert;
+import java.sql.SQLException;
 
 /**
  * FXML Controller class
@@ -85,8 +85,6 @@ public class LoginController implements Initializable {
     private void login(MouseEvent event) throws IOException, InterruptedException, ExecutionException {
        loadPerson().start();
        rememberMe.requestFocus();
-       JFXAlert.openError(stackPane, "Login failed ya' cunt.");
-        
     }
 
     /**
@@ -132,20 +130,18 @@ public class LoginController implements Initializable {
      * to either the teacher- or student view depending on
      * the login information given.
      * @return Returns the login thread to be executed.
-     * @throws InterruptedException
-     * @throws ExecutionException
-     * @throws IOException 
      */
-    public Thread loadPerson() throws InterruptedException, ExecutionException, IOException {
+    public Thread loadPerson()  {
 
         Thread loginThread = new Thread(() -> {
 
             String username = usernameField.getText();
             String password = passwordField.getText();
             showLoading();
-
+            
+            try{
             Employee employeeToValidate = appModel.validateEmployee(username, password);
-
+            
             if (employeeToValidate == null) {
                 hideLoading();
             } else {
@@ -156,6 +152,7 @@ public class LoginController implements Initializable {
                     forgetLogin();
                 }
                 loggedUser = employeeToValidate;
+                
                 Platform.runLater(() -> {
 
                     try {
@@ -171,10 +168,12 @@ public class LoginController implements Initializable {
                             controller.setAdmin(stage, scene);
                         }
                     } catch (IOException ex) {
-                        ex.printStackTrace();
+                        JFXAlert.openError(stackPane, "Error loading menu.");
                     }
                 });
             }
+            }
+            catch(SQLException ex){JFXAlert.openError(stackPane, "Error loading data.");}
         });
         return loginThread;
     }

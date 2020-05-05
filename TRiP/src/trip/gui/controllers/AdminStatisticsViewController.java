@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXProgressBar;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.List;
@@ -25,10 +26,12 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import trip.be.Employee;
 import trip.be.Project;
 import trip.gui.AppModel;
 import trip.gui.models.ProjectModel;
+import trip.utilities.JFXAlert;
 import trip.utilities.TimeConverter;
 
 /**
@@ -69,13 +72,15 @@ public class AdminStatisticsViewController implements Initializable {
     private JFXButton openEmployeeBtn;
     @FXML
     private ComboBox<Employee> employeeSelection;
+    @FXML
+    private StackPane stackPane;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+try{
         projectComboBox.setItems(projectModel.loadAllActiveProjects());
         projectComboBox.getItems().add(0, new Project("All projects", 0));
         projectComboBox.getSelectionModel().select(0);
@@ -86,6 +91,7 @@ public class AdminStatisticsViewController implements Initializable {
 
         employeeComboBox.setItems(appModel.loadActiveEmployees());
         employeeSelection.setItems(appModel.loadActiveEmployees());
+         }catch(SQLException ex){JFXAlert.openError(stackPane, "Error intitializing.");}
 
     }
 
@@ -152,7 +158,7 @@ public class AdminStatisticsViewController implements Initializable {
         calculateLine.setDisable(true);
 
         Thread thread = new Thread(() -> {
-
+            try{
             LocalDate localDateFirst = dateStart.getValue();
             LocalDate localDateLast = dateEnd.getValue();
             Project selectedProject = projectComboBox.getValue();
@@ -164,6 +170,7 @@ public class AdminStatisticsViewController implements Initializable {
                 progress.setVisible(false);
                 validate();
             });
+                 }catch(SQLException ex){JFXAlert.openError(stackPane, "Error Calculating Statistics.");}
         });
 
         thread.start();
@@ -180,7 +187,7 @@ public class AdminStatisticsViewController implements Initializable {
         calculateBar.setDisable(true);
 
         Thread thread = new Thread(() -> {
-
+            try{
             LocalDate localDateFirst = dateStart.getValue();
             LocalDate localDateLast = dateEnd.getValue();
             Employee selectedEmployee = employeeComboBox.getValue();
@@ -192,6 +199,7 @@ public class AdminStatisticsViewController implements Initializable {
                 progress.setVisible(false);
                 validate();
             });
+             }catch(SQLException ex){JFXAlert.openError(stackPane, "Error Calculating Statistics.");}
         });
 
         thread.start();
@@ -212,6 +220,7 @@ public class AdminStatisticsViewController implements Initializable {
 
         DecimalFormat df = new DecimalFormat("0.0#");
 
+        try{
         if (projectID == 0) {
 
             for (Project project : projectModel.loadAllActiveProjects()) {
@@ -233,6 +242,7 @@ public class AdminStatisticsViewController implements Initializable {
             totalTimeLabel.setText(totalTimeString);
             totalPriceLabel.setText(totalPriceString);
         });
+         }catch(SQLException ex){JFXAlert.openError(stackPane, "Error Calculating Price.");}
     }
 
     /**
@@ -249,6 +259,7 @@ public class AdminStatisticsViewController implements Initializable {
         String totalTimeString;
         String totalPriceString;
 
+        try{
         DecimalFormat df = new DecimalFormat("0.0#");
         List<Project> allWorkedOnProjects = projectModel.loadWorkedOnProjectsBetweenDates(startDate, endDate, employeeID);
 
@@ -266,7 +277,7 @@ public class AdminStatisticsViewController implements Initializable {
             totalTimeLabel.setText(totalTimeString);
             totalPriceLabel.setText(totalPriceString);
         });
-
+         }catch(SQLException ex){JFXAlert.openError(stackPane, "Error Calculating Price.");}
     }
 
     /**

@@ -8,6 +8,7 @@ package trip.gui.controllers;
 import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -18,9 +19,11 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import trip.gui.AppModel;
+import trip.utilities.JFXAlert;
 
 /**
  * FXML Controller class
@@ -46,11 +49,11 @@ public class MenuBarViewController implements Initializable {
     @FXML
     private JFXButton timeTrackingTab;
     @FXML
-    private JFXButton EconomyTab;
-    @FXML
     private JFXButton logOutTab;
 
     public static Pane viewPane;
+    @FXML
+    private StackPane stackPane;
 
     /**
      * Initializes the controller class.
@@ -79,7 +82,7 @@ public class MenuBarViewController implements Initializable {
                 });
                 viewPane = this.pane;
             } catch (IOException ex) {
-                ex.printStackTrace();
+                JFXAlert.openError(stackPane, "Error loading Admin view.");
             }
         });
         thread.start();
@@ -105,7 +108,7 @@ public class MenuBarViewController implements Initializable {
                 });
 
             } catch (IOException ex) {
-                ex.printStackTrace();
+                JFXAlert.openError(stackPane, "Error loading user view.");
             }
         });
         thread.start();
@@ -128,7 +131,7 @@ public class MenuBarViewController implements Initializable {
                     pane.getChildren().setAll(fxml);
                 });
             } catch (IOException ex) {
-                ex.printStackTrace();
+                JFXAlert.openError(stackPane, "Error loading main Admin view.");
             }
         });
         thread.start();
@@ -152,7 +155,7 @@ public class MenuBarViewController implements Initializable {
                 });
 
             } catch (IOException ex) {
-                ex.printStackTrace();
+                JFXAlert.openError(stackPane, "Error loading customer view.");
             }
         });
         thread.start();
@@ -171,7 +174,7 @@ public class MenuBarViewController implements Initializable {
                     pane.getChildren().setAll(fxml);
                 });
             } catch (IOException ex) {
-                ex.printStackTrace();
+                JFXAlert.openError(stackPane, "Error loading main user view.");
             }
         });
         thread.start();
@@ -190,7 +193,7 @@ public class MenuBarViewController implements Initializable {
                     pane.getChildren().setAll(fxml);
                 });
             } catch (IOException ex) {
-                ex.printStackTrace();
+                JFXAlert.openError(stackPane, "Error loading statistics view.");
             }
         });
         thread.start();
@@ -209,19 +212,12 @@ public class MenuBarViewController implements Initializable {
                     pane.getChildren().setAll(fxml);
                 });
             } catch (IOException ex) {
-                ex.printStackTrace();
+                JFXAlert.openError(stackPane, "Error loading time tracking view.");
             }
         });
         thread.start();
     }
 
-    /*
-    Opens the EconomyView view within the menubar view.
-    */
-    @FXML
-    private void openEconomyView(MouseEvent event) throws IOException {
-
-    }
 
     /*
     Logs the current user/admin out.
@@ -240,7 +236,7 @@ public class MenuBarViewController implements Initializable {
                     stage.show();
                 });
             } catch (IOException ex) {
-                ex.printStackTrace();
+                JFXAlert.openError(stackPane, "Error logging out.");
             }
         });
         thread.start();

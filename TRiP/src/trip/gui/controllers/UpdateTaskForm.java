@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -16,10 +17,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import trip.be.Task;
 import trip.gui.models.TaskModel;
+import trip.utilities.JFXAlert;
 
 /**
  * FXML Controller class
@@ -41,6 +44,8 @@ public class UpdateTaskForm implements Initializable {
     private JFXButton deleteButton;
     @FXML
     private JFXTextField taskNameField;
+    @FXML
+    private StackPane stackPane;
 
     /**
      * Initializes the controller class.
@@ -74,10 +79,12 @@ public class UpdateTaskForm implements Initializable {
      */
     @FXML
     private void updateTask(ActionEvent event) {
+        try{
         task.setName(taskNameField.getText());
         taskModel.updateTask(task);
         updateThread.start();
         closeStage();
+        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error updating task.");}
     }
 
     /**
@@ -98,6 +105,7 @@ public class UpdateTaskForm implements Initializable {
     @FXML
     private void deleteTask(ActionEvent event) {
 
+        try{
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initStyle(StageStyle.UTILITY);
         alert.setTitle("Confirm delete");
@@ -111,6 +119,7 @@ public class UpdateTaskForm implements Initializable {
         } else {
             alert.close();
         }
+        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error occured while trying to delete task.");}
     }
 
     /**

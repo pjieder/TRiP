@@ -11,6 +11,7 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
 import com.jfoenix.validation.RegexValidator;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -20,9 +21,11 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import trip.be.TaskTime;
 import trip.gui.models.TaskModel;
+import trip.utilities.JFXAlert;
 import trip.utilities.TimeConverter;
 
 /**
@@ -53,6 +56,8 @@ public class UpdateTasktimeForm implements Initializable {
     private JFXTimePicker timeStop;
     @FXML
     private JFXButton deleteButton;
+    @FXML
+    private StackPane stackPane;
 
     /**
      * Initializes the controller class.
@@ -115,7 +120,9 @@ public class UpdateTasktimeForm implements Initializable {
         taskTime.setStartTime(startDate);
         taskTime.setStopTime(endDate);
 
+        try{
         taskModel.UpdateTimeForTask(taskTime);
+        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error occured while trying to update task.");}
         updateThread.start();
         closeStage();
     }
@@ -137,9 +144,11 @@ public class UpdateTasktimeForm implements Initializable {
      */
     @FXML
     private void deleteTasktime(ActionEvent event) {
+        try{
         taskModel.DeleteTimeForTask(taskTime);
         updateThread.start();
         closeStage();
+        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error occured while trying to delete time for the task.");}
     }
 
     /**

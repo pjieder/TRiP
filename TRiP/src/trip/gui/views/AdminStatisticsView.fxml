@@ -11,6 +11,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="972.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trip.gui.controllers.AdminStatisticsViewController">
@@ -84,5 +85,6 @@
          <font>
             <Font size="15.0" />
          </font></JFXButton>
+      <StackPane fx:id="stackPane" layoutX="348.0" layoutY="24.0" prefHeight="159.0" prefWidth="296.0" visible="false" />
    </children>
 </AnchorPane>

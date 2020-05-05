@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -28,6 +29,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import trip.be.Employee;
@@ -35,6 +37,7 @@ import trip.be.Project;
 import trip.gui.AppModel;
 import trip.gui.TRiP;
 import trip.gui.models.ProjectModel;
+import trip.utilities.JFXAlert;
 
 /**
  * FXML Controller class
@@ -68,6 +71,8 @@ public class AdminCurrentUserViewController implements Initializable {
     private ComboBox<Project> projectComboBox;
     @FXML
     private TextField searchBar;
+    @FXML
+    private StackPane stackPane;
 
     /**
      * Initializes the controller class.
@@ -96,11 +101,13 @@ public class AdminCurrentUserViewController implements Initializable {
      * Loads the active employees into the user list and loads the combobox with all active projects.
      */
     public void loadUsers() {
+        try{
         employees = appModel.loadActiveEmployees();
         userList.setItems(employees);
         projectComboBox.setItems(projectModel.loadAllActiveProjects());
         projectComboBox.getItems().add(0, new Project("All projects", 0));
         projectComboBox.getSelectionModel().select(0);
+        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error loading users.");}
     }
 
     /**
@@ -193,11 +200,12 @@ public class AdminCurrentUserViewController implements Initializable {
      */
     @FXML
     private void makeUserInactive(ActionEvent event) {
-
+        try{
         if (!userList.getSelectionModel().isEmpty()) {
             appModel.updateEmployeeActive(userList.getSelectionModel().getSelectedItem(), false);
             getUpdateListThread().start();
         }
+        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error making user inactive.");}
     }
 
     /**
@@ -206,11 +214,12 @@ public class AdminCurrentUserViewController implements Initializable {
      */
     @FXML
     private void makeUserActive(ActionEvent event) {
-
+        try{
         if (!userList.getSelectionModel().isEmpty()) {
             appModel.updateEmployeeActive(userList.getSelectionModel().getSelectedItem(), true);
             getUpdateListThread().start();
         }
+        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error making user active.");}
     }
 
     /**
@@ -219,6 +228,7 @@ public class AdminCurrentUserViewController implements Initializable {
      */
     @FXML
     private void deleteUser(ActionEvent event) {
+        try{
         if (!userList.getSelectionModel().isEmpty()) {
 
             Employee selectedEmployee = userList.getSelectionModel().getSelectedItem();
@@ -235,6 +245,7 @@ public class AdminCurrentUserViewController implements Initializable {
             } else {
             }
         }
+        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error deleting user.");}
     }
 
     /**
@@ -260,6 +271,7 @@ public class AdminCurrentUserViewController implements Initializable {
      * Loads all employees in the userlist that works on the selected project.
      */
     private void setProject() {
+        try{
         Project project = projectComboBox.getValue();
 
         if (project.getId() == 0) {
@@ -271,6 +283,7 @@ public class AdminCurrentUserViewController implements Initializable {
         } else {
             employees = appModel.loadEmployeesAssignedToProject(project.getId(), isLastOnActive);
         }
+        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error loading employees.");}
     }
 
     /**

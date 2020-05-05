@@ -19,7 +19,8 @@ public class JFXAlert {
 
     public static void openError(StackPane stackPane, String errorMessage) {
         String title = "Alert";
-
+        stackPane.setVisible(true);
+        
         JFXDialogLayout dialogContent = new JFXDialogLayout();
         dialogContent.setHeading(new Text(title));
         dialogContent.setBody(new Text(errorMessage));
@@ -29,6 +30,7 @@ public class JFXAlert {
         close.setOnMouseClicked((event) ->
         {
             dialog.close();
+            stackPane.setVisible(false);
         });
 
         close.setButtonType(JFXButton.ButtonType.RAISED);
