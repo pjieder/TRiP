@@ -14,9 +14,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import trip.be.Customer;
 import trip.gui.models.CustomerModel;
+import trip.utilities.JFXAlert;
 
 /**
  * FXML Controller class
@@ -44,6 +46,8 @@ public class AddEditCustomerController implements Initializable {
     private JFXButton updateButton;
     @FXML
     private Label title;
+    @FXML
+    private StackPane stackPane;
 
     /**
      * Initializes the controller class.
@@ -151,8 +155,9 @@ public class AddEditCustomerController implements Initializable {
      */
     @FXML
     private void cancelScene(ActionEvent event) {
-        Stage currentStage = (Stage) nameField.getScene().getWindow();
-        currentStage.close();
+       // Stage currentStage = (Stage) nameField.getScene().getWindow();
+        //currentStage.close();
+        JFXAlert.openError(stackPane, "Login failed ya' cunt.");
     }
 
 }

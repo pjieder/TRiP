@@ -7,6 +7,8 @@ package trip.gui.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXProgressBar;
 import com.jfoenix.controls.JFXTextField;
@@ -22,10 +24,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import trip.be.Employee;
 import trip.be.Roles;
 import trip.gui.AppModel;
+import trip.utilities.JFXAlert;
 
 /**
  * FXML Controller class
@@ -50,6 +55,8 @@ public class LoginController implements Initializable {
     private JFXButton loginButton;
     @FXML
     private Label errorMsg;
+    @FXML
+    private StackPane stackPane;
 
     /**
      * Initializes the controller class.
@@ -76,8 +83,10 @@ public class LoginController implements Initializable {
      */
     @FXML
     private void login(MouseEvent event) throws IOException, InterruptedException, ExecutionException {
-        loadPerson().start();
-        rememberMe.requestFocus();
+       loadPerson().start();
+       rememberMe.requestFocus();
+       JFXAlert.openError(stackPane, "Login failed ya' cunt.");
+        
     }
 
     /**
