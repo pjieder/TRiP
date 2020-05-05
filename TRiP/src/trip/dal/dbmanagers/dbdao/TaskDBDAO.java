@@ -11,8 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import trip.be.Task;
@@ -35,9 +33,10 @@ public class TaskDBDAO implements ITaskDBDAO {
      * @param projectId The ID of the project that the task is associated to.
      * @param taskName The name of the task.
      * @return The newly created task.
+     * @throws java.sql.SQLException
      */
     @Override
-    public Task addTask(int userId, int projectId, String taskName) {
+    public Task addTask(int userId, int projectId, String taskName) throws SQLException {
         Connection con = null;
         Task task = new Task(taskName);
         try {
@@ -59,8 +58,6 @@ public class TaskDBDAO implements ITaskDBDAO {
                 return task;
             }
 
-        } catch (SQLException ex) {
-            Logger.getLogger(TaskDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
             DatabaseLogger.logAction("Created task with ID: " + task.getId() + " (" + taskName + ")");
@@ -74,9 +71,10 @@ public class TaskDBDAO implements ITaskDBDAO {
      * @param userId The ID of
      * @param projectId
      * @return An observablelist containing all stored tasks for the specified user and project.
+     * @throws java.sql.SQLException
      */
     @Override
-    public ObservableList<Task> loadTasks(int userId, int projectId) {
+    public ObservableList<Task> loadTasks(int userId, int projectId) throws SQLException {
 
         Connection con = null;
         ObservableList<Task> tasks = FXCollections.observableArrayList();
@@ -102,12 +100,9 @@ public class TaskDBDAO implements ITaskDBDAO {
 
             return tasks;
 
-        } catch (SQLException ex) {
-            Logger.getLogger(TaskDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
         }
-        return tasks;
     }
 
     /**
@@ -115,9 +110,10 @@ public class TaskDBDAO implements ITaskDBDAO {
      *
      * @param task The task that will update the previous task with the same ID.
      * @return A boolean value representing whether or not the task was updated.
+     * @throws java.sql.SQLException
      */
     @Override
-    public boolean updateTask(Task task) {
+    public boolean updateTask(Task task) throws SQLException {
         Connection con = null;
         try {
             con = DBSettings.getInstance().getConnection();
@@ -131,13 +127,10 @@ public class TaskDBDAO implements ITaskDBDAO {
 
             return true;
 
-        } catch (SQLException ex) {
-            Logger.getLogger(TaskDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
             DatabaseLogger.logAction("Updated task with ID: " + task.getId() + " (" + task.getName() + ")");
         }
-        return false;
     }
 
     /**
@@ -145,9 +138,10 @@ public class TaskDBDAO implements ITaskDBDAO {
      *
      * @param task The task to be deleted.
      * @return A boolean value representing whether or not the task was deleted.
+     * @throws java.sql.SQLException
      */
     @Override
-    public boolean deleteTask(Task task) {
+    public boolean deleteTask(Task task) throws SQLException {
         Connection con = null;
         try {
             con = DBSettings.getInstance().getConnection();
@@ -160,13 +154,10 @@ public class TaskDBDAO implements ITaskDBDAO {
 
             return true;
 
-        } catch (SQLException ex) {
-            Logger.getLogger(TaskDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
             DatabaseLogger.logAction("Deleted task with ID: " + task.getId() + " (" + task.getName() + ")");
         }
-        return false;
     }
 
     /**
@@ -176,9 +167,10 @@ public class TaskDBDAO implements ITaskDBDAO {
      * @param time The total amount of time having been worked on the task in seconds.
      * @param startTime The starttime of when the work began.
      * @param stopTime The endtime of when the work ended.
+     * @throws java.sql.SQLException
      */
     @Override
-    public void addTimeForTask(Task task, int time, Date startTime, Date stopTime) {
+    public void addTimeForTask(Task task, int time, Date startTime, Date stopTime) throws SQLException {
         Connection con = null;
         try {
             con = DBSettings.getInstance().getConnection();
@@ -194,8 +186,6 @@ public class TaskDBDAO implements ITaskDBDAO {
 
             stmt.executeUpdate();
 
-        } catch (SQLException ex) {
-            Logger.getLogger(TaskDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
             DatabaseLogger.logAction("Added time to task with ID: " + task.getId() + " (" + task.getName() + ") for " + TimeConverter.convertSecondsToString(time));
@@ -207,9 +197,10 @@ public class TaskDBDAO implements ITaskDBDAO {
      *
      * @param taskID The ID of the task.
      * @return An int value representing the total amount of time having been used on the task in seconds.
+     * @throws java.sql.SQLException
      */
     @Override
-    public int getTaskTime(int taskID) {
+    public int getTaskTime(int taskID) throws SQLException {
 
         Connection con = null;
         int totalTime = 0;
@@ -228,12 +219,9 @@ public class TaskDBDAO implements ITaskDBDAO {
             }
             return totalTime;
 
-        } catch (SQLException ex) {
-            Logger.getLogger(TaskDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
         }
-        return totalTime;
     }
 
     /**
@@ -241,9 +229,10 @@ public class TaskDBDAO implements ITaskDBDAO {
      *
      * @param taskId The ID of the task being searched for.
      * @return An observablelist containing all time registered for the task.
+     * @throws java.sql.SQLException
      */
     @Override
-    public ObservableList<TaskTime> loadTimeForTask(int taskId) {
+    public ObservableList<TaskTime> loadTimeForTask(int taskId) throws SQLException {
 
         Connection con = null;
         ObservableList<TaskTime> tasks = FXCollections.observableArrayList();
@@ -269,12 +258,9 @@ public class TaskDBDAO implements ITaskDBDAO {
             }
             return tasks;
 
-        } catch (SQLException ex) {
-            Logger.getLogger(TaskDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
         }
-        return tasks;
     }
 
     /**
@@ -282,9 +268,10 @@ public class TaskDBDAO implements ITaskDBDAO {
      *
      * @param taskTime The taskTime that will update the previous taskTime with the same ID.
      * @return A boolean value representing whether or not the update was successful.
+     * @throws java.sql.SQLException
      */
     @Override
-    public boolean UpdateTimeForTask(TaskTime taskTime) {
+    public boolean UpdateTimeForTask(TaskTime taskTime) throws SQLException {
         Connection con = null;
         try {
             con = DBSettings.getInstance().getConnection();
@@ -300,13 +287,10 @@ public class TaskDBDAO implements ITaskDBDAO {
 
             return true;
 
-        } catch (SQLException ex) {
-            Logger.getLogger(TaskDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
             DatabaseLogger.logAction("Updated time for task time with ID: " + taskTime.getId() + " - " + TimeConverter.convertSecondsToString(taskTime.getTime()));
         }
-        return false;
     }
 
     /**
@@ -314,9 +298,10 @@ public class TaskDBDAO implements ITaskDBDAO {
      *
      * @param taskTime The taskTime to be deleted.
      * @return A boolean value representing whether or not the delete was successful.
+     * @throws java.sql.SQLException
      */
     @Override
-    public boolean DeleteTimeForTask(TaskTime taskTime) {
+    public boolean DeleteTimeForTask(TaskTime taskTime) throws SQLException {
         Connection con = null;
         try {
             con = DBSettings.getInstance().getConnection();
@@ -329,13 +314,10 @@ public class TaskDBDAO implements ITaskDBDAO {
 
             return true;
 
-        } catch (SQLException ex) {
-            Logger.getLogger(TaskDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBSettings.getInstance().releaseConnection(con);
             DatabaseLogger.logAction("Deleted task time with ID: " + taskTime.getId());
         }
-        return false;
     }
 
 }

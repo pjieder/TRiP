@@ -15,6 +15,7 @@ import trip.be.Project;
 import trip.dal.dbmanagers.facades.IDalFacade;
 import trip.dal.dbmanagers.facades.DalFacade;
 import trip.utilities.TimeConverter;
+import java.sql.SQLException;
 
 /**
  *
@@ -33,8 +34,9 @@ public class ProjectManager {
      *
      * @param project The project to be saved.
      * @param allEmployees The employees that should be registered to the project.
+     * @throws java.sql.SQLException
      */
-    public void createProject(Project project, List<Employee> allEmployees) {
+    public void createProject(Project project, List<Employee> allEmployees) throws SQLException{
         dalFacade.createProject(project, allEmployees);
     }
 
@@ -42,8 +44,9 @@ public class ProjectManager {
      * Loads all saved projects in the database.
      *
      * @return An observablelist containing all projects stored.
+     * @throws java.sql.SQLException
      */
-    public ObservableList<Project> getAllProjects() {
+    public ObservableList<Project> getAllProjects() throws SQLException{
         return dalFacade.getAllProjects();
     }
 
@@ -51,8 +54,9 @@ public class ProjectManager {
      * Loads all active projects stored in the database.
      *
      * @return An observablelist containing all active projects stored.
+     * @throws java.sql.SQLException
      */
-    public ObservableList<Project> loadAllActiveProjects() {
+    public ObservableList<Project> loadAllActiveProjects() throws SQLException{
         return dalFacade.loadAllActiveProjects();
     }
 
@@ -60,8 +64,9 @@ public class ProjectManager {
      * Loads all inactiev projects stored in the database.
      *
      * @return An observablelist containing all the inactive projects stored.
+     * @throws java.sql.SQLException
      */
-    public ObservableList<Project> loadAllInactiveProjects() {
+    public ObservableList<Project> loadAllInactiveProjects() throws SQLException{
         return dalFacade.loadAllInactiveProjects();
     }
 
@@ -70,8 +75,9 @@ public class ProjectManager {
      *
      * @param employeeId The ID of the employee.
      * @return Returns an observablelist containing all projects assigned to the specified employee.
+     * @throws java.sql.SQLException
      */
-    public ObservableList<Project> loadEmployeeProjects(int employeeId) {
+    public ObservableList<Project> loadEmployeeProjects(int employeeId) throws SQLException{
         return dalFacade.loadEmployeeProjects(employeeId);
     }
 
@@ -82,8 +88,9 @@ public class ProjectManager {
      * @param endDate The enddate of the timespan.
      * @param employeeID The ID of the specified employee.
      * @return A list containing all projects having been worked on by the specified employee between the two dates.
+     * @throws java.sql.SQLException
      */
-    public List<Project> loadWorkedOnProjectsBetweenDates(LocalDate startDate, LocalDate endDate, int employeeID) {
+    public List<Project> loadWorkedOnProjectsBetweenDates(LocalDate startDate, LocalDate endDate, int employeeID) throws SQLException{
         return dalFacade.loadWorkedOnProjectsBetweenDates(startDate, endDate, employeeID);
     }
 
@@ -94,8 +101,9 @@ public class ProjectManager {
      * @param startDate The startdate of the timespan.
      * @param endDate The enddate of the timespan.
      * @return An int value representing the total amount of time having been used in seconds.
+     * @throws java.sql.SQLException
      */
-    public int loadAllProjectTimeBetweenDates(int projectID, LocalDate startDate, LocalDate endDate) {
+    public int loadAllProjectTimeBetweenDates(int projectID, LocalDate startDate, LocalDate endDate) throws SQLException{
         return dalFacade.loadAllProjectTimeBetweenDates(projectID, startDate, endDate);
     }
 
@@ -107,8 +115,9 @@ public class ProjectManager {
      * @param startDate The startdate of the timespan.
      * @param endDate The enddate of the timespan.
      * @return An int value representing the total amount of time the specified employe have been working on the project in seconds.
+     * @throws java.sql.SQLException
      */
-    public int loadAllEmployeeProjectTimeBetweenDates(int employeeID, int projectID, LocalDate startDate, LocalDate endDate) {
+    public int loadAllEmployeeProjectTimeBetweenDates(int employeeID, int projectID, LocalDate startDate, LocalDate endDate) throws SQLException{
         return dalFacade.loadAllEmployeeProjectTimeBetweenDates(employeeID, projectID, startDate, endDate);
     }
 
@@ -117,8 +126,9 @@ public class ProjectManager {
      *
      * @param project The project that will update the previous project with the same ID.
      * @param allEmployees The employees that should be registered to the project.
+     * @throws java.sql.SQLException
      */
-    public void updateProject(Project project, List<Employee> allEmployees) {
+    public void updateProject(Project project, List<Employee> allEmployees) throws SQLException{
         dalFacade.updateProject(project, allEmployees);
     }
 
@@ -126,8 +136,9 @@ public class ProjectManager {
      * Deletes the specified project from the database.
      *
      * @param project The project to be deleted.
+     * @throws java.sql.SQLException
      */
-    public void deleteProject(Project project) {
+    public void deleteProject(Project project) throws SQLException{
         dalFacade.deleteProject(project);
     }
 
@@ -159,8 +170,9 @@ public class ProjectManager {
      * @param dateStart The startdate of the timeframe.
      * @param dateEnd The enddate of the timeframe.
      * @return A series containing all the stored data to be displayed.
+     * @throws java.sql.SQLException
      */
-    public XYChart.Series calculateGraphLine(int projectID, LocalDate dateStart, LocalDate dateEnd) {
+    public XYChart.Series calculateGraphLine(int projectID, LocalDate dateStart, LocalDate dateEnd) throws SQLException{
 
         List<LocalDate> datesX = TimeConverter.getDaysBetweenDates(dateStart, dateEnd);
         List<Integer> time = dalFacade.loadTimeForDates(projectID, datesX);
@@ -182,8 +194,9 @@ public class ProjectManager {
      * @param dateEnd The enddate of the timeframe.
      * @param employeeID The Id of the employee that the series is based upon.
      * @return A series containing all the stored data to be displayed.
+     * @throws java.sql.SQLException
      */
-    public XYChart.Series calculateGraphBar(LocalDate dateStart, LocalDate dateEnd, int employeeID) {
+    public XYChart.Series calculateGraphBar(LocalDate dateStart, LocalDate dateEnd, int employeeID) throws SQLException{
 
         return dalFacade.loadTimeForUsersProjects(dateStart, dateEnd, employeeID);
     }

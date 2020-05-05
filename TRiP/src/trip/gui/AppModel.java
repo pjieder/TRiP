@@ -5,6 +5,7 @@
  */
 package trip.gui;
 
+import java.sql.SQLException;
 import javafx.collections.ObservableList;
 import trip.be.Employee;
 import trip.bll.EmployeeManager;
@@ -27,8 +28,9 @@ public class AppModel {
      * @param username The username of the employee
      * @param password The password of the employee
      * @return The employee found based on the username and password
+     * @throws java.sql.SQLException
      */
-    public Employee validateEmployee(String username, String password) {
+    public Employee validateEmployee(String username, String password) throws SQLException{
         return employeeManager.validateEmployee(username, password);
     }
 
@@ -37,8 +39,9 @@ public class AppModel {
      *
      * @param employee The employee to be saved.
      * @param password The desired password for the newly created employee.
+     * @throws java.sql.SQLException
      */
-    public void createEmployee(Employee employee, String password) {
+    public void createEmployee(Employee employee, String password) throws SQLException{
         employeeManager.createEmployee(employee, password);
     }
 
@@ -46,8 +49,9 @@ public class AppModel {
      * Loads all active employees
      *
      * @return Returns an observablelist containing all active employees stored.
+     * @throws java.sql.SQLException
      */
-    public ObservableList<Employee> loadActiveEmployees() {
+    public ObservableList<Employee> loadActiveEmployees() throws SQLException{
         return employeeManager.loadActiveEmployees();
     }
 
@@ -55,8 +59,9 @@ public class AppModel {
      * Loads all inactive employees
      *
      * @return Returns an observablelist containing all inactive employees stored.
+     * @throws java.sql.SQLException
      */
-    public ObservableList<Employee> loadInactiveEmployees() {
+    public ObservableList<Employee> loadInactiveEmployees() throws SQLException{
         return employeeManager.loadInactiveEmployees();
     }
 
@@ -65,8 +70,9 @@ public class AppModel {
      *
      * @param projectId The ID of the project searching for.
      * @return Returns an observablelist containing all employees assigned to the specified project.
+     * @throws java.sql.SQLException
      */
-    public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId) {
+    public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId) throws SQLException{
         return employeeManager.loadEmployeesAssignedToProject(projectId);
     }
 
@@ -76,8 +82,9 @@ public class AppModel {
      * @param projectId The ID of the project searching for.
      * @param isActive Boolean value representing whether or not the employees should be active or inactive
      * @return Returns an observablelist containing all active or inactive employees assigned to the specified project.
+     * @throws java.sql.SQLException
      */
-    public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId, boolean isActive) {
+    public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId, boolean isActive) throws SQLException{
         return employeeManager.loadEmployeesAssignedToProject(projectId, isActive);
     }
 
@@ -85,8 +92,9 @@ public class AppModel {
      * Updates the specified employee in the database.
      *
      * @param employee The employee that will update the previous employee with the same ID.
+     * @throws java.sql.SQLException
      */
-    public void updateEmployee(Employee employee) {
+    public void updateEmployee(Employee employee) throws SQLException{
         employeeManager.updateEmployee(employee);
     }
 
@@ -95,8 +103,9 @@ public class AppModel {
      *
      * @param employee The employee to be updated.
      * @param active Boolean representing whether or not the user should be active or inactive.
+     * @throws java.sql.SQLException
      */
-    public void updateEmployeeActive(Employee employee, boolean active) {
+    public void updateEmployeeActive(Employee employee, boolean active) throws SQLException{
         employeeManager.updateEmployeeActive(employee, active);
     }
 
@@ -105,8 +114,9 @@ public class AppModel {
      *
      * @param password The new password to be hashed and stored.
      * @param employee The employee to be updated.
+     * @throws java.sql.SQLException
      */
-    public void updatePassword(String password, Employee employee) {
+    public void updatePassword(String password, Employee employee) throws SQLException{
         employeeManager.updatePassword(password, employee);
     }
 
@@ -114,8 +124,9 @@ public class AppModel {
      * Deletes the specified employee from the database.
      *
      * @param employee The employee to be deleted.
+     * @throws java.sql.SQLException
      */
-    public void deleteEmployee(Employee employee) {
+    public void deleteEmployee(Employee employee) throws SQLException{
         employeeManager.deleteEmployee(employee);
     }
 

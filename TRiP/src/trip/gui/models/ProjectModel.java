@@ -5,6 +5,7 @@
  */
 package trip.gui.models;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import javafx.collections.ObservableList;
@@ -30,8 +31,9 @@ public class ProjectModel {
      *
      * @param project The project to be saved.
      * @param allEmployees The employees that should be registered to the project.
+     * @throws java.sql.SQLException
      */
-    public void createProject(Project project, List<Employee> allEmployees) {
+    public void createProject(Project project, List<Employee> allEmployees) throws SQLException{
         projectManager.createProject(project, allEmployees);
     }
 
@@ -39,8 +41,9 @@ public class ProjectModel {
      * Loads all saved projects in the database.
      *
      * @return An observablelist containing all projects stored.
+     * @throws java.sql.SQLException
      */
-    public ObservableList<Project> getAllProjects() {
+    public ObservableList<Project> getAllProjects() throws SQLException{
         return projectManager.getAllProjects();
     }
 
@@ -48,8 +51,9 @@ public class ProjectModel {
      * Loads all active projects stored in the database.
      *
      * @return An observablelist containing all active projects stored.
+     * @throws java.sql.SQLException
      */
-    public ObservableList<Project> loadAllActiveProjects() {
+    public ObservableList<Project> loadAllActiveProjects() throws SQLException{
         return projectManager.loadAllActiveProjects();
     }
 
@@ -57,8 +61,9 @@ public class ProjectModel {
      * Loads all inactiev projects stored in the database.
      *
      * @return An observablelist containing all the inactive projects stored.
+     * @throws java.sql.SQLException
      */
-    public ObservableList<Project> loadAllInactiveProjects() {
+    public ObservableList<Project> loadAllInactiveProjects() throws SQLException{
         return projectManager.loadAllInactiveProjects();
     }
 
@@ -67,8 +72,9 @@ public class ProjectModel {
      *
      * @param employeeId The ID of the employee.
      * @return Returns an observablelist containing all projects assigned to the specified employee.
+     * @throws java.sql.SQLException
      */
-    public ObservableList<Project> loadAllEmployeeProjects(int employeeId) {
+    public ObservableList<Project> loadAllEmployeeProjects(int employeeId) throws SQLException{
         return projectManager.loadEmployeeProjects(employeeId);
 
     }
@@ -80,8 +86,9 @@ public class ProjectModel {
      * @param endDate The enddate of the timespan.
      * @param employeeID The ID of the specified employee.
      * @return A list containing all projects having been worked on by the specified employee between the two dates.
+     * @throws java.sql.SQLException
      */
-    public List<Project> loadWorkedOnProjectsBetweenDates(LocalDate startDate, LocalDate endDate, int employeeID) {
+    public List<Project> loadWorkedOnProjectsBetweenDates(LocalDate startDate, LocalDate endDate, int employeeID) throws SQLException{
         return projectManager.loadWorkedOnProjectsBetweenDates(startDate, endDate, employeeID);
     }
 
@@ -92,8 +99,9 @@ public class ProjectModel {
      * @param startDate The startdate of the timespan.
      * @param endDate The enddate of the timespan.
      * @return An int value representing the total amount of time having been used in seconds.
+     * @throws java.sql.SQLException
      */
-    public int loadAllProjectTimeBetweenDates(int projectID, LocalDate startDate, LocalDate endDate) {
+    public int loadAllProjectTimeBetweenDates(int projectID, LocalDate startDate, LocalDate endDate) throws SQLException{
         return projectManager.loadAllProjectTimeBetweenDates(projectID, startDate, endDate);
     }
 
@@ -105,8 +113,9 @@ public class ProjectModel {
      * @param startDate The startdate of the timespan.
      * @param endDate The enddate of the timespan.
      * @return An int value representing the total amount of time the specified employe have been working on the project in seconds.
+     * @throws java.sql.SQLException
      */
-    public int loadAllEmployeeProjectTimeBetweenDates(int employeeID, int projectID, LocalDate startDate, LocalDate endDate) {
+    public int loadAllEmployeeProjectTimeBetweenDates(int employeeID, int projectID, LocalDate startDate, LocalDate endDate) throws SQLException{
         return projectManager.loadAllEmployeeProjectTimeBetweenDates(employeeID, projectID, startDate, endDate);
     }
 
@@ -115,8 +124,9 @@ public class ProjectModel {
      *
      * @param project The project that will update the previous project with the same ID.
      * @param allEmployees The employees that should be registered to the project.
+     * @throws java.sql.SQLException
      */
-    public void updateProject(Project project, List<Employee> allEmployees) {
+    public void updateProject(Project project, List<Employee> allEmployees) throws SQLException{
         projectManager.updateProject(project, allEmployees);
     }
 
@@ -124,8 +134,9 @@ public class ProjectModel {
      * Deletes the specified project from the database.
      *
      * @param project The project to be deleted.
+     * @throws java.sql.SQLException
      */
-    public void deleteProject(Project project) {
+    public void deleteProject(Project project) throws SQLException{
         projectManager.deleteProject(project);
     }
 
@@ -147,8 +158,9 @@ public class ProjectModel {
      * @param startDate The startdate of the timeframe.
      * @param endDate The enddate of the timeframe.
      * @return A series containing all the stored data to be displayed.
+     * @throws java.sql.SQLException
      */
-    public XYChart.Series calculateGraphLine(int projectID, LocalDate startDate, LocalDate endDate) {
+    public XYChart.Series calculateGraphLine(int projectID, LocalDate startDate, LocalDate endDate) throws SQLException{
         return projectManager.calculateGraphLine(projectID, startDate, endDate);
     }
 
@@ -159,8 +171,9 @@ public class ProjectModel {
      * @param endDate The enddate of the timeframe.
      * @param employeeID The Id of the employee that the series is based upon.
      * @return
+     * @throws java.sql.SQLException
      */
-    public XYChart.Series calculateGraphBar(LocalDate startDate, LocalDate endDate, int employeeID) {
+    public XYChart.Series calculateGraphBar(LocalDate startDate, LocalDate endDate, int employeeID) throws SQLException{
         return projectManager.calculateGraphBar(startDate, endDate, employeeID);
     }
 }

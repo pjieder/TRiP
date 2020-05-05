@@ -5,6 +5,7 @@
  */
 package trip.bll;
 
+import java.sql.SQLException;
 import java.util.Date;
 import javafx.collections.ObservableList;
 import trip.be.Task;
@@ -31,8 +32,9 @@ public class TaskManager {
      * @param projectId The ID of the project that the task is associated to.
      * @param taskName The name of the task.
      * @return The newly created task.
+     * @throws java.sql.SQLException
      */
-    public Task addTask(int userId, int projectId, String taskName) {
+    public Task addTask(int userId, int projectId, String taskName) throws SQLException{
         return dalFacade.addTask(userId, projectId, taskName);
     }
 
@@ -42,8 +44,9 @@ public class TaskManager {
      * @param userId The ID of
      * @param projectId
      * @return
+     * @throws java.sql.SQLException
      */
-    public ObservableList<Task> loadTasks(int userId, int projectId) {
+    public ObservableList<Task> loadTasks(int userId, int projectId) throws SQLException{
         return dalFacade.loadTasks(userId, projectId);
     }
 
@@ -52,8 +55,9 @@ public class TaskManager {
      *
      * @param task The task that will update the previous task with the same ID.
      * @return A boolean value representing whether or not the task was updated.
+     * @throws java.sql.SQLException
      */
-    public boolean updateTask(Task task) {
+    public boolean updateTask(Task task) throws SQLException{
         return dalFacade.updateTask(task);
     }
 
@@ -62,8 +66,9 @@ public class TaskManager {
      *
      * @param task The task to be deleted.
      * @return A boolean value representing whether or not the task was deleted.
+     * @throws java.sql.SQLException
      */
-    public boolean deleteTask(Task task) {
+    public boolean deleteTask(Task task) throws SQLException{
         return dalFacade.deleteTask(task);
     }
 
@@ -74,8 +79,9 @@ public class TaskManager {
      * @param time The total amount of time having been worked on the task in seconds.
      * @param startTime The starttime of when the work began.
      * @param stopTime The endtime of when the work ended.
+     * @throws java.sql.SQLException
      */
-    public void saveTimeForTask(Task task, int time, Date startTime, Date stopTime) {
+    public void saveTimeForTask(Task task, int time, Date startTime, Date stopTime) throws SQLException{
         dalFacade.saveTimeForTask(task, time, startTime, stopTime);
     }
 
@@ -84,8 +90,9 @@ public class TaskManager {
      *
      * @param taskTime The taskTime that will update the previous taskTime with the same ID.
      * @return A boolean value representing whether or not the update was successful.
+     * @throws java.sql.SQLException
      */
-    public boolean UpdateTimeForTask(TaskTime taskTime) {
+    public boolean UpdateTimeForTask(TaskTime taskTime) throws SQLException{
         return dalFacade.UpdateTimeForTask(taskTime);
     }
 
@@ -94,8 +101,9 @@ public class TaskManager {
      *
      * @param taskTime The taskTime to be deleted.
      * @return A boolean value representing whether or not the delete was successful.
+     * @throws java.sql.SQLException
      */
-    public boolean DeleteTimeForTask(TaskTime taskTime) {
+    public boolean DeleteTimeForTask(TaskTime taskTime) throws SQLException{
         return dalFacade.DeleteTimeForTask(taskTime);
     }
 

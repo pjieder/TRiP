@@ -5,6 +5,7 @@
  */
 package trip.dal.dbmanagers.dbdao.Interfaces;
 
+import java.sql.SQLException;
 import trip.be.User;
 
 /**
@@ -18,7 +19,8 @@ public interface IUserDBDAO {
      *
      * @param id the ID of the user
      * @return The user with the specified ID
+     * @throws java.sql.SQLException
      */
-    public User getUserById(int id);
+    public User getUserById(int id) throws SQLException;
 
 }

@@ -11,8 +11,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import trip.be.Admin;
 
 /**
@@ -26,9 +24,10 @@ public class AdminDBDAO implements IAdminDBDAO {
      *
      * @param id the ID of the admin
      * @return The admin with the specified ID
+     * @throws java.sql.SQLException
      */
     @Override
-    public Admin getAdminById(int id) {
+    public Admin getAdminById(int id) throws SQLException{
 
         Connection con = null;
         Admin admin = null;
@@ -49,18 +48,12 @@ public class AdminDBDAO implements IAdminDBDAO {
 
                 admin = new Admin(fname, lname, email);
                 admin.setId(id);
-
             }
-
             return admin;
 
-        } catch (SQLException ex) {
-            Logger.getLogger(AdminDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+        }finally {
             DBSettings.getInstance().releaseConnection(con);
         }
-
-        return admin;
     }
 
 }

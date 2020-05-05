@@ -6,7 +6,6 @@
 package trip.dal.dbmanagers.dbdao;
 
 import trip.dal.dbmanagers.dbdao.Interfaces.IProjectDBDAO;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,8 +14,6 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
@@ -31,23 +28,14 @@ import trip.utilities.TimeConverter;
  */
 public class ProjectDBDAO implements IProjectDBDAO {
 
-    private DBSettings dbCon;
-
-    public ProjectDBDAO() {
-        try {
-            dbCon = new DBSettings();
-        } catch (IOException ex) {
-            Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     /**
      * Saves the newly created project in the database.
      *
      * @param project The project to be saved.
+     * @throws java.sql.SQLException
      */
     @Override
-    public void createProject(Project project) {
+    public void createProject(Project project) throws SQLException{
         Connection con = null;
         try {
             con = DBSettings.getInstance().getConnection();
@@ -67,9 +55,7 @@ public class ProjectDBDAO implements IProjectDBDAO {
             if (rs.next()) {
                 project.setId(rs.getInt(1));
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+        }finally {
             DBSettings.getInstance().releaseConnection(con);
             DatabaseLogger.logAction("Created project with ID: " + project.getId() + " (" + project.getName() + ")");
         }
@@ -79,9 +65,10 @@ public class ProjectDBDAO implements IProjectDBDAO {
      * Loads all saved projects in the database.
      *
      * @return An observablelist containing all projects stored.
+     * @throws java.sql.SQLException
      */
     @Override
-    public ObservableList<Project> loadAllProjects() {
+    public ObservableList<Project> loadAllProjects() throws SQLException{
         Connection con = null;
         ObservableList<Project> allProjects = FXCollections.observableArrayList();
         try {
@@ -99,21 +86,19 @@ public class ProjectDBDAO implements IProjectDBDAO {
                 allProjects.add(project);
             }
             return allProjects;
-        } catch (SQLException ex) {
-            Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+        }finally {
             DBSettings.getInstance().releaseConnection(con);
         }
-        return null;
     }
 
     /**
      * Loads all active projects stored in the database.
      *
      * @return An observablelist containing all active projects stored.
+     * @throws java.sql.SQLException
      */
     @Override
-    public ObservableList<Project> loadAllActiveProjects() {
+    public ObservableList<Project> loadAllActiveProjects() throws SQLException{
         Connection con = null;
         ObservableList<Project> projects = FXCollections.observableArrayList();
         try {
@@ -134,21 +119,19 @@ public class ProjectDBDAO implements IProjectDBDAO {
 
             return projects;
 
-        } catch (SQLException ex) {
-            Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+        }finally {
             DBSettings.getInstance().releaseConnection(con);
         }
-        return projects;
     }
 
     /**
      * Loads all inactiev projects stored in the database.
      *
      * @return An observablelist containing all the inactive projects stored.
+     * @throws java.sql.SQLException
      */
     @Override
-    public ObservableList<Project> loadAllInactiveProjects() {
+    public ObservableList<Project> loadAllInactiveProjects() throws SQLException{
         Connection con = null;
         ObservableList<Project> projects = FXCollections.observableArrayList();
         try {
@@ -168,12 +151,9 @@ public class ProjectDBDAO implements IProjectDBDAO {
             }
             return projects;
 
-        } catch (SQLException ex) {
-            Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+        }finally {
             DBSettings.getInstance().releaseConnection(con);
         }
-        return projects;
     }
 
     /**
@@ -181,9 +161,10 @@ public class ProjectDBDAO implements IProjectDBDAO {
      *
      * @param employeeID The ID of the employee.
      * @return Returns an observablelist containing all projects assigned to the specified employee.
+     * @throws java.sql.SQLException
      */
     @Override
-    public ObservableList<Project> loadEmployeeProjects(int employeeID) {
+    public ObservableList<Project> loadEmployeeProjects(int employeeID) throws SQLException{
 
         Connection con = null;
         ObservableList<Project> projects = FXCollections.observableArrayList();
@@ -207,12 +188,9 @@ public class ProjectDBDAO implements IProjectDBDAO {
             }
             return projects;
 
-        } catch (SQLException ex) {
-            Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+        }finally {
             DBSettings.getInstance().releaseConnection(con);
         }
-        return projects;
     }
 
     /**
@@ -221,9 +199,10 @@ public class ProjectDBDAO implements IProjectDBDAO {
      * @param employeeID The ID of the employee working on the project.
      * @param projectID The ID of the project being worked on.
      * @return An int value representing the total amount of time worked on the project by the specified user in seconds.
+     * @throws java.sql.SQLException
      */
     @Override
-    public int loadProjectTime(int employeeID, int projectID) {
+    public int loadProjectTime(int employeeID, int projectID) throws SQLException{
 
         Connection con = null;
         int totalTime = 0;
@@ -242,12 +221,9 @@ public class ProjectDBDAO implements IProjectDBDAO {
             }
             return totalTime;
 
-        } catch (SQLException ex) {
-            Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+        }finally {
             DBSettings.getInstance().releaseConnection(con);
         }
-        return totalTime;
     }
 
     /**
@@ -255,9 +231,10 @@ public class ProjectDBDAO implements IProjectDBDAO {
      *
      * @param projectID The ID of the project.
      * @return An int value representing the total amount of time worked on the project in seconds.
+     * @throws java.sql.SQLException
      */
     @Override
-    public int loadTotalProjectTime(int projectID) {
+    public int loadTotalProjectTime(int projectID) throws SQLException{
         Connection con = null;
         int totalTime = 0;
 
@@ -274,12 +251,9 @@ public class ProjectDBDAO implements IProjectDBDAO {
                 totalTime = rs.getInt("TotalTime");
             }
             return totalTime;
-        } catch (SQLException ex) {
-            Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+        }finally {
             DBSettings.getInstance().releaseConnection(con);
         }
-        return totalTime;
     }
 
     /**
@@ -289,9 +263,10 @@ public class ProjectDBDAO implements IProjectDBDAO {
      * @param startDate The startdate of the timespan.
      * @param endDate The enddate of the timespan.
      * @return An int value representing the total amount of time having been used in seconds.
+     * @throws java.sql.SQLException
      */
     @Override
-    public int loadAllProjectTimeBetweenDates(int projectID, LocalDate startDate, LocalDate endDate) {
+    public int loadAllProjectTimeBetweenDates(int projectID, LocalDate startDate, LocalDate endDate) throws SQLException{
         Connection con = null;
         int totalTime = 0;
 
@@ -311,12 +286,9 @@ public class ProjectDBDAO implements IProjectDBDAO {
 
             return totalTime;
 
-        } catch (SQLException ex) {
-            Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+        }finally {
             DBSettings.getInstance().releaseConnection(con);
         }
-        return totalTime;
     }
 
     /**
@@ -327,9 +299,10 @@ public class ProjectDBDAO implements IProjectDBDAO {
      * @param startDate The startdate of the timespan.
      * @param endDate The enddate of the timespan.
      * @return An int value representing the total amount of time the specified employe have been working on the project in seconds.
+     * @throws java.sql.SQLException
      */
     @Override
-    public int loadAllEmployeeProjectTimeBetweenDates(int employeeID, int projectID, LocalDate startDate, LocalDate endDate) {
+    public int loadAllEmployeeProjectTimeBetweenDates(int employeeID, int projectID, LocalDate startDate, LocalDate endDate) throws SQLException{
         Connection con = null;
         int totalTime = 0;
 
@@ -350,12 +323,9 @@ public class ProjectDBDAO implements IProjectDBDAO {
 
             return totalTime;
 
-        } catch (SQLException ex) {
-            Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+        }finally {
             DBSettings.getInstance().releaseConnection(con);
         }
-        return totalTime;
     }
 
     /**
@@ -363,9 +333,10 @@ public class ProjectDBDAO implements IProjectDBDAO {
      *
      * @param date The date being searched for.
      * @return An int value representing the total amount of work done on the specified date in seconds.
+     * @throws java.sql.SQLException
      */
     @Override
-    public int loadAllProjectTimeForDay(LocalDate date) {
+    public int loadAllProjectTimeForDay(LocalDate date) throws SQLException{
 
         Connection con = null;
         int totalTime = 0;
@@ -384,12 +355,9 @@ public class ProjectDBDAO implements IProjectDBDAO {
 
             return totalTime;
 
-        } catch (SQLException ex) {
-            Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+        }finally {
             DBSettings.getInstance().releaseConnection(con);
         }
-        return totalTime;
     }
 
     /**
@@ -398,9 +366,10 @@ public class ProjectDBDAO implements IProjectDBDAO {
      * @param projectID The project ID of the project being searched for.
      * @param date The date being searched for.
      * @return An int value representing the total amount of work done on the specified project on the specified date in seconds.
+     * @throws java.sql.SQLException
      */
     @Override
-    public int loadProjectTimeForDay(int projectID, LocalDate date) {
+    public int loadProjectTimeForDay(int projectID, LocalDate date) throws SQLException{
 
         Connection con = null;
         int totalTime = 0;
@@ -420,12 +389,9 @@ public class ProjectDBDAO implements IProjectDBDAO {
 
             return totalTime;
 
-        } catch (SQLException ex) {
-            Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+        }finally {
             DBSettings.getInstance().releaseConnection(con);
         }
-        return totalTime;
     }
 
     /**
@@ -435,9 +401,10 @@ public class ProjectDBDAO implements IProjectDBDAO {
      * @param endDate The enddate of the timespan.
      * @param employeeID The ID of the specified employee.
      * @return A list containing all projects having been worked on by the specified employee between the two dates.
+     * @throws java.sql.SQLException
      */
     @Override
-    public List<Project> loadWorkedOnProjectsBetweenDates(LocalDate startDate, LocalDate endDate, int employeeID) {
+    public List<Project> loadWorkedOnProjectsBetweenDates(LocalDate startDate, LocalDate endDate, int employeeID) throws SQLException{
         Connection con = null;
         List<Project> allWorkedOnProjects = new ArrayList();
 
@@ -464,12 +431,9 @@ public class ProjectDBDAO implements IProjectDBDAO {
 
             return allWorkedOnProjects;
 
-        } catch (SQLException ex) {
-            Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+        }finally {
             DBSettings.getInstance().releaseConnection(con);
         }
-        return allWorkedOnProjects;
     }
 
     /**
@@ -479,9 +443,10 @@ public class ProjectDBDAO implements IProjectDBDAO {
      * @param endDate The enddate of the timeframe.
      * @param employeeID The Id of the employee that the series is based upon.
      * @return A series containing all the stored data to be displayed.
+     * @throws java.sql.SQLException
      */
     @Override
-    public XYChart.Series loadTimeForUsersProjects(LocalDate startDate, LocalDate endDate, int employeeID) {
+    public XYChart.Series loadTimeForUsersProjects(LocalDate startDate, LocalDate endDate, int employeeID) throws SQLException{
 
         Connection con = null;
         XYChart.Series series = new XYChart.Series();
@@ -507,21 +472,19 @@ public class ProjectDBDAO implements IProjectDBDAO {
 
             return series;
 
-        } catch (SQLException ex) {
-            Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+        }finally {
             DBSettings.getInstance().releaseConnection(con);
         }
-        return series;
     }
 
     /**
      * Updates the specified project in the database.
      *
      * @param project The project that will update the previous project with the same ID.
+     * @throws java.sql.SQLException
      */
     @Override
-    public void updateProject(Project project) {
+    public void updateProject(Project project) throws SQLException{
         Connection con = null;
         try {
             con = DBSettings.getInstance().getConnection();
@@ -537,9 +500,7 @@ public class ProjectDBDAO implements IProjectDBDAO {
             if (affected < 1) {
                 throw new SQLException();
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+        }finally {
             DBSettings.getInstance().releaseConnection(con);
             DatabaseLogger.logAction("Updated project with ID: " + project.getId() + " (" + project.getName() + ")");
         }
@@ -549,9 +510,10 @@ public class ProjectDBDAO implements IProjectDBDAO {
      * Deletes the specified project from the database.
      *
      * @param project The project to be deleted.
+     * @throws java.sql.SQLException
      */
     @Override
-    public void deleteProject(Project project) {
+    public void deleteProject(Project project) throws SQLException{
         Connection con = null;
         try {
             con = DBSettings.getInstance().getConnection();
@@ -559,9 +521,7 @@ public class ProjectDBDAO implements IProjectDBDAO {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, project.getId());
             ps.execute();
-        } catch (SQLException ex) {
-            Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+        }finally {
             DBSettings.getInstance().releaseConnection(con);
             DatabaseLogger.logAction("Deleted project with ID: " + project.getId() + " (" + project.getName() + ")");
         }

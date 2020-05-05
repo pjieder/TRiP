@@ -5,6 +5,7 @@
  */
 package trip.gui.models;
 
+import java.sql.SQLException;
 import javafx.collections.ObservableList;
 import trip.be.Customer;
 import trip.bll.CustomerManager;
@@ -25,8 +26,9 @@ public class CustomerModel {
      * Saves the newly created customer in the database.
      *
      * @param customer The customer to be saved.
+     * @throws java.sql.SQLException
      */
-    public void createCustomer(Customer customer) {
+    public void createCustomer(Customer customer) throws SQLException{
         customerManager.createCustomer(customer);
     }
 
@@ -34,8 +36,9 @@ public class CustomerModel {
      * Loads all customers stored in the database.
      *
      * @return Returns an observablelist containing all the stored customers.
+     * @throws java.sql.SQLException
      */
-    public ObservableList<Customer> getAllCustomers() {
+    public ObservableList<Customer> getAllCustomers() throws SQLException{
         return customerManager.getAllCustomers();
     }
 
@@ -43,8 +46,9 @@ public class CustomerModel {
      * Updates the specified customer in the database.
      *
      * @param customer The customer that will update the previous customer with the same ID.
+     * @throws java.sql.SQLException
      */
-    public void updateCustomer(Customer customer) {
+    public void updateCustomer(Customer customer) throws SQLException{
         customerManager.updateCustomer(customer);
     }
 
@@ -52,8 +56,9 @@ public class CustomerModel {
      * Deletes the specified customer from the database.
      *
      * @param customer The customer to be deleted.
+     * @throws java.sql.SQLException
      */
-    public void deleteCustomer(Customer customer) {
+    public void deleteCustomer(Customer customer) throws SQLException{
         customerManager.deleteCustomer(customer);
     }
 

@@ -5,6 +5,7 @@
  */
 package trip.dal.dbmanagers.dbdao.Interfaces;
 
+import java.sql.SQLException;
 import trip.be.Admin;
 
 /**
@@ -18,7 +19,8 @@ public interface IAdminDBDAO {
      *
      * @param id the ID of the admin
      * @return The admin with the specified ID
+     * @throws java.sql.SQLException
      */
-    public Admin getAdminById(int id);
+    public Admin getAdminById(int id) throws SQLException;
 
 }

@@ -10,8 +10,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import trip.be.User;
 import trip.dal.dbmanagers.dbdao.Interfaces.IUserDBDAO;
 
@@ -26,9 +24,10 @@ public class UserDBDAO implements IUserDBDAO {
      *
      * @param id the ID of the user
      * @return The user with the specified ID
+     * @throws java.sql.SQLException
      */
     @Override
-    public User getUserById(int id) {
+    public User getUserById(int id) throws SQLException{
 
         Connection con = null;
         User user = null;
@@ -53,13 +52,9 @@ public class UserDBDAO implements IUserDBDAO {
             }
             return user;
 
-        } catch (SQLException ex) {
-            Logger.getLogger(UserDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+        }finally {
             DBSettings.getInstance().releaseConnection(con);
         }
-
-        return user;
     }
 
 }

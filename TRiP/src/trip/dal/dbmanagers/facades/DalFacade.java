@@ -29,6 +29,7 @@ import trip.dal.dbmanagers.dbdao.Interfaces.IUserDBDAO;
 import trip.dal.dbmanagers.dbdao.ProjectDBDAO;
 import trip.dal.dbmanagers.dbdao.TaskDBDAO;
 import trip.dal.dbmanagers.dbdao.UserDBDAO;
+import java.sql.SQLException;
 
 /**
  *
@@ -59,9 +60,10 @@ public class DalFacade implements IDalFacade {
      * @param username The username of the employee
      * @param password The password of the employee
      * @return The employee found based on the username and password
+     * @throws java.sql.SQLException
      */
     @Override
-    public Employee login(String username, String password) {
+    public Employee login(String username, String password) throws SQLException{
 
         Employee employee = null;
         int employeeId = employeeDBDAO.isLoginCorrect(username, password);
@@ -84,9 +86,10 @@ public class DalFacade implements IDalFacade {
      *
      * @param employee The employee to be saved.
      * @param password The desired password for the newly created employee.
+     * @throws java.sql.SQLException
      */
     @Override
-    public void createEmployee(Employee employee, String password) {
+    public void createEmployee(Employee employee, String password) throws SQLException{
         employeeDBDAO.createEmployee(employee, password);
     }
 
@@ -94,9 +97,10 @@ public class DalFacade implements IDalFacade {
      * Loads all active employees
      *
      * @return Returns an observablelist containing all active employees stored.
+     * @throws java.sql.SQLException
      */
     @Override
-    public ObservableList<Employee> loadActiveEmployees() {
+    public ObservableList<Employee> loadActiveEmployees() throws SQLException{
         return employeeDBDAO.loadActiveEmployees();
     }
 
@@ -104,9 +108,10 @@ public class DalFacade implements IDalFacade {
      * Loads all inactive employees
      *
      * @return Returns an observablelist containing all inactive employees stored.
+     * @throws java.sql.SQLException
      */
     @Override
-    public ObservableList<Employee> loadInactiveEmployees() {
+    public ObservableList<Employee> loadInactiveEmployees() throws SQLException{
         return employeeDBDAO.loadInactiveEmployees();
     }
 
@@ -115,9 +120,10 @@ public class DalFacade implements IDalFacade {
      *
      * @param projectId The ID of the project searching for.
      * @return Returns an observablelist containing all employees assigned to the specified project.
+     * @throws java.sql.SQLException
      */
     @Override
-    public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId) {
+    public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId) throws SQLException{
         return employeeDBDAO.loadEmployeesAssignedToProject(projectId);
     }
 
@@ -127,9 +133,10 @@ public class DalFacade implements IDalFacade {
      * @param projectId The ID of the project searching for.
      * @param isActive Boolean value representing whether or not the employees should be active or inactive
      * @return Returns an observablelist containing all active or inactive employees assigned to the specified project.
+     * @throws java.sql.SQLException
      */
     @Override
-    public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId, boolean isActive) {
+    public ObservableList<Employee> loadEmployeesAssignedToProject(int projectId, boolean isActive) throws SQLException{
         return employeeDBDAO.loadEmployeesAssignedToProject(projectId, isActive);
     }
 
@@ -137,9 +144,10 @@ public class DalFacade implements IDalFacade {
      * Updates the specified employee in the database.
      *
      * @param employee The employee that will update the previous employee with the same ID.
+     * @throws java.sql.SQLException
      */
     @Override
-    public void updateEmployee(Employee employee) {
+    public void updateEmployee(Employee employee) throws SQLException{
         employeeDBDAO.updateEmployee(employee);
         employeeDBDAO.updateUsername(employee.getEmail(), employee);
     }
@@ -149,9 +157,10 @@ public class DalFacade implements IDalFacade {
      *
      * @param employee The employee to be updated.
      * @param active Boolean representing whether or not the user should be active or inactive.
+     * @throws java.sql.SQLException
      */
     @Override
-    public void updateEmployeeActive(Employee employee, boolean active) {
+    public void updateEmployeeActive(Employee employee, boolean active) throws SQLException{
         employeeDBDAO.updateEmployeeActive(employee, active);
     }
 
@@ -160,9 +169,10 @@ public class DalFacade implements IDalFacade {
      *
      * @param password The new password to be hashed and stored.
      * @param employee The employee to be updated.
+     * @throws java.sql.SQLException
      */
     @Override
-    public void updatePassword(String password, Employee employee) {
+    public void updatePassword(String password, Employee employee) throws SQLException{
         employeeDBDAO.updatePassword(password, employee);
     }
 
@@ -170,9 +180,10 @@ public class DalFacade implements IDalFacade {
      * Deletes the specified employee from the database.
      *
      * @param employee The employee to be deleted.
+     * @throws java.sql.SQLException
      */
     @Override
-    public void deleteEmployee(Employee employee) {
+    public void deleteEmployee(Employee employee) throws SQLException{
         employeeDBDAO.deleteEmployee(employee);
     }
 
@@ -181,9 +192,10 @@ public class DalFacade implements IDalFacade {
      *
      * @param project The project to be saved.
      * @param allEmployees The employees that should be registered to the project.
+     * @throws java.sql.SQLException
      */
     @Override
-    public void createProject(Project project, List<Employee> allEmployees) {
+    public void createProject(Project project, List<Employee> allEmployees) throws SQLException{
         projectManager.createProject(project);
         customerManager.addCustomerToProject(project.getCustomer(), project);
         for (Employee employee : allEmployees) {
@@ -195,9 +207,10 @@ public class DalFacade implements IDalFacade {
      * Loads all saved projects in the database.
      *
      * @return An observablelist containing all projects stored.
+     * @throws java.sql.SQLException
      */
     @Override
-    public ObservableList<Project> getAllProjects() {
+    public ObservableList<Project> getAllProjects() throws SQLException{
         return projectManager.loadAllProjects();
     }
 
@@ -205,9 +218,10 @@ public class DalFacade implements IDalFacade {
      * Loads all active projects stored in the database.
      *
      * @return An observablelist containing all active projects stored.
+     * @throws java.sql.SQLException
      */
     @Override
-    public ObservableList<Project> loadAllActiveProjects() {
+    public ObservableList<Project> loadAllActiveProjects() throws SQLException{
         ObservableList<Project> allActiveProjects = projectManager.loadAllActiveProjects();
         for (Project project : allActiveProjects) {
             project.setTotalTime(projectManager.loadTotalProjectTime(project.getId()));
@@ -220,9 +234,10 @@ public class DalFacade implements IDalFacade {
      * Loads all inactiev projects stored in the database.
      *
      * @return An observablelist containing all the inactive projects stored.
+     * @throws java.sql.SQLException
      */
     @Override
-    public ObservableList<Project> loadAllInactiveProjects() {
+    public ObservableList<Project> loadAllInactiveProjects() throws SQLException{
         ObservableList<Project> allActiveProjects = projectManager.loadAllInactiveProjects();
         for (Project project : allActiveProjects) {
             project.setTotalTime(projectManager.loadTotalProjectTime(project.getId()));
@@ -236,9 +251,10 @@ public class DalFacade implements IDalFacade {
      *
      * @param employeeId The ID of the employee.
      * @return Returns an observablelist containing all projects assigned to the specified employee.
+     * @throws java.sql.SQLException
      */
     @Override
-    public ObservableList<Project> loadEmployeeProjects(int employeeId) {
+    public ObservableList<Project> loadEmployeeProjects(int employeeId) throws SQLException{
         ObservableList<Project> allUserProjects = projectManager.loadEmployeeProjects(employeeId);
         for (Project project : allUserProjects) {
             project.setTotalTime(projectManager.loadProjectTime(employeeId, project.getId()));
@@ -252,9 +268,10 @@ public class DalFacade implements IDalFacade {
      * @param projectID The ID of the project searching for.
      * @param dates A list of all dates that the total time is wanted for.
      * @return A list of all time used each day of the specified days in seconds.
+     * @throws java.sql.SQLException
      */
     @Override
-    public List<Integer> loadTimeForDates(int projectID, List<LocalDate> dates) {
+    public List<Integer> loadTimeForDates(int projectID, List<LocalDate> dates) throws SQLException{
 
         List<Integer> dateTime = new ArrayList();
 
@@ -279,9 +296,10 @@ public class DalFacade implements IDalFacade {
      * @param endDate The enddate of the timespan.
      * @param employeeID The ID of the specified employee.
      * @return A list containing all projects having been worked on by the specified employee between the two dates.
+     * @throws java.sql.SQLException
      */
     @Override
-    public List<Project> loadWorkedOnProjectsBetweenDates(LocalDate startDate, LocalDate endDate, int employeeID) {
+    public List<Project> loadWorkedOnProjectsBetweenDates(LocalDate startDate, LocalDate endDate, int employeeID) throws SQLException{
         return projectManager.loadWorkedOnProjectsBetweenDates(startDate, endDate, employeeID);
     }
 
@@ -292,9 +310,10 @@ public class DalFacade implements IDalFacade {
      * @param endDate The enddate of the timeframe.
      * @param employeeID The Id of the employee that the series is based upon.
      * @return A series containing all the stored data to be displayed.
+     * @throws java.sql.SQLException
      */
     @Override
-    public XYChart.Series loadTimeForUsersProjects(LocalDate startDate, LocalDate endDate, int employeeID) {
+    public XYChart.Series loadTimeForUsersProjects(LocalDate startDate, LocalDate endDate, int employeeID) throws SQLException{
         return projectManager.loadTimeForUsersProjects(startDate, endDate, employeeID);
     }
 
@@ -305,9 +324,10 @@ public class DalFacade implements IDalFacade {
      * @param startDate The startdate of the timespan.
      * @param endDate The enddate of the timespan.
      * @return An int value representing the total amount of time having been used in seconds.
+     * @throws java.sql.SQLException
      */
     @Override
-    public int loadAllProjectTimeBetweenDates(int projectID, LocalDate startDate, LocalDate endDate) {
+    public int loadAllProjectTimeBetweenDates(int projectID, LocalDate startDate, LocalDate endDate) throws SQLException{
         return projectManager.loadAllProjectTimeBetweenDates(projectID, startDate, endDate);
     }
 
@@ -319,9 +339,10 @@ public class DalFacade implements IDalFacade {
      * @param startDate The startdate of the timespan.
      * @param endDate The enddate of the timespan.
      * @return An int value representing the total amount of time the specified employe have been working on the project in seconds.
+     * @throws java.sql.SQLException
      */
     @Override
-    public int loadAllEmployeeProjectTimeBetweenDates(int employeeID, int projectID, LocalDate startDate, LocalDate endDate) {
+    public int loadAllEmployeeProjectTimeBetweenDates(int employeeID, int projectID, LocalDate startDate, LocalDate endDate) throws SQLException{
         return projectManager.loadAllEmployeeProjectTimeBetweenDates(employeeID, projectID, startDate, endDate);
     }
 
@@ -330,9 +351,10 @@ public class DalFacade implements IDalFacade {
      *
      * @param project The project that will update the previous project with the same ID.
      * @param allEmployees The employees that should be registered to the project.
+     * @throws java.sql.SQLException
      */
     @Override
-    public void updateProject(Project project, List<Employee> allEmployees) {
+    public void updateProject(Project project, List<Employee> allEmployees) throws SQLException{
         projectManager.updateProject(project);
         customerManager.removeCustomerFromProject(project.getId());
         customerManager.addCustomerToProject(project.getCustomer(), project);
@@ -347,9 +369,10 @@ public class DalFacade implements IDalFacade {
      * Deletes the specified project from the database.
      *
      * @param project The project to be deleted.
+     * @throws java.sql.SQLException
      */
     @Override
-    public void deleteProject(Project project) {
+    public void deleteProject(Project project) throws SQLException{
         projectManager.deleteProject(project);
     }
 
@@ -360,9 +383,10 @@ public class DalFacade implements IDalFacade {
      * @param projectId The ID of the project that the task is associated to.
      * @param taskName The name of the task.
      * @return The newly created task.
+     * @throws java.sql.SQLException
      */
     @Override
-    public Task addTask(int userId, int projectId, String taskName) {
+    public Task addTask(int userId, int projectId, String taskName) throws SQLException{
         return taskManager.addTask(userId, projectId, taskName);
     }
 
@@ -372,9 +396,10 @@ public class DalFacade implements IDalFacade {
      * @param employeeId The ID of the specified employee.
      * @param projectId The ID of the specified project.
      * @return An observablelist containing all stored tasks for the specified user and project.
+     * @throws java.sql.SQLException
      */
     @Override
-    public ObservableList<Task> loadTasks(int employeeId, int projectId) {
+    public ObservableList<Task> loadTasks(int employeeId, int projectId) throws SQLException{
 
         ObservableList<Task> tasks = taskManager.loadTasks(employeeId, projectId);
 
@@ -391,9 +416,10 @@ public class DalFacade implements IDalFacade {
      *
      * @param task The task that will update the previous task with the same ID.
      * @return A boolean value representing whether or not the task was updated.
+     * @throws java.sql.SQLException
      */
     @Override
-    public boolean updateTask(Task task) {
+    public boolean updateTask(Task task) throws SQLException{
         return taskManager.updateTask(task);
     }
 
@@ -402,9 +428,10 @@ public class DalFacade implements IDalFacade {
      *
      * @param task The task to be deleted.
      * @return A boolean value representing whether or not the task was deleted.
+     * @throws java.sql.SQLException
      */
     @Override
-    public boolean deleteTask(Task task) {
+    public boolean deleteTask(Task task) throws SQLException{
         return taskManager.deleteTask(task);
     }
 
@@ -415,9 +442,10 @@ public class DalFacade implements IDalFacade {
      * @param time The total amount of time having been worked on the task in seconds.
      * @param startTime The starttime of when the work began.
      * @param stopTime The endtime of when the work ended.
+     * @throws java.sql.SQLException
      */
     @Override
-    public void saveTimeForTask(Task task, int time, Date startTime, Date stopTime) {
+    public void saveTimeForTask(Task task, int time, Date startTime, Date stopTime) throws SQLException{
         taskManager.addTimeForTask(task, time, startTime, stopTime);
     }
 
@@ -426,9 +454,10 @@ public class DalFacade implements IDalFacade {
      *
      * @param taskTime The taskTime that will update the previous taskTime with the same ID.
      * @return A boolean value representing whether or not the update was successful.
+     * @throws java.sql.SQLException
      */
     @Override
-    public boolean UpdateTimeForTask(TaskTime taskTime) {
+    public boolean UpdateTimeForTask(TaskTime taskTime) throws SQLException{
         return taskManager.UpdateTimeForTask(taskTime);
     }
 
@@ -437,9 +466,10 @@ public class DalFacade implements IDalFacade {
      *
      * @param taskTime The taskTime to be deleted.
      * @return A boolean value representing whether or not the delete was successful.
+     * @throws java.sql.SQLException
      */
     @Override
-    public boolean DeleteTimeForTask(TaskTime taskTime) {
+    public boolean DeleteTimeForTask(TaskTime taskTime) throws SQLException{
         return taskManager.DeleteTimeForTask(taskTime);
     }
 
@@ -447,9 +477,10 @@ public class DalFacade implements IDalFacade {
      * Saves the newly created customer in the database.
      *
      * @param customer The customer to be saved.
+     * @throws java.sql.SQLException
      */
     @Override
-    public void createCustomer(Customer customer) {
+    public void createCustomer(Customer customer) throws SQLException{
         customerManager.createCustomer(customer);
     }
 
@@ -457,9 +488,10 @@ public class DalFacade implements IDalFacade {
      * Loads all customers stored in the database.
      *
      * @return Returns an observablelist containing all the stored customers.
+     * @throws java.sql.SQLException
      */
     @Override
-    public ObservableList<Customer> getAllCustomers() {
+    public ObservableList<Customer> getAllCustomers() throws SQLException{
         return customerManager.getAllCustomers();
     }
 
@@ -467,9 +499,10 @@ public class DalFacade implements IDalFacade {
      * Updates the specified customer in the database.
      *
      * @param customer The customer that will update the previous customer with the same ID.
+     * @throws java.sql.SQLException
      */
     @Override
-    public void updateCustomer(Customer customer) {
+    public void updateCustomer(Customer customer) throws SQLException{
         customerManager.updateCustomer(customer);
     }
 
@@ -477,9 +510,10 @@ public class DalFacade implements IDalFacade {
      * Deletes the specified customer from the database.
      *
      * @param customer The customer to be deleted.
+     * @throws java.sql.SQLException
      */
     @Override
-    public void deleteCustomer(Customer customer) {
+    public void deleteCustomer(Customer customer) throws SQLException{
         customerManager.deleteCustomer(customer);
     }
 
