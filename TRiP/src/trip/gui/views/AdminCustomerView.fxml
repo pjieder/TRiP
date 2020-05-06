@@ -93,6 +93,6 @@
          </image>
       </ImageView>
       <StackPane fx:id="stackPane" layoutX="348.0" layoutY="24.0" prefHeight="159.0" prefWidth="296.0" visible="false" />
-      <StackPane fx:id="stackPaneDelete" layoutX="340.0" layoutY="307.0" prefHeight="159.0" prefWidth="296.0" />
+      <StackPane fx:id="stackPaneDelete" layoutX="350.0" layoutY="307.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="159.0" prefWidth="296.0" stylesheets="@../styles/MainAdminView.css" />
    </children>
 </AnchorPane>

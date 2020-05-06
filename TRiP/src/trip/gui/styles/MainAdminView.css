@@ -12,14 +12,16 @@ and open the template in the editor.
 .button
 {
     -fx-background-color: #9a80fe;
-
+    -fx-text-fill: white;
+    -fx-cursor: hand;
 
    
 }
 .button:hover
 {
     -fx-background-color: #b49afd;
-    
+    -fx-text-fill: white;
+
 }
 
 #deleteButton
