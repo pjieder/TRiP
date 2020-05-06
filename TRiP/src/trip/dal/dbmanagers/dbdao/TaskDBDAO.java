@@ -14,7 +14,7 @@ import java.util.Date;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import trip.be.Task;
-import trip.be.TaskTime;
+import trip.be.CountedTime;
 import trip.dal.dbaccess.DBSettings;
 import trip.dal.dbmanagers.dbdao.Interfaces.ITaskDBDAO;
 import trip.dal.dbmanagers.dbdao.utilities.DatabaseLogger;
@@ -172,22 +172,28 @@ public class TaskDBDAO implements ITaskDBDAO {
     @Override
     public void addTimeForTask(Task task, int time, Date startTime, Date stopTime) throws SQLException {
         Connection con = null;
+        int ID = -1;
         try {
             con = DBSettings.getInstance().getConnection();
             String sql = "INSERT INTO Tasks (taskID, time, startTime, stopTime) "
                     + "VALUES (?,?,?,?);";
 
-            PreparedStatement stmt = con.prepareStatement(sql);
+            PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             stmt.setInt(1, task.getId());
             stmt.setInt(2, time);
             stmt.setString(3, TimeConverter.convertDateToStringDB(startTime));
             stmt.setString(4, TimeConverter.convertDateToStringDB(stopTime));
 
-            stmt.executeUpdate();
+             stmt.executeUpdate();
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                ID = generatedKeys.getInt(1);
+            }
 
         } finally {
             DBSettings.getInstance().releaseConnection(con);
+            DatabaseLogger.logAction("Created counted time with ID: " + ID);
             DatabaseLogger.logAction("Added time to task with ID: " + task.getId() + " (" + task.getName() + ") for " + TimeConverter.convertSecondsToString(time));
         }
     }
@@ -200,7 +206,7 @@ public class TaskDBDAO implements ITaskDBDAO {
      * @throws java.sql.SQLException
      */
     @Override
-    public int getTaskTime(int taskID) throws SQLException {
+    public int getCountedTime(int taskID) throws SQLException {
 
         Connection con = null;
         int totalTime = 0;
@@ -232,10 +238,10 @@ public class TaskDBDAO implements ITaskDBDAO {
      * @throws java.sql.SQLException
      */
     @Override
-    public ObservableList<TaskTime> loadTimeForTask(int taskId) throws SQLException {
+    public ObservableList<CountedTime> loadTimeForTask(int taskId) throws SQLException {
 
         Connection con = null;
-        ObservableList<TaskTime> tasks = FXCollections.observableArrayList();
+        ObservableList<CountedTime> tasks = FXCollections.observableArrayList();
 
         try {
             con = DBSettings.getInstance().getConnection();
@@ -252,7 +258,7 @@ public class TaskDBDAO implements ITaskDBDAO {
                 Date startTime = TimeConverter.convertStringToDateDB(rs.getString("startTime"));
                 Date stopTime = TimeConverter.convertStringToDateDB(rs.getString("stopTime"));
 
-                TaskTime taskTime = new TaskTime(time, startTime, stopTime);
+                CountedTime taskTime = new CountedTime(time, startTime, stopTime);
                 taskTime.setId(id);
                 tasks.add(taskTime);
             }
@@ -266,22 +272,22 @@ public class TaskDBDAO implements ITaskDBDAO {
     /**
      * Updates the specified time having been worked on the task in the database.
      *
-     * @param taskTime The taskTime that will update the previous taskTime with the same ID.
+     * @param countedTime The countedTime that will update the previous taskTime with the same ID.
      * @return A boolean value representing whether or not the update was successful.
      * @throws java.sql.SQLException
      */
     @Override
-    public boolean UpdateTimeForTask(TaskTime taskTime) throws SQLException {
+    public boolean UpdateTimeForTask(CountedTime countedTime) throws SQLException {
         Connection con = null;
         try {
             con = DBSettings.getInstance().getConnection();
             String sql = "UPDATE Tasks SET Tasks.time = ?, Tasks.startTime = ?, Tasks.stopTime = ? WHERE Tasks.ID = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
 
-            stmt.setInt(1, taskTime.getTime());
-            stmt.setString(2, TimeConverter.convertDateToStringDB(taskTime.getStartTime()));
-            stmt.setString(3, TimeConverter.convertDateToStringDB(taskTime.getStopTime()));
-            stmt.setInt(4, taskTime.getId());
+            stmt.setInt(1, countedTime.getTime());
+            stmt.setString(2, TimeConverter.convertDateToStringDB(countedTime.getStartTime()));
+            stmt.setString(3, TimeConverter.convertDateToStringDB(countedTime.getStopTime()));
+            stmt.setInt(4, countedTime.getId());
 
             stmt.executeUpdate();
 
@@ -289,26 +295,26 @@ public class TaskDBDAO implements ITaskDBDAO {
 
         } finally {
             DBSettings.getInstance().releaseConnection(con);
-            DatabaseLogger.logAction("Updated time for task time with ID: " + taskTime.getId() + " - " + TimeConverter.convertSecondsToString(taskTime.getTime()));
+            DatabaseLogger.logAction("Updated time for counted time with ID: " + countedTime.getId() + " - " + TimeConverter.convertSecondsToString(countedTime.getTime()));
         }
     }
 
     /**
      * Deletes the specified time registered to the task in the database.
      *
-     * @param taskTime The taskTime to be deleted.
+     * @param countedTime The taskTime to be deleted.
      * @return A boolean value representing whether or not the delete was successful.
      * @throws java.sql.SQLException
      */
     @Override
-    public boolean DeleteTimeForTask(TaskTime taskTime) throws SQLException {
+    public boolean DeleteTimeForTask(CountedTime countedTime) throws SQLException {
         Connection con = null;
         try {
             con = DBSettings.getInstance().getConnection();
             String sql = "DELETE FROM Tasks WHERE Tasks.ID = ?;";
             PreparedStatement stmt = con.prepareStatement(sql);
 
-            stmt.setInt(1, taskTime.getId());
+            stmt.setInt(1, countedTime.getId());
 
             stmt.executeUpdate();
 
@@ -316,7 +322,7 @@ public class TaskDBDAO implements ITaskDBDAO {
 
         } finally {
             DBSettings.getInstance().releaseConnection(con);
-            DatabaseLogger.logAction("Deleted task time with ID: " + taskTime.getId());
+            DatabaseLogger.logAction("Deleted counted time with ID: " + countedTime.getId());
         }
     }
 

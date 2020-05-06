@@ -11,14 +11,14 @@ import java.util.Date;
  *
  * @author ander
  */
-public class TaskTime {
+public class CountedTime {
 
     private int id;
     private int time;
     private Date startTime;
     private Date stopTime;
 
-    public TaskTime(int time, Date startTime, Date stopTime) {
+    public CountedTime(int time, Date startTime, Date stopTime) {
         this.time = time;
         this.startTime = startTime;
         this.stopTime = stopTime;
@@ -59,7 +59,7 @@ public class TaskTime {
     @Override
     public boolean equals(Object obj) {
 
-        TaskTime taskTime = (TaskTime) obj;
+        CountedTime taskTime = (CountedTime) obj;
 
         if (taskTime.getId() == this.getId()) {
             return true;

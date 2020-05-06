@@ -15,7 +15,7 @@ import trip.be.Customer;
 import trip.be.Employee;
 import trip.be.Project;
 import trip.be.Task;
-import trip.be.TaskTime;
+import trip.be.CountedTime;
 
 /**
  *
@@ -282,7 +282,7 @@ public interface IDalFacade {
      * @return A boolean value representing whether or not the update was successful.
      * @throws java.sql.SQLException
      */
-    public boolean UpdateTimeForTask(TaskTime taskTime) throws SQLException;
+    public boolean UpdateTimeForTask(CountedTime taskTime) throws SQLException;
 
     /**
      * Deletes the specified time registered to the task in the database.
@@ -291,7 +291,7 @@ public interface IDalFacade {
      * @return A boolean value representing whether or not the delete was successful.
      * @throws java.sql.SQLException
      */
-    public boolean DeleteTimeForTask(TaskTime taskTime) throws SQLException;
+    public boolean DeleteTimeForTask(CountedTime taskTime) throws SQLException;
 
     /**
      * Saves the newly created customer in the database.

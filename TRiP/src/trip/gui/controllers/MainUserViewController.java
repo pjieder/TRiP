@@ -42,7 +42,7 @@ import trip.be.Employee;
 import trip.be.Project;
 import trip.be.Roles;
 import trip.be.Task;
-import trip.be.TaskTime;
+import trip.be.CountedTime;
 import trip.be.Timer;
 import trip.gui.AppModel;
 import trip.gui.TRiP;
@@ -73,13 +73,13 @@ public class MainUserViewController implements Initializable {
     @FXML
     private TableColumn<Task, String> timeColumn;
     @FXML
-    private TableView<TaskTime> taskTimerList;
+    private TableView<CountedTime> taskTimerList;
     @FXML
-    private TableColumn<TaskTime, String> durationColumn;
+    private TableColumn<CountedTime, String> durationColumn;
     @FXML
-    private TableColumn<TaskTime, String> startColumn;
+    private TableColumn<CountedTime, String> startColumn;
     @FXML
-    private TableColumn<TaskTime, String> endColumn;
+    private TableColumn<CountedTime, String> endColumn;
     @FXML
     private TextField newTaskTitle;
     @FXML
@@ -138,17 +138,17 @@ public class MainUserViewController implements Initializable {
         });
 
         durationColumn.setCellValueFactory((data) -> {
-            TaskTime taskTime = data.getValue();
+            CountedTime taskTime = data.getValue();
             return new SimpleStringProperty(TimeConverter.convertSecondsToString(taskTime.getTime()));
         });
 
         startColumn.setCellValueFactory((data) -> {
-            TaskTime taskTime = data.getValue();
+            CountedTime taskTime = data.getValue();
             return new SimpleStringProperty(TimeConverter.convertDateToString(taskTime.getStartTime()));
         });
 
         endColumn.setCellValueFactory((data) -> {
-            TaskTime taskTime = data.getValue();
+            CountedTime taskTime = data.getValue();
             return new SimpleStringProperty(TimeConverter.convertDateToString(taskTime.getStopTime()));
         });
 
@@ -382,7 +382,7 @@ public class MainUserViewController implements Initializable {
         Date startDate = Date.from(instantStart);
         Date endDate = Date.from(instantEnd);
 
-        TaskTime taskTime = new TaskTime(time, startDate, endDate);
+        CountedTime taskTime = new CountedTime(time, startDate, endDate);
 
         try {
             taskModel.saveTimeForTask(task, time, startDate, endDate);

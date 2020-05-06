@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import javafx.collections.ObservableList;
 import trip.be.Task;
-import trip.be.TaskTime;
+import trip.be.CountedTime;
 
 /**
  *
@@ -74,7 +74,7 @@ public interface ITaskDBDAO {
      * @return An int value representing the total amount of time having been used on the task in seconds.
      * @throws java.sql.SQLException
      */
-    public int getTaskTime(int taskID) throws SQLException;
+    public int getCountedTime(int taskID) throws SQLException;
 
     /**
      * Loads all time stored for the task.
@@ -83,7 +83,7 @@ public interface ITaskDBDAO {
      * @return An observablelist containing all time registered for the task.
      * @throws java.sql.SQLException
      */
-    public ObservableList<TaskTime> loadTimeForTask(int taskId) throws SQLException;
+    public ObservableList<CountedTime> loadTimeForTask(int taskId) throws SQLException;
 
     /**
      * Updates the specified time having been worked on the task in the database.
@@ -92,7 +92,7 @@ public interface ITaskDBDAO {
      * @return A boolean value representing whether or not the update was successful.
      * @throws java.sql.SQLException
      */
-    public boolean UpdateTimeForTask(TaskTime taskTime) throws SQLException;
+    public boolean UpdateTimeForTask(CountedTime taskTime) throws SQLException;
 
     /**
      * Deletes the specified time registered to the task in the database.
@@ -101,6 +101,6 @@ public interface ITaskDBDAO {
      * @return A boolean value representing whether or not the delete was successful.
      * @throws java.sql.SQLException
      */
-    public boolean DeleteTimeForTask(TaskTime taskTime) throws SQLException;
+    public boolean DeleteTimeForTask(CountedTime taskTime) throws SQLException;
 
 }

@@ -17,7 +17,7 @@ public class Task {
     private int id;
     private String name;
     private int totalTime;
-    private ObservableList<TaskTime> timeTasks = FXCollections.observableArrayList();
+    private ObservableList<CountedTime> timeTasks = FXCollections.observableArrayList();
 
     public Task(String name) {
         this.name = name;
@@ -39,11 +39,11 @@ public class Task {
         this.name = name;
     }
 
-    public ObservableList<TaskTime> getTimeTasks() {
+    public ObservableList<CountedTime> getTimeTasks() {
         return timeTasks;
     }
 
-    public void setTasks(ObservableList<TaskTime> timeTasks) {
+    public void setTasks(ObservableList<CountedTime> timeTasks) {
         this.timeTasks = timeTasks;
     }
 

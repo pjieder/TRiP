@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import javafx.collections.ObservableList;
 import trip.be.Task;
-import trip.be.TaskTime;
+import trip.be.CountedTime;
 import trip.bll.TaskManager;
 
 /**
@@ -91,7 +91,7 @@ public class TaskModel {
      * @return A boolean value representing whether or not the update was successful.
      * @throws java.sql.SQLException
      */
-    public boolean UpdateTimeForTask(TaskTime taskTime) throws SQLException{
+    public boolean UpdateTimeForTask(CountedTime taskTime) throws SQLException{
         return taskManager.UpdateTimeForTask(taskTime);
     }
 
@@ -102,7 +102,7 @@ public class TaskModel {
      * @return A boolean value representing whether or not the delete was successful.
      * @throws java.sql.SQLException
      */
-    public boolean DeleteTimeForTask(TaskTime taskTime) throws SQLException{
+    public boolean DeleteTimeForTask(CountedTime taskTime) throws SQLException{
         return taskManager.DeleteTimeForTask(taskTime);
     }
 

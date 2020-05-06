@@ -16,7 +16,7 @@ import trip.be.Employee;
 import trip.be.Project;
 import trip.be.Roles;
 import trip.be.Task;
-import trip.be.TaskTime;
+import trip.be.CountedTime;
 import trip.dal.dbmanagers.dbdao.AdminDBDAO;
 import trip.dal.dbmanagers.dbdao.CustomerDBDAO;
 import trip.dal.dbmanagers.dbdao.EmployeeDBDAO;
@@ -406,7 +406,7 @@ public class DalFacade implements IDalFacade {
         for (Task task : tasks) {
 
             task.setTasks(taskManager.loadTimeForTask(task.getId()));
-            task.setTotalTime(taskManager.getTaskTime(task.getId()));
+            task.setTotalTime(taskManager.getCountedTime(task.getId()));
         }
         return tasks;
     }
@@ -457,7 +457,7 @@ public class DalFacade implements IDalFacade {
      * @throws java.sql.SQLException
      */
     @Override
-    public boolean UpdateTimeForTask(TaskTime taskTime) throws SQLException{
+    public boolean UpdateTimeForTask(CountedTime taskTime) throws SQLException{
         return taskManager.UpdateTimeForTask(taskTime);
     }
 
@@ -469,7 +469,7 @@ public class DalFacade implements IDalFacade {
      * @throws java.sql.SQLException
      */
     @Override
-    public boolean DeleteTimeForTask(TaskTime taskTime) throws SQLException{
+    public boolean DeleteTimeForTask(CountedTime taskTime) throws SQLException{
         return taskManager.DeleteTimeForTask(taskTime);
     }
 

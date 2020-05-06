@@ -23,7 +23,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import trip.be.TaskTime;
+import trip.be.CountedTime;
 import trip.gui.models.TaskModel;
 import trip.utilities.JFXAlert;
 import trip.utilities.TimeConverter;
@@ -37,7 +37,7 @@ public class UpdateTasktimeForm implements Initializable {
 
     private TaskModel taskModel = new TaskModel();
 
-    private TaskTime taskTime;
+    private CountedTime taskTime;
     private Thread updateThread;
 
     @FXML
@@ -83,7 +83,7 @@ public class UpdateTasktimeForm implements Initializable {
      * @param thread the Thread returned by method updateView in the MainUserViewController.
      * @param taskTime the selected taskTime to be updated.
      */
-    public void setTaskTime(Thread thread, TaskTime taskTime) {
+    public void setTaskTime(Thread thread, CountedTime taskTime) {
         this.taskTime = taskTime;
         this.updateThread = thread;
         dateStart.setValue(taskTime.getStartTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
