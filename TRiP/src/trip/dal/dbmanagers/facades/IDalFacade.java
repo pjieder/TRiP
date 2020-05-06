@@ -218,6 +218,15 @@ public interface IDalFacade {
     public void updateProject(Project project, List<Employee> allEmployees) throws SQLException;
 
     /**
+     * Updates whether or not the specified project is active.
+     *
+     * @param project The project to be updated.
+     * @param active Boolean representing whether or not the project should be active or inactive.
+     * @throws java.sql.SQLException
+     */
+    public void updateProjectActive(Project project, boolean active) throws SQLException;
+
+    /**
      * Deletes the specified project from the database.
      *
      * @param project The project to be deleted.

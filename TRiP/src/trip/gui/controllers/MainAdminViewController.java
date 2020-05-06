@@ -75,6 +75,10 @@ public class MainAdminViewController implements Initializable {
     private StackPane stackPane;
     @FXML
     private StackPane stackPaneDelete;
+    @FXML
+    private JFXButton makeInactivebtn;
+    @FXML
+    private JFXButton makeActivebtn;
 
     /**
      * Initializes the controller class.
@@ -127,7 +131,9 @@ public class MainAdminViewController implements Initializable {
             projects = projectModel.loadAllActiveProjects();
             projectTable.setItems(projects);
         } catch (SQLException ex) {
-            Platform.runLater(()->{JFXAlert.openError(stackPane, "Error loading all projects.");});
+            Platform.runLater(() -> {
+                JFXAlert.openError(stackPane, "Error loading all projects.");
+            });
         }
     }
 
@@ -249,6 +255,8 @@ public class MainAdminViewController implements Initializable {
             activeArrow.setVisible(false);
             inactiveArrow.setVisible(true);
             deleteButton.setVisible(true);
+            makeActivebtn.setVisible(true);
+            makeInactivebtn.setVisible(false);
             isLastOnActive = false;
             projects = projectModel.loadAllInactiveProjects();
             projectTable.setItems(projects);
@@ -272,6 +280,8 @@ public class MainAdminViewController implements Initializable {
             activeArrow.setVisible(true);
             inactiveArrow.setVisible(false);
             deleteButton.setVisible(false);
+            makeActivebtn.setVisible(false);
+            makeInactivebtn.setVisible(true);
             isLastOnActive = true;
             projects = projectModel.loadAllActiveProjects();
             projectTable.setItems(projects);
@@ -331,6 +341,40 @@ public class MainAdminViewController implements Initializable {
             projectTable.setItems(projects);
         } else {
             projectTable.setItems(projectModel.searchProjects(projectName, projects));
+        }
+    }
+
+    /**
+     * Disables the selected project making it inactive.
+     *
+     * @param event
+     */
+    @FXML
+    private void makeProjectInactive(ActionEvent event) {
+        try {
+            if (!projectTable.getSelectionModel().isEmpty()) {
+                projectModel.updateProjectActive(projectTable.getSelectionModel().getSelectedItem(), false);
+                updateView().start();
+            }
+        } catch (SQLException ex) {
+            JFXAlert.openError(stackPane, "Error making project inactive.");
+        }
+    }
+
+    /**
+     * Activates the selected project making it active.
+     *
+     * @param event
+     */
+    @FXML
+    private void makeProjectActive(ActionEvent event) {
+        try {
+            if (!projectTable.getSelectionModel().isEmpty()) {
+                projectModel.updateProjectActive(projectTable.getSelectionModel().getSelectedItem(), true);
+                updateView().start();
+            }
+        } catch (SQLException ex) {
+            JFXAlert.openError(stackPane, "Error making project active.");
         }
     }
 

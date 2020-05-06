@@ -506,6 +506,32 @@ public class ProjectDBDAO implements IProjectDBDAO {
         }
     }
 
+     /**
+     * Updates whether or not the specified project is active.
+     *
+     * @param project The project to be updated.
+     * @param active Boolean representing whether or not the project should be active or inactive.
+     * @throws java.sql.SQLException
+     */
+    @Override
+    public void updateProjectActive(Project project, boolean active) throws SQLException{
+        Connection con = null;
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "UPDATE Project SET isActive = ? WHERE ID = ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setBoolean(1, active);
+            stmt.setInt(2, project.getId());
+
+            stmt.executeUpdate();
+
+        }finally {
+            DBSettings.getInstance().releaseConnection(con);
+            DatabaseLogger.logAction("Updated project with ID: " + project.getId() + " (" + project.getName() + ") to active: " + active);
+        }
+    }
+    
     /**
      * Deletes the specified project from the database.
      *

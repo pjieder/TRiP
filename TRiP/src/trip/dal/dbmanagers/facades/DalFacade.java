@@ -364,6 +364,18 @@ public class DalFacade implements IDalFacade {
             employeeDBDAO.addEmployeeToProject(employee, project);
         }
     }
+    
+    /**
+     * Updates whether or not the specified project is active.
+     *
+     * @param project The project to be updated.
+     * @param active Boolean representing whether or not the project should be active or inactive.
+     * @throws java.sql.SQLException
+     */
+    @Override
+    public void updateProjectActive(Project project, boolean active) throws SQLException{
+        projectManager.updateProjectActive(project, active);
+    }
 
     /**
      * Deletes the specified project from the database.
