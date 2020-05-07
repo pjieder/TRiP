@@ -158,6 +158,7 @@ public class UpdateTasktimeForm implements Initializable {
      */
     @FXML
     private void validateAddTask(ActionEvent event) {
+        calculateTime();
         decideUpdateTimeEnabled();
     }
 
@@ -178,6 +179,30 @@ public class UpdateTasktimeForm implements Initializable {
             updateButton.setDisable(false);
         } else {
             updateButton.setDisable(true);
+        }
+    }
+    
+        public void calculateTime()
+    {
+        if (dateStart.getValue() != null && dateStop.getValue() != null && timeStart.getValue() != null && timeStop.getValue() != null)
+        {
+        
+        LocalDate localStart = dateStart.getValue();
+        LocalDate localStop = dateStop.getValue();
+
+        LocalTime start = timeStart.getValue();
+        LocalTime stop = timeStop.getValue();
+
+        Instant instantStart = localStart.atTime(start).atZone(ZoneId.systemDefault()).toInstant();
+        Instant instantEnd = localStop.atTime(stop).atZone(ZoneId.systemDefault()).toInstant();
+
+        Date startDate = Date.from(instantStart);
+        Date endDate = Date.from(instantEnd);
+        
+        int seconds = (int) (endDate.getTime()-startDate.getTime())/1000;
+        seconds = (seconds >0)?seconds:0;
+        
+        timerField.setText(TimeConverter.convertSecondsToString(seconds));
         }
     }
 

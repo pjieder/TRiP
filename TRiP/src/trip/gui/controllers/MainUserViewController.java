@@ -17,8 +17,10 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.temporal.TemporalField;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
@@ -519,6 +521,7 @@ public class MainUserViewController implements Initializable {
      */
     @FXML
     private void validateAddTask(ActionEvent event) {
+        calculateTime();
         decideAddTimeEnabled();
     }
 
@@ -557,6 +560,30 @@ public class MainUserViewController implements Initializable {
     @FXML
     private void addTaskToUser(ActionEvent event) {
         addTask();
+    }
+    
+    public void calculateTime()
+    {
+        if (dateStart.getValue() != null && dateEnd.getValue() != null && timeStart.getValue() != null && timeEnd.getValue() != null)
+        {
+        
+        LocalDate localStart = dateStart.getValue();
+        LocalDate localStop = dateEnd.getValue();
+
+        LocalTime start = timeStart.getValue();
+        LocalTime stop = timeEnd.getValue();
+
+        Instant instantStart = localStart.atTime(start).atZone(ZoneId.systemDefault()).toInstant();
+        Instant instantEnd = localStop.atTime(stop).atZone(ZoneId.systemDefault()).toInstant();
+
+        Date startDate = Date.from(instantStart);
+        Date endDate = Date.from(instantEnd);
+        
+        int seconds = (int) (endDate.getTime()-startDate.getTime())/1000;
+        seconds = (seconds >0)?seconds:0;
+        
+        timerField.setText(TimeConverter.convertSecondsToString(seconds));
+        }
     }
 
 }
