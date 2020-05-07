@@ -14,6 +14,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -73,6 +74,7 @@ public class UpdateTasktimeForm implements Initializable {
         timerField.getValidators().add(regex);
 
         timerField.textProperty().addListener((Observable, oldValue, newValue) -> {
+            changeTime();
             decideUpdateTimeEnabled();
         });
     }
@@ -120,9 +122,11 @@ public class UpdateTasktimeForm implements Initializable {
         taskTime.setStartTime(startDate);
         taskTime.setStopTime(endDate);
 
-        try{
-        taskModel.UpdateTimeForTask(taskTime);
-        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error occured while trying to update task.");}
+        try {
+            taskModel.UpdateTimeForTask(taskTime);
+        } catch (SQLException ex) {
+            JFXAlert.openError(stackPane, "Error occured while trying to update task.");
+        }
         updateThread.start();
         closeStage();
     }
@@ -144,11 +148,13 @@ public class UpdateTasktimeForm implements Initializable {
      */
     @FXML
     private void deleteTasktime(ActionEvent event) {
-        try{
-        taskModel.DeleteTimeForTask(taskTime);
-        updateThread.start();
-        closeStage();
-        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error occured while trying to delete time for the task.");}
+        try {
+            taskModel.DeleteTimeForTask(taskTime);
+            updateThread.start();
+            closeStage();
+        } catch (SQLException ex) {
+            JFXAlert.openError(stackPane, "Error occured while trying to delete time for the task.");
+        }
     }
 
     /**
@@ -181,28 +187,48 @@ public class UpdateTasktimeForm implements Initializable {
             updateButton.setDisable(true);
         }
     }
-    
-        public void calculateTime()
-    {
-        if (dateStart.getValue() != null && dateStop.getValue() != null && timeStart.getValue() != null && timeStop.getValue() != null)
+
+    public void calculateTime() {
+        if (dateStart.getValue() != null && dateStop.getValue() != null && timeStart.getValue() != null && timeStop.getValue() != null) {
+
+            LocalDate localStart = dateStart.getValue();
+            LocalDate localStop = dateStop.getValue();
+
+            LocalTime start = timeStart.getValue();
+            LocalTime stop = timeStop.getValue();
+
+            Instant instantStart = localStart.atTime(start).atZone(ZoneId.systemDefault()).toInstant();
+            Instant instantEnd = localStop.atTime(stop).atZone(ZoneId.systemDefault()).toInstant();
+
+            Date startDate = Date.from(instantStart);
+            Date endDate = Date.from(instantEnd);
+
+            int seconds = (int) (endDate.getTime() - startDate.getTime()) / 1000;
+            seconds = (seconds > 0) ? seconds : 0;
+
+            timerField.clear();
+            timerField.setText(TimeConverter.convertSecondsToString(seconds));
+        }
+    }
+
+    public void changeTime() {
+        if (timerField.validate())
         {
+        if (dateStart.getValue()== null){dateStart.setValue(LocalDate.now());}
+        if (timeStart.getValue()==null){timeStart.setValue(LocalTime.now().withSecond(0));}
+        
+        int seconds = TimeConverter.convertStringToSeconds(timerField.getText());
         
         LocalDate localStart = dateStart.getValue();
-        LocalDate localStop = dateStop.getValue();
-
         LocalTime start = timeStart.getValue();
-        LocalTime stop = timeStop.getValue();
-
-        Instant instantStart = localStart.atTime(start).atZone(ZoneId.systemDefault()).toInstant();
-        Instant instantEnd = localStop.atTime(stop).atZone(ZoneId.systemDefault()).toInstant();
-
-        Date startDate = Date.from(instantStart);
-        Date endDate = Date.from(instantEnd);
         
-        int seconds = (int) (endDate.getTime()-startDate.getTime())/1000;
-        seconds = (seconds >0)?seconds:0;
+        LocalDateTime dateTime = LocalDateTime.of(localStart, start);
         
-        timerField.setText(TimeConverter.convertSecondsToString(seconds));
+        Instant instantStart = dateTime.atZone(ZoneId.systemDefault()).toInstant();
+        Instant instantEnd = dateTime.atZone(ZoneId.systemDefault()).toInstant().plusSeconds(seconds);
+        
+        dateStop.setValue(instantEnd.atZone(ZoneId.systemDefault()).toLocalDate());
+        timeStop.setValue(instantEnd.atZone(ZoneId.systemDefault()).toLocalTime());
         }
     }
 

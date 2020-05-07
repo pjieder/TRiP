@@ -15,6 +15,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.temporal.TemporalField;
@@ -167,6 +168,7 @@ public class MainUserViewController implements Initializable {
         timerField.getValidators().add(regex);
 
         timerField.textProperty().addListener((Observable, oldValue, newValue) -> {
+            changeTime();
             decideAddTimeEnabled();
             timerField.validate();
         });
@@ -582,7 +584,30 @@ public class MainUserViewController implements Initializable {
         int seconds = (int) (endDate.getTime()-startDate.getTime())/1000;
         seconds = (seconds >0)?seconds:0;
         
+        timerField.clear();
         timerField.setText(TimeConverter.convertSecondsToString(seconds));
+        }
+    }
+    
+    public void changeTime()
+    {
+        if (timerField.validate())
+        {
+        if (dateStart.getValue()== null){dateStart.setValue(LocalDate.now());}
+        if (timeStart.getValue()==null){timeStart.setValue(LocalTime.now().withSecond(0));}
+        
+        int seconds = TimeConverter.convertStringToSeconds(timerField.getText());
+        
+        LocalDate localStart = dateStart.getValue();
+        LocalTime start = timeStart.getValue();
+        
+        LocalDateTime dateTime = LocalDateTime.of(localStart, start);
+        
+        Instant instantStart = dateTime.atZone(ZoneId.systemDefault()).toInstant();
+        Instant instantEnd = dateTime.atZone(ZoneId.systemDefault()).toInstant().plusSeconds(seconds);
+        
+        dateEnd.setValue(instantEnd.atZone(ZoneId.systemDefault()).toLocalDate());
+        timeEnd.setValue(instantEnd.atZone(ZoneId.systemDefault()).toLocalTime());
         }
     }
 
