@@ -103,8 +103,8 @@ public class ProjectManager {
      * @return An int value representing the total amount of time having been used in seconds.
      * @throws java.sql.SQLException
      */
-    public int loadAllProjectTimeBetweenDates(int projectID, LocalDate startDate, LocalDate endDate) throws SQLException{
-        return dalFacade.loadAllProjectTimeBetweenDates(projectID, startDate, endDate);
+    public int loadAllBillableProjectTimeBetweenDates(int projectID, LocalDate startDate, LocalDate endDate) throws SQLException{
+        return dalFacade.loadAllBillableProjectTimeBetweenDates(projectID, startDate, endDate);
     }
 
     /**
@@ -117,8 +117,8 @@ public class ProjectManager {
      * @return An int value representing the total amount of time the specified employe have been working on the project in seconds.
      * @throws java.sql.SQLException
      */
-    public int loadAllEmployeeProjectTimeBetweenDates(int employeeID, int projectID, LocalDate startDate, LocalDate endDate) throws SQLException{
-        return dalFacade.loadAllEmployeeProjectTimeBetweenDates(employeeID, projectID, startDate, endDate);
+    public int loadAllBillableEmployeeProjectTimeBetweenDates(int employeeID, int projectID, LocalDate startDate, LocalDate endDate) throws SQLException{
+        return dalFacade.loadAllBillableEmployeeProjectTimeBetweenDates(employeeID, projectID, startDate, endDate);
     }
 
     /**

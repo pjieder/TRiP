@@ -6,6 +6,7 @@
 package trip.gui.controllers;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
 import java.net.URL;
@@ -45,6 +46,8 @@ public class UpdateTaskForm implements Initializable {
     private StackPane stackPane;
     @FXML
     private StackPane stackPaneDelete;
+    @FXML
+    private JFXCheckBox billable;
 
     /**
      * Initializes the controller class.
@@ -70,6 +73,7 @@ public class UpdateTaskForm implements Initializable {
         this.updateThread = updateThread;
         this.task = task;
         taskNameField.setText(task.getName());
+        billable.setSelected(task.isBillable());
     }
 
     /**
@@ -81,6 +85,7 @@ public class UpdateTaskForm implements Initializable {
     private void updateTask(ActionEvent event) {
         try {
             task.setName(taskNameField.getText());
+            task.setBillable(billable.isSelected());
             taskModel.updateTask(task);
             updateThread.start();
             closeStage();

@@ -233,12 +233,12 @@ public class AdminStatisticsViewController implements Initializable {
 
                 for (Project project : projectModel.loadAllActiveProjects()) {
 
-                    double timeForProject = projectModel.loadAllProjectTimeBetweenDates(project.getId(), startDate, endDate);
+                    double timeForProject = projectModel.loadAllBillableProjectTimeBetweenDates(project.getId(), startDate, endDate);
                     totalPrice += (timeForProject / 3600) * project.getRate();
                     totalTime += timeForProject;
                 }
             } else {
-                totalTime = projectModel.loadAllProjectTimeBetweenDates(projectID, startDate, endDate);
+                totalTime = projectModel.loadAllBillableProjectTimeBetweenDates(projectID, startDate, endDate);
                 totalPrice = ((double) totalTime / 3600) * projectComboBox.getValue().getRate();
             }
             totalTimeString = TimeConverter.convertSecondsToString(totalTime);
@@ -273,7 +273,7 @@ public class AdminStatisticsViewController implements Initializable {
 
             for (Project project : allWorkedOnProjects) {
 
-                double timeForProject = projectModel.loadAllEmployeeProjectTimeBetweenDates(employeeID, project.getId(), startDate, endDate);
+                double timeForProject = projectModel.loadAllBillableEmployeeProjectTimeBetweenDates(employeeID, project.getId(), startDate, endDate);
                 totalPrice += (timeForProject / 3600) * project.getRate();
                 totalTime += timeForProject;
             }

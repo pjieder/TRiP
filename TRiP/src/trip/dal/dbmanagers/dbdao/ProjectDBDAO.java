@@ -266,13 +266,13 @@ public class ProjectDBDAO implements IProjectDBDAO {
      * @throws java.sql.SQLException
      */
     @Override
-    public int loadAllProjectTimeBetweenDates(int projectID, LocalDate startDate, LocalDate endDate) throws SQLException{
+    public int loadAllBillableProjectTimeBetweenDates(int projectID, LocalDate startDate, LocalDate endDate) throws SQLException{
         Connection con = null;
         int totalTime = 0;
 
         try {
             con = DBSettings.getInstance().getConnection();
-            String sql = "SELECT SUM(Tasks.time) AS TotalTime FROM Tasks JOIN Task on Tasks.taskID = Task.ID WHERE Task.projID = ?  AND Tasks.startTime BETWEEN ? AND ?;";
+            String sql = "SELECT SUM(Tasks.time) AS TotalTime FROM Tasks JOIN Task on Tasks.taskID = Task.ID WHERE Task.projID = ?  AND Tasks.startTime BETWEEN ? AND ? AND Task.isBillable = 1;";
             PreparedStatement stmt = con.prepareStatement(sql);
 
             stmt.setInt(1, projectID);
@@ -302,13 +302,13 @@ public class ProjectDBDAO implements IProjectDBDAO {
      * @throws java.sql.SQLException
      */
     @Override
-    public int loadAllEmployeeProjectTimeBetweenDates(int employeeID, int projectID, LocalDate startDate, LocalDate endDate) throws SQLException{
+    public int loadAllBillableEmployeeProjectTimeBetweenDates(int employeeID, int projectID, LocalDate startDate, LocalDate endDate) throws SQLException{
         Connection con = null;
         int totalTime = 0;
 
         try {
             con = DBSettings.getInstance().getConnection();
-            String sql = "SELECT SUM(Tasks.time) AS TotalTime FROM Tasks JOIN Task on Tasks.taskID = Task.ID WHERE Task.projID = ? And Task.employeeID = ? AND Tasks.startTime BETWEEN ? AND ?;";
+            String sql = "SELECT SUM(Tasks.time) AS TotalTime FROM Tasks JOIN Task on Tasks.taskID = Task.ID WHERE Task.projID = ? And Task.employeeID = ? AND Tasks.startTime BETWEEN ? AND ? AND Task.isBillable = 1;";
             PreparedStatement stmt = con.prepareStatement(sql);
 
             stmt.setInt(1, projectID);

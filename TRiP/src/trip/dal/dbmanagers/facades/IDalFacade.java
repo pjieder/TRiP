@@ -194,7 +194,7 @@ public interface IDalFacade {
      * @return An int value representing the total amount of time having been used in seconds.
      * @throws java.sql.SQLException
      */
-    public int loadAllProjectTimeBetweenDates(int projectID, LocalDate startDate, LocalDate endDate) throws SQLException;
+    public int loadAllBillableProjectTimeBetweenDates(int projectID, LocalDate startDate, LocalDate endDate) throws SQLException;
 
     /**
      * Loads the total amount of time having been registered on the specifiec project by the specified employee between the timespan.
@@ -206,7 +206,7 @@ public interface IDalFacade {
      * @return An int value representing the total amount of time the specified employe have been working on the project in seconds.
      * @throws java.sql.SQLException
      */
-    public int loadAllEmployeeProjectTimeBetweenDates(int employeeID, int projectID, LocalDate startDate, LocalDate endDate) throws SQLException;
+    public int loadAllBillableEmployeeProjectTimeBetweenDates(int employeeID, int projectID, LocalDate startDate, LocalDate endDate) throws SQLException;
 
     /**
      * Updates the specified project in the database.

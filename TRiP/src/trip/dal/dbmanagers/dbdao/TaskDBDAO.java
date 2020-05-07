@@ -41,13 +41,14 @@ public class TaskDBDAO implements ITaskDBDAO {
         Task task = new Task(taskName);
         try {
             con = DBSettings.getInstance().getConnection();
-            String sql = "INSERT INTO Task (projID, employeeID, name) "
-                    + "VALUES (?,?,?);";
+            String sql = "INSERT INTO Task (projID, employeeID, name, isBillable) "
+                    + "VALUES (?,?,?,?);";
             PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             stmt.setInt(1, projectId);
             stmt.setInt(2, userId);
             stmt.setString(3, taskName);
+            stmt.setBoolean(4, true);
 
             stmt.executeUpdate();
 
@@ -92,9 +93,11 @@ public class TaskDBDAO implements ITaskDBDAO {
 
                 int id = rs.getInt("ID");
                 String name = rs.getString("name");
+                boolean isBillable = rs.getBoolean("isBillable");
 
                 Task task = new Task(name);
                 task.setId(id);
+                task.setBillable(isBillable);
                 tasks.add(task);
             }
 
@@ -117,11 +120,12 @@ public class TaskDBDAO implements ITaskDBDAO {
         Connection con = null;
         try {
             con = DBSettings.getInstance().getConnection();
-            String sql = "UPDATE Task SET Task.name = ? WHERE Task.ID = ?;";
+            String sql = "UPDATE Task SET Task.name = ?, Task.isBillable = ? WHERE Task.ID = ?;";
             PreparedStatement stmt = con.prepareStatement(sql);
 
             stmt.setString(1, task.getName());
-            stmt.setInt(2, task.getId());
+            stmt.setBoolean(2, task.isBillable());
+            stmt.setInt(3, task.getId());
 
             stmt.executeUpdate();
 

@@ -327,8 +327,8 @@ public class DalFacade implements IDalFacade {
      * @throws java.sql.SQLException
      */
     @Override
-    public int loadAllProjectTimeBetweenDates(int projectID, LocalDate startDate, LocalDate endDate) throws SQLException{
-        return projectManager.loadAllProjectTimeBetweenDates(projectID, startDate, endDate);
+    public int loadAllBillableProjectTimeBetweenDates(int projectID, LocalDate startDate, LocalDate endDate) throws SQLException{
+        return projectManager.loadAllBillableProjectTimeBetweenDates(projectID, startDate, endDate);
     }
 
     /**
@@ -342,8 +342,8 @@ public class DalFacade implements IDalFacade {
      * @throws java.sql.SQLException
      */
     @Override
-    public int loadAllEmployeeProjectTimeBetweenDates(int employeeID, int projectID, LocalDate startDate, LocalDate endDate) throws SQLException{
-        return projectManager.loadAllEmployeeProjectTimeBetweenDates(employeeID, projectID, startDate, endDate);
+    public int loadAllBillableEmployeeProjectTimeBetweenDates(int employeeID, int projectID, LocalDate startDate, LocalDate endDate) throws SQLException{
+        return projectManager.loadAllBillableEmployeeProjectTimeBetweenDates(employeeID, projectID, startDate, endDate);
     }
 
     /**
