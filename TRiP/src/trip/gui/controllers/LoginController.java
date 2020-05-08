@@ -147,8 +147,6 @@ public class LoginController implements Initializable {
                         forgetLogin();
                     }
                     loggedUser = employeeToValidate;
-
-                    Platform.runLater(() -> {
                         try {
                             FXMLLoader fxmlLoader = new FXMLLoader();
                             fxmlLoader.setLocation(AppModel.class.getResource("views/MenuBarView.fxml"));
@@ -164,7 +162,7 @@ public class LoginController implements Initializable {
                         } catch (IOException ex) {
                             JFXAlert.openError(stackPane, "Error loading menu.");
                         }
-                    });
+                    
                 }
             } catch (SQLException ex) {
                 Platform.runLater(() -> {

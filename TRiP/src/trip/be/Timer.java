@@ -30,7 +30,6 @@ public class Timer implements Runnable{
     public void run() {
 
         try {
-
             while (true) {
                 TimeUnit.SECONDS.sleep(1);
                 time++;
@@ -38,7 +37,6 @@ public class Timer implements Runnable{
                 Platform.runLater(() -> {
                     displayTime();
                 });
-
             }
         } catch (InterruptedException ex) {
         }
