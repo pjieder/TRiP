@@ -167,6 +167,51 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
     }
 
     /**
+     * Returns the employee based on the specified ID.
+     *
+     * @param id the ID of the employee
+     * @return The employee with the specified ID
+     * @throws java.sql.SQLException
+     */
+    @Override
+    public Employee getEmployeeById(int id) throws SQLException{
+
+        Connection con = null;
+        Employee employee = null;
+
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "SELECT * FROM Employees WHERE Employees.ID = ? AND Employees.isActive = 1;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                String fname = rs.getString("fName");
+                String lname = rs.getString("lName");
+                String email = rs.getString("email");
+                boolean isAdmin = rs.getBoolean("isAdmin");
+
+                if (isAdmin == true)
+                {
+                employee = new Admin(fname, lname, email);
+                }
+                else
+                {
+                employee = new User(fname, lname, email);
+                }
+                employee.setId(id);
+            }
+            return employee;
+
+        }finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+    }
+    
+    /**
      * Loads all active employees
      *
      * @return Returns an observablelist containing all active employees stored.

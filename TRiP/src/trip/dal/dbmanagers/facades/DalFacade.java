@@ -17,18 +17,14 @@ import trip.be.Project;
 import trip.be.Roles;
 import trip.be.Task;
 import trip.be.CountedTime;
-import trip.dal.dbmanagers.dbdao.AdminDBDAO;
 import trip.dal.dbmanagers.dbdao.CustomerDBDAO;
 import trip.dal.dbmanagers.dbdao.EmployeeDBDAO;
-import trip.dal.dbmanagers.dbdao.Interfaces.IAdminDBDAO;
 import trip.dal.dbmanagers.dbdao.Interfaces.ICustomerDBDAO;
 import trip.dal.dbmanagers.dbdao.Interfaces.IEmployeeDBDAO;
 import trip.dal.dbmanagers.dbdao.Interfaces.IProjectDBDAO;
 import trip.dal.dbmanagers.dbdao.Interfaces.ITaskDBDAO;
-import trip.dal.dbmanagers.dbdao.Interfaces.IUserDBDAO;
 import trip.dal.dbmanagers.dbdao.ProjectDBDAO;
 import trip.dal.dbmanagers.dbdao.TaskDBDAO;
-import trip.dal.dbmanagers.dbdao.UserDBDAO;
 import java.sql.SQLException;
 
 /**
@@ -38,8 +34,6 @@ import java.sql.SQLException;
 public class DalFacade implements IDalFacade {
 
     private IEmployeeDBDAO employeeDBDAO;
-    private IUserDBDAO userDBDAO;
-    private IAdminDBDAO adminDBDAO;
     private IProjectDBDAO projectManager;
     private ITaskDBDAO taskManager;
     private ICustomerDBDAO customerManager;
@@ -47,8 +41,6 @@ public class DalFacade implements IDalFacade {
     public DalFacade() {
 
         employeeDBDAO = new EmployeeDBDAO();
-        userDBDAO = new UserDBDAO();
-        adminDBDAO = new AdminDBDAO();
         projectManager = new ProjectDBDAO();
         taskManager = new TaskDBDAO();
         customerManager = new CustomerDBDAO();
@@ -69,14 +61,8 @@ public class DalFacade implements IDalFacade {
         int employeeId = employeeDBDAO.isLoginCorrect(username, password);
 
         if (employeeId != -1) {
-            Roles role = employeeDBDAO.getRoleById(employeeId);
-
-            if (role == Roles.USER) {
-                employee = userDBDAO.getUserById(employeeId);
-            } else if (role == Roles.ADMIN) {
-                employee = adminDBDAO.getAdminById(employeeId);
-            }
-            return employee;
+            
+            return employeeDBDAO.getEmployeeById(employeeId);
         }
         return employee;
     }

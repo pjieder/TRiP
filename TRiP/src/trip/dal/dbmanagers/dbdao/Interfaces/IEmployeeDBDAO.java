@@ -57,6 +57,15 @@ public interface IEmployeeDBDAO {
     public void addEmployeeToProject(Employee employee, Project project) throws SQLException;
 
     /**
+     * Returns the employee based on the specified ID.
+     *
+     * @param id the ID of the employee
+     * @return The employee with the specified ID
+     * @throws java.sql.SQLException
+     */
+    public Employee getEmployeeById(int id) throws SQLException;
+
+    /**
      * Loads all active employees
      *
      * @return Returns an observablelist containing all active employees stored.
@@ -127,7 +136,7 @@ public interface IEmployeeDBDAO {
      */
     public void updateUsername(String username, Employee employee) throws SQLException;
 
-      /**
+    /**
      * Updates the password of the specified employee.
      *
      * @param password The new password to be hashed and stored.
