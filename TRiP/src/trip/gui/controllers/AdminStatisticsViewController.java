@@ -170,7 +170,7 @@ public class AdminStatisticsViewController implements Initializable {
                     lineChart.getData().clear();
                     lineChart.getData().add(series);
                     progress.setVisible(false);
-                    validate();
+                    validate();               
                 });
             } catch (SQLException ex) {
                 Platform.runLater(() -> {
