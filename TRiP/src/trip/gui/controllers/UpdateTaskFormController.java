@@ -27,7 +27,7 @@ import trip.utilities.JFXAlert;
  *
  * @author ander
  */
-public class UpdateTaskForm implements Initializable {
+public class UpdateTaskFormController implements Initializable {
 
     private TaskModel taskModel = new TaskModel();
 

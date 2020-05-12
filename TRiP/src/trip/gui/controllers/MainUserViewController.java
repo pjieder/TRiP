@@ -280,7 +280,7 @@ public class MainUserViewController implements Initializable {
                 stage.setTitle("TRiP");
                 stage.getIcons().add(new Image(TRiP.class.getResourceAsStream("images/time.png")));
                 stage.setResizable(false);
-                UpdateTaskForm controller = fxmlLoader.getController();
+                UpdateTaskFormController controller = fxmlLoader.getController();
                 controller.setTask(updateView(), taskList.getSelectionModel().getSelectedItem());
                 stage.setScene(scene);
                 stage.show();
@@ -506,7 +506,7 @@ public class MainUserViewController implements Initializable {
                 stage.setTitle("TRiP");
                 stage.getIcons().add(new Image(TRiP.class.getResourceAsStream("images/time.png")));
                 stage.setResizable(false);
-                UpdateTasktimeForm controller = fxmlLoader.getController();
+                UpdateTasktimeFormController controller = fxmlLoader.getController();
                 controller.setTaskTime(updateView(), taskTimerList.getSelectionModel().getSelectedItem());
                 stage.setScene(scene);
                 stage.show();
