@@ -274,13 +274,13 @@ public class MainUserViewController implements Initializable {
         if (event.getClickCount() > 1 & !taskList.getSelectionModel().isEmpty() & !event.isConsumed()) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(EmployeeModel.class.getResource("views/UpdateTaskForm.fxml"));
+                fxmlLoader.setLocation(TRiP.class.getResource("views/UpdateTaskFormView.fxml"));
                 Scene scene = new Scene(fxmlLoader.load());
                 Stage stage = new Stage();
                 stage.setTitle("TRiP");
                 stage.getIcons().add(new Image(TRiP.class.getResourceAsStream("images/time.png")));
                 stage.setResizable(false);
-                UpdateTaskForm controller = fxmlLoader.getController();
+                UpdateTaskFormController controller = fxmlLoader.getController();
                 controller.setTask(updateView(), taskList.getSelectionModel().getSelectedItem());
                 stage.setScene(scene);
                 stage.show();
@@ -500,13 +500,13 @@ public class MainUserViewController implements Initializable {
         if (event.getClickCount() > 1 & !taskTimerList.getSelectionModel().isEmpty() & !event.isConsumed()) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(EmployeeModel.class.getResource("views/UpdateTasktimeForm.fxml"));
+                fxmlLoader.setLocation(TRiP.class.getResource("views/UpdateTasktimeFormView.fxml"));
                 Scene scene = new Scene(fxmlLoader.load());
                 Stage stage = new Stage();
                 stage.setTitle("TRiP");
                 stage.getIcons().add(new Image(TRiP.class.getResourceAsStream("images/time.png")));
                 stage.setResizable(false);
-                UpdateTasktimeForm controller = fxmlLoader.getController();
+                UpdateTasktimeFormController controller = fxmlLoader.getController();
                 controller.setTaskTime(updateView(), taskTimerList.getSelectionModel().getSelectedItem());
                 stage.setScene(scene);
                 stage.show();

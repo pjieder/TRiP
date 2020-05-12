@@ -5,10 +5,9 @@
  */
 package trip.gui.controllers;
 
+import trip.gui.TRiP;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXProgressBar;
 import com.jfoenix.controls.JFXTextField;
@@ -149,7 +148,7 @@ public class LoginController implements Initializable {
                     loggedUser = employeeToValidate;
                         try {
                             FXMLLoader fxmlLoader = new FXMLLoader();
-                            fxmlLoader.setLocation(EmployeeModel.class.getResource("views/MenuBarView.fxml"));
+                            fxmlLoader.setLocation(TRiP.class.getResource("views/MenuBarView.fxml"));
                             Scene scene = new Scene(fxmlLoader.load());
                             Stage stage = (Stage) rememberMe.getScene().getWindow();
                             MenuBarViewController controller = fxmlLoader.getController();

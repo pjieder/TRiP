@@ -34,7 +34,7 @@ import trip.utilities.TimeConverter;
  *
  * @author ander
  */
-public class UpdateTasktimeForm implements Initializable {
+public class UpdateTasktimeFormController implements Initializable {
 
     private TaskModel taskModel = new TaskModel();
 

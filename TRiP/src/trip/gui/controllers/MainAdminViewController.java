@@ -149,7 +149,7 @@ public class MainAdminViewController implements Initializable {
         if (event.getClickCount() > 1 & !projectTable.getSelectionModel().isEmpty() & !event.isConsumed()) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(EmployeeModel.class.getResource("views/MainUserView.fxml"));
+                fxmlLoader.setLocation(TRiP.class.getResource("views/MainUserView.fxml"));
 
                 Pane pane = fxmlLoader.load();
                 MainUserViewController controller = fxmlLoader.getController();
@@ -173,7 +173,7 @@ public class MainAdminViewController implements Initializable {
     private void createProject(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(EmployeeModel.class.getResource("views/AddEditProject.fxml"));
+            fxmlLoader.setLocation(TRiP.class.getResource("views/AddEditProjectView.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
             stage.setResizable(false);
@@ -199,7 +199,7 @@ public class MainAdminViewController implements Initializable {
         if (!projectTable.getSelectionModel().isEmpty()) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(EmployeeModel.class.getResource("views/AddEditProject.fxml"));
+                fxmlLoader.setLocation(TRiP.class.getResource("views/AddEditProjectView.fxml"));
                 Scene scene = new Scene(fxmlLoader.load());
                 Stage stage = new Stage();
                 stage.setResizable(false);
