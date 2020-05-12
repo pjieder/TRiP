@@ -121,7 +121,7 @@ public class AdminCurrentUserViewController implements Initializable {
     private void openAddUser(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(EmployeeModel.class.getResource("views/RegisterForm.fxml"));
+            fxmlLoader.setLocation(TRiP.class.getResource("views/RegisterForm.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
             stage.setResizable(false);
@@ -151,7 +151,7 @@ public class AdminCurrentUserViewController implements Initializable {
 
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(EmployeeModel.class.getResource("views/RegisterForm.fxml"));
+                fxmlLoader.setLocation(TRiP.class.getResource("views/RegisterForm.fxml"));
                 Scene scene = new Scene(fxmlLoader.load());
                 Stage stage = new Stage();
                 stage.setResizable(false);

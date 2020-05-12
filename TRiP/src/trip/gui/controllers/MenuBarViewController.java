@@ -21,6 +21,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import trip.gui.TRiP;
 import trip.gui.models.EmployeeModel;
 import trip.utilities.JFXAlert;
 
@@ -69,7 +70,7 @@ public class MenuBarViewController implements Initializable {
         Thread thread = new Thread(() -> {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(EmployeeModel.class.getResource("views/MainAdminView.fxml"));
+                fxmlLoader.setLocation(TRiP.class.getResource("views/MainAdminView.fxml"));
                 Pane adminPane = fxmlLoader.load();
                 MainAdminViewController controller = fxmlLoader.getController();
                 controller.loadAllProjects();
@@ -96,7 +97,7 @@ public class MenuBarViewController implements Initializable {
         Thread thread = new Thread(() -> {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(EmployeeModel.class.getResource("views/MainUserView.fxml"));
+                fxmlLoader.setLocation(TRiP.class.getResource("views/MainUserView.fxml"));
                 Pane userPane = fxmlLoader.load();
                 pane.getChildren().add(userPane);
                 viewPane = this.pane;
@@ -125,7 +126,7 @@ public class MenuBarViewController implements Initializable {
         Thread thread = new Thread(() -> {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(EmployeeModel.class.getResource("views/MainAdminView.fxml"));
+                fxmlLoader.setLocation(TRiP.class.getResource("views/MainAdminView.fxml"));
                 Parent fxml = fxmlLoader.load();
                 MainAdminViewController controller = fxmlLoader.getController();
                 controller.loadAllProjects();
@@ -150,7 +151,7 @@ public class MenuBarViewController implements Initializable {
         Thread thread = new Thread(() -> {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(EmployeeModel.class.getResource("views/AdminCustomerView.fxml"));
+                fxmlLoader.setLocation(TRiP.class.getResource("views/AdminCustomerView.fxml"));
                 Parent fxml = fxmlLoader.load();
                 AdminCustomerViewController controller = fxmlLoader.getController();
                 controller.loadAllCustomers();
@@ -175,7 +176,7 @@ public class MenuBarViewController implements Initializable {
     private void openUserView(MouseEvent event){
         Thread thread = new Thread(() -> {
             try {
-                Parent fxml = FXMLLoader.load(EmployeeModel.class.getResource("views/AdminCurrentUserView.fxml"));
+                Parent fxml = FXMLLoader.load(TRiP.class.getResource("views/AdminCurrentUserView.fxml"));
                 Platform.runLater(() -> {
                     pane.getChildren().removeAll();
                     pane.getChildren().setAll(fxml);
@@ -194,7 +195,7 @@ public class MenuBarViewController implements Initializable {
     private void openStatisticsView(MouseEvent event){
         Thread thread = new Thread(() -> {
             try {
-                Parent fxml = FXMLLoader.load(EmployeeModel.class.getResource("views/AdminStatisticsView.fxml"));
+                Parent fxml = FXMLLoader.load(TRiP.class.getResource("views/AdminStatisticsView.fxml"));
                 Platform.runLater(() -> {
                     pane.getChildren().removeAll();
                     pane.getChildren().setAll(fxml);
@@ -213,7 +214,7 @@ public class MenuBarViewController implements Initializable {
     private void openTimeTrackingView(MouseEvent event){
         Thread thread = new Thread(() -> {
             try {
-                Parent fxml = FXMLLoader.load(EmployeeModel.class.getResource("views/MainUserView.fxml"));
+                Parent fxml = FXMLLoader.load(TRiP.class.getResource("views/MainUserView.fxml"));
                 Platform.runLater(() -> {
                     pane.getChildren().removeAll();
                     pane.getChildren().setAll(fxml);
@@ -234,7 +235,7 @@ public class MenuBarViewController implements Initializable {
         Thread thread = new Thread(() -> {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(EmployeeModel.class.getResource("views/Login.fxml"));
+                fxmlLoader.setLocation(TRiP.class.getResource("views/Login.fxml"));
                 Scene scene = new Scene(fxmlLoader.load());
                 Stage stage = (Stage) AP.getScene().getWindow();
                 Platform.runLater(() -> {

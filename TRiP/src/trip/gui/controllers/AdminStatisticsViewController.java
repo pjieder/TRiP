@@ -29,6 +29,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import trip.be.Employee;
 import trip.be.Project;
+import trip.gui.TRiP;
 import trip.gui.models.EmployeeModel;
 import trip.gui.models.ProjectModel;
 import trip.utilities.JFXAlert;
@@ -300,7 +301,7 @@ public class AdminStatisticsViewController implements Initializable {
         if (employeeSelection.getValue() != null) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(EmployeeModel.class.getResource("views/MainUserView.fxml"));
+                fxmlLoader.setLocation(TRiP.class.getResource("views/MainUserView.fxml"));
 
                 Pane pane = fxmlLoader.load();
                 MainUserViewController controller = fxmlLoader.getController();
