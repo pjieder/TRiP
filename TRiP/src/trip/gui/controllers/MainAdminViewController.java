@@ -31,7 +31,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import trip.be.Project;
-import trip.gui.AppModel;
+import trip.gui.models.EmployeeModel;
 import trip.gui.TRiP;
 import trip.gui.models.ProjectModel;
 import trip.utilities.JFXAlert;
@@ -44,7 +44,7 @@ import trip.utilities.TimeConverter;
  */
 public class MainAdminViewController implements Initializable {
 
-    private AppModel appModel = new AppModel();
+    private EmployeeModel appModel = new EmployeeModel();
     private ProjectModel projectModel = new ProjectModel();
     private ObservableList<Project> projects = FXCollections.observableArrayList();
     private boolean isLastOnActive = true;
@@ -149,7 +149,7 @@ public class MainAdminViewController implements Initializable {
         if (event.getClickCount() > 1 & !projectTable.getSelectionModel().isEmpty() & !event.isConsumed()) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(AppModel.class.getResource("views/MainUserView.fxml"));
+                fxmlLoader.setLocation(EmployeeModel.class.getResource("views/MainUserView.fxml"));
 
                 Pane pane = fxmlLoader.load();
                 MainUserViewController controller = fxmlLoader.getController();
@@ -173,7 +173,7 @@ public class MainAdminViewController implements Initializable {
     private void createProject(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(AppModel.class.getResource("views/AddEditProject.fxml"));
+            fxmlLoader.setLocation(EmployeeModel.class.getResource("views/AddEditProject.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
             stage.setResizable(false);
@@ -199,7 +199,7 @@ public class MainAdminViewController implements Initializable {
         if (!projectTable.getSelectionModel().isEmpty()) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(AppModel.class.getResource("views/AddEditProject.fxml"));
+                fxmlLoader.setLocation(EmployeeModel.class.getResource("views/AddEditProject.fxml"));
                 Scene scene = new Scene(fxmlLoader.load());
                 Stage stage = new Stage();
                 stage.setResizable(false);

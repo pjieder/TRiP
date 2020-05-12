@@ -28,7 +28,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import trip.be.Customer;
-import trip.gui.AppModel;
+import trip.gui.models.EmployeeModel;
 import trip.gui.TRiP;
 import trip.gui.models.CustomerModel;
 import trip.utilities.JFXAlert;
@@ -108,7 +108,7 @@ public class AdminCustomerViewController implements Initializable {
     private void createCustomer(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(AppModel.class.getResource("views/AddEditCustomer.fxml"));
+            fxmlLoader.setLocation(EmployeeModel.class.getResource("views/AddEditCustomer.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
             stage.setResizable(false);
@@ -134,7 +134,7 @@ public class AdminCustomerViewController implements Initializable {
         if (!customerTable.getSelectionModel().isEmpty()) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(AppModel.class.getResource("views/AddEditCustomer.fxml"));
+                fxmlLoader.setLocation(EmployeeModel.class.getResource("views/AddEditCustomer.fxml"));
                 Scene scene = new Scene(fxmlLoader.load());
                 Stage stage = new Stage();
                 stage.setResizable(false);

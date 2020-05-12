@@ -26,7 +26,7 @@ import javafx.stage.Stage;
 import trip.be.Customer;
 import trip.be.Employee;
 import trip.be.Project;
-import trip.gui.AppModel;
+import trip.gui.models.EmployeeModel;
 import trip.gui.models.CustomerModel;
 import trip.gui.models.ProjectModel;
 import trip.utilities.JFXAlert;
@@ -42,7 +42,7 @@ public class AddEditProjectController implements Initializable {
     private Project projectToUpdate;
 
     private ProjectModel projectModel = new ProjectModel();
-    private AppModel appModel = new AppModel();
+    private EmployeeModel appModel = new EmployeeModel();
     private CustomerModel customerModel = new CustomerModel();
 
     @FXML

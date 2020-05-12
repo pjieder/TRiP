@@ -29,7 +29,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import trip.be.Employee;
 import trip.be.Project;
-import trip.gui.AppModel;
+import trip.gui.models.EmployeeModel;
 import trip.gui.models.ProjectModel;
 import trip.utilities.JFXAlert;
 import trip.utilities.TimeConverter;
@@ -42,7 +42,7 @@ import trip.utilities.TimeConverter;
 public class AdminStatisticsViewController implements Initializable {
 
     private ProjectModel projectModel = new ProjectModel();
-    private AppModel appModel = new AppModel();
+    private EmployeeModel appModel = new EmployeeModel();
 
     @FXML
     private LineChart<String, Double> lineChart;
@@ -300,7 +300,7 @@ public class AdminStatisticsViewController implements Initializable {
         if (employeeSelection.getValue() != null) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(AppModel.class.getResource("views/MainUserView.fxml"));
+                fxmlLoader.setLocation(EmployeeModel.class.getResource("views/MainUserView.fxml"));
 
                 Pane pane = fxmlLoader.load();
                 MainUserViewController controller = fxmlLoader.getController();

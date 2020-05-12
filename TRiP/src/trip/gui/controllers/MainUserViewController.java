@@ -47,7 +47,7 @@ import trip.be.Roles;
 import trip.be.Task;
 import trip.be.CountedTime;
 import trip.be.Timer;
-import trip.gui.AppModel;
+import trip.gui.models.EmployeeModel;
 import trip.gui.TRiP;
 import trip.gui.models.ProjectModel;
 import trip.gui.models.TaskModel;
@@ -274,7 +274,7 @@ public class MainUserViewController implements Initializable {
         if (event.getClickCount() > 1 & !taskList.getSelectionModel().isEmpty() & !event.isConsumed()) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(AppModel.class.getResource("views/UpdateTaskForm.fxml"));
+                fxmlLoader.setLocation(EmployeeModel.class.getResource("views/UpdateTaskForm.fxml"));
                 Scene scene = new Scene(fxmlLoader.load());
                 Stage stage = new Stage();
                 stage.setTitle("TRiP");
@@ -500,7 +500,7 @@ public class MainUserViewController implements Initializable {
         if (event.getClickCount() > 1 & !taskTimerList.getSelectionModel().isEmpty() & !event.isConsumed()) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(AppModel.class.getResource("views/UpdateTasktimeForm.fxml"));
+                fxmlLoader.setLocation(EmployeeModel.class.getResource("views/UpdateTasktimeForm.fxml"));
                 Scene scene = new Scene(fxmlLoader.load());
                 Stage stage = new Stage();
                 stage.setTitle("TRiP");

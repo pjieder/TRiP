@@ -28,7 +28,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import trip.be.Employee;
 import trip.be.Roles;
-import trip.gui.AppModel;
+import trip.gui.models.EmployeeModel;
 import trip.utilities.JFXAlert;
 import java.sql.SQLException;
 
@@ -39,7 +39,7 @@ import java.sql.SQLException;
  */
 public class LoginController implements Initializable {
 
-    private AppModel appModel = new AppModel();
+    private EmployeeModel appModel = new EmployeeModel();
     private Preferences preferences;
     public static Employee loggedUser;
 
@@ -149,7 +149,7 @@ public class LoginController implements Initializable {
                     loggedUser = employeeToValidate;
                         try {
                             FXMLLoader fxmlLoader = new FXMLLoader();
-                            fxmlLoader.setLocation(AppModel.class.getResource("views/MenuBarView.fxml"));
+                            fxmlLoader.setLocation(EmployeeModel.class.getResource("views/MenuBarView.fxml"));
                             Scene scene = new Scene(fxmlLoader.load());
                             Stage stage = (Stage) rememberMe.getScene().getWindow();
                             MenuBarViewController controller = fxmlLoader.getController();

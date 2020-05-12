@@ -30,7 +30,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import trip.be.Employee;
 import trip.be.Project;
-import trip.gui.AppModel;
+import trip.gui.models.EmployeeModel;
 import trip.gui.TRiP;
 import trip.gui.models.ProjectModel;
 import trip.utilities.JFXAlert;
@@ -42,7 +42,7 @@ import trip.utilities.JFXAlert;
  */
 public class AdminCurrentUserViewController implements Initializable {
 
-    private AppModel appModel = new AppModel();
+    private EmployeeModel appModel = new EmployeeModel();
     private ProjectModel projectModel = new ProjectModel();
     private boolean isLastOnActive = true;
     private ObservableList<Employee> employees = FXCollections.observableArrayList();
@@ -121,7 +121,7 @@ public class AdminCurrentUserViewController implements Initializable {
     private void openAddUser(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(AppModel.class.getResource("views/RegisterForm.fxml"));
+            fxmlLoader.setLocation(EmployeeModel.class.getResource("views/RegisterForm.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
             stage.setResizable(false);
@@ -151,7 +151,7 @@ public class AdminCurrentUserViewController implements Initializable {
 
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(AppModel.class.getResource("views/RegisterForm.fxml"));
+                fxmlLoader.setLocation(EmployeeModel.class.getResource("views/RegisterForm.fxml"));
                 Scene scene = new Scene(fxmlLoader.load());
                 Stage stage = new Stage();
                 stage.setResizable(false);

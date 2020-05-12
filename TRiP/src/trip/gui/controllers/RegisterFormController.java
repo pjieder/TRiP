@@ -23,7 +23,7 @@ import trip.be.Admin;
 import trip.be.Employee;
 import trip.be.Roles;
 import trip.be.User;
-import trip.gui.AppModel;
+import trip.gui.models.EmployeeModel;
 import trip.utilities.JFXAlert;
 
 /**
@@ -33,7 +33,7 @@ import trip.utilities.JFXAlert;
  */
 public class RegisterFormController implements Initializable {
     
-    private AppModel appModel = new AppModel();
+    private EmployeeModel appModel = new EmployeeModel();
     private Thread updateThread;
     private Employee employeeToUpdate;
     

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package trip.gui;
+package trip.gui.models;
 
 import java.sql.SQLException;
 import javafx.collections.ObservableList;
@@ -14,11 +14,11 @@ import trip.bll.EmployeeManager;
  *
  * @author ander
  */
-public class AppModel {
+public class EmployeeModel {
 
     private final EmployeeManager employeeManager;
 
-    public AppModel() {
+    public EmployeeModel() {
         employeeManager = new EmployeeManager();
     }
 
