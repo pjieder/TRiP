@@ -21,6 +21,11 @@ import trip.gui.controllers.LoginController;
  */
 public class DatabaseLogger {
 
+    /**
+     * For logging a new action, done by specific users, to the database,
+     * with a describtion of what, when and where.
+     * @param logAction 
+     */
     public static void logAction(String logAction) {
 
         Connection con = null;

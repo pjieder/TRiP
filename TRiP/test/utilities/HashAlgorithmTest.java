@@ -37,6 +37,10 @@ public class HashAlgorithmTest {
     public void tearDown() {
     }
 
+    /**
+     * Tests to see if the algorithm creates a compareable Hash,
+     * so it is able to be found when you write the correct password.
+     */
     @Test
     public void testGenerateSameHash() {
         System.out.println("Testing generateHash()");
@@ -50,6 +54,9 @@ public class HashAlgorithmTest {
 
     }
 
+    /**
+     * 
+     */
     @Test
     public void testRandomSalt() {
         System.out.println("Testing RandomtSalt()");

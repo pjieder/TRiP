@@ -20,6 +20,11 @@ import javafx.scene.text.Text;
  */
 public class JFXAlert {
 
+    /**
+     * This alert opens when an error has occurred, to inform the user.
+     * @param stackPane
+     * @param errorMessage 
+     */
     public static void openError(StackPane stackPane, String errorMessage) {
         String title = "Alert";
         stackPane.setVisible(true);
@@ -43,6 +48,12 @@ public class JFXAlert {
         dialog.show();
     }
 
+    /**
+     * This alert opens when the user has to react or confirm the chosen action.
+     * @param stackPane
+     * @param deleteMessage
+     * @param confirmAction 
+     */
     public static void openConfirm(StackPane stackPane, String deleteMessage, Thread confirmAction) {
         stackPane.setVisible(true);
         JFXDialogLayout dialogContent = new JFXDialogLayout();
@@ -67,6 +78,10 @@ public class JFXAlert {
         dialog.show();
     }
     
+    /**
+     * Opens when an error occurs with the utitlies
+     * @param errorMessage 
+     */
     public static void openUtilityError(String errorMessage){
     
         Alert errAlert = new Alert(Alert.AlertType.ERROR);

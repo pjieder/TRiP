@@ -47,6 +47,9 @@ public class TimeConverterTest {
     }
 
     
+    /**
+     * This test checks if the converting process is successful
+     */
     @Test
     public void testConvertSecondsToString () {
         System.out.println("Testing convertSecondsToString()");
@@ -58,6 +61,9 @@ public class TimeConverterTest {
         
     }
     
+    /**
+     * This test checks if the convertion is successful
+     */
     @Test
     public void testConvertStringToSeconds () {
         System.out.println("Testing convertStringToSeconds()");
@@ -69,7 +75,10 @@ public class TimeConverterTest {
         
     }
     
-    //TODO later
+    /**
+     * This test checks if it can count the dates,
+     * as well as check if it knows which dates are on what locations.
+     */
     @Test
     public void testGetDaysBetweenDates () {
         System.out.println("Testing getDaysBetweenDates()");
