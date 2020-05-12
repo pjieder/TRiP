@@ -108,7 +108,7 @@ public class AdminCustomerViewController implements Initializable {
     private void createCustomer(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(TRiP.class.getResource("views/AddEditCustomer.fxml"));
+            fxmlLoader.setLocation(TRiP.class.getResource("views/AddEditCustomerView.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
             stage.setResizable(false);
@@ -134,7 +134,7 @@ public class AdminCustomerViewController implements Initializable {
         if (!customerTable.getSelectionModel().isEmpty()) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(TRiP.class.getResource("views/AddEditCustomer.fxml"));
+                fxmlLoader.setLocation(TRiP.class.getResource("views/AddEditCustomerView.fxml"));
                 Scene scene = new Scene(fxmlLoader.load());
                 Stage stage = new Stage();
                 stage.setResizable(false);
