@@ -16,6 +16,7 @@ public class Task {
 
     private int id;
     private String name;
+    private String employee;
     private int totalTime;
     private boolean billable;
     private ObservableList<CountedTime> timeTasks = FXCollections.observableArrayList();
@@ -63,6 +64,14 @@ public class Task {
 
     public void setBillable(boolean billable) {
         this.billable = billable;
+    }
+
+    public String getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(String employee) {
+        this.employee = employee;
     }
 
     @Override

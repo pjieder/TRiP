@@ -6,6 +6,7 @@
 package trip.gui.models;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Date;
 import javafx.collections.ObservableList;
 import trip.be.Task;
@@ -33,7 +34,7 @@ public class TaskModel {
      * @return The newly created task.
      * @throws java.sql.SQLException
      */
-    public Task addTask(int userId, int projectId, String taskName) throws SQLException{
+    public Task addTask(int userId, int projectId, String taskName) throws SQLException {
         return taskManager.addTask(userId, projectId, taskName);
     }
 
@@ -45,8 +46,12 @@ public class TaskModel {
      * @return A list of all tasks stored.
      * @throws java.sql.SQLException
      */
-    public ObservableList<Task> loadTasks(int userId, int projectId) throws SQLException{
+    public ObservableList<Task> loadTasks(int userId, int projectId) throws SQLException {
         return taskManager.loadTasks(userId, projectId);
+    }
+
+    public ObservableList<Task> loadAllUniqueTasksDates(int projectID, LocalDate startDate, LocalDate endDate) throws SQLException {
+        return taskManager.loadAllUniqueTasksDates(projectID, startDate, endDate);
     }
 
     /**
@@ -56,7 +61,7 @@ public class TaskModel {
      * @return A boolean value representing whether or not the task was updated.
      * @throws java.sql.SQLException
      */
-    public boolean updateTask(Task task) throws SQLException{
+    public boolean updateTask(Task task) throws SQLException {
         return taskManager.updateTask(task);
     }
 
@@ -67,7 +72,7 @@ public class TaskModel {
      * @return A boolean value representing whether or not the task was deleted.
      * @throws java.sql.SQLException
      */
-    public boolean deleteTask(Task task) throws SQLException{
+    public boolean deleteTask(Task task) throws SQLException {
         return taskManager.deleteTask(task);
     }
 
@@ -80,7 +85,7 @@ public class TaskModel {
      * @param stopTime The endtime of when the work ended.
      * @throws java.sql.SQLException
      */
-    public void saveTimeForTask(Task task, int time, Date startTime, Date stopTime) throws SQLException{
+    public void saveTimeForTask(Task task, int time, Date startTime, Date stopTime) throws SQLException {
         taskManager.saveTimeForTask(task, time, startTime, stopTime);
     }
 
@@ -91,7 +96,7 @@ public class TaskModel {
      * @return A boolean value representing whether or not the update was successful.
      * @throws java.sql.SQLException
      */
-    public boolean UpdateTimeForTask(CountedTime taskTime) throws SQLException{
+    public boolean UpdateTimeForTask(CountedTime taskTime) throws SQLException {
         return taskManager.UpdateTimeForTask(taskTime);
     }
 
@@ -102,7 +107,7 @@ public class TaskModel {
      * @return A boolean value representing whether or not the delete was successful.
      * @throws java.sql.SQLException
      */
-    public boolean DeleteTimeForTask(CountedTime taskTime) throws SQLException{
+    public boolean DeleteTimeForTask(CountedTime taskTime) throws SQLException {
         return taskManager.DeleteTimeForTask(taskTime);
     }
 

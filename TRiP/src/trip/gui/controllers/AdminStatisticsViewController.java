@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,13 +26,17 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import trip.be.Employee;
 import trip.be.Project;
+import trip.be.Task;
 import trip.gui.TRiP;
 import trip.gui.models.EmployeeModel;
 import trip.gui.models.ProjectModel;
+import trip.gui.models.TaskModel;
 import trip.utilities.JFXAlert;
 import trip.utilities.TimeConverter;
 
@@ -44,6 +49,8 @@ public class AdminStatisticsViewController implements Initializable {
 
     private ProjectModel projectModel = new ProjectModel();
     private EmployeeModel appModel = new EmployeeModel();
+    private TaskModel taskModel = new TaskModel();
+    private DecimalFormat df = new DecimalFormat("0.0#");
 
     @FXML
     private LineChart<String, Double> lineChart;
@@ -75,12 +82,53 @@ public class AdminStatisticsViewController implements Initializable {
     private ComboBox<Employee> employeeSelection;
     @FXML
     private StackPane stackPane;
+    @FXML
+    private TableView<Task> taskTable;
+    @FXML
+    private TableColumn<Task, String> taskColumn;
+    @FXML
+    private TableColumn<Task, String> nameColumn;
+    @FXML
+    private TableColumn<Task, String> hourColumn;
+    @FXML
+    private TableColumn<Task, String> priceColumn;
+    @FXML
+    private JFXButton calculateTask;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        taskColumn.setCellValueFactory((data) -> {
+
+            Task task = data.getValue();
+            return new SimpleStringProperty(task.getName());
+        });
+
+        nameColumn.setCellValueFactory((data) -> {
+
+            Task task = data.getValue();
+            return new SimpleStringProperty(task.getEmployee());
+        });
+
+        hourColumn.setCellValueFactory((data) -> {
+
+            Task task = data.getValue();
+            double hours = (double) task.getTotalTime() / 3600;
+
+            return new SimpleStringProperty(df.format(hours));
+        });
+
+        priceColumn.setCellValueFactory((data) -> {
+
+            Task task = data.getValue();
+            double price = ((double) task.getTotalTime() / 3600) * projectComboBox.getValue().getRate();
+
+            return new SimpleStringProperty(df.format(price));
+        });
+
         try {
             projectComboBox.setItems(projectModel.loadAllActiveProjects());
             projectComboBox.getItems().add(0, new Project("All projects", 0));
@@ -88,6 +136,7 @@ public class AdminStatisticsViewController implements Initializable {
 
             statisticComboBox.getItems().add("Project chart");
             statisticComboBox.getItems().add("Employee chart");
+            statisticComboBox.getItems().add("Task Chart");
             statisticComboBox.getSelectionModel().select(0);
 
             employeeComboBox.setItems(appModel.loadActiveEmployees());
@@ -112,6 +161,8 @@ public class AdminStatisticsViewController implements Initializable {
             barChart.setVisible(false);
             calculateLine.setVisible(true);
             calculateBar.setVisible(false);
+            calculateTask.setVisible(false);
+            taskTable.setVisible(false);
             totalTimeLabel.setText("00:00:00");
             totalPriceLabel.setText("0.00 DKK");
         } else if (statisticComboBox.getSelectionModel().getSelectedIndex() == 1) {
@@ -121,6 +172,19 @@ public class AdminStatisticsViewController implements Initializable {
             barChart.setVisible(true);
             calculateLine.setVisible(false);
             calculateBar.setVisible(true);
+            calculateTask.setVisible(false);
+            taskTable.setVisible(false);
+            totalTimeLabel.setText("00:00:00");
+            totalPriceLabel.setText("0.00 DKK");
+        } else if (statisticComboBox.getSelectionModel().getSelectedIndex() == 2) {
+            employeeComboBox.setVisible(false);
+            projectComboBox.setVisible(true);
+            lineChart.setVisible(false);
+            barChart.setVisible(false);
+            calculateLine.setVisible(false);
+            calculateBar.setVisible(false);
+            calculateTask.setVisible(true);
+            taskTable.setVisible(true);
             totalTimeLabel.setText("00:00:00");
             totalPriceLabel.setText("0.00 DKK");
         }
@@ -140,12 +204,16 @@ public class AdminStatisticsViewController implements Initializable {
 
         if (dateStart.getValue() != null && dateEnd.getValue() != null) {
             calculateLine.setDisable(false);
+            if (projectComboBox.getValue().getId() > 0) {
+                calculateTask.setDisable(false);
+            }
 
             if (employeeComboBox.getValue() != null) {
                 calculateBar.setDisable(false);
             }
         } else {
             calculateLine.setDisable(true);
+            calculateBar.setDisable(true);
             calculateBar.setDisable(true);
         }
     }
@@ -171,7 +239,7 @@ public class AdminStatisticsViewController implements Initializable {
                     lineChart.getData().clear();
                     lineChart.getData().add(series);
                     progress.setVisible(false);
-                    validate();               
+                    validate();
                 });
             } catch (SQLException ex) {
                 Platform.runLater(() -> {
@@ -227,8 +295,6 @@ public class AdminStatisticsViewController implements Initializable {
         String totalTimeString;
         String totalPriceString;
 
-        DecimalFormat df = new DecimalFormat("0.0#");
-
         try {
             if (projectID == 0) {
 
@@ -250,7 +316,9 @@ public class AdminStatisticsViewController implements Initializable {
                 totalPriceLabel.setText(totalPriceString);
             });
         } catch (SQLException ex) {
-            Platform.runLater(()->{JFXAlert.openError(stackPane, "Error Calculating Price.");});
+            Platform.runLater(() -> {
+                JFXAlert.openError(stackPane, "Error Calculating Price.");
+            });
         }
     }
 
@@ -269,7 +337,6 @@ public class AdminStatisticsViewController implements Initializable {
         String totalPriceString;
 
         try {
-            DecimalFormat df = new DecimalFormat("0.0#");
             List<Project> allWorkedOnProjects = projectModel.loadWorkedOnProjectsBetweenDates(startDate, endDate, employeeID);
 
             for (Project project : allWorkedOnProjects) {
@@ -287,7 +354,9 @@ public class AdminStatisticsViewController implements Initializable {
                 totalPriceLabel.setText(totalPriceString);
             });
         } catch (SQLException ex) {
-           Platform.runLater(()->{JFXAlert.openError(stackPane, "Error Calculating Price.");});
+            Platform.runLater(() -> {
+                JFXAlert.openError(stackPane, "Error Calculating Price.");
+            });
         }
     }
 
@@ -301,7 +370,8 @@ public class AdminStatisticsViewController implements Initializable {
         if (employeeSelection.getValue() != null) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(TRiP.class.getResource("views/MainUserView.fxml"));
+                fxmlLoader.setLocation(TRiP.class
+                        .getResource("views/MainUserView.fxml"));
 
                 Pane pane = fxmlLoader.load();
                 MainUserViewController controller = fxmlLoader.getController();
@@ -309,8 +379,21 @@ public class AdminStatisticsViewController implements Initializable {
 
                 MenuBarViewController.viewPane.getChildren().clear();
                 MenuBarViewController.viewPane.getChildren().add(pane);
-            } catch (IOException ex) {JFXAlert.openError(stackPane, "Error loading main user view.");}
+            } catch (IOException ex) {
+                JFXAlert.openError(stackPane, "Error loading main user view.");
+            }
         }
+    }
+
+    @FXML
+    private void calculateTask(ActionEvent event) {
+
+        try {
+            taskTable.setItems(taskModel.loadAllUniqueTasksDates(projectComboBox.getValue().getId(), dateStart.getValue(), dateEnd.getValue()));
+        } catch (SQLException ex) {
+            JFXAlert.openError(stackPane, "Error loading tasks.");
+        }
+
     }
 
 }

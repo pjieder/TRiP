@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.Date;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -98,6 +99,48 @@ public class TaskDBDAO implements ITaskDBDAO {
                 Task task = new Task(name);
                 task.setId(id);
                 task.setBillable(isBillable);
+                tasks.add(task);
+            }
+
+            return tasks;
+
+        } finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+    }
+    
+    @Override
+    public ObservableList<Task> loadAllUniqueTasksDates(int projectID, LocalDate startDate, LocalDate endDate) throws SQLException
+    {
+        Connection con = null;
+        ObservableList<Task> tasks = FXCollections.observableArrayList();
+
+        try {
+            con = DBSettings.getInstance().getConnection();
+            
+            String sql = "WITH x AS (SELECT Tasks.time, Task.* FROM Tasks JOIN Task ON Tasks.taskID = Task.ID WHERE Tasks.startTime BETWEEN ? AND ? AND Task.projID = ?)" +
+            "SELECT DISTINCT x.ID, x.name, Employees.fName, Employees.lName, x.isBillable, SUM(x.time) over (partition by x.ID) as totalTime FROM x JOIN Employees ON x.employeeID = Employees.ID;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            
+            stmt.setString(1, startDate.toString());
+            stmt.setString(2, TimeConverter.addDays(endDate, 1).toString());
+            stmt.setInt(3, projectID);
+            
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                int id = rs.getInt("ID");
+                String name = rs.getString("name");
+                String employeeName = rs.getString("fName") + " " + rs.getString("lName");
+                boolean isBillable = rs.getBoolean("isBillable");
+                int totalTime = rs.getInt("totalTime");
+
+                Task task = new Task(name);
+                task.setId(id);
+                task.setEmployee(employeeName);
+                task.setBillable(isBillable);
+                task.setTotalTime(totalTime);
                 tasks.add(task);
             }
 

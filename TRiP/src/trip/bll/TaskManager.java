@@ -6,6 +6,7 @@
 package trip.bll;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Date;
 import javafx.collections.ObservableList;
 import trip.be.Task;
@@ -50,6 +51,11 @@ public class TaskManager {
         return dalFacade.loadTasks(userId, projectId);
     }
 
+    public ObservableList<Task> loadAllUniqueTasksDates(int projectID, LocalDate startDate, LocalDate endDate) throws SQLException
+    {
+        return dalFacade.loadAllUniqueTasksDates(projectID, startDate, endDate);
+    }
+    
     /**
      * Updates the specified task in the database.
      *

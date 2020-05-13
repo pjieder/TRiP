@@ -255,6 +255,8 @@ public interface IDalFacade {
      */
     public ObservableList<Task> loadTasks(int employeeId, int projectId) throws SQLException;
 
+    public ObservableList<Task> loadAllUniqueTasksDates(int projectID, LocalDate startDate, LocalDate endDate) throws SQLException;
+    
     /**
      * Updates the specified task in the database.
      *

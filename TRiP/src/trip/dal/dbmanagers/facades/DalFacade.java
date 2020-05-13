@@ -408,6 +408,12 @@ public class DalFacade implements IDalFacade {
         }
         return tasks;
     }
+    
+    @Override
+    public ObservableList<Task> loadAllUniqueTasksDates(int projectID, LocalDate startDate, LocalDate endDate) throws SQLException
+    {
+        return taskManager.loadAllUniqueTasksDates(projectID, startDate, endDate);
+    }
 
     /**
      * Updates the specified task in the database.

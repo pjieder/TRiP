@@ -6,6 +6,7 @@
 package trip.dal.dbmanagers.dbdao.Interfaces;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Date;
 import javafx.collections.ObservableList;
 import trip.be.Task;
@@ -38,6 +39,8 @@ public interface ITaskDBDAO {
      */
     public ObservableList<Task> loadTasks(int userId, int projectId) throws SQLException;
 
+    public ObservableList<Task> loadAllUniqueTasksDates(int projectID, LocalDate startDate, LocalDate endDate) throws SQLException;
+    
     /**
      * Updates the specified task in the database.
      *
