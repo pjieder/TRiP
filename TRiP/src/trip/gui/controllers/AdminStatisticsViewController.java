@@ -73,10 +73,6 @@ public class AdminStatisticsViewController implements Initializable {
     @FXML
     private JFXButton calculateBar;
     @FXML
-    private Label totalPriceLabel;
-    @FXML
-    private Label totalTimeLabel;
-    @FXML
     private JFXButton openEmployeeBtn;
     @FXML
     private ComboBox<Employee> employeeSelection;
@@ -94,6 +90,24 @@ public class AdminStatisticsViewController implements Initializable {
     private TableColumn<Task, String> priceColumn;
     @FXML
     private JFXButton calculateTask;
+    @FXML
+    private Label totalTimeLabelLine;
+    @FXML
+    private Label totalPriceLabelLine;
+    @FXML
+    private Label totalTimeLabelBar;
+    @FXML
+    private Label totalPriceLabelBar;
+    @FXML
+    private Label totalTimeLabelTask;
+    @FXML
+    private Label totalPriceLabelTask;
+    @FXML
+    private Pane TaskStatistics;
+    @FXML
+    private Pane lineStatistics;
+    @FXML
+    private Pane BarStatistics;
 
     /**
      * Initializes the controller class.
@@ -125,8 +139,11 @@ public class AdminStatisticsViewController implements Initializable {
 
             Task task = data.getValue();
             double price = ((double) task.getTotalTime() / 3600) * projectComboBox.getValue().getRate();
-
-            return new SimpleStringProperty(df.format(price));
+            if (task.isBillable()) {
+                return new SimpleStringProperty(df.format(price) + "DKK");
+            } else {
+                return new SimpleStringProperty("0.0 DKK");
+            }
         });
 
         try {
@@ -154,39 +171,48 @@ public class AdminStatisticsViewController implements Initializable {
      */
     @FXML
     private void changeStatistic(ActionEvent event) {
-        if (statisticComboBox.getSelectionModel().getSelectedIndex() == 0) {
-            employeeComboBox.setVisible(false);
-            projectComboBox.setVisible(true);
-            lineChart.setVisible(true);
-            barChart.setVisible(false);
-            calculateLine.setVisible(true);
-            calculateBar.setVisible(false);
-            calculateTask.setVisible(false);
-            taskTable.setVisible(false);
-            totalTimeLabel.setText("00:00:00");
-            totalPriceLabel.setText("0.00 DKK");
-        } else if (statisticComboBox.getSelectionModel().getSelectedIndex() == 1) {
-            employeeComboBox.setVisible(true);
-            projectComboBox.setVisible(false);
-            lineChart.setVisible(false);
-            barChart.setVisible(true);
-            calculateLine.setVisible(false);
-            calculateBar.setVisible(true);
-            calculateTask.setVisible(false);
-            taskTable.setVisible(false);
-            totalTimeLabel.setText("00:00:00");
-            totalPriceLabel.setText("0.00 DKK");
-        } else if (statisticComboBox.getSelectionModel().getSelectedIndex() == 2) {
-            employeeComboBox.setVisible(false);
-            projectComboBox.setVisible(true);
-            lineChart.setVisible(false);
-            barChart.setVisible(false);
-            calculateLine.setVisible(false);
-            calculateBar.setVisible(false);
-            calculateTask.setVisible(true);
-            taskTable.setVisible(true);
-            totalTimeLabel.setText("00:00:00");
-            totalPriceLabel.setText("0.00 DKK");
+        switch (statisticComboBox.getSelectionModel().getSelectedIndex()) {
+            case 0:
+                employeeComboBox.setVisible(false);
+                projectComboBox.setVisible(true);
+                lineChart.setVisible(true);
+                barChart.setVisible(false);
+                calculateLine.setVisible(true);
+                calculateBar.setVisible(false);
+                calculateTask.setVisible(false);
+                taskTable.setVisible(false);
+                lineStatistics.setVisible(true);
+                BarStatistics.setVisible(false);
+                TaskStatistics.setVisible(false);
+                break;
+            case 1:
+                employeeComboBox.setVisible(true);
+                projectComboBox.setVisible(false);
+                lineChart.setVisible(false);
+                barChart.setVisible(true);
+                calculateLine.setVisible(false);
+                calculateBar.setVisible(true);
+                calculateTask.setVisible(false);
+                taskTable.setVisible(false);
+                lineStatistics.setVisible(false);
+                BarStatistics.setVisible(true);
+                TaskStatistics.setVisible(false);
+                break;
+            case 2:
+                employeeComboBox.setVisible(false);
+                projectComboBox.setVisible(true);
+                lineChart.setVisible(false);
+                barChart.setVisible(false);
+                calculateLine.setVisible(false);
+                calculateBar.setVisible(false);
+                calculateTask.setVisible(true);
+                taskTable.setVisible(true);
+                lineStatistics.setVisible(false);
+                BarStatistics.setVisible(false);
+                TaskStatistics.setVisible(true);
+                break;
+            default:
+                break;
         }
     }
 
@@ -204,9 +230,8 @@ public class AdminStatisticsViewController implements Initializable {
 
         if (dateStart.getValue() != null && dateEnd.getValue() != null) {
             calculateLine.setDisable(false);
-            if (projectComboBox.getValue().getId() > 0) {
-                calculateTask.setDisable(false);
-            }
+            if (projectComboBox.getValue().getId() > 0) {calculateTask.setDisable(false);}
+            else{calculateTask.setDisable(true);}
 
             if (employeeComboBox.getValue() != null) {
                 calculateBar.setDisable(false);
@@ -214,7 +239,7 @@ public class AdminStatisticsViewController implements Initializable {
         } else {
             calculateLine.setDisable(true);
             calculateBar.setDisable(true);
-            calculateBar.setDisable(true);
+            calculateTask.setDisable(true);
         }
     }
 
@@ -312,8 +337,8 @@ public class AdminStatisticsViewController implements Initializable {
             totalPriceString = df.format(totalPrice) + " DKK";
 
             Platform.runLater(() -> {
-                totalTimeLabel.setText(totalTimeString);
-                totalPriceLabel.setText(totalPriceString);
+                totalTimeLabelLine.setText(totalTimeString);
+                totalPriceLabelLine.setText(totalPriceString);
             });
         } catch (SQLException ex) {
             Platform.runLater(() -> {
@@ -350,14 +375,31 @@ public class AdminStatisticsViewController implements Initializable {
             totalPriceString = df.format(totalPrice) + " DKK";
 
             Platform.runLater(() -> {
-                totalTimeLabel.setText(totalTimeString);
-                totalPriceLabel.setText(totalPriceString);
+                totalTimeLabelBar.setText(totalTimeString);
+                totalPriceLabelBar.setText(totalPriceString);
             });
         } catch (SQLException ex) {
             Platform.runLater(() -> {
                 JFXAlert.openError(stackPane, "Error Calculating Price.");
             });
         }
+    }
+
+    public void calculatePriceForTask() {
+        int totalTime = 0;
+        double totalPrice = 0;
+        String totalTimeString;
+        String totalPriceString;
+
+        for (Task task : taskTable.getItems()) {
+            totalTime += task.getTotalTime();
+            totalPrice += (task.isBillable()) ? ((double) task.getTotalTime() / 3600) * projectComboBox.getValue().getRate() : 0;
+        }
+
+        totalTimeString = TimeConverter.convertSecondsToString(totalTime);
+        totalPriceString = df.format(totalPrice) + " DKK";
+        totalTimeLabelTask.setText(totalTimeString);
+        totalPriceLabelTask.setText(totalPriceString);
     }
 
     /**
@@ -390,6 +432,7 @@ public class AdminStatisticsViewController implements Initializable {
 
         try {
             taskTable.setItems(taskModel.loadAllUniqueTasksDates(projectComboBox.getValue().getId(), dateStart.getValue(), dateEnd.getValue()));
+            calculatePriceForTask();
         } catch (SQLException ex) {
             JFXAlert.openError(stackPane, "Error loading tasks.");
         }

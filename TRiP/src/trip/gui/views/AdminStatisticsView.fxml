@@ -13,6 +13,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
@@ -44,12 +45,12 @@
                   <String fx:value="chart-line-symbol" />
                </styleClass>
             </LineChart>
-            <TableView fx:id="taskTable" prefHeight="544.0" prefWidth="881.0" visible="false">
+            <TableView fx:id="taskTable" prefHeight="544.0" prefWidth="881.0" stylesheets="@../styles/StatisticsCSS.css" visible="false">
               <columns>
-                <TableColumn fx:id="taskColumn" prefWidth="286.0" text="Task" />
-                <TableColumn fx:id="nameColumn" minWidth="0.0" prefWidth="266.0" text="Name" />
-                  <TableColumn fx:id="hourColumn" prefWidth="188.0" text="Hour" />
-                  <TableColumn fx:id="priceColumn" prefWidth="140.0" text="Price" />
+                <TableColumn fx:id="taskColumn" prefWidth="326.0" text="Task" />
+                <TableColumn fx:id="nameColumn" minWidth="0.0" prefWidth="327.0" text="Name" />
+                  <TableColumn fx:id="hourColumn" prefWidth="114.0" text="Hour" />
+                  <TableColumn fx:id="priceColumn" prefWidth="113.0" text="Price" />
               </columns>
             </TableView>
             <Label layoutX="220.0" layoutY="559.0" text="Total Turn Over:">
@@ -57,17 +58,7 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label fx:id="totalPriceLabel" layoutX="333.0" layoutY="559.0" text="0.00 DKK">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
             <Label layoutX="15.0" layoutY="559.0" text="Total Time Spent:">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <Label fx:id="totalTimeLabel" layoutX="136.0" layoutY="559.0" text="00:00:00">
                <font>
                   <Font size="15.0" />
                </font>
@@ -80,6 +71,48 @@
             </JFXButton>
          </children>
       </AnchorPane>
+      <Pane fx:id="TaskStatistics" layoutX="196.0" layoutY="657.0" prefHeight="43.0" prefWidth="296.0" visible="false">
+         <children>
+            <Label fx:id="totalTimeLabelTask" layoutX="7.0" layoutY="10.0" text="00:00:00">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="totalPriceLabelTask" layoutX="203.0" layoutY="11.0" text="0.00 DKK">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="lineStatistics" layoutX="196.0" layoutY="657.0" prefHeight="43.0" prefWidth="296.0">
+         <children>
+            <Label fx:id="totalTimeLabelLine" layoutX="7.0" layoutY="10.0" text="00:00:00">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="totalPriceLabelLine" layoutX="203.0" layoutY="11.0" text="0.00 DKK">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="BarStatistics" layoutX="196.0" layoutY="657.0" prefHeight="43.0" prefWidth="296.0" visible="false">
+         <children>
+            <Label fx:id="totalTimeLabelBar" layoutX="7.0" layoutY="10.0" text="00:00:00">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="totalPriceLabelBar" layoutX="203.0" layoutY="11.0" text="0.00 DKK">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
       <ComboBox fx:id="statisticComboBox" layoutX="71.0" layoutY="54.0" onAction="#changeStatistic" prefHeight="31.0" prefWidth="204.0" promptText="Statistic" stylesheets="@../styles/StatisticsCSS.css" />
       <ComboBox layoutX="424.0" layoutY="98.0" prefHeight="31.0" prefWidth="159.0" promptText="Client" stylesheets="@../styles/StatisticsCSS.css" visible="false" />
       <ComboBox fx:id="projectComboBox" layoutX="594.0" layoutY="50.0" onAction="#validate" prefHeight="31.0" prefWidth="204.0" promptText="Project" stylesheets="@../styles/StatisticsCSS.css" />
