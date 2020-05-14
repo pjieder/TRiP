@@ -233,7 +233,7 @@ public class MenuBarViewController implements Initializable {
         Thread thread = new Thread(() -> {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(TRiP.class.getResource("views/Login.fxml"));
+                fxmlLoader.setLocation(TRiP.class.getResource("views/LoginView.fxml"));
                 Scene scene = new Scene(fxmlLoader.load());
                 Stage stage = (Stage) AP.getScene().getWindow();
                 Platform.runLater(() -> {

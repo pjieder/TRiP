@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import trip.dal.dbaccess.DBSettings;
 import trip.dal.dbmanagers.dbdao.CustomerDBDAO;
 import trip.gui.controllers.LoginController;
+import trip.utilities.TimeConverter;
 
 /**
  *
@@ -36,7 +37,7 @@ public class DatabaseLogger {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, LoginController.loggedUser.getId() + " (" + LoginController.loggedUser.getfName() + ")");
             ps.setString(2, logAction);
-            ps.setString(3, new Date().toString());
+            ps.setString(3, TimeConverter.convertDateToStringDB(new Date()));
             
             ps.executeUpdate();
 
