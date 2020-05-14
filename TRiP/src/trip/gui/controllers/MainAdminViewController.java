@@ -43,8 +43,7 @@ import trip.utilities.TimeConverter;
  * @author Peter
  */
 public class MainAdminViewController implements Initializable {
-
-    private EmployeeModel appModel = new EmployeeModel();
+    
     private ProjectModel projectModel = new ProjectModel();
     private ObservableList<Project> projects = FXCollections.observableArrayList();
     private boolean isLastOnActive = true;

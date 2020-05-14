@@ -212,7 +212,7 @@ public class MainUserViewController implements Initializable {
     /**
      * Loads all active projects or the projects which the logged user is assigned to, based on the role of the user.
      */
-    public void loadProjects() {
+    private void loadProjects() {
         try {
             if (loggedUser.getRole() == Roles.ADMIN) {
                 projectComboBox.setItems(projectModel.loadAllActiveProjects());
@@ -542,7 +542,7 @@ public class MainUserViewController implements Initializable {
      * Calculates the time between the selected date and time in order to display this
      * in the timerField for a precise logging time.
      */
-    public void calculateTime()
+    private void calculateTime()
     {
         if (dateStart.getValue() != null && dateEnd.getValue() != null && timeStart.getValue() != null && timeEnd.getValue() != null)
         {
@@ -571,7 +571,7 @@ public class MainUserViewController implements Initializable {
      * Calculates what the date and time fields should be to reflect the change
      * made to the timerField in order to display a precise logging time.
      */
-    public void changeTime()
+    private void changeTime()
     {
         if (timerField.validate())
         {
@@ -595,7 +595,7 @@ public class MainUserViewController implements Initializable {
     /**
      * Adds a on close request to the stage which will cancel the timer if the stage is closed without disabling the timer. This insures that the timer does not run as a thread in the background when the application is closed.
      */
-    public void setupCloseRequest() {
+    private void setupCloseRequest() {
 
         Stage appStage = (Stage) taskList.getScene().getWindow();
         if (appStage.getOnCloseRequest() == null) {

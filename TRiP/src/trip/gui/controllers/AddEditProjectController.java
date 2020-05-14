@@ -37,12 +37,12 @@ import trip.utilities.JFXAlert;
  */
 public class AddEditProjectController implements Initializable {
 
+    private CustomerModel customerModel = new CustomerModel();
+    private EmployeeModel employeeModel = new EmployeeModel();
+    private ProjectModel projectModel = new ProjectModel();
+
     private Thread updateThread;
     private Project projectToUpdate;
-
-    private ProjectModel projectModel = new ProjectModel();
-    private EmployeeModel appModel = new EmployeeModel();
-    private CustomerModel customerModel = new CustomerModel();
 
     @FXML
     private JFXTextField nameField;
@@ -127,38 +127,43 @@ public class AddEditProjectController implements Initializable {
      * @param thread the Thread returned by method updateView in the MainAdminViewController
      */
     public void setUpdateThread(Thread thread) {
-        try{
-        this.updateThread = thread;
-        activeUsersCBox.setItems(appModel.loadActiveEmployees());
-        customerComboBox.setItems(customerModel.getAllCustomers());
-        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error loading.");}
+        try {
+            this.updateThread = thread;
+            activeUsersCBox.setItems(employeeModel.loadActiveEmployees());
+            customerComboBox.setItems(customerModel.getAllCustomers());
+        } catch (SQLException ex) {
+            JFXAlert.openError(stackPane, "Error loading.");
+        }
 
     }
 
     /**
      * This methods runs when the AddEditProject FXML is opened by the "edit" button. It takes the selected project and update thread and stores them as instance variables.
+     *
      * @param thread The Thread returned by method updateView in the MainAdminViewController
-     * @param project The project to be updated 
+     * @param project The project to be updated
      */
     public void setProject(Thread thread, Project project) {
-        try{
-        this.updateThread = thread;
-        this.projectToUpdate = project;
+        try {
+            this.updateThread = thread;
+            this.projectToUpdate = project;
 
-        registerButton.setVisible(false);
-        updateButton.setVisible(true);
+            registerButton.setVisible(false);
+            updateButton.setVisible(true);
 
-        customerComboBox.setItems(customerModel.getAllCustomers());
-        activeUsersList.setItems(appModel.loadEmployeesAssignedToProject(project.getId()));
+            customerComboBox.setItems(customerModel.getAllCustomers());
+            activeUsersList.setItems(employeeModel.loadEmployeesAssignedToProject(project.getId()));
 
-        nameField.setText(projectToUpdate.getName());
-        customerComboBox.getSelectionModel().select(project.getCustomer());
-        rateField.setText(projectToUpdate.getRate() + "");
+            nameField.setText(projectToUpdate.getName());
+            customerComboBox.getSelectionModel().select(project.getCustomer());
+            rateField.setText(projectToUpdate.getRate() + "");
 
-        updateCheckBox();
-        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error loading.");}
+            updateCheckBox();
+        } catch (SQLException ex) {
+            JFXAlert.openError(stackPane, "Error loading.");
+        }
     }
-    
+
     /**
      * Saves or updates the project based on what button was pressed when opening the FXML.
      *
@@ -166,44 +171,47 @@ public class AddEditProjectController implements Initializable {
      */
     @FXML
     private void registerProject(ActionEvent event) {
-        try{
-        String name = nameField.getText();
-        double rate = Double.parseDouble(rateField.getText().replace(",", "."));
-        Project project = new Project(name, rate);
-        project.setCustomer(customerComboBox.getValue());
+        try {
+            String name = nameField.getText();
+            double rate = Double.parseDouble(rateField.getText().replace(",", "."));
+            Project project = new Project(name, rate);
+            project.setCustomer(customerComboBox.getValue());
 
-        if (activeUsersList.getItems().isEmpty()) {
-            project.setIsActive(false);
-        } else {
-            project.setIsActive(true);
-        }
+            if (activeUsersList.getItems().isEmpty()) {
+                project.setIsActive(false);
+            } else {
+                project.setIsActive(true);
+            }
 
-        if (projectToUpdate == null) {
-            projectModel.createProject(project, activeUsersList.getItems());
-        } else {
-            project.setId(projectToUpdate.getId());
-            projectModel.updateProject(project, activeUsersList.getItems());
+            if (projectToUpdate == null) {
+                projectModel.createProject(project, activeUsersList.getItems());
+            } else {
+                project.setId(projectToUpdate.getId());
+                projectModel.updateProject(project, activeUsersList.getItems());
+            }
+            updateThread.start();
+            closeScene();
+        } catch (SQLException ex) {
+            JFXAlert.openError(stackPane, "Error creating or updating project.");
         }
-        updateThread.start();
-        closeScene();
-        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error creating or updating project.");}
     }
 
     /**
      * Updates the check box containing active employees not yet assigned to the project.
      */
     private void updateCheckBox() {
-        try{
-        ObservableList<Employee> updatedCombo = appModel.loadActiveEmployees();
+        try {
+            ObservableList<Employee> updatedCombo = employeeModel.loadActiveEmployees();
 
-        for (Employee employee : activeUsersList.getItems()) {
-            updatedCombo.remove(employee);
+            for (Employee employee : activeUsersList.getItems()) {
+                updatedCombo.remove(employee);
+            }
+            activeUsersCBox.setItems(updatedCombo);
+        } catch (SQLException ex) {
+            JFXAlert.openError(stackPane, "Error updating checkbox.");
         }
-        activeUsersCBox.setItems(updatedCombo);
-        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error updating checkbox.");}
     }
 
-    
     /**
      * Adds an active user to the list of users working on the project.
      */
@@ -251,7 +259,8 @@ public class AddEditProjectController implements Initializable {
 
     /**
      * Runs method 'validateInput' when new information is entered.
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     private void validateCustomer(ActionEvent event) {
