@@ -188,7 +188,7 @@ public class UpdateTasktimeFormController implements Initializable {
      * Calculates the time between the selected date and time in order to display this
      * in the timerField for a precise logging time.
      */
-    public void calculateTime() {
+    private void calculateTime() {
         if (dateStart.getValue() != null && dateStop.getValue() != null && timeStart.getValue() != null && timeStop.getValue() != null) {
 
             LocalDate localStart = dateStart.getValue();
@@ -215,7 +215,7 @@ public class UpdateTasktimeFormController implements Initializable {
      * Calculates what the date and time fields should be to reflect the change
      * made to the timerField in order to display a precise logging time.
      */
-    public void changeTime() {
+    private void changeTime() {
         if (timerField.validate())
         {
         if (dateStart.getValue()== null){dateStart.setValue(LocalDate.now());}
