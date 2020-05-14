@@ -19,7 +19,7 @@ public class Task {
     private String employee;
     private int totalTime;
     private boolean billable;
-    private ObservableList<CountedTime> timeTasks = FXCollections.observableArrayList();
+    private ObservableList<CountedTime> countedTime = FXCollections.observableArrayList();
 
     public Task(String name) {
         this.name = name;
@@ -42,12 +42,12 @@ public class Task {
         this.name = name;
     }
 
-    public ObservableList<CountedTime> getTimeTasks() {
-        return timeTasks;
+    public String getEmployee() {
+        return employee;
     }
 
-    public void setTasks(ObservableList<CountedTime> timeTasks) {
-        this.timeTasks = timeTasks;
+    public void setEmployee(String employee) {
+        this.employee = employee;
     }
 
     public int getTotalTime() {
@@ -66,12 +66,12 @@ public class Task {
         this.billable = billable;
     }
 
-    public String getEmployee() {
-        return employee;
+    public ObservableList<CountedTime> getCountedTime() {
+        return countedTime;
     }
 
-    public void setEmployee(String employee) {
-        this.employee = employee;
+    public void setCountedTime(ObservableList<CountedTime> countedTime) {
+        this.countedTime = countedTime;
     }
 
     @Override
@@ -96,7 +96,5 @@ public class Task {
     public String toString() {
         return name;
     }
-    
-    
 
 }

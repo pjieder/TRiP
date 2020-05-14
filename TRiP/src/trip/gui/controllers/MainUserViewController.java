@@ -18,10 +18,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
-import java.time.temporal.TemporalField;
 import java.util.Date;
 import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
@@ -47,7 +45,6 @@ import trip.be.Roles;
 import trip.be.Task;
 import trip.be.CountedTime;
 import trip.be.Timer;
-import trip.gui.models.EmployeeModel;
 import trip.gui.TRiP;
 import trip.gui.models.ProjectModel;
 import trip.gui.models.TaskModel;
@@ -116,10 +113,6 @@ public class MainUserViewController implements Initializable {
     @FXML
     private Button addButton;
     @FXML
-    private Tooltip ttTrackTime;
-    @FXML
-    private Tooltip ttAddTime;
-    @FXML
     private JFXButton addTask;
     @FXML
     private StackPane stackPane;
@@ -141,18 +134,18 @@ public class MainUserViewController implements Initializable {
         });
 
         durationColumn.setCellValueFactory((data) -> {
-            CountedTime taskTime = data.getValue();
-            return new SimpleStringProperty(TimeConverter.convertSecondsToString(taskTime.getTime()));
+            CountedTime countedTime = data.getValue();
+            return new SimpleStringProperty(TimeConverter.convertSecondsToString(countedTime.getTime()));
         });
 
         startColumn.setCellValueFactory((data) -> {
-            CountedTime taskTime = data.getValue();
-            return new SimpleStringProperty(TimeConverter.convertDateToString(taskTime.getStartTime()));
+            CountedTime countedTime = data.getValue();
+            return new SimpleStringProperty(TimeConverter.convertDateToString(countedTime.getStartTime()));
         });
 
         endColumn.setCellValueFactory((data) -> {
-            CountedTime taskTime = data.getValue();
-            return new SimpleStringProperty(TimeConverter.convertDateToString(taskTime.getStopTime()));
+            CountedTime countedTime = data.getValue();
+            return new SimpleStringProperty(TimeConverter.convertDateToString(countedTime.getStopTime()));
         });
 
         newTaskTitle.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -265,7 +258,7 @@ public class MainUserViewController implements Initializable {
     private void showTime(MouseEvent event) {
 
         if (!taskList.getSelectionModel().isEmpty()) {
-            taskTimerList.setItems(taskList.getSelectionModel().getSelectedItem().getTimeTasks());
+            taskTimerList.setItems(taskList.getSelectionModel().getSelectedItem().getCountedTime());
             tasks.getSelectionModel().select(taskList.getSelectionModel().getSelectedItem());
             decideTimerEnabled();
             decideAddTimeEnabled();
@@ -386,8 +379,6 @@ public class MainUserViewController implements Initializable {
         Date startDate = Date.from(instantStart);
         Date endDate = Date.from(instantEnd);
 
-        CountedTime taskTime = new CountedTime(time, startDate, endDate);
-
         try {
             taskModel.saveTimeForTask(task, time, startDate, endDate);
         } catch (SQLException ex) {
@@ -422,7 +413,7 @@ public class MainUserViewController implements Initializable {
                         taskTimerList.getItems().clear();
 
                         if (taskList.getSelectionModel().getSelectedItem() != null) {
-                            taskTimerList.setItems(taskList.getSelectionModel().getSelectedItem().getTimeTasks());
+                            taskTimerList.setItems(taskList.getSelectionModel().getSelectedItem().getCountedTime());
                         }
                         taskTimerList.refresh();
                     } else {
@@ -473,23 +464,6 @@ public class MainUserViewController implements Initializable {
     }
 
     /**
-     * Adds a on close request to the stage which will cancel the timer if the stage is closed without disabling the timer. This insures that the timer does not run as a thread in the background when the application is closed.
-     */
-    public void setupCloseRequest() {
-
-        Stage appStage = (Stage) taskList.getScene().getWindow();
-        if (appStage.getOnCloseRequest() == null) {
-            appStage.setOnCloseRequest((e) -> {
-                System.out.println("Closing thread");
-                if (timer.isEnabled()) {
-                    timer.stopTimer();
-                    System.out.println("Closed");
-                }
-            });
-        }
-    }
-
-    /**
      * Event handler for the taskTimerList. If a time is selected by double-clicking, the selected time will be opened in the UpdateTaskTimeForm so that the user can change the saved data if changes needs to be made.
      *
      * @param event
@@ -507,7 +481,7 @@ public class MainUserViewController implements Initializable {
                 stage.getIcons().add(new Image(TRiP.class.getResourceAsStream("images/time.png")));
                 stage.setResizable(false);
                 UpdateTasktimeFormController controller = fxmlLoader.getController();
-                controller.setTaskTime(updateView(), taskTimerList.getSelectionModel().getSelectedItem());
+                controller.setCountedTime(updateView(), taskTimerList.getSelectionModel().getSelectedItem());
                 stage.setScene(scene);
                 stage.show();
             } catch (IOException ex) {
@@ -564,6 +538,10 @@ public class MainUserViewController implements Initializable {
         addTask();
     }
     
+    /**
+     * Calculates the time between the selected date and time in order to display this
+     * in the timerField for a precise logging time.
+     */
     public void calculateTime()
     {
         if (dateStart.getValue() != null && dateEnd.getValue() != null && timeStart.getValue() != null && timeEnd.getValue() != null)
@@ -589,6 +567,10 @@ public class MainUserViewController implements Initializable {
         }
     }
     
+    /**
+     * Calculates what the date and time fields should be to reflect the change
+     * made to the timerField in order to display a precise logging time.
+     */
     public void changeTime()
     {
         if (timerField.validate())
@@ -602,8 +584,7 @@ public class MainUserViewController implements Initializable {
         LocalTime start = timeStart.getValue();
         
         LocalDateTime dateTime = LocalDateTime.of(localStart, start);
-        
-        Instant instantStart = dateTime.atZone(ZoneId.systemDefault()).toInstant();
+
         Instant instantEnd = dateTime.atZone(ZoneId.systemDefault()).toInstant().plusSeconds(seconds);
         
         dateEnd.setValue(instantEnd.atZone(ZoneId.systemDefault()).toLocalDate());
@@ -611,4 +592,21 @@ public class MainUserViewController implements Initializable {
         }
     }
 
+    /**
+     * Adds a on close request to the stage which will cancel the timer if the stage is closed without disabling the timer. This insures that the timer does not run as a thread in the background when the application is closed.
+     */
+    public void setupCloseRequest() {
+
+        Stage appStage = (Stage) taskList.getScene().getWindow();
+        if (appStage.getOnCloseRequest() == null) {
+            appStage.setOnCloseRequest((e) -> {
+                System.out.println("Closing thread");
+                if (timer.isEnabled()) {
+                    timer.stopTimer();
+                    System.out.println("Closed");
+                }
+            });
+        }
+    }
+    
 }

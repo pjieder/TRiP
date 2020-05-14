@@ -73,4 +73,5 @@ public interface ICustomerDBDAO {
      * @throws java.sql.SQLException
      */
     public void removeCustomerFromProject(int projectID) throws SQLException;
+    
 }

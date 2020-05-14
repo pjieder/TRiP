@@ -42,8 +42,6 @@ public class AddEditCustomerController implements Initializable {
     @FXML
     private JFXButton registerButton;
     @FXML
-    private JFXButton cancelButton;
-    @FXML
     private JFXButton updateButton;
     @FXML
     private Label title;
@@ -133,11 +131,11 @@ public class AddEditCustomerController implements Initializable {
     @FXML
     private void registerCustomer(ActionEvent event) {
         try{
-        Customer customer = new Customer();
 
-        customer.setName(nameField.getText());
-        customer.setPhoneNumber(phoneNumberField.getText());
-        customer.setEmail(emailField.getText());
+        String name = nameField.getText();
+        String phoneNumber = phoneNumberField.getText();
+        String email = emailField.getText();
+        Customer customer = new Customer(name, phoneNumber, email);
 
         if (customerToUpdate == null) {
             customerModel.createCustomer(customer);

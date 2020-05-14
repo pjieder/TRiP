@@ -216,33 +216,6 @@ public class MainAdminViewController implements Initializable {
     }
 
     /**
-     * Creates a new Thread that updates the data stored in the project table.
-     *
-     * @return the update Thread to be executed
-     */
-    private Thread updateView() {
-        Thread updateThread = new Thread(()
-                -> {
-            Platform.runLater(()
-                    -> {
-                try {
-                    if (isLastOnActive == true) {
-                        projects = projectModel.loadAllActiveProjects();
-                    } else {
-                        projects = projectModel.loadAllInactiveProjects();
-                    }
-                    projectTable.setItems(projects);
-                    projectTable.refresh();
-                    search();
-                } catch (SQLException ex) {
-                    JFXAlert.openError(stackPane, "Error occured while updating view.");
-                }
-            });
-        });
-        return updateThread;
-    }
-
-    /**
      * Loads all inactive projects and inserts them into the project table.
      *
      * @param event
@@ -293,58 +266,6 @@ public class MainAdminViewController implements Initializable {
     }
 
     /**
-     * Deletes the selected inactive project from the system together with registered time and tasks for the selected project.
-     *
-     * @param event
-     */
-    @FXML
-    private void deleteProject(ActionEvent event) {
-
-        if (!projectTable.getSelectionModel().isEmpty()) {
-
-            Project selectedProject = projectTable.getSelectionModel().getSelectedItem();
-            String message = "Are you sure you want to delete project: " + selectedProject.getName() + "? All logged time will no longer be accessable. Proceed?";
-
-            Thread confirmExecuteThread = new Thread(() -> {
-                try {
-                    Platform.runLater(() -> {
-                        projectTable.getItems().remove(selectedProject);
-                    });
-                    projectModel.deleteProject(selectedProject);
-                } catch (SQLException ex) {
-                    Platform.runLater(() -> {
-                        JFXAlert.openError(stackPane, "Error occured while trying to delete project.");
-                    });
-                }
-            });
-            JFXAlert.openConfirm(stackPaneDelete, message, confirmExecuteThread);
-        }
-    }
-
-    /**
-     * Event handler for the search bar. Runs method search in order to update the view.
-     *
-     * @param event
-     */
-    @FXML
-    private void projectSearch(KeyEvent event) {
-        search();
-    }
-
-    /**
-     * Searches through the project table and displays projects mathing the name of the search term.
-     */
-    private void search() {
-        String projectName = searchBar.getText();
-
-        if (projectName.equalsIgnoreCase("")) {
-            projectTable.setItems(projects);
-        } else {
-            projectTable.setItems(projectModel.searchProjects(projectName, projects));
-        }
-    }
-
-    /**
      * Disables the selected project making it inactive.
      *
      * @param event
@@ -378,4 +299,83 @@ public class MainAdminViewController implements Initializable {
         }
     }
 
+    /**
+     * Deletes the selected inactive project from the system together with registered time and tasks for the selected project.
+     *
+     * @param event
+     */
+    @FXML
+    private void deleteProject(ActionEvent event) {
+
+        if (!projectTable.getSelectionModel().isEmpty()) {
+
+            Project selectedProject = projectTable.getSelectionModel().getSelectedItem();
+            String message = "Are you sure you want to delete project: " + selectedProject.getName() + "? All logged time will no longer be accessable. Proceed?";
+
+            Thread confirmExecuteThread = new Thread(() -> {
+                try {
+                    Platform.runLater(() -> {
+                        projectTable.getItems().remove(selectedProject);
+                    });
+                    projectModel.deleteProject(selectedProject);
+                } catch (SQLException ex) {
+                    Platform.runLater(() -> {
+                        JFXAlert.openError(stackPane, "Error occured while trying to delete project.");
+                    });
+                }
+            });
+            JFXAlert.openConfirm(stackPaneDelete, message, confirmExecuteThread);
+        }
+    }
+
+    /**
+     * Creates a new Thread that updates the data stored in the project table.
+     *
+     * @return the update Thread to be executed
+     */
+    private Thread updateView() {
+        Thread updateThread = new Thread(()
+                -> {
+            Platform.runLater(()
+                    -> {
+                try {
+                    if (isLastOnActive == true) {
+                        projects = projectModel.loadAllActiveProjects();
+                    } else {
+                        projects = projectModel.loadAllInactiveProjects();
+                    }
+                    projectTable.setItems(projects);
+                    projectTable.refresh();
+                    search();
+                } catch (SQLException ex) {
+                    JFXAlert.openError(stackPane, "Error occured while updating view.");
+                }
+            });
+        });
+        return updateThread;
+    }
+    
+    /**
+     * Event handler for the search bar. Runs method search in order to update the view.
+     *
+     * @param event
+     */
+    @FXML
+    private void projectSearch(KeyEvent event) {
+        search();
+    }
+
+    /**
+     * Searches through the project table and displays projects mathing the name of the search term.
+     */
+    private void search() {
+        String projectName = searchBar.getText();
+
+        if (projectName.equalsIgnoreCase("")) {
+            projectTable.setItems(projects);
+        } else {
+            projectTable.setItems(projectModel.searchProjects(projectName, projects));
+        }
+    }
+    
 }

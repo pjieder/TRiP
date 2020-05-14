@@ -14,18 +14,13 @@ public class Project {
     private int id;
     private String name;
     private double rate;
-    private boolean isActive = true;
     private int totalTime;
     private Customer customer;
+    private boolean isActive = true;
 
     public Project(String name, double rate) {
         this.name = name;
         this.rate = rate;
-    }
-    
-    public Project()
-    {
-        
     }
 
     public int getId() {
@@ -52,14 +47,6 @@ public class Project {
         this.rate = rate;
     }
 
-    public boolean getIsActive() {
-        return isActive;
-    }
-
-    public void setIsActive(boolean isActive) {
-        this.isActive = isActive;
-    }
-
     public int getTotalTime() {
         return totalTime;
     }
@@ -74,6 +61,14 @@ public class Project {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
     }
 
     @Override

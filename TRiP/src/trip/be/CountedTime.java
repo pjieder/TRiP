@@ -65,7 +65,5 @@ public class CountedTime {
             return true;
         }
         return false;
-
     }
-
 }

@@ -187,4 +187,5 @@ public class ProjectModel {
     public XYChart.Series calculateGraphBar(LocalDate startDate, LocalDate endDate, int employeeID) throws SQLException{
         return projectManager.calculateGraphBar(startDate, endDate, employeeID);
     }
+    
 }

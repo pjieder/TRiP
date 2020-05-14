@@ -109,6 +109,14 @@ public class TaskDBDAO implements ITaskDBDAO {
         }
     }
     
+    /**
+     * Loads all unique tasks having been worked on between two specified dates within the specified project.
+     * @param projectID The id of the project searching tasks for.
+     * @param startDate The startdate of the time span.
+     * @param endDate The enddate of the time span.
+     * @return An observablelist containing all the stored tasks searched for.
+     * @throws SQLException 
+     */
     @Override
     public ObservableList<Task> loadAllUniqueTasksDates(int projectID, LocalDate startDate, LocalDate endDate) throws SQLException
     {
@@ -305,9 +313,9 @@ public class TaskDBDAO implements ITaskDBDAO {
                 Date startTime = TimeConverter.convertStringToDateDB(rs.getString("startTime"));
                 Date stopTime = TimeConverter.convertStringToDateDB(rs.getString("stopTime"));
 
-                CountedTime taskTime = new CountedTime(time, startTime, stopTime);
-                taskTime.setId(id);
-                tasks.add(taskTime);
+                CountedTime countedTime = new CountedTime(time, startTime, stopTime);
+                countedTime.setId(id);
+                tasks.add(countedTime);
             }
             return tasks;
 
@@ -319,7 +327,7 @@ public class TaskDBDAO implements ITaskDBDAO {
     /**
      * Updates the specified time having been worked on the task in the database.
      *
-     * @param countedTime The countedTime that will update the previous taskTime with the same ID.
+     * @param countedTime The counted time that will update the previous counted time with the same ID.
      * @return A boolean value representing whether or not the update was successful.
      * @throws java.sql.SQLException
      */
@@ -349,7 +357,7 @@ public class TaskDBDAO implements ITaskDBDAO {
     /**
      * Deletes the specified time registered to the task in the database.
      *
-     * @param countedTime The taskTime to be deleted.
+     * @param countedTime The counted time to be deleted.
      * @return A boolean value representing whether or not the delete was successful.
      * @throws java.sql.SQLException
      */

@@ -73,8 +73,6 @@ public class AdminStatisticsViewController implements Initializable {
     @FXML
     private JFXButton calculateBar;
     @FXML
-    private JFXButton openEmployeeBtn;
-    @FXML
     private ComboBox<Employee> employeeSelection;
     @FXML
     private StackPane stackPane;
@@ -217,7 +215,7 @@ public class AdminStatisticsViewController implements Initializable {
     }
 
     /**
-     * Validates whether or not the calculateBar- or calculateLine button is enabled or disabled when a change happens.
+     * Validates whether or not the calculateBar-, calculateLine- or calculateTask button is enabled or disabled when a change happens.
      *
      * @param event
      */
@@ -226,6 +224,11 @@ public class AdminStatisticsViewController implements Initializable {
         validate();
     }
 
+    /**
+     * Validates whether or not the calculateBar-, calculateLine- or calculateTask button is enabled or disabled when a change happens.
+     *
+     * @param event
+     */
     private void validate() {
 
         if (dateStart.getValue() != null && dateEnd.getValue() != null) {
@@ -308,6 +311,22 @@ public class AdminStatisticsViewController implements Initializable {
     }
 
     /**
+     * Calculates the statistics showin in the taskchart based on the information entered.
+     * The total amount of tasks being worked on in the specified project between the selected dates are displayed.
+     * @param event 
+     */
+    @FXML
+    private void calculateTask(ActionEvent event) {
+
+        try {
+            taskTable.setItems(taskModel.loadAllUniqueTasksDates(projectComboBox.getValue().getId(), dateStart.getValue(), dateEnd.getValue()));
+            calculatePriceForTask();
+        } catch (SQLException ex) {
+            JFXAlert.openError(stackPane, "Error loading tasks.");
+        }
+    }
+    
+    /**
      * Calculates the total hours worked in the period and the total amount of money earned based on the rate of the different projects.
      *
      * @param startDate The startdate of the period the statistics should be calculated upon.
@@ -385,6 +404,10 @@ public class AdminStatisticsViewController implements Initializable {
         }
     }
 
+    /**
+     * Calculates the total hours worked in the period and the total amount of money earned
+     * based on the rate of the rate of the selected project.
+     */
     public void calculatePriceForTask() {
         int totalTime = 0;
         double totalPrice = 0;
@@ -426,17 +449,5 @@ public class AdminStatisticsViewController implements Initializable {
             }
         }
     }
-
-    @FXML
-    private void calculateTask(ActionEvent event) {
-
-        try {
-            taskTable.setItems(taskModel.loadAllUniqueTasksDates(projectComboBox.getValue().getId(), dateStart.getValue(), dateEnd.getValue()));
-            calculatePriceForTask();
-        } catch (SQLException ex) {
-            JFXAlert.openError(stackPane, "Error loading tasks.");
-        }
-
-    }
-
+    
 }

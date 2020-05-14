@@ -21,7 +21,7 @@ public enum Roles {
 
     @Override
     public String toString() {
-        return this.type; //To change body of generated methods, choose Tools | Templates.
+        return this.type;
     }
     
     

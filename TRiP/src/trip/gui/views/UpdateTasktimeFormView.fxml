@@ -29,7 +29,7 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <JFXButton fx:id="updateButton" disable="true" layoutX="106.0" layoutY="367.0" onAction="#updateTasktime" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Update" textFill="WHITE">
+      <JFXButton fx:id="updateButton" disable="true" layoutX="106.0" layoutY="367.0" onAction="#updateCountedTime" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Update" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
@@ -37,7 +37,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton fx:id="cancelButton" layoutX="271.0" layoutY="367.0" onAction="#cancelScene" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Cancel" textFill="WHITE">
+      <JFXButton layoutX="271.0" layoutY="367.0" onAction="#cancelScene" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Cancel" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
@@ -54,7 +54,7 @@
          </font>
       </JFXTextField>
       <JFXTimePicker fx:id="timeStop" defaultColor="#9a80fe" layoutX="238.0" layoutY="245.0" onAction="#validateAddTask" prefHeight="28.0" prefWidth="126.0" promptText="3" stylesheets="@../styles/MainUserViewCSS.css" />
-      <JFXButton fx:id="deleteButton" layoutX="190.0" layoutY="367.0" onAction="#deleteTasktime" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Delete" textFill="WHITE">
+      <JFXButton layoutX="190.0" layoutY="367.0" onAction="#deleteCountedTime" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Delete" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>

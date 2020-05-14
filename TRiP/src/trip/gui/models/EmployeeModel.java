@@ -140,4 +140,5 @@ public class EmployeeModel {
     public ObservableList<Employee> searchEmployee(String employeeName, ObservableList<Employee> employeeList) {
         return employeeManager.searchEmployee(employeeName, employeeList);
     }
+    
 }

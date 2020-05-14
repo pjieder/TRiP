@@ -38,13 +38,11 @@ public class UpdateTasktimeFormController implements Initializable {
 
     private TaskModel taskModel = new TaskModel();
 
-    private CountedTime taskTime;
+    private CountedTime countedTime;
     private Thread updateThread;
 
     @FXML
     private JFXButton updateButton;
-    @FXML
-    private JFXButton cancelButton;
     @FXML
     private JFXDatePicker dateStart;
     @FXML
@@ -55,8 +53,6 @@ public class UpdateTasktimeFormController implements Initializable {
     private JFXTextField timerField;
     @FXML
     private JFXTimePicker timeStop;
-    @FXML
-    private JFXButton deleteButton;
     @FXML
     private StackPane stackPane;
 
@@ -80,30 +76,30 @@ public class UpdateTasktimeFormController implements Initializable {
     }
 
     /**
-     * This method runs when the updateTasktimeForm is opened from the MainUserviewController. It takes the selected taskTime and update thread and stores them as instance variables.
+     * This method runs when the updateTasktimeForm is opened from the MainUserviewController. It takes the selected counted time and update thread and stores them as instance variables.
      *
      * @param thread the Thread returned by method updateView in the MainUserViewController.
-     * @param taskTime the selected taskTime to be updated.
+     * @param countedTime the selected counted time to be updated.
      */
-    public void setTaskTime(Thread thread, CountedTime taskTime) {
-        this.taskTime = taskTime;
+    public void setCountedTime(Thread thread, CountedTime countedTime) {
+        this.countedTime = countedTime;
         this.updateThread = thread;
-        dateStart.setValue(taskTime.getStartTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-        dateStop.setValue(taskTime.getStopTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        dateStart.setValue(countedTime.getStartTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        dateStop.setValue(countedTime.getStopTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
 
-        timeStart.setValue(taskTime.getStartTime().toInstant().atZone(ZoneId.systemDefault()).toLocalTime());
-        timeStop.setValue(taskTime.getStopTime().toInstant().atZone(ZoneId.systemDefault()).toLocalTime());
+        timeStart.setValue(countedTime.getStartTime().toInstant().atZone(ZoneId.systemDefault()).toLocalTime());
+        timeStop.setValue(countedTime.getStopTime().toInstant().atZone(ZoneId.systemDefault()).toLocalTime());
 
-        timerField.setText(TimeConverter.convertSecondsToString(taskTime.getTime()));
+        timerField.setText(TimeConverter.convertSecondsToString(countedTime.getTime()));
     }
 
     /**
-     * Updates the selected taskTime with the newly entered information and closes the stage.
+     * Updates the selected counted time with the newly entered information and closes the stage.
      *
      * @param event
      */
     @FXML
-    private void updateTasktime(ActionEvent event) {
+    private void updateCountedTime(ActionEvent event) {
 
         int time = TimeConverter.convertStringToSeconds(timerField.getText());
         LocalDate localStart = dateStart.getValue();
@@ -118,12 +114,12 @@ public class UpdateTasktimeFormController implements Initializable {
         Date startDate = Date.from(instantStart);
         Date endDate = Date.from(instantEnd);
 
-        taskTime.setTime(time);
-        taskTime.setStartTime(startDate);
-        taskTime.setStopTime(endDate);
+        countedTime.setTime(time);
+        countedTime.setStartTime(startDate);
+        countedTime.setStopTime(endDate);
 
         try {
-            taskModel.UpdateTimeForTask(taskTime);
+            taskModel.UpdateTimeForTask(countedTime);
         } catch (SQLException ex) {
             JFXAlert.openError(stackPane, "Error occured while trying to update task.");
         }
@@ -142,14 +138,14 @@ public class UpdateTasktimeFormController implements Initializable {
     }
 
     /**
-     * Deletes the selected taskTime. This will result in the registered time for the task being deleted as well.
+     * Deletes the selected countedTime. This will result in the registered time for the task being deleted as well.
      *
      * @param event
      */
     @FXML
-    private void deleteTasktime(ActionEvent event) {
+    private void deleteCountedTime(ActionEvent event) {
         try {
-            taskModel.DeleteTimeForTask(taskTime);
+            taskModel.DeleteTimeForTask(countedTime);
             updateThread.start();
             closeStage();
         } catch (SQLException ex) {
@@ -188,6 +184,10 @@ public class UpdateTasktimeFormController implements Initializable {
         }
     }
 
+    /**
+     * Calculates the time between the selected date and time in order to display this
+     * in the timerField for a precise logging time.
+     */
     public void calculateTime() {
         if (dateStart.getValue() != null && dateStop.getValue() != null && timeStart.getValue() != null && timeStop.getValue() != null) {
 
@@ -211,6 +211,10 @@ public class UpdateTasktimeFormController implements Initializable {
         }
     }
 
+    /**
+     * Calculates what the date and time fields should be to reflect the change
+     * made to the timerField in order to display a precise logging time.
+     */
     public void changeTime() {
         if (timerField.validate())
         {

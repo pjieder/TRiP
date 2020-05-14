@@ -64,7 +64,7 @@
                </font>
             </Label>
             <ComboBox fx:id="employeeSelection" layoutX="456.0" layoutY="554.0" prefHeight="31.0" prefWidth="204.0" promptText="Employee" stylesheets="@../styles/StatisticsCSS.css" />
-            <JFXButton fx:id="openEmployeeBtn" layoutX="680.0" layoutY="554.0" onAction="#openEmployee" prefHeight="31.0" prefWidth="166.0" stylesheets="@../styles/MainUserViewCSS.css" text="Open Employee Data" textFill="WHITE">
+            <JFXButton layoutX="680.0" layoutY="554.0" onAction="#openEmployee" prefHeight="31.0" prefWidth="166.0" stylesheets="@../styles/MainUserViewCSS.css" text="Open Employee Data" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>

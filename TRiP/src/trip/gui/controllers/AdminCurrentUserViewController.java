@@ -81,22 +81,6 @@ public class AdminCurrentUserViewController implements Initializable {
     }
 
     /**
-     * Creates a new Thread that updates the data stored in the project list.
-     *
-     * @return the update Thread to be executed
-     */
-    public Thread getUpdateListThread() {
-        Thread updateThread = new Thread(() -> {
-
-            Platform.runLater(() -> {
-                setProject();
-                search();
-            });
-        });
-        return updateThread;
-    }
-
-    /**
      * Loads the active employees into the user list and loads the combobox with all active projects.
      */
     public void loadUsers() {
@@ -269,6 +253,22 @@ public class AdminCurrentUserViewController implements Initializable {
         }
     }
 
+    /**
+     * Creates a new Thread that updates the data stored in the project list.
+     *
+     * @return the update Thread to be executed
+     */
+    public Thread getUpdateListThread() {
+        Thread updateThread = new Thread(() -> {
+
+            Platform.runLater(() -> {
+                setProject();
+                search();
+            });
+        });
+        return updateThread;
+    }
+    
     /**
      * Event handler for the project combobox. Runs method setProject and search in order to update the view.
      *

@@ -16,8 +16,6 @@ import trip.dal.dbmanagers.facades.IDalFacade;
 import trip.dal.dbmanagers.facades.DalFacade;
 import trip.utilities.TimeConverter;
 import java.sql.SQLException;
-import javafx.scene.control.Tooltip;
-import javafx.util.Duration;
 import trip.be.TresholdNode;
 
 /**
@@ -197,14 +195,9 @@ public class ProjectManager {
 
             double value = (double) time.get(i) / 3600;
             XYChart.Data<String, Double> data = new XYChart.Data<>(datesX.get(i).toString(), value);
-            
             data.setNode(new TresholdNode(data.getYValue()));
-            
-            
-            
             series.getData().add(data);
-            
-            
+      
         }
         return series;
     }

@@ -45,7 +45,6 @@ public class DatabaseLogger {
         } finally {
             DBSettings.getInstance().releaseConnection(con);
         }
-
     }
 
 }

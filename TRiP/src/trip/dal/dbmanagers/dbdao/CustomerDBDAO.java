@@ -97,11 +97,13 @@ public class CustomerDBDAO implements ICustomerDBDAO {
             Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
-                Customer customer = new Customer();
-                customer.setId(rs.getInt("id"));
-                customer.setName(rs.getString("name"));
-                customer.setPhoneNumber(rs.getString("phoneNumber"));
-                customer.setEmail(rs.getString("email"));
+                
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String phoneNumber = rs.getString("phoneNumber");
+                String email = rs.getString("email");
+                Customer customer = new Customer(name, phoneNumber, email);
+                customer.setId(id);
 
                 allCustomers.add(customer);
             }
@@ -131,11 +133,12 @@ public class CustomerDBDAO implements ICustomerDBDAO {
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                customer = new Customer();
-                customer.setId(rs.getInt("id"));
-                customer.setName(rs.getString("name"));
-                customer.setPhoneNumber(rs.getString("phoneNumber"));
-                customer.setEmail(rs.getString("email"));
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String phoneNumber = rs.getString("phoneNumber");
+                String email = rs.getString("email");
+                customer = new Customer(name, phoneNumber, email);
+                customer.setId(id);
             }
             return customer;
         } finally {
@@ -213,4 +216,5 @@ public class CustomerDBDAO implements ICustomerDBDAO {
             DatabaseLogger.logAction("Removed all customers from project with ID: " + projectID);
         }
     }
+    
 }

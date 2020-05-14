@@ -15,5 +15,4 @@ public class User extends Employee{
         super(fName, lName, email, Roles.USER);
     }
     
-    
 }

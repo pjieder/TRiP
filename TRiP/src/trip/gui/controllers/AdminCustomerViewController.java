@@ -5,7 +5,6 @@
  */
 package trip.gui.controllers;
 
-import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -28,7 +27,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import trip.be.Customer;
-import trip.gui.models.EmployeeModel;
 import trip.gui.TRiP;
 import trip.gui.models.CustomerModel;
 import trip.utilities.JFXAlert;
@@ -53,10 +51,6 @@ public class AdminCustomerViewController implements Initializable {
     private TableColumn<Customer, String> emailColumn;
     @FXML
     private TextField searchBar;
-    @FXML
-    private JFXButton deleteButton;
-    @FXML
-    private ImageView searchIcon;
     @FXML
     private StackPane stackPane;
     @FXML

@@ -58,8 +58,6 @@ public class RegisterFormController implements Initializable {
     @FXML
     private JFXButton updateButton;
     @FXML
-    private JFXButton cancelButton;
-    @FXML
     private JFXCheckBox passwordVisibility;
     @FXML
     private StackPane stackPane;

@@ -51,6 +51,14 @@ public class TaskManager {
         return dalFacade.loadTasks(userId, projectId);
     }
 
+    /**
+     * Loads all unique tasks having been worked on between two specified dates within the specified project.
+     * @param projectID The id of the project searching tasks for.
+     * @param startDate The startdate of the time span.
+     * @param endDate The enddate of the time span.
+     * @return An observablelist containing all the stored tasks searched for.
+     * @throws SQLException 
+     */
     public ObservableList<Task> loadAllUniqueTasksDates(int projectID, LocalDate startDate, LocalDate endDate) throws SQLException
     {
         return dalFacade.loadAllUniqueTasksDates(projectID, startDate, endDate);
@@ -94,23 +102,23 @@ public class TaskManager {
     /**
      * Updates the specified time having been worked on the task in the database.
      *
-     * @param taskTime The taskTime that will update the previous taskTime with the same ID.
+     * @param countedTime The counted time that will update the previous counred time with the same ID.
      * @return A boolean value representing whether or not the update was successful.
      * @throws java.sql.SQLException
      */
-    public boolean UpdateTimeForTask(CountedTime taskTime) throws SQLException{
-        return dalFacade.UpdateTimeForTask(taskTime);
+    public boolean UpdateTimeForTask(CountedTime countedTime) throws SQLException{
+        return dalFacade.UpdateTimeForTask(countedTime);
     }
 
     /**
      * Deletes the specified time registered to the task in the database.
      *
-     * @param taskTime The taskTime to be deleted.
+     * @param countedTime The tcounted time to be deleted.
      * @return A boolean value representing whether or not the delete was successful.
      * @throws java.sql.SQLException
      */
-    public boolean DeleteTimeForTask(CountedTime taskTime) throws SQLException{
-        return dalFacade.DeleteTimeForTask(taskTime);
+    public boolean DeleteTimeForTask(CountedTime countedTime) throws SQLException{
+        return dalFacade.DeleteTimeForTask(countedTime);
     }
 
 }

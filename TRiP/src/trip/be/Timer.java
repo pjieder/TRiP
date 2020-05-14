@@ -26,6 +26,9 @@ public class Timer implements Runnable{
     private Label numberLabel;
     ExecutorService executor = null;
 
+    /**
+     * Starts the count of the timer for the task instance variable.
+     */
     @Override
     public void run() {
 

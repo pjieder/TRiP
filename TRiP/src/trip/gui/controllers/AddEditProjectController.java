@@ -18,7 +18,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -55,10 +54,6 @@ public class AddEditProjectController implements Initializable {
     private JFXListView<Employee> activeUsersList;
     @FXML
     private JFXButton registerButton;
-    @FXML
-    private Label removeUser;
-    @FXML
-    private JFXButton cancelButton;
     @FXML
     private JFXButton updateButton;
     @FXML
@@ -127,87 +122,6 @@ public class AddEditProjectController implements Initializable {
     }
 
     /**
-     * Saves or updates the project based on what button was pressed when opening the FXML.
-     *
-     * @param event
-     */
-    @FXML
-    private void registerProject(ActionEvent event) {
-        try{
-        Project project = new Project();
-        project.setName(nameField.getText());
-        project.setRate(Double.parseDouble(rateField.getText().replace(",", ".")));
-        project.setCustomer(customerComboBox.getValue());
-
-        if (activeUsersList.getItems().isEmpty()) {
-            project.setIsActive(false);
-        } else {
-            project.setIsActive(true);
-        }
-
-        if (projectToUpdate == null) {
-            projectModel.createProject(project, activeUsersList.getItems());
-        } else {
-            project.setId(projectToUpdate.getId());
-            projectModel.updateProject(project, activeUsersList.getItems());
-        }
-        updateThread.start();
-        closeScene();
-        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error creating or updating project.");}
-    }
-
-    /**
-     * Adds an active user to the list of users working on the project.
-     */
-    private void addUserToProject() {
-
-        if (activeUsersCBox.getValue() != null && !activeUsersList.getItems().contains(activeUsersCBox.getSelectionModel().getSelectedItem())) {
-
-            Employee selectedItem = activeUsersCBox.getValue();
-            activeUsersCBox.getItems().clear();
-            activeUsersList.getItems().add(selectedItem);
-            updateCheckBox();
-        }
-    }
-
-    /**
-     * Updates the check box containing active employees not yet assigned to the project.
-     */
-    private void updateCheckBox() {
-        try{
-        ObservableList<Employee> updatedCombo = appModel.loadActiveEmployees();
-
-        for (Employee employee : activeUsersList.getItems()) {
-            updatedCombo.remove(employee);
-        }
-        activeUsersCBox.setItems(updatedCombo);
-        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error updating checkbox.");}
-    }
-
-    /**
-     * Removes the selected employee from the list containing active employees working on the project and returns it to the check box.
-     *
-     * @param event
-     */
-    @FXML
-    private void removeUser(MouseEvent event) {
-        if (!activeUsersList.getSelectionModel().isEmpty()) {
-            activeUsersList.getItems().remove(activeUsersList.getSelectionModel().getSelectedItem());
-            updateCheckBox();
-        }
-    }
-
-    /**
-     * Cancels all actions and closes the stage.
-     *
-     * @param event
-     */
-    @FXML
-    private void cancelScene(ActionEvent event) {
-        closeScene();
-    }
-
-   /**
      * This methods runs when the AddEditProject FXML is opened by the "create" button. It takes the update statistics thread and stores it as an instance variable.
      *
      * @param thread the Thread returned by method updateView in the MainAdminViewController
@@ -243,6 +157,88 @@ public class AddEditProjectController implements Initializable {
 
         updateCheckBox();
         }catch(SQLException ex){JFXAlert.openError(stackPane, "Error loading.");}
+    }
+    
+    /**
+     * Saves or updates the project based on what button was pressed when opening the FXML.
+     *
+     * @param event
+     */
+    @FXML
+    private void registerProject(ActionEvent event) {
+        try{
+        String name = nameField.getText();
+        double rate = Double.parseDouble(rateField.getText().replace(",", "."));
+        Project project = new Project(name, rate);
+        project.setCustomer(customerComboBox.getValue());
+
+        if (activeUsersList.getItems().isEmpty()) {
+            project.setIsActive(false);
+        } else {
+            project.setIsActive(true);
+        }
+
+        if (projectToUpdate == null) {
+            projectModel.createProject(project, activeUsersList.getItems());
+        } else {
+            project.setId(projectToUpdate.getId());
+            projectModel.updateProject(project, activeUsersList.getItems());
+        }
+        updateThread.start();
+        closeScene();
+        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error creating or updating project.");}
+    }
+
+    /**
+     * Updates the check box containing active employees not yet assigned to the project.
+     */
+    private void updateCheckBox() {
+        try{
+        ObservableList<Employee> updatedCombo = appModel.loadActiveEmployees();
+
+        for (Employee employee : activeUsersList.getItems()) {
+            updatedCombo.remove(employee);
+        }
+        activeUsersCBox.setItems(updatedCombo);
+        }catch(SQLException ex){JFXAlert.openError(stackPane, "Error updating checkbox.");}
+    }
+
+    
+    /**
+     * Adds an active user to the list of users working on the project.
+     */
+    private void addUserToProject() {
+
+        if (activeUsersCBox.getValue() != null && !activeUsersList.getItems().contains(activeUsersCBox.getSelectionModel().getSelectedItem())) {
+
+            Employee selectedItem = activeUsersCBox.getValue();
+            activeUsersCBox.getItems().clear();
+            activeUsersList.getItems().add(selectedItem);
+            updateCheckBox();
+        }
+    }
+
+    /**
+     * Removes the selected employee from the list containing active employees working on the project and returns it to the check box.
+     *
+     * @param event
+     */
+    @FXML
+    private void removeUser(MouseEvent event) {
+        if (!activeUsersList.getSelectionModel().isEmpty()) {
+            activeUsersList.getItems().remove(activeUsersList.getSelectionModel().getSelectedItem());
+            updateCheckBox();
+        }
+    }
+
+    /**
+     * Cancels all actions and closes the stage.
+     *
+     * @param event
+     */
+    @FXML
+    private void cancelScene(ActionEvent event) {
+        closeScene();
     }
 
     /**

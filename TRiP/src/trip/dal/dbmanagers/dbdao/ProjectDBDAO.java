@@ -77,10 +77,11 @@ public class ProjectDBDAO implements IProjectDBDAO {
             Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
-                Project project = new Project();
+                
+                String name = rs.getString("name");
+                double rate = rs.getDouble("rate");
+                Project project = new Project(name, rate);
                 project.setId(rs.getInt("id"));
-                project.setName(rs.getString("name"));
-                project.setRate(rs.getDouble("rate"));
                 project.setIsActive(rs.getBoolean("isActive"));
 
                 allProjects.add(project);
@@ -420,10 +421,10 @@ public class ProjectDBDAO implements IProjectDBDAO {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                Project project = new Project();
-                project.setId(rs.getInt("ID"));
-                project.setName(rs.getString("name"));
-                project.setRate(rs.getDouble("rate"));
+                String name = rs.getString("name");
+                double rate = rs.getDouble("rate");
+                Project project = new Project(name, rate);
+                project.setId(rs.getInt("id"));
                 project.setIsActive(rs.getBoolean("isActive"));
 
                 allWorkedOnProjects.add(project);

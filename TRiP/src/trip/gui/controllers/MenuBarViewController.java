@@ -22,7 +22,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import trip.gui.TRiP;
-import trip.gui.models.EmployeeModel;
 import trip.utilities.JFXAlert;
 
 /**
@@ -32,6 +31,8 @@ import trip.utilities.JFXAlert;
  */
 public class MenuBarViewController implements Initializable {
 
+    public static Pane viewPane;
+    
     @FXML
     private AnchorPane AP;
     @FXML
@@ -39,19 +40,7 @@ public class MenuBarViewController implements Initializable {
     @FXML
     private VBox vBox;
     @FXML
-    private JFXButton projectTab;
-    @FXML
-    private JFXButton customersTab;
-    @FXML
-    private JFXButton usersTab;
-    @FXML
-    private JFXButton statisticsTab;
-    @FXML
-    private JFXButton timeTrackingTab;
-    @FXML
     private JFXButton logOutTab;
-
-    public static Pane viewPane;
     @FXML
     private StackPane stackPane;
 
@@ -63,8 +52,10 @@ public class MenuBarViewController implements Initializable {
         // TODO
     }
 
-    /*
-    If an admin logs in, the pane view within the MenuBarView is set to MainAdminView
+    /**
+     * If an admin logs in, the pane view within the MenuBarView is set to MainAdminView.
+     * @param stage The stage of the login.
+     * @param scene The scene of the login display.
      */
     public void setAdmin(Stage stage, Scene scene){
         Thread thread = new Thread(() -> {
@@ -90,8 +81,10 @@ public class MenuBarViewController implements Initializable {
         thread.start();
     }
 
-    /*
-    If a user logs in, the pane view within the MenuBarView is set to MainUserView
+    /**
+     * If a user logs in, the pane view within the MenuBarView is set to MainUserView
+     * @param stage The stage of the login.
+     * @param scene The scene of the login display.
      */
     public void setUser(Stage stage, Scene scene){
         Thread thread = new Thread(() -> {
@@ -118,8 +111,9 @@ public class MenuBarViewController implements Initializable {
         thread.start();
     }
 
-    /*
-    Opens the MainAdminView view within the menubar view.
+    /**
+     * Opens the MainAdminView within the menubar view.
+     * @param event 
      */
     @FXML
     private void openProjectsView(MouseEvent event){
@@ -143,8 +137,9 @@ public class MenuBarViewController implements Initializable {
         thread.start();
     }
 
-    /*
-    Opens the AdminCustomerView view within the menubar view.
+    /**
+     * Opens the AdminCustomerView within the menubar view.
+     * @param event 
      */
     @FXML
     private void openCustomerView(MouseEvent event){
@@ -169,8 +164,9 @@ public class MenuBarViewController implements Initializable {
         thread.start();
     }
 
-    /*
-    Opens the AdminCurrentUserView view within the menubar view.
+    /**
+     * Opens the AdminCurrentUserView view within the menubar view.
+     * @param event 
      */
     @FXML
     private void openUserView(MouseEvent event){
@@ -188,8 +184,9 @@ public class MenuBarViewController implements Initializable {
         thread.start();
     }
 
-    /*
-    Opens the AdminStatisticsView view within the menubar view.
+    /**
+     * Opens the AdminStatisticsView within the menubar view.
+     * @param event 
      */
     @FXML
     private void openStatisticsView(MouseEvent event){
@@ -207,8 +204,9 @@ public class MenuBarViewController implements Initializable {
         thread.start();
     }
 
-    /*
-    Opens the MainUserView view within the menubar view.
+    /**
+     * Opens the MainUserView within the menubar view.
+     * @param event 
      */
     @FXML
     private void openTimeTrackingView(MouseEvent event){
@@ -226,9 +224,9 @@ public class MenuBarViewController implements Initializable {
         thread.start();
     }
 
-
-    /*
-    Logs the current user/admin out.
+    /**
+     * Logs the current employee out of the system.
+     * @param event 
      */
     @FXML
     private void logOut(MouseEvent event){

@@ -31,7 +31,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton fx:id="cancelButton" layoutX="273.0" layoutY="226.0" onAction="#cancelScene" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Cancel" textFill="WHITE">
+      <JFXButton layoutX="273.0" layoutY="226.0" onAction="#cancelScene" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Cancel" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
@@ -39,7 +39,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton fx:id="deleteButton" layoutX="192.0" layoutY="226.0" onAction="#deleteTask" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Delete" textFill="WHITE">
+      <JFXButton layoutX="192.0" layoutY="226.0" onAction="#deleteTask" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Delete" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>

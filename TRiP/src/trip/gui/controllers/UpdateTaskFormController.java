@@ -37,10 +37,6 @@ public class UpdateTaskFormController implements Initializable {
     @FXML
     private JFXButton updateButton;
     @FXML
-    private JFXButton cancelButton;
-    @FXML
-    private JFXButton deleteButton;
-    @FXML
     private JFXTextField taskNameField;
     @FXML
     private StackPane stackPane;

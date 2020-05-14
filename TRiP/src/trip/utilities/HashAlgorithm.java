@@ -60,7 +60,5 @@ public class HashAlgorithm {
         }
         return hash.toString();
     }
-
-    
     
 }

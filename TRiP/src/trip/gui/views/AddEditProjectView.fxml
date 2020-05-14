@@ -55,7 +55,7 @@
          </image>
       </ImageView>
       <JFXListView fx:id="activeUsersList" layoutX="85.0" layoutY="395.0" prefHeight="195.0" prefWidth="296.0" stylesheets="@../styles/AddEditProjects.css" />
-      <Label fx:id="removeUser" layoutX="305.0" layoutY="598.0" onMouseClicked="#removeUser" text="Remove User">
+      <Label layoutX="305.0" layoutY="598.0" onMouseClicked="#removeUser" text="Remove User">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -63,7 +63,7 @@
             <Font size="13.0" />
          </font>
       </Label>
-      <JFXButton fx:id="cancelButton" layoutX="172.0" layoutY="629.0" onAction="#cancelScene" prefHeight="31.0" prefWidth="75.0" styleClass="login-button" stylesheets="@../styles/AddEditProjects.css" text="Cancel" textFill="WHITE">
+      <JFXButton layoutX="172.0" layoutY="629.0" onAction="#cancelScene" prefHeight="31.0" prefWidth="75.0" styleClass="login-button" stylesheets="@../styles/AddEditProjects.css" text="Cancel" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>

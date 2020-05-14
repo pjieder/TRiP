@@ -74,12 +74,12 @@
             <Font size="15.0" />
          </font>
       </TextField>
-      <ImageView fx:id="searchIcon" fitHeight="83.0" fitWidth="21.0" layoutX="583.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="83.0" fitWidth="21.0" layoutX="583.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/magnifying-glass%20(6).png" />
          </image>
       </ImageView>
-      <JFXButton fx:id="deleteButton" layoutX="67.0" layoutY="679.0" onAction="#deleteCustomer" prefHeight="31.0" prefWidth="129.0" stylesheets="@../styles/MainAdminView.css" text="Delete customer" textFill="WHITE">
+      <JFXButton layoutX="67.0" layoutY="679.0" onAction="#deleteCustomer" prefHeight="31.0" prefWidth="129.0" stylesheets="@../styles/MainAdminView.css" text="Delete customer" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>

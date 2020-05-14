@@ -8,7 +8,6 @@ package trip.be;
 import java.text.DecimalFormat;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
-import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;

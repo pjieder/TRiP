@@ -72,4 +72,5 @@ public class CustomerModel {
     public ObservableList<Customer> searchCustomers(String customerName, ObservableList<Customer> customerList) {
         return customerManager.searchCustomers(customerName, customerList);
     }
+    
 }
