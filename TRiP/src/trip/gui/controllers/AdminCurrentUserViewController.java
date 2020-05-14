@@ -42,7 +42,7 @@ import trip.utilities.JFXAlert;
  */
 public class AdminCurrentUserViewController implements Initializable {
 
-    private EmployeeModel appModel = new EmployeeModel();
+    private EmployeeModel employeeModel = new EmployeeModel();
     private ProjectModel projectModel = new ProjectModel();
     private boolean isLastOnActive = true;
     private ObservableList<Employee> employees = FXCollections.observableArrayList();
@@ -85,7 +85,7 @@ public class AdminCurrentUserViewController implements Initializable {
      */
     public void loadUsers() {
         try {
-            employees = appModel.loadActiveEmployees();
+            employees = employeeModel.loadActiveEmployees();
             userList.setItems(employees);
             projectComboBox.setItems(projectModel.loadAllActiveProjects());
             projectComboBox.getItems().add(0, new Project("All projects", 0));
@@ -199,7 +199,7 @@ public class AdminCurrentUserViewController implements Initializable {
     private void makeUserInactive(ActionEvent event) {
         try {
             if (!userList.getSelectionModel().isEmpty()) {
-                appModel.updateEmployeeActive(userList.getSelectionModel().getSelectedItem(), false);
+                employeeModel.updateEmployeeActive(userList.getSelectionModel().getSelectedItem(), false);
                 getUpdateListThread().start();
             }
         } catch (SQLException ex) {
@@ -216,7 +216,7 @@ public class AdminCurrentUserViewController implements Initializable {
     private void makeUserActive(ActionEvent event) {
         try {
             if (!userList.getSelectionModel().isEmpty()) {
-                appModel.updateEmployeeActive(userList.getSelectionModel().getSelectedItem(), true);
+                employeeModel.updateEmployeeActive(userList.getSelectionModel().getSelectedItem(), true);
                 getUpdateListThread().start();
             }
         } catch (SQLException ex) {
@@ -242,7 +242,7 @@ public class AdminCurrentUserViewController implements Initializable {
                     Platform.runLater(() -> {
                         employees.remove(selectedEmployee);
                     });
-                    appModel.deleteEmployee(selectedEmployee);
+                    employeeModel.deleteEmployee(selectedEmployee);
                 } catch (SQLException ex) {
                     Platform.runLater(() -> {
                         JFXAlert.openError(stackPane, "Error deleting user.");
@@ -258,7 +258,7 @@ public class AdminCurrentUserViewController implements Initializable {
      *
      * @return the update Thread to be executed
      */
-    public Thread getUpdateListThread() {
+    private Thread getUpdateListThread() {
         Thread updateThread = new Thread(() -> {
 
             Platform.runLater(() -> {
@@ -299,12 +299,12 @@ public class AdminCurrentUserViewController implements Initializable {
 
             if (project.getId() == 0) {
                 if (isLastOnActive) {
-                    employees = appModel.loadActiveEmployees();
+                    employees = employeeModel.loadActiveEmployees();
                 } else {
-                    employees = appModel.loadInactiveEmployees();
+                    employees = employeeModel.loadInactiveEmployees();
                 }
             } else {
-                employees = appModel.loadEmployeesAssignedToProject(project.getId(), isLastOnActive);
+                employees = employeeModel.loadEmployeesAssignedToProject(project.getId(), isLastOnActive);
             }
         } catch (SQLException ex) {
             JFXAlert.openError(stackPane, "Error loading employees.");
@@ -320,7 +320,7 @@ public class AdminCurrentUserViewController implements Initializable {
         if (userName.equalsIgnoreCase("")) {
             userList.setItems(employees);
         } else {
-            userList.setItems(appModel.searchEmployee(userName, employees));
+            userList.setItems(employeeModel.searchEmployee(userName, employees));
         }
     }
 

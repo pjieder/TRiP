@@ -22,7 +22,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -208,7 +207,7 @@ public class AdminCustomerViewController implements Initializable {
     /**
      * Searches through the customer table and displays customers mathing the name of the search term.
      */
-    public void search() {
+    private void search() {
         String customerName = searchBar.getText();
 
         if (customerName.equalsIgnoreCase("")) {

@@ -33,7 +33,7 @@ import trip.utilities.JFXAlert;
  */
 public class RegisterFormController implements Initializable {
     
-    private EmployeeModel appModel = new EmployeeModel();
+    private EmployeeModel employeeModel = new EmployeeModel();
     private Thread updateThread;
     private Employee employeeToUpdate;
     
@@ -161,6 +161,39 @@ public class RegisterFormController implements Initializable {
     }
     
     /**
+     * This methods runs when the RegisterForm FXML is opened by the "add" button. It takes the update statistics thread and stores it as an instance variable.
+     *
+     * @param thread the Thread returned by method getUpdateListThread in the AdminCurrentUserViewController
+     */
+    public void setUpdateThread(Thread thread) {
+        this.updateThread = thread;
+    }
+    
+    /**
+     * This method runs when the RegisterForm FXML is opened by the "update" button. It takes the selected employee and update thread and stores them as instance variables.
+     * @param employee The employee to be updated
+     * @param thread the Thread returned by method getUpdateListThread in the AdminCurrentUserViewController.
+     */
+    public void setEmployee(Employee employee, Thread thread) {
+        this.updateThread = thread;
+        this.employeeToUpdate = employee;
+        
+        registerButton.setVisible(false);
+        updateButton.setVisible(true);
+        passwordVisibility.setVisible(true);
+        passwordField.setVisible(false);
+        passwordFieldTwo.setVisible(false);
+        
+        firstNameField.setText(employee.getfName());
+        lastNameField.setText(employee.getlName());
+        emailField.setText(employee.getEmail());
+        adminCheckbox.setSelected(employee.getRole() == Roles.ADMIN);
+        userCheckbox.setSelected(employee.getRole() == Roles.USER);
+        
+        validateInput();
+    }
+    
+    /**
      * Saves or updates the employee based on what button was pressed when opening the FXML.
      *
      * @param event
@@ -185,15 +218,15 @@ public class RegisterFormController implements Initializable {
         
         if (employeeToUpdate == null)
         {
-            appModel.createEmployee(newEmployee, password);
+            employeeModel.createEmployee(newEmployee, password);
         } else
         {
             newEmployee.setId(employeeToUpdate.getId());
-            appModel.updateEmployee(newEmployee);
+            employeeModel.updateEmployee(newEmployee);
             
             if (passwordVisibility.isSelected())
             {
-                appModel.updatePassword(password, newEmployee);
+                employeeModel.updatePassword(password, newEmployee);
             }
         }
         updateThread.start();
@@ -230,39 +263,6 @@ public class RegisterFormController implements Initializable {
             passwordField.setVisible(false);
             passwordFieldTwo.setVisible(false);
         }
-        validateInput();
-    }
-    
-    /**
-     * This methods runs when the RegisterForm FXML is opened by the "add" button. It takes the update statistics thread and stores it as an instance variable.
-     *
-     * @param thread the Thread returned by method getUpdateListThread in the AdminCurrentUserViewController
-     */
-    public void setUpdateThread(Thread thread) {
-        this.updateThread = thread;
-    }
-    
-    /**
-     * This method runs when the RegisterForm FXML is opened by the "update" button. It takes the selected employee and update thread and stores them as instance variables.
-     * @param employee The employee to be updated
-     * @param thread the Thread returned by method getUpdateListThread in the AdminCurrentUserViewController.
-     */
-    public void setEmployee(Employee employee, Thread thread) {
-        this.updateThread = thread;
-        this.employeeToUpdate = employee;
-        
-        registerButton.setVisible(false);
-        updateButton.setVisible(true);
-        passwordVisibility.setVisible(true);
-        passwordField.setVisible(false);
-        passwordFieldTwo.setVisible(false);
-        
-        firstNameField.setText(employee.getfName());
-        lastNameField.setText(employee.getlName());
-        emailField.setText(employee.getEmail());
-        adminCheckbox.setSelected(employee.getRole() == Roles.ADMIN);
-        userCheckbox.setSelected(employee.getRole() == Roles.USER);
-        
         validateInput();
     }
     

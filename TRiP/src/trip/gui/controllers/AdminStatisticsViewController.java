@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -48,7 +50,7 @@ import trip.utilities.TimeConverter;
 public class AdminStatisticsViewController implements Initializable {
 
     private ProjectModel projectModel = new ProjectModel();
-    private EmployeeModel appModel = new EmployeeModel();
+    private EmployeeModel employeeModel = new EmployeeModel();
     private TaskModel taskModel = new TaskModel();
     private DecimalFormat df = new DecimalFormat("0.0#");
 
@@ -154,8 +156,8 @@ public class AdminStatisticsViewController implements Initializable {
             statisticComboBox.getItems().add("Task Chart");
             statisticComboBox.getSelectionModel().select(0);
 
-            employeeComboBox.setItems(appModel.loadActiveEmployees());
-            employeeSelection.setItems(appModel.loadActiveEmployees());
+            employeeComboBox.setItems(employeeModel.loadActiveEmployees());
+            employeeSelection.setItems(employeeModel.loadActiveEmployees());
         } catch (SQLException ex) {
             JFXAlert.openError(stackPane, "Error intitializing.");
         }
@@ -233,8 +235,11 @@ public class AdminStatisticsViewController implements Initializable {
 
         if (dateStart.getValue() != null && dateEnd.getValue() != null) {
             calculateLine.setDisable(false);
-            if (projectComboBox.getValue().getId() > 0) {calculateTask.setDisable(false);}
-            else{calculateTask.setDisable(true);}
+            if (projectComboBox.getValue().getId() > 0) {
+                calculateTask.setDisable(false);
+            } else {
+                calculateTask.setDisable(true);
+            }
 
             if (employeeComboBox.getValue() != null) {
                 calculateBar.setDisable(false);
@@ -311,21 +316,35 @@ public class AdminStatisticsViewController implements Initializable {
     }
 
     /**
-     * Calculates the statistics showin in the taskchart based on the information entered.
-     * The total amount of tasks being worked on in the specified project between the selected dates are displayed.
-     * @param event 
+     * Calculates the statistics showin in the taskchart based on the information entered. The total amount of tasks being worked on in the specified project between the selected dates are displayed.
+     *
+     * @param event
      */
     @FXML
     private void calculateTask(ActionEvent event) {
 
-        try {
-            taskTable.setItems(taskModel.loadAllUniqueTasksDates(projectComboBox.getValue().getId(), dateStart.getValue(), dateEnd.getValue()));
-            calculatePriceForTask();
-        } catch (SQLException ex) {
-            JFXAlert.openError(stackPane, "Error loading tasks.");
-        }
+        progress.setVisible(true);
+        calculateTask.setDisable(true);
+
+        Thread thread = new Thread(() -> {
+            try {
+
+                ObservableList<Task> tasks = taskModel.loadAllUniqueTasksDates(projectComboBox.getValue().getId(), dateStart.getValue(), dateEnd.getValue());
+                calculatePriceForTask(tasks, projectComboBox.getValue());
+
+                Platform.runLater(() -> {
+                    taskTable.setItems(tasks);
+                    progress.setVisible(false);
+                    calculateTask.setDisable(false);
+                });
+
+            } catch (SQLException ex) {
+                JFXAlert.openError(stackPane, "Error loading tasks.");
+            }
+        });
+        thread.start();
     }
-    
+
     /**
      * Calculates the total hours worked in the period and the total amount of money earned based on the rate of the different projects.
      *
@@ -405,24 +424,28 @@ public class AdminStatisticsViewController implements Initializable {
     }
 
     /**
-     * Calculates the total hours worked in the period and the total amount of money earned
-     * based on the rate of the rate of the selected project.
+     * Calculates the total hours worked in the period and the total amount of money earned based on the rate of the rate of the selected project.
+     *
+     * @param tasks The tasks the calculation is based on.
+     * @param project The selected project.
      */
-    public void calculatePriceForTask() {
+    private void calculatePriceForTask(ObservableList<Task> tasks, Project project) {
         int totalTime = 0;
         double totalPrice = 0;
         String totalTimeString;
         String totalPriceString;
 
-        for (Task task : taskTable.getItems()) {
+        for (Task task : tasks) {
             totalTime += task.getTotalTime();
-            totalPrice += (task.isBillable()) ? ((double) task.getTotalTime() / 3600) * projectComboBox.getValue().getRate() : 0;
+            totalPrice += (task.isBillable()) ? ((double) task.getTotalTime() / 3600) * project.getRate() : 0;
         }
-
         totalTimeString = TimeConverter.convertSecondsToString(totalTime);
         totalPriceString = df.format(totalPrice) + " DKK";
-        totalTimeLabelTask.setText(totalTimeString);
-        totalPriceLabelTask.setText(totalPriceString);
+        Platform.runLater(() -> {
+            totalTimeLabelTask.setText(totalTimeString);
+            totalPriceLabelTask.setText(totalPriceString);
+        });
+
     }
 
     /**
@@ -449,5 +472,5 @@ public class AdminStatisticsViewController implements Initializable {
             }
         }
     }
-    
+
 }
