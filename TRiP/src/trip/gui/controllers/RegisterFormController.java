@@ -61,6 +61,8 @@ public class RegisterFormController implements Initializable {
     private JFXCheckBox passwordVisibility;
     @FXML
     private StackPane stackPane;
+    @FXML
+    private StackPane stackPaneExistingUser;
 
     /**
      * Initializes the controller class.
@@ -218,7 +220,7 @@ public class RegisterFormController implements Initializable {
         
         if (employeeToUpdate == null)
         {
-            employeeModel.createEmployee(newEmployee, password);
+            if (!employeeModel.createEmployee(newEmployee, password)){JFXAlert.openError(stackPaneExistingUser, "User with that email already exists. Please use a different one."); return;}
         } else
         {
             newEmployee.setId(employeeToUpdate.getId());

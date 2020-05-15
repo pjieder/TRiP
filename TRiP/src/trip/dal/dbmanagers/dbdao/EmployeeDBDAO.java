@@ -212,6 +212,32 @@ public class EmployeeDBDAO implements IEmployeeDBDAO {
     }
     
     /**
+     * Checks the database for a user with the same username already exists.
+     * @param username The username of the wanted new employee.
+     * @return A boolean representing whether or not an employee with the same username exists.
+     * @throws SQLException 
+     */
+    @Override
+    public boolean checkExistingEmployee(String username) throws SQLException
+    {
+        Connection con = null;
+        
+        try {
+            con = DBSettings.getInstance().getConnection();
+            String sql = "SELECT * FROM Employees WHERE email = ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+
+            return rs.next();
+
+        }finally {
+            DBSettings.getInstance().releaseConnection(con);
+        }
+    }
+    
+    /**
      * Loads all active employees
      *
      * @return Returns an observablelist containing all active employees stored.

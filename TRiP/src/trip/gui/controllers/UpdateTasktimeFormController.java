@@ -119,7 +119,7 @@ public class UpdateTasktimeFormController implements Initializable {
         countedTime.setStopTime(endDate);
 
         try {
-            taskModel.UpdateTimeForTask(countedTime);
+            taskModel.updateTimeForTask(countedTime);
         } catch (SQLException ex) {
             JFXAlert.openError(stackPane, "Error occured while trying to update task.");
         }
@@ -145,7 +145,7 @@ public class UpdateTasktimeFormController implements Initializable {
     @FXML
     private void deleteCountedTime(ActionEvent event) {
         try {
-            taskModel.DeleteTimeForTask(countedTime);
+            taskModel.deleteTimeForTask(countedTime);
             updateThread.start();
             closeStage();
         } catch (SQLException ex) {

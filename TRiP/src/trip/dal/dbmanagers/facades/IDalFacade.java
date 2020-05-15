@@ -39,8 +39,9 @@ public interface IDalFacade {
      * @param employee The employee to be saved.
      * @param password The desired password for the newly created employee.
      * @throws java.sql.SQLException
+     * @return A boolean value representing whether or not the user is created.
      */
-    public void createEmployee(Employee employee, String password) throws SQLException;
+    public boolean createEmployee(Employee employee, String password) throws SQLException;
 
     /**
      * Loads all active employees
@@ -301,7 +302,7 @@ public interface IDalFacade {
      * @return A boolean value representing whether or not the update was successful.
      * @throws java.sql.SQLException
      */
-    public boolean UpdateTimeForTask(CountedTime countedTime) throws SQLException;
+    public boolean updateTimeForTask(CountedTime countedTime) throws SQLException;
 
     /**
      * Deletes the specified time registered to the task in the database.
@@ -310,7 +311,7 @@ public interface IDalFacade {
      * @return A boolean value representing whether or not the delete was successful.
      * @throws java.sql.SQLException
      */
-    public boolean DeleteTimeForTask(CountedTime countedTime) throws SQLException;
+    public boolean deleteTimeForTask(CountedTime countedTime) throws SQLException;
 
     /**
      * Saves the newly created customer in the database.

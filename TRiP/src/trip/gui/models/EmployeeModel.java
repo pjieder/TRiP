@@ -40,9 +40,10 @@ public class EmployeeModel {
      * @param employee The employee to be saved.
      * @param password The desired password for the newly created employee.
      * @throws java.sql.SQLException
+     * @return A boolean value representing whether or not the user is created.
      */
-    public void createEmployee(Employee employee, String password) throws SQLException{
-        employeeManager.createEmployee(employee, password);
+    public boolean createEmployee(Employee employee, String password) throws SQLException{
+       return employeeManager.createEmployee(employee, password);
     }
 
     /**

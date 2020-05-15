@@ -66,6 +66,14 @@ public interface IEmployeeDBDAO {
     public Employee getEmployeeById(int id) throws SQLException;
 
     /**
+     * Checks the database for a user with the same username already exists.
+     * @param username The username of the wanted new employee.
+     * @return A boolean representing whether or not an employee with the same username exists.
+     * @throws SQLException 
+     */
+    public boolean checkExistingEmployee(String username) throws SQLException;
+    
+    /**
      * Loads all active employees
      *
      * @return Returns an observablelist containing all active employees stored.

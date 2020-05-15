@@ -94,5 +94,6 @@
       </JFXButton>
       <JFXCheckBox fx:id="passwordVisibility" checkedColor="#9a80fe" layoutX="250.0" layoutY="318.0" onAction="#makePasswordVisible" text="Change Password" visible="false" />
       <StackPane fx:id="stackPane" layoutX="76.0" layoutY="146.0" prefHeight="159.0" prefWidth="296.0" visible="false" />
+      <StackPane fx:id="stackPaneExistingUser" layoutX="36.0" layoutY="149.0" prefHeight="159.0" prefWidth="296.0" visible="false" />
    </children>
 </AnchorPane>

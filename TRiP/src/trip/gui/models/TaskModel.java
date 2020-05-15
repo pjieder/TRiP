@@ -104,8 +104,8 @@ public class TaskModel {
      * @return A boolean value representing whether or not the update was successful.
      * @throws java.sql.SQLException
      */
-    public boolean UpdateTimeForTask(CountedTime countedTime) throws SQLException {
-        return taskManager.UpdateTimeForTask(countedTime);
+    public boolean updateTimeForTask(CountedTime countedTime) throws SQLException {
+        return taskManager.updateTimeForTask(countedTime);
     }
 
     /**
@@ -115,8 +115,8 @@ public class TaskModel {
      * @return A boolean value representing whether or not the delete was successful.
      * @throws java.sql.SQLException
      */
-    public boolean DeleteTimeForTask(CountedTime countedTime) throws SQLException {
-        return taskManager.DeleteTimeForTask(countedTime);
+    public boolean deleteTimeForTask(CountedTime countedTime) throws SQLException {
+        return taskManager.deleteTimeForTask(countedTime);
     }
 
 }

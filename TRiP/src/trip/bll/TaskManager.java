@@ -106,8 +106,8 @@ public class TaskManager {
      * @return A boolean value representing whether or not the update was successful.
      * @throws java.sql.SQLException
      */
-    public boolean UpdateTimeForTask(CountedTime countedTime) throws SQLException{
-        return dalFacade.UpdateTimeForTask(countedTime);
+    public boolean updateTimeForTask(CountedTime countedTime) throws SQLException{
+        return dalFacade.updateTimeForTask(countedTime);
     }
 
     /**
@@ -117,8 +117,8 @@ public class TaskManager {
      * @return A boolean value representing whether or not the delete was successful.
      * @throws java.sql.SQLException
      */
-    public boolean DeleteTimeForTask(CountedTime countedTime) throws SQLException{
-        return dalFacade.DeleteTimeForTask(countedTime);
+    public boolean deleteTimeForTask(CountedTime countedTime) throws SQLException{
+        return dalFacade.deleteTimeForTask(countedTime);
     }
 
 }

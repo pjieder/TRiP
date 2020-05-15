@@ -71,11 +71,14 @@ public class DalFacade implements IDalFacade {
      *
      * @param employee The employee to be saved.
      * @param password The desired password for the newly created employee.
+     * @return A boolean value representing whether or not the user is created.
      * @throws java.sql.SQLException
      */
     @Override
-    public void createEmployee(Employee employee, String password) throws SQLException{
-        employeeDBDAO.createEmployee(employee, password);
+    public boolean createEmployee(Employee employee, String password) throws SQLException{
+        
+        if (employeeDBDAO.checkExistingEmployee(employee.getEmail())){return false;}
+        return employeeDBDAO.createEmployee(employee, password);
     }
 
     /**
@@ -468,7 +471,7 @@ public class DalFacade implements IDalFacade {
      * @throws java.sql.SQLException
      */
     @Override
-    public boolean UpdateTimeForTask(CountedTime countedTime) throws SQLException{
+    public boolean updateTimeForTask(CountedTime countedTime) throws SQLException{
         return taskManager.updateTimeForTask(countedTime);
     }
 
@@ -480,7 +483,7 @@ public class DalFacade implements IDalFacade {
      * @throws java.sql.SQLException
      */
     @Override
-    public boolean DeleteTimeForTask(CountedTime countedTime) throws SQLException{
+    public boolean deleteTimeForTask(CountedTime countedTime) throws SQLException{
         return taskManager.deleteTimeForTask(countedTime);
     }
 
