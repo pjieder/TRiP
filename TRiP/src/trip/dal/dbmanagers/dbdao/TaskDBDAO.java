@@ -332,7 +332,7 @@ public class TaskDBDAO implements ITaskDBDAO {
      * @throws java.sql.SQLException
      */
     @Override
-    public boolean UpdateTimeForTask(CountedTime countedTime) throws SQLException {
+    public boolean updateTimeForTask(CountedTime countedTime) throws SQLException {
         Connection con = null;
         try {
             con = DBSettings.getInstance().getConnection();
@@ -362,7 +362,7 @@ public class TaskDBDAO implements ITaskDBDAO {
      * @throws java.sql.SQLException
      */
     @Override
-    public boolean DeleteTimeForTask(CountedTime countedTime) throws SQLException {
+    public boolean deleteTimeForTask(CountedTime countedTime) throws SQLException {
         Connection con = null;
         try {
             con = DBSettings.getInstance().getConnection();

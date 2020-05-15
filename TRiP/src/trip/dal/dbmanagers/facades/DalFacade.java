@@ -469,7 +469,7 @@ public class DalFacade implements IDalFacade {
      */
     @Override
     public boolean UpdateTimeForTask(CountedTime countedTime) throws SQLException{
-        return taskManager.UpdateTimeForTask(countedTime);
+        return taskManager.updateTimeForTask(countedTime);
     }
 
     /**
@@ -481,7 +481,7 @@ public class DalFacade implements IDalFacade {
      */
     @Override
     public boolean DeleteTimeForTask(CountedTime countedTime) throws SQLException{
-        return taskManager.DeleteTimeForTask(countedTime);
+        return taskManager.deleteTimeForTask(countedTime);
     }
 
     /**

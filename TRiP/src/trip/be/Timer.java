@@ -24,7 +24,7 @@ public class Timer implements Runnable{
     private Date startTime;
     private Date stopTime;
     private Label numberLabel;
-    ExecutorService executor = null;
+    private ExecutorService executor = null;
 
     /**
      * Starts the count of the timer for the task instance variable.
@@ -48,7 +48,7 @@ public class Timer implements Runnable{
     /**
      * Displays the current amount of time that the timer has run.
      */
-    public void displayTime() {
+    private void displayTime() {
         numberLabel.setText(TimeConverter.convertSecondsToString(time));
     }
 
@@ -100,24 +100,15 @@ public class Timer implements Runnable{
         return time;
     }
 
-    public void setTime(int time) {
-        this.time = time;
-    }
 
     public Date getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
 
     public Date getStopTime() {
         return stopTime;
     }
 
-    public void setStopTime(Date stopTime) {
-        this.stopTime = stopTime;
-    }
     
 }

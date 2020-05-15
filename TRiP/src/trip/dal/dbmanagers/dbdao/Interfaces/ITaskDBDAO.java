@@ -103,7 +103,7 @@ public interface ITaskDBDAO {
      * @return A boolean value representing whether or not the update was successful.
      * @throws java.sql.SQLException
      */
-    public boolean UpdateTimeForTask(CountedTime countedTime) throws SQLException;
+    public boolean updateTimeForTask(CountedTime countedTime) throws SQLException;
 
     /**
      * Deletes the specified time registered to the task in the database.
@@ -112,6 +112,6 @@ public interface ITaskDBDAO {
      * @return A boolean value representing whether or not the delete was successful.
      * @throws java.sql.SQLException
      */
-    public boolean DeleteTimeForTask(CountedTime countedTime) throws SQLException;
+    public boolean deleteTimeForTask(CountedTime countedTime) throws SQLException;
 
 }
