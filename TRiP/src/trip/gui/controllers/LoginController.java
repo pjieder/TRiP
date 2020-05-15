@@ -38,7 +38,7 @@ import java.sql.SQLException;
  */
 public class LoginController implements Initializable {
 
-    private EmployeeModel appModel = new EmployeeModel();
+    private EmployeeModel employeeModel = new EmployeeModel();
     private Preferences preferences;
     public static Employee loggedUser;
 
@@ -136,7 +136,7 @@ public class LoginController implements Initializable {
             showLoading();
 
             try {
-                Employee employeeToValidate = appModel.validateEmployee(username, password);
+                Employee employeeToValidate = employeeModel.validateEmployee(username, password);
                 if (employeeToValidate == null) {
                     hideLoading();
                 } else {
