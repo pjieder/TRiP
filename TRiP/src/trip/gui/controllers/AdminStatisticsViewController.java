@@ -12,7 +12,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -114,6 +116,8 @@ public class AdminStatisticsViewController implements Initializable {
     private Label totalPriceLabelBar;
     @FXML
     private Label totalUnbillableTimeLabelBar;
+    @FXML
+    private ComboBox<String> dateChoiseBox;
 
     /**
      * Initializes the controller class.
@@ -157,9 +161,16 @@ public class AdminStatisticsViewController implements Initializable {
             statisticComboBox.getItems().add("Employee chart");
             statisticComboBox.getItems().add("Task Chart");
             statisticComboBox.getSelectionModel().select(0);
+            
+            dateChoiseBox.getItems().add("This week");
+            dateChoiseBox.getItems().add("This month");
+            dateChoiseBox.getItems().add("User select");
+            dateChoiseBox.getSelectionModel().select(0);
 
             employeeComboBox.setItems(employeeModel.loadActiveEmployees());
             employeeSelection.setItems(employeeModel.loadActiveEmployees());
+            
+            validate();
         } catch (SQLException ex) {
             JFXAlert.openError(stackPane, "Error intitializing.");
         }
@@ -235,7 +246,7 @@ public class AdminStatisticsViewController implements Initializable {
      */
     private void validate() {
 
-        if (dateStart.getValue() != null && dateEnd.getValue() != null) {
+        if ((dateStart.getValue() != null && dateEnd.getValue() != null) || dateChoiseBox.getSelectionModel().isSelected(0) ||dateChoiseBox.getSelectionModel().isSelected(1)) {
             calculateLine.setDisable(false);
             if (projectComboBox.getValue().getId() > 0) {
                 calculateTask.setDisable(false);
@@ -265,14 +276,15 @@ public class AdminStatisticsViewController implements Initializable {
 
         Thread thread = new Thread(() -> {
             try {
-                LocalDate localDateFirst = dateStart.getValue();
-                LocalDate localDateLast = dateEnd.getValue();
+                LocalDate localDateFirst = decideStartDate();
+                LocalDate localDateLast = decideEndDate(localDateFirst);
                 Project selectedProject = projectComboBox.getValue();
                 XYChart.Series series = projectModel.calculateGraphLine(selectedProject.getId(), localDateFirst, localDateLast);
                 calculatePriceForLine(localDateFirst, localDateLast, selectedProject.getId());
                 Platform.runLater(() -> {
                     lineChart.getData().clear();
-                    lineChart.getData().add(series);
+                    if(series.getData().size() > 0)
+                    {lineChart.getData().add(series);}
                     progress.setVisible(false);
                     validate();
                 });
@@ -297,14 +309,15 @@ public class AdminStatisticsViewController implements Initializable {
 
         Thread thread = new Thread(() -> {
             try {
-                LocalDate localDateFirst = dateStart.getValue();
-                LocalDate localDateLast = dateEnd.getValue();
+                LocalDate localDateFirst = decideStartDate();
+                LocalDate localDateLast = decideEndDate(localDateFirst);
                 Employee selectedEmployee = employeeComboBox.getValue();
                 XYChart.Series series = projectModel.calculateGraphBar(localDateFirst, localDateLast, selectedEmployee.getId());
                 calculatePriceForBar(localDateFirst, localDateLast, selectedEmployee.getId());
                 Platform.runLater(() -> {
                     barChart.getData().clear();
-                    barChart.getData().add(series);
+                    if(series.getData().size() > 0)
+                    {barChart.getData().add(series);}
                     progress.setVisible(false);
                     validate();
                 });
@@ -330,8 +343,9 @@ public class AdminStatisticsViewController implements Initializable {
 
         Thread thread = new Thread(() -> {
             try {
-
-                ObservableList<Task> tasks = taskModel.loadAllUniqueTasksDates(projectComboBox.getValue().getId(), dateStart.getValue(), dateEnd.getValue());
+                LocalDate localDateFirst = decideStartDate();
+                LocalDate localDateLast = decideEndDate(localDateFirst);
+                ObservableList<Task> tasks = taskModel.loadAllUniqueTasksDates(projectComboBox.getValue().getId(), localDateFirst, localDateLast);
                 calculatePriceForTask(tasks, projectComboBox.getValue());
 
                 Platform.runLater(() -> {
@@ -498,5 +512,29 @@ public class AdminStatisticsViewController implements Initializable {
             }
         }
     }
-
+    
+    /**
+     * Determines the start date based on user choise.
+     * @return The start date that the statistics are based on.
+     */
+    private LocalDate decideStartDate()
+    {
+        LocalDate now = LocalDate.now();
+        if (dateChoiseBox.getSelectionModel().isSelected(0)){return now.with(TemporalAdjusters.previousOrSame( DayOfWeek.MONDAY ));}
+        if (dateChoiseBox.getSelectionModel().isSelected(1)){return now.with(TemporalAdjusters.firstDayOfMonth());}
+        else{return dateStart.getValue();} 
+    }
+    
+    /**
+     * Determines the end date based on user choise.
+     * @param startDate The start date that the statistics are based on.
+     * @return The end date that the statistics are based on.
+     */
+    private LocalDate decideEndDate(LocalDate startDate)
+    {
+        if (dateChoiseBox.getSelectionModel().isSelected(0)){return TimeConverter.addDays(startDate, 6);}
+        if (dateChoiseBox.getSelectionModel().isSelected(1)){return startDate.with(TemporalAdjusters.lastDayOfMonth());}
+        else{return dateEnd.getValue();} 
+    }
+    
 }
