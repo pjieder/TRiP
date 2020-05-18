@@ -91,23 +91,29 @@ public class AdminStatisticsViewController implements Initializable {
     @FXML
     private JFXButton calculateTask;
     @FXML
-    private Label totalTimeLabelLine;
-    @FXML
-    private Label totalPriceLabelLine;
-    @FXML
-    private Label totalTimeLabelBar;
-    @FXML
-    private Label totalPriceLabelBar;
-    @FXML
-    private Label totalTimeLabelTask;
-    @FXML
-    private Label totalPriceLabelTask;
-    @FXML
     private Pane TaskStatistics;
     @FXML
     private Pane lineStatistics;
     @FXML
     private Pane BarStatistics;
+    @FXML
+    private Label totalBillableTimeLabelLine;
+    @FXML
+    private Label totalPriceLabelLine;
+    @FXML
+    private Label totalUnbillableTimeLabelLine;
+    @FXML
+    private Label totalBillableTimeLabelTask;
+    @FXML
+    private Label totalPriceLabelTask;
+    @FXML
+    private Label totalUnbillableTimeLabelTask;
+    @FXML
+    private Label totalBillableTimeLabelBar;
+    @FXML
+    private Label totalPriceLabelBar;
+    @FXML
+    private Label totalUnbillableTimeLabelBar;
 
     /**
      * Initializes the controller class.
@@ -138,12 +144,8 @@ public class AdminStatisticsViewController implements Initializable {
         priceColumn.setCellValueFactory((data) -> {
 
             Task task = data.getValue();
-            double price = ((double) task.getTotalTime() / 3600) * projectComboBox.getValue().getRate();
-            if (task.isBillable()) {
-                return new SimpleStringProperty(df.format(price) + "DKK");
-            } else {
-                return new SimpleStringProperty("0.0 DKK");
-            }
+            double price = (((double) task.getTotalTime() - (double) task.getUnbillabletime()) / 3600) * projectComboBox.getValue().getRate();
+            return new SimpleStringProperty(df.format(price) + "DKK");
         });
 
         try {
@@ -316,7 +318,7 @@ public class AdminStatisticsViewController implements Initializable {
     }
 
     /**
-     * Calculates the statistics showin in the taskchart based on the information entered. The total amount of tasks being worked on in the specified project between the selected dates are displayed.
+     * Calculates the statistics shown in the taskchart based on the information entered. The total amount of tasks being worked on in the specified project between the selected dates are displayed.
      *
      * @param event
      */
@@ -353,9 +355,12 @@ public class AdminStatisticsViewController implements Initializable {
      * @param projectID The ID of the selected project.
      */
     private void calculatePriceForLine(LocalDate startDate, LocalDate endDate, int projectID) {
-        int totalTime = 0;
+        int totalBillableTime = 0;
+        int totalUnbillableTime = 0;
         double totalPrice = 0;
-        String totalTimeString;
+        
+        String totalBillableTimeString;
+        String totalUnbillableTimeString;
         String totalPriceString;
 
         try {
@@ -363,19 +368,25 @@ public class AdminStatisticsViewController implements Initializable {
 
                 for (Project project : projectModel.loadAllActiveProjects()) {
 
-                    double timeForProject = projectModel.loadAllBillableProjectTimeBetweenDates(project.getId(), startDate, endDate);
-                    totalPrice += (timeForProject / 3600) * project.getRate();
-                    totalTime += timeForProject;
+                    double billableTimeForProject = projectModel.loadAllProjectTimeBetweenDates(project.getId(), startDate, endDate, true);
+                    double unBillableTimeForProject = projectModel.loadAllProjectTimeBetweenDates(project.getId(), startDate, endDate, false);
+                    
+                    totalPrice += (billableTimeForProject / 3600) * project.getRate();
+                    totalBillableTime += billableTimeForProject;
+                    totalUnbillableTime += unBillableTimeForProject;
                 }
             } else {
-                totalTime = projectModel.loadAllBillableProjectTimeBetweenDates(projectID, startDate, endDate);
-                totalPrice = ((double) totalTime / 3600) * projectComboBox.getValue().getRate();
+                totalBillableTime = projectModel.loadAllProjectTimeBetweenDates(projectID, startDate, endDate, true);
+                totalUnbillableTime = projectModel.loadAllProjectTimeBetweenDates(projectID, startDate, endDate, false);
+                totalPrice = ((double) totalBillableTime / 3600) * projectComboBox.getValue().getRate();
             }
-            totalTimeString = TimeConverter.convertSecondsToString(totalTime);
+            totalBillableTimeString = TimeConverter.convertSecondsToString(totalBillableTime);
+            totalUnbillableTimeString = TimeConverter.convertSecondsToString(totalUnbillableTime);
             totalPriceString = df.format(totalPrice) + " DKK";
 
             Platform.runLater(() -> {
-                totalTimeLabelLine.setText(totalTimeString);
+                totalBillableTimeLabelLine.setText(totalBillableTimeString);
+                totalUnbillableTimeLabelLine.setText(totalUnbillableTimeString);
                 totalPriceLabelLine.setText(totalPriceString);
             });
         } catch (SQLException ex) {
@@ -393,10 +404,12 @@ public class AdminStatisticsViewController implements Initializable {
      * @param employeeeID The ID of the selected employee.
      */
     private void calculatePriceForBar(LocalDate startDate, LocalDate endDate, int employeeID) {
-
-        int totalTime = 0;
+        int totalBillableTime = 0;
+        int totalUnbillableTime = 0;
         double totalPrice = 0;
-        String totalTimeString;
+        
+        String totalBillableTimeString;
+        String totalUnbillableTimeString;
         String totalPriceString;
 
         try {
@@ -404,16 +417,21 @@ public class AdminStatisticsViewController implements Initializable {
 
             for (Project project : allWorkedOnProjects) {
 
-                double timeForProject = projectModel.loadAllBillableEmployeeProjectTimeBetweenDates(employeeID, project.getId(), startDate, endDate);
-                totalPrice += (timeForProject / 3600) * project.getRate();
-                totalTime += timeForProject;
+                double billableTimeForProject = projectModel.loadAllEmployeeProjectTimeBetweenDates(employeeID, project.getId(), startDate, endDate, true);
+                double unBillableTimeForProject = projectModel.loadAllEmployeeProjectTimeBetweenDates(employeeID, project.getId(), startDate, endDate, false);
+                    
+                totalPrice += (billableTimeForProject / 3600) * project.getRate();
+                totalBillableTime += billableTimeForProject;
+                totalUnbillableTime += unBillableTimeForProject;
             }
 
-            totalTimeString = TimeConverter.convertSecondsToString(totalTime);
+            totalBillableTimeString = TimeConverter.convertSecondsToString(totalBillableTime);
+            totalUnbillableTimeString = TimeConverter.convertSecondsToString(totalUnbillableTime);
             totalPriceString = df.format(totalPrice) + " DKK";
 
             Platform.runLater(() -> {
-                totalTimeLabelBar.setText(totalTimeString);
+                totalBillableTimeLabelBar.setText(totalBillableTimeString);
+                totalUnbillableTimeLabelBar.setText(totalUnbillableTimeString);
                 totalPriceLabelBar.setText(totalPriceString);
             });
         } catch (SQLException ex) {
@@ -430,19 +448,29 @@ public class AdminStatisticsViewController implements Initializable {
      * @param project The selected project.
      */
     private void calculatePriceForTask(ObservableList<Task> tasks, Project project) {
-        int totalTime = 0;
+        
+        int totalBillableTime = 0;
+        int totalUnbillableTime = 0;
         double totalPrice = 0;
-        String totalTimeString;
+        
+        String totalBillableTimeString;
+        String totalUnbillableTimeString;
         String totalPriceString;
 
         for (Task task : tasks) {
-            totalTime += task.getTotalTime();
-            totalPrice += (task.isBillable()) ? ((double) task.getTotalTime() / 3600) * project.getRate() : 0;
+            
+            totalBillableTime += task.getTotalTime() - task.getUnbillabletime();
+            totalUnbillableTime += task.getUnbillabletime();            
         }
-        totalTimeString = TimeConverter.convertSecondsToString(totalTime);
+        
+        totalPrice = (totalBillableTime > 0) ? ((double) totalBillableTime / 3600) * project.getRate() : 0;
+        totalBillableTimeString = TimeConverter.convertSecondsToString(totalBillableTime);
+        totalUnbillableTimeString = TimeConverter.convertSecondsToString(totalUnbillableTime);
         totalPriceString = df.format(totalPrice) + " DKK";
+        
         Platform.runLater(() -> {
-            totalTimeLabelTask.setText(totalTimeString);
+            totalBillableTimeLabelTask.setText(totalBillableTimeString);
+            totalUnbillableTimeLabelTask.setText(totalUnbillableTimeString);
             totalPriceLabelTask.setText(totalPriceString);
         });
 
@@ -458,9 +486,7 @@ public class AdminStatisticsViewController implements Initializable {
         if (employeeSelection.getValue() != null) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(TRiP.class
-                        .getResource("views/MainUserView.fxml"));
-
+                fxmlLoader.setLocation(TRiP.class.getResource("views/MainUserView.fxml"));
                 Pane pane = fxmlLoader.load();
                 MainUserViewController controller = fxmlLoader.getController();
                 controller.setEmployee(employeeSelection.getSelectionModel().getSelectedItem());

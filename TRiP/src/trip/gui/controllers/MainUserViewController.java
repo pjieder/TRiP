@@ -73,6 +73,8 @@ public class MainUserViewController implements Initializable {
     @FXML
     private TableColumn<Task, String> timeColumn;
     @FXML
+    private TableColumn<CountedTime, String> billableColumn;
+    @FXML
     private TableView<CountedTime> taskTimerList;
     @FXML
     private TableColumn<CountedTime, String> durationColumn;
@@ -146,6 +148,14 @@ public class MainUserViewController implements Initializable {
         endColumn.setCellValueFactory((data) -> {
             CountedTime countedTime = data.getValue();
             return new SimpleStringProperty(TimeConverter.convertDateToString(countedTime.getStopTime()));
+        });
+        
+        billableColumn.setCellValueFactory((data) -> {
+            CountedTime countedTime = data.getValue();
+            String isBillable;
+            if (countedTime.isBillable()) {isBillable = "✓";} 
+            else {isBillable = "✕";}
+            return new SimpleStringProperty(isBillable);
         });
 
         newTaskTitle.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -537,58 +547,56 @@ public class MainUserViewController implements Initializable {
     private void addTaskToUser(ActionEvent event) {
         addTask();
     }
-    
+
     /**
-     * Calculates the time between the selected date and time in order to display this
-     * in the timerField for a precise logging time.
+     * Calculates the time between the selected date and time in order to display this in the timerField for a precise logging time.
      */
-    private void calculateTime()
-    {
-        if (dateStart.getValue() != null && dateEnd.getValue() != null && timeStart.getValue() != null && timeEnd.getValue() != null)
-        {
-        
-        LocalDate localStart = dateStart.getValue();
-        LocalDate localStop = dateEnd.getValue();
+    private void calculateTime() {
+        if (dateStart.getValue() != null && dateEnd.getValue() != null && timeStart.getValue() != null && timeEnd.getValue() != null) {
 
-        LocalTime start = timeStart.getValue();
-        LocalTime stop = timeEnd.getValue();
+            LocalDate localStart = dateStart.getValue();
+            LocalDate localStop = dateEnd.getValue();
 
-        Instant instantStart = localStart.atTime(start).atZone(ZoneId.systemDefault()).toInstant();
-        Instant instantEnd = localStop.atTime(stop).atZone(ZoneId.systemDefault()).toInstant();
+            LocalTime start = timeStart.getValue();
+            LocalTime stop = timeEnd.getValue();
 
-        Date startDate = Date.from(instantStart);
-        Date endDate = Date.from(instantEnd);
-        
-        int seconds = (int) (endDate.getTime()-startDate.getTime())/1000;
-        seconds = (seconds >0)?seconds:0;
-        
-        timerField.clear();
-        timerField.setText(TimeConverter.convertSecondsToString(seconds));
+            Instant instantStart = localStart.atTime(start).atZone(ZoneId.systemDefault()).toInstant();
+            Instant instantEnd = localStop.atTime(stop).atZone(ZoneId.systemDefault()).toInstant();
+
+            Date startDate = Date.from(instantStart);
+            Date endDate = Date.from(instantEnd);
+
+            int seconds = (int) (endDate.getTime() - startDate.getTime()) / 1000;
+            seconds = (seconds > 0) ? seconds : 0;
+
+            timerField.clear();
+            timerField.setText(TimeConverter.convertSecondsToString(seconds));
         }
     }
-    
-    /**
-     * Calculates what the date and time fields should be to reflect the change
-     * made to the timerField in order to display a precise logging time.
-     */
-    private void changeTime()
-    {
-        if (timerField.validate())
-        {
-        if (dateStart.getValue()== null){dateStart.setValue(LocalDate.now());}
-        if (timeStart.getValue()==null){timeStart.setValue(LocalTime.now().withSecond(0));}
-        
-        int seconds = TimeConverter.convertStringToSeconds(timerField.getText());
-        
-        LocalDate localStart = dateStart.getValue();
-        LocalTime start = timeStart.getValue();
-        
-        LocalDateTime dateTime = LocalDateTime.of(localStart, start);
 
-        Instant instantEnd = dateTime.atZone(ZoneId.systemDefault()).toInstant().plusSeconds(seconds);
-        
-        dateEnd.setValue(instantEnd.atZone(ZoneId.systemDefault()).toLocalDate());
-        timeEnd.setValue(instantEnd.atZone(ZoneId.systemDefault()).toLocalTime());
+    /**
+     * Calculates what the date and time fields should be to reflect the change made to the timerField in order to display a precise logging time.
+     */
+    private void changeTime() {
+        if (timerField.validate()) {
+            if (dateStart.getValue() == null) {
+                dateStart.setValue(LocalDate.now());
+            }
+            if (timeStart.getValue() == null) {
+                timeStart.setValue(LocalTime.now().withSecond(0));
+            }
+
+            int seconds = TimeConverter.convertStringToSeconds(timerField.getText());
+
+            LocalDate localStart = dateStart.getValue();
+            LocalTime start = timeStart.getValue();
+
+            LocalDateTime dateTime = LocalDateTime.of(localStart, start);
+
+            Instant instantEnd = dateTime.atZone(ZoneId.systemDefault()).toInstant().plusSeconds(seconds);
+
+            dateEnd.setValue(instantEnd.atZone(ZoneId.systemDefault()).toLocalDate());
+            timeEnd.setValue(instantEnd.atZone(ZoneId.systemDefault()).toLocalTime());
         }
     }
 
@@ -608,5 +616,5 @@ public class MainUserViewController implements Initializable {
             });
         }
     }
-    
+
 }

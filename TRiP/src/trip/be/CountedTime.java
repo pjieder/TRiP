@@ -17,11 +17,13 @@ public class CountedTime {
     private int time;
     private Date startTime;
     private Date stopTime;
+    private boolean billable;
 
     public CountedTime(int time, Date startTime, Date stopTime) {
         this.time = time;
         this.startTime = startTime;
         this.stopTime = stopTime;
+        this.billable = true;
     }
 
     public int getId() {
@@ -54,6 +56,14 @@ public class CountedTime {
 
     public void setStopTime(Date stopTime) {
         this.stopTime = stopTime;
+    }
+
+    public boolean isBillable() {
+        return billable;
+    }
+
+    public void setBillable(boolean billable) {
+        this.billable = billable;
     }
 
     @Override

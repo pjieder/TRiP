@@ -18,12 +18,11 @@ public class Task {
     private String name;
     private String employee;
     private int totalTime;
-    private boolean billable;
+    private int unbillabletime;
     private ObservableList<CountedTime> countedTime = FXCollections.observableArrayList();
 
     public Task(String name) {
         this.name = name;
-        billable = true;
     }
 
     public int getId() {
@@ -58,14 +57,14 @@ public class Task {
         this.totalTime = totalTime;
     }
 
-    public boolean isBillable() {
-        return billable;
+    public int getUnbillabletime() {
+        return unbillabletime;
     }
 
-    public void setBillable(boolean billable) {
-        this.billable = billable;
+    public void setUnbillabletime(int unbillabletime) {
+        this.unbillabletime = unbillabletime;
     }
-
+    
     public ObservableList<CountedTime> getCountedTime() {
         return countedTime;
     }

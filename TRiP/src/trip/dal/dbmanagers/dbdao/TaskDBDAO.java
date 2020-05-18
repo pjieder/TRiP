@@ -42,14 +42,13 @@ public class TaskDBDAO implements ITaskDBDAO {
         Task task = new Task(taskName);
         try {
             con = DBSettings.getInstance().getConnection();
-            String sql = "INSERT INTO Task (projID, employeeID, name, isBillable) "
+            String sql = "INSERT INTO Task (projID, employeeID, name) "
                     + "VALUES (?,?,?,?);";
             PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             stmt.setInt(1, projectId);
             stmt.setInt(2, userId);
             stmt.setString(3, taskName);
-            stmt.setBoolean(4, true);
 
             stmt.executeUpdate();
 
@@ -94,11 +93,9 @@ public class TaskDBDAO implements ITaskDBDAO {
 
                 int id = rs.getInt("ID");
                 String name = rs.getString("name");
-                boolean isBillable = rs.getBoolean("isBillable");
 
                 Task task = new Task(name);
                 task.setId(id);
-                task.setBillable(isBillable);
                 tasks.add(task);
             }
 
@@ -127,7 +124,7 @@ public class TaskDBDAO implements ITaskDBDAO {
             con = DBSettings.getInstance().getConnection();
             
             String sql = "WITH x AS (SELECT Tasks.time, Task.* FROM Tasks JOIN Task ON Tasks.taskID = Task.ID WHERE Tasks.startTime BETWEEN ? AND ? AND Task.projID = ?)" +
-            "SELECT DISTINCT x.ID, x.name, Employees.fName, Employees.lName, x.isBillable, SUM(x.time) over (partition by x.ID) as totalTime FROM x JOIN Employees ON x.employeeID = Employees.ID;";
+            "SELECT DISTINCT x.ID, x.name, Employees.fName, Employees.lName, COALESCE((SELECT SUM (Tasks.time) FROM Tasks WHERE Tasks.taskID = x.ID AND Tasks.isBillable = 0),0) as unbillabletime, SUM(x.time) over (partition by x.ID) as totalTime FROM x JOIN Employees ON x.employeeID = Employees.ID;";
             PreparedStatement stmt = con.prepareStatement(sql);
             
             stmt.setString(1, startDate.toString());
@@ -141,14 +138,14 @@ public class TaskDBDAO implements ITaskDBDAO {
                 int id = rs.getInt("ID");
                 String name = rs.getString("name");
                 String employeeName = rs.getString("fName") + " " + rs.getString("lName");
-                boolean isBillable = rs.getBoolean("isBillable");
                 int totalTime = rs.getInt("totalTime");
+                int unbillableTime = rs.getInt("unbillableTime");
 
                 Task task = new Task(name);
                 task.setId(id);
                 task.setEmployee(employeeName);
-                task.setBillable(isBillable);
                 task.setTotalTime(totalTime);
+                task.setUnbillabletime(unbillableTime);
                 tasks.add(task);
             }
 
@@ -171,12 +168,11 @@ public class TaskDBDAO implements ITaskDBDAO {
         Connection con = null;
         try {
             con = DBSettings.getInstance().getConnection();
-            String sql = "UPDATE Task SET Task.name = ?, Task.isBillable = ? WHERE Task.ID = ?;";
+            String sql = "UPDATE Task SET Task.name = ? WHERE Task.ID = ?;";
             PreparedStatement stmt = con.prepareStatement(sql);
 
             stmt.setString(1, task.getName());
-            stmt.setBoolean(2, task.isBillable());
-            stmt.setInt(3, task.getId());
+            stmt.setInt(2, task.getId());
 
             stmt.executeUpdate();
 
@@ -230,8 +226,8 @@ public class TaskDBDAO implements ITaskDBDAO {
         int ID = -1;
         try {
             con = DBSettings.getInstance().getConnection();
-            String sql = "INSERT INTO Tasks (taskID, time, startTime, stopTime) "
-                    + "VALUES (?,?,?,?);";
+            String sql = "INSERT INTO Tasks (taskID, time, startTime, stopTime, isBillable) "
+                    + "VALUES (?,?,?,?,?);";
 
             PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
@@ -239,6 +235,7 @@ public class TaskDBDAO implements ITaskDBDAO {
             stmt.setInt(2, time);
             stmt.setString(3, TimeConverter.convertDateToStringDB(startTime));
             stmt.setString(4, TimeConverter.convertDateToStringDB(stopTime));
+            stmt.setBoolean(5, true);
 
              stmt.executeUpdate();
             ResultSet generatedKeys = stmt.getGeneratedKeys();
@@ -312,9 +309,11 @@ public class TaskDBDAO implements ITaskDBDAO {
                 int time = rs.getInt("time");
                 Date startTime = TimeConverter.convertStringToDateDB(rs.getString("startTime"));
                 Date stopTime = TimeConverter.convertStringToDateDB(rs.getString("stopTime"));
+                boolean isBillable = rs.getBoolean("isBillable");
 
                 CountedTime countedTime = new CountedTime(time, startTime, stopTime);
                 countedTime.setId(id);
+                countedTime.setBillable(isBillable);
                 tasks.add(countedTime);
             }
             return tasks;
@@ -336,13 +335,15 @@ public class TaskDBDAO implements ITaskDBDAO {
         Connection con = null;
         try {
             con = DBSettings.getInstance().getConnection();
-            String sql = "UPDATE Tasks SET Tasks.time = ?, Tasks.startTime = ?, Tasks.stopTime = ? WHERE Tasks.ID = ?";
+            String sql = "UPDATE Tasks SET Tasks.time = ?, Tasks.startTime = ?, Tasks.stopTime = ?, Tasks.isBillable = ? WHERE Tasks.ID = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
 
             stmt.setInt(1, countedTime.getTime());
             stmt.setString(2, TimeConverter.convertDateToStringDB(countedTime.getStartTime()));
             stmt.setString(3, TimeConverter.convertDateToStringDB(countedTime.getStopTime()));
-            stmt.setInt(4, countedTime.getId());
+            stmt.setBoolean(4, countedTime.isBillable());
+            stmt.setInt(5, countedTime.getId());
+
 
             stmt.executeUpdate();
 
