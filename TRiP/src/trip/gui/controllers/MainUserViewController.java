@@ -620,6 +620,7 @@ public class MainUserViewController implements Initializable {
         if (appStage.getOnCloseRequest() == null) {
             appStage.setOnCloseRequest((e) -> {
                 executor.shutdownNow();
+                executor = null;
                 System.out.println("Closing thread");
                 if (timer.isEnabled()) {
                     timer.stopTimer();
@@ -628,7 +629,7 @@ public class MainUserViewController implements Initializable {
             });
         }
     }
-
+    
     /**
      * Creates a new thread that automatically updates the view every 15 seconds in case a change should happen.
      *
@@ -644,7 +645,7 @@ public class MainUserViewController implements Initializable {
                 while (taskList.getScene().getWindow() != null) {
                     
                     TimeUnit.SECONDS.sleep(15);
-                    
+                    System.out.println("Update");
                     ObservableList<Project> projects;
                     if (loggedUser.getRole() == Roles.ADMIN) {
                         projects = projectModel.loadAllActiveProjects();
