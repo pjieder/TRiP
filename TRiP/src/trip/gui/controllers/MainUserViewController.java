@@ -645,7 +645,6 @@ public class MainUserViewController implements Initializable {
                 while (taskList.getScene().getWindow() != null) {
                     
                     TimeUnit.SECONDS.sleep(15);
-                    System.out.println("Update");
                     ObservableList<Project> projects;
                     if (loggedUser.getRole() == Roles.ADMIN) {
                         projects = projectModel.loadAllActiveProjects();
