@@ -53,7 +53,7 @@ public class TimeConverterTest {
     @Test
     public void testConvertSecondsToString () {
         System.out.println("Testing convertSecondsToString()");
-        int duration = new Integer(3602);
+        int duration = 3602;
         
         String expResult = "01:00:02";
         String result = TimeConverter.convertSecondsToString(duration);
@@ -67,9 +67,9 @@ public class TimeConverterTest {
     @Test
     public void testConvertStringToSeconds () {
         System.out.println("Testing convertStringToSeconds()");
-        String time = new String("01:00:02");
+        String time = new String("01:00:05");
         
-        int expResult = 3602;
+        int expResult = 3605;
         int result = TimeConverter.convertStringToSeconds(time);
         assertEquals(expResult, result);
         
