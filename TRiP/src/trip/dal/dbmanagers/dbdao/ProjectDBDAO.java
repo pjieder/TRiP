@@ -263,22 +263,24 @@ public class ProjectDBDAO implements IProjectDBDAO {
      * @param projectID The ID of the project that the count is based upon.
      * @param startDate The startdate of the timespan.
      * @param endDate The enddate of the timespan.
+     * @param isBillable Boolean value representing whether or not the time is billable.
      * @return An int value representing the total amount of time having been used in seconds.
      * @throws java.sql.SQLException
      */
     @Override
-    public int loadAllBillableProjectTimeBetweenDates(int projectID, LocalDate startDate, LocalDate endDate) throws SQLException{
+    public int loadAllProjectTimeBetweenDates(int projectID, LocalDate startDate, LocalDate endDate, boolean isBillable) throws SQLException{
         Connection con = null;
         int totalTime = 0;
 
         try {
             con = DBSettings.getInstance().getConnection();
-            String sql = "SELECT SUM(Tasks.time) AS TotalTime FROM Tasks JOIN Task on Tasks.taskID = Task.ID WHERE Task.projID = ?  AND Tasks.startTime BETWEEN ? AND ? AND Task.isBillable = 1;";
+            String sql = "SELECT SUM(Tasks.time) AS TotalTime FROM Tasks JOIN Task on Tasks.taskID = Task.ID WHERE Task.projID = ?  AND Tasks.startTime BETWEEN ? AND ? AND Tasks.isBillable = ?;";
             PreparedStatement stmt = con.prepareStatement(sql);
 
             stmt.setInt(1, projectID);
             stmt.setString(2, startDate.toString());
             stmt.setString(3, TimeConverter.addDays(endDate, 1).toString());
+            stmt.setBoolean(4, isBillable);
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -299,23 +301,25 @@ public class ProjectDBDAO implements IProjectDBDAO {
      * @param projectID The ID of the project that the count is based upon.
      * @param startDate The startdate of the timespan.
      * @param endDate The enddate of the timespan.
+     * @param isBillable Boolean value representing whether or not the time is billable.
      * @return An int value representing the total amount of time the specified employe have been working on the project in seconds.
      * @throws java.sql.SQLException
      */
     @Override
-    public int loadAllBillableEmployeeProjectTimeBetweenDates(int employeeID, int projectID, LocalDate startDate, LocalDate endDate) throws SQLException{
+    public int loadAllEmployeeProjectTimeBetweenDates(int employeeID, int projectID, LocalDate startDate, LocalDate endDate, boolean isBillable) throws SQLException{
         Connection con = null;
         int totalTime = 0;
 
         try {
             con = DBSettings.getInstance().getConnection();
-            String sql = "SELECT SUM(Tasks.time) AS TotalTime FROM Tasks JOIN Task on Tasks.taskID = Task.ID WHERE Task.projID = ? And Task.employeeID = ? AND Tasks.startTime BETWEEN ? AND ? AND Task.isBillable = 1;";
+            String sql = "SELECT SUM(Tasks.time) AS TotalTime FROM Tasks JOIN Task on Tasks.taskID = Task.ID WHERE Task.projID = ? And Task.employeeID = ? AND Tasks.startTime BETWEEN ? AND ? AND Tasks.isBillable = ?;";
             PreparedStatement stmt = con.prepareStatement(sql);
 
             stmt.setInt(1, projectID);
             stmt.setInt(2, employeeID);
             stmt.setString(3, startDate.toString());
             stmt.setString(4, TimeConverter.addDays(endDate, 1).toString());
+            stmt.setBoolean(5, isBillable);
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {

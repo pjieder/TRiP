@@ -6,6 +6,7 @@
 package trip.gui.controllers;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
@@ -55,6 +56,8 @@ public class UpdateTasktimeFormController implements Initializable {
     private JFXTimePicker timeStop;
     @FXML
     private StackPane stackPane;
+    @FXML
+    private JFXCheckBox billable;
 
     /**
      * Initializes the controller class.
@@ -91,6 +94,7 @@ public class UpdateTasktimeFormController implements Initializable {
         timeStop.setValue(countedTime.getStopTime().toInstant().atZone(ZoneId.systemDefault()).toLocalTime());
 
         timerField.setText(TimeConverter.convertSecondsToString(countedTime.getTime()));
+        billable.setSelected(countedTime.isBillable());
     }
 
     /**
@@ -101,6 +105,7 @@ public class UpdateTasktimeFormController implements Initializable {
     @FXML
     private void updateCountedTime(ActionEvent event) {
 
+        try{
         int time = TimeConverter.convertStringToSeconds(timerField.getText());
         LocalDate localStart = dateStart.getValue();
         LocalDate localStop = dateStop.getValue();
@@ -117,14 +122,18 @@ public class UpdateTasktimeFormController implements Initializable {
         countedTime.setTime(time);
         countedTime.setStartTime(startDate);
         countedTime.setStopTime(endDate);
+        countedTime.setBillable(billable.isSelected());
+        
+        taskModel.updateTimeForTask(countedTime);
+        
+        updateThread.start();
+        closeStage();
 
-        try {
-            taskModel.updateTimeForTask(countedTime);
+
         } catch (SQLException ex) {
             JFXAlert.openError(stackPane, "Error occured while trying to update task.");
         }
-        updateThread.start();
-        closeStage();
+
     }
 
     /**

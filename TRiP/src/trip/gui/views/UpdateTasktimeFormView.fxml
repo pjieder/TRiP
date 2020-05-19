@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTimePicker?>
@@ -24,7 +25,7 @@
             <Image url="@../images/plus%20(4).png" />
          </image>
       </ImageView>
-      <Label layoutX="105.0" layoutY="76.0" text="Edit Time" textFill="#4d4d4d">
+      <Label layoutX="104.0" layoutY="37.0" text="Edit Time" textFill="#4d4d4d">
          <font>
             <Font size="24.0" />
          </font>
@@ -45,15 +46,15 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXDatePicker fx:id="dateStart" defaultColor="#9a80fe" layoutX="109.0" layoutY="171.0" onAction="#validateAddTask" prefHeight="30.0" prefWidth="126.0" promptText="3" stylesheets="@../styles/MainUserViewCSS.css" />
-      <JFXDatePicker fx:id="dateStop" defaultColor="#9a80fe" layoutX="240.0" layoutY="171.0" onAction="#validateAddTask" prefHeight="30.0" prefWidth="126.0" promptText="3" stylesheets="@../styles/MainUserViewCSS.css" />
-      <JFXTimePicker fx:id="timeStart" defaultColor="#9a80fe" layoutX="107.0" layoutY="245.0" onAction="#validateAddTask" prefHeight="28.0" prefWidth="126.0" promptText="2" stylesheets="@../styles/MainUserViewCSS.css" />
-      <JFXTextField fx:id="timerField" focusColor="#9a80fe00" layoutX="230.0" layoutY="298.0" prefHeight="21.0" prefWidth="210.0" text="00:00:00" unFocusColor="#4d4d4d00">
+      <JFXDatePicker fx:id="dateStart" defaultColor="#9a80fe" layoutX="108.0" layoutY="132.0" onAction="#validateAddTask" prefHeight="30.0" prefWidth="126.0" promptText="3" stylesheets="@../styles/MainUserViewCSS.css" />
+      <JFXDatePicker fx:id="dateStop" defaultColor="#9a80fe" layoutX="239.0" layoutY="132.0" onAction="#validateAddTask" prefHeight="30.0" prefWidth="126.0" promptText="3" stylesheets="@../styles/MainUserViewCSS.css" />
+      <JFXTimePicker fx:id="timeStart" defaultColor="#9a80fe" layoutX="106.0" layoutY="206.0" onAction="#validateAddTask" prefHeight="28.0" prefWidth="126.0" promptText="2" stylesheets="@../styles/MainUserViewCSS.css" />
+      <JFXTextField fx:id="timerField" focusColor="#9a80fe00" layoutX="229.0" layoutY="259.0" prefHeight="21.0" prefWidth="210.0" text="00:00:00" unFocusColor="#4d4d4d00">
          <font>
             <Font size="15.0" />
          </font>
       </JFXTextField>
-      <JFXTimePicker fx:id="timeStop" defaultColor="#9a80fe" layoutX="238.0" layoutY="245.0" onAction="#validateAddTask" prefHeight="28.0" prefWidth="126.0" promptText="3" stylesheets="@../styles/MainUserViewCSS.css" />
+      <JFXTimePicker fx:id="timeStop" defaultColor="#9a80fe" layoutX="237.0" layoutY="206.0" onAction="#validateAddTask" prefHeight="28.0" prefWidth="126.0" promptText="3" stylesheets="@../styles/MainUserViewCSS.css" />
       <JFXButton layoutX="190.0" layoutY="367.0" onAction="#deleteCountedTime" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Delete" textFill="WHITE">
          <font>
             <Font size="15.0" />
@@ -62,31 +63,32 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <Label layoutX="110.0" layoutY="150.0" text="Start Date">
+      <Label layoutX="109.0" layoutY="111.0" text="Start Date">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label layoutX="241.0" layoutY="150.0" text="Stop Date">
+      <Label layoutX="240.0" layoutY="111.0" text="Stop Date">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label layoutX="110.0" layoutY="224.0" text="Start Time">
+      <Label layoutX="109.0" layoutY="185.0" text="Start Time">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label layoutX="241.0" layoutY="224.0" text="Stop Time">
+      <Label layoutX="240.0" layoutY="185.0" text="Stop Time">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label layoutX="160.0" layoutY="303.0" text="Duration:">
+      <Label layoutX="159.0" layoutY="264.0" text="Duration:">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
+      <JFXCheckBox fx:id="billable" checkedColor="#b49afd" layoutX="111.0" layoutY="304.0" stylesheets="@../styles/RegisterFormCSS.css" text="Billable" />
       <StackPane fx:id="stackPane" layoutX="74.0" layoutY="145.0" prefHeight="159.0" prefWidth="296.0" visible="false" />
    </children>
 </AnchorPane>

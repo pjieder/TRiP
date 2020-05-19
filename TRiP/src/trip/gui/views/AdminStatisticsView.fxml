@@ -53,60 +53,80 @@
                   <TableColumn fx:id="priceColumn" prefWidth="113.0" text="Price" />
               </columns>
             </TableView>
-            <Label layoutX="220.0" layoutY="559.0" text="Total Turn Over:">
+            <Label layoutX="433.0" layoutY="559.0" text="Total Turn Over:">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label layoutX="15.0" layoutY="559.0" text="Total Time Spent:">
+            <Label layoutX="15.0" layoutY="559.0" text="Total Billable time:">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <ComboBox fx:id="employeeSelection" layoutX="456.0" layoutY="554.0" prefHeight="31.0" prefWidth="204.0" promptText="Employee" stylesheets="@../styles/StatisticsCSS.css" />
-            <JFXButton layoutX="680.0" layoutY="554.0" onAction="#openEmployee" prefHeight="31.0" prefWidth="166.0" stylesheets="@../styles/MainUserViewCSS.css" text="Open Employee Data" textFill="WHITE">
+            <Label layoutX="215.0" layoutY="559.0" text="Total Unbillable time:">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="employeeSelection" layoutX="680.0" layoutY="551.0" prefHeight="31.0" prefWidth="166.0" promptText="Employee" stylesheets="@../styles/StatisticsCSS.css" />
+            <JFXButton layoutX="680.0" layoutY="588.0" onAction="#openEmployee" prefHeight="31.0" prefWidth="166.0" stylesheets="@../styles/MainUserViewCSS.css" text="Open Employee Data" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>
             </JFXButton>
+            <Pane fx:id="lineStatistics" layoutX="134.0" layoutY="548.0" prefHeight="43.0" prefWidth="481.0">
+               <children>
+                  <Label fx:id="totalBillableTimeLabelLine" layoutX="7.0" layoutY="12.0" text="00:00:00">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="totalPriceLabelLine" layoutX="411.0" layoutY="12.0" text="0.00 DKK">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="totalUnbillableTimeLabelLine" layoutX="226.0" layoutY="12.0" text="00:00:00">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
          </children>
       </AnchorPane>
-      <Pane fx:id="TaskStatistics" layoutX="196.0" layoutY="657.0" prefHeight="43.0" prefWidth="296.0" visible="false">
+      <Pane fx:id="TaskStatistics" layoutX="196.0" layoutY="657.0" prefHeight="43.0" prefWidth="481.0" visible="false">
          <children>
-            <Label fx:id="totalTimeLabelTask" layoutX="7.0" layoutY="10.0" text="00:00:00">
+            <Label fx:id="totalBillableTimeLabelTask" layoutX="10.0" layoutY="10.0" text="00:00:00">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label fx:id="totalPriceLabelTask" layoutX="203.0" layoutY="11.0" text="0.00 DKK">
+            <Label fx:id="totalPriceLabelTask" layoutX="414.0" layoutY="10.0" text="0.00 DKK">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="totalUnbillableTimeLabelTask" layoutX="229.0" layoutY="10.0" text="00:00:00">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
          </children>
       </Pane>
-      <Pane fx:id="lineStatistics" layoutX="196.0" layoutY="657.0" prefHeight="43.0" prefWidth="296.0">
+      <Pane fx:id="BarStatistics" layoutX="196.0" layoutY="657.0" prefHeight="43.0" prefWidth="481.0" visible="false">
          <children>
-            <Label fx:id="totalTimeLabelLine" layoutX="7.0" layoutY="10.0" text="00:00:00">
+            <Label fx:id="totalBillableTimeLabelBar" layoutX="10.0" layoutY="10.0" text="00:00:00">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label fx:id="totalPriceLabelLine" layoutX="203.0" layoutY="11.0" text="0.00 DKK">
+            <Label fx:id="totalPriceLabelBar" layoutX="414.0" layoutY="10.0" text="0.00 DKK">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-         </children>
-      </Pane>
-      <Pane fx:id="BarStatistics" layoutX="196.0" layoutY="657.0" prefHeight="43.0" prefWidth="296.0" visible="false">
-         <children>
-            <Label fx:id="totalTimeLabelBar" layoutX="7.0" layoutY="10.0" text="00:00:00">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <Label fx:id="totalPriceLabelBar" layoutX="203.0" layoutY="11.0" text="0.00 DKK">
+            <Label fx:id="totalUnbillableTimeLabelBar" layoutX="229.0" layoutY="10.0" text="00:00:00">
                <font>
                   <Font size="15.0" />
                </font>
@@ -134,5 +154,6 @@
             <Font size="15.0" />
          </font></JFXButton>
       <StackPane fx:id="stackPane" layoutX="348.0" layoutY="24.0" prefHeight="159.0" prefWidth="296.0" visible="false" />
+      <ComboBox fx:id="dateChoiseBox" layoutX="71.0" layoutY="12.0" onAction="#validate" prefWidth="150.0" />
    </children>
 </AnchorPane>

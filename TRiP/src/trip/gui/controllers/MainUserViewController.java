@@ -20,8 +20,12 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -57,13 +61,14 @@ import trip.utilities.TimeConverter;
  * @author Peter
  */
 public class MainUserViewController implements Initializable {
-
+    
     private ProjectModel projectModel = new ProjectModel();
     private TaskModel taskModel = new TaskModel();
-
+    
     private Timer timer = new Timer();
     private Employee loggedUser = LoginController.loggedUser;
-
+    private ExecutorService executor = Executors.newSingleThreadExecutor();
+    
     @FXML
     private ComboBox<Project> projectComboBox;
     @FXML
@@ -72,6 +77,8 @@ public class MainUserViewController implements Initializable {
     private TableColumn<Task, String> nameColumn;
     @FXML
     private TableColumn<Task, String> timeColumn;
+    @FXML
+    private TableColumn<CountedTime, String> billableColumn;
     @FXML
     private TableView<CountedTime> taskTimerList;
     @FXML
@@ -122,62 +129,74 @@ public class MainUserViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        
         nameColumn.setCellValueFactory((data) -> {
             Task task = data.getValue();
             return new SimpleStringProperty(task.getName());
         });
-
+        
         timeColumn.setCellValueFactory((data) -> {
             Task task = data.getValue();
             return new SimpleStringProperty(TimeConverter.convertSecondsToString(task.getTotalTime()));
         });
-
+        
         durationColumn.setCellValueFactory((data) -> {
             CountedTime countedTime = data.getValue();
             return new SimpleStringProperty(TimeConverter.convertSecondsToString(countedTime.getTime()));
         });
-
+        
         startColumn.setCellValueFactory((data) -> {
             CountedTime countedTime = data.getValue();
             return new SimpleStringProperty(TimeConverter.convertDateToString(countedTime.getStartTime()));
         });
-
+        
         endColumn.setCellValueFactory((data) -> {
             CountedTime countedTime = data.getValue();
             return new SimpleStringProperty(TimeConverter.convertDateToString(countedTime.getStopTime()));
         });
-
+        
+        billableColumn.setCellValueFactory((data) -> {
+            CountedTime countedTime = data.getValue();
+            String isBillable;
+            if (countedTime.isBillable()) {
+                isBillable = "✓";
+            } else {
+                isBillable = "✕";
+            }
+            return new SimpleStringProperty(isBillable);
+        });
+        
         newTaskTitle.textProperty().addListener((observable, oldValue, newValue) -> {
             decideTimerEnabled();
         });
-
+        
         timeStart.set24HourView(true);
         timeEnd.set24HourView(true);
-
+        
         RegexValidator regex = new RegexValidator();
         regex.setRegexPattern("^([0-9][0-9]|[2][0-3]):([0-5][0-9]):([0-5][0-9])$");
         regex.setMessage("Input is not a valid time");
         timerField.getValidators().add(regex);
-
+        
         timerField.textProperty().addListener((Observable, oldValue, newValue) -> {
             changeTime();
             decideAddTimeEnabled();
             timerField.validate();
         });
-
+        
         loadProjects();
-
+        
         final Tooltip tooltipButton = new Tooltip();
         tooltipButton.setText("Add Time");
         addButton.setTooltip(tooltipButton);
         tooltipButton.setStyle("-fx-font-size: 15px; -fx-background-color: rgb(154, 128, 254, .8);");
-
+        
         final Tooltip tooltipButton2 = new Tooltip();
         tooltipButton2.setText("Track Time");
         startButton.setTooltip(tooltipButton2);
         tooltipButton2.setStyle("-fx-font-size: 15px; -fx-background-color: rgb(154, 128, 254, .8);");
-
+        
+        executor.submit(update());
     }
 
     /**
@@ -219,7 +238,7 @@ public class MainUserViewController implements Initializable {
             } else {
                 projectComboBox.setItems(projectModel.loadAllEmployeeProjects(loggedUser.getId()));
             }
-
+            
             projectComboBox.getSelectionModel().select(0);
             if (projectComboBox.getValue() != null) {
                 taskList.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getValue().getId()));
@@ -239,10 +258,12 @@ public class MainUserViewController implements Initializable {
     @FXML
     private void switchProject(ActionEvent event) {
         try {
-            taskList.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
-            tasks.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
-            tasks.getSelectionModel().select(0);
-            decideTimerEnabled();
+            if (projectComboBox.getValue() != null) {
+                taskList.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
+                tasks.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
+                tasks.getSelectionModel().select(0);
+                decideTimerEnabled();
+            }
         } catch (SQLException ex) {
             JFXAlert.openError(stackPane, "Error while attempting to switch Project.");
         }
@@ -256,14 +277,14 @@ public class MainUserViewController implements Initializable {
      */
     @FXML
     private void showTime(MouseEvent event) {
-
+        
         if (!taskList.getSelectionModel().isEmpty()) {
             taskTimerList.setItems(taskList.getSelectionModel().getSelectedItem().getCountedTime());
             tasks.getSelectionModel().select(taskList.getSelectionModel().getSelectedItem());
             decideTimerEnabled();
             decideAddTimeEnabled();
         }
-
+        
         if (event.getClickCount() > 1 & !taskList.getSelectionModel().isEmpty() & !event.isConsumed()) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
@@ -307,7 +328,7 @@ public class MainUserViewController implements Initializable {
      */
     @FXML
     private void startTimer(ActionEvent event) {
-
+        
         if (!newTaskTitle.getText().trim().isEmpty()) {
             Task task = addTask();
             newTaskTitle.clear();
@@ -315,11 +336,11 @@ public class MainUserViewController implements Initializable {
         } else {
             timer.startTimer(taskList.getSelectionModel().getSelectedItem(), timerLabel);
         }
-
+        
         startTimer.setVisible(false);
         stopTimer.setVisible(true);
         cancelTimer.setVisible(true);
-
+        
         setupCloseRequest();
     }
 
@@ -362,29 +383,29 @@ public class MainUserViewController implements Initializable {
      */
     @FXML
     private void addTime(ActionEvent event) {
-
+        
         Task selectedTask = tasks.getSelectionModel().getSelectedItem();
         Task task = (selectedTask != null) ? selectedTask : taskList.getSelectionModel().getSelectedItem();
-
+        
         int time = TimeConverter.convertStringToSeconds(timerField.getText());
         LocalDate localStart = dateStart.getValue();
         LocalDate localStop = dateEnd.getValue();
-
+        
         LocalTime start = timeStart.getValue();
         LocalTime stop = timeEnd.getValue();
-
+        
         Instant instantStart = localStart.atTime(start).atZone(ZoneId.systemDefault()).toInstant();
         Instant instantEnd = localStop.atTime(stop).atZone(ZoneId.systemDefault()).toInstant();
-
+        
         Date startDate = Date.from(instantStart);
         Date endDate = Date.from(instantEnd);
-
+        
         try {
             taskModel.saveTimeForTask(task, time, startDate, endDate);
         } catch (SQLException ex) {
             JFXAlert.openError(stackPane, "Error saving time for task.");
         }
-
+        
         timerField.setText("00:00:00");
         dateStart.setValue(null);
         dateEnd.setValue(null);
@@ -399,19 +420,19 @@ public class MainUserViewController implements Initializable {
      * @return the update thread to be executed.
      */
     private Thread updateView() {
-
+        
         Thread updateThread = new Thread(() -> {
-
+            
             Platform.runLater(() -> {
                 try {
                     if (!taskList.getSelectionModel().isEmpty()) {
-
+                        
                         Task selectedTask = taskList.getSelectionModel().getSelectedItem();
                         taskList.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
                         taskList.refresh();
                         taskList.getSelectionModel().select(selectedTask);
                         taskTimerList.getItems().clear();
-
+                        
                         if (taskList.getSelectionModel().getSelectedItem() != null) {
                             taskTimerList.setItems(taskList.getSelectionModel().getSelectedItem().getCountedTime());
                         }
@@ -422,7 +443,7 @@ public class MainUserViewController implements Initializable {
                     }
                     Task selectedItem = tasks.getSelectionModel().getSelectedItem();
                     tasks.setItems(taskList.getItems());
-
+                    
                     if (taskList.getItems().contains(selectedItem)) {
                         tasks.getSelectionModel().select(selectedItem);
                     } else {
@@ -512,7 +533,7 @@ public class MainUserViewController implements Initializable {
         startTime.setVisible(true);
         startButton.setVisible(false);
         addButton.setVisible(true);
-
+        
     }
 
     /**
@@ -537,69 +558,68 @@ public class MainUserViewController implements Initializable {
     private void addTaskToUser(ActionEvent event) {
         addTask();
     }
-    
+
     /**
-     * Calculates the time between the selected date and time in order to display this
-     * in the timerField for a precise logging time.
+     * Calculates the time between the selected date and time in order to display this in the timerField for a precise logging time.
      */
-    private void calculateTime()
-    {
-        if (dateStart.getValue() != null && dateEnd.getValue() != null && timeStart.getValue() != null && timeEnd.getValue() != null)
-        {
-        
-        LocalDate localStart = dateStart.getValue();
-        LocalDate localStop = dateEnd.getValue();
-
-        LocalTime start = timeStart.getValue();
-        LocalTime stop = timeEnd.getValue();
-
-        Instant instantStart = localStart.atTime(start).atZone(ZoneId.systemDefault()).toInstant();
-        Instant instantEnd = localStop.atTime(stop).atZone(ZoneId.systemDefault()).toInstant();
-
-        Date startDate = Date.from(instantStart);
-        Date endDate = Date.from(instantEnd);
-        
-        int seconds = (int) (endDate.getTime()-startDate.getTime())/1000;
-        seconds = (seconds >0)?seconds:0;
-        
-        timerField.clear();
-        timerField.setText(TimeConverter.convertSecondsToString(seconds));
+    private void calculateTime() {
+        if (dateStart.getValue() != null && dateEnd.getValue() != null && timeStart.getValue() != null && timeEnd.getValue() != null) {
+            
+            LocalDate localStart = dateStart.getValue();
+            LocalDate localStop = dateEnd.getValue();
+            
+            LocalTime start = timeStart.getValue();
+            LocalTime stop = timeEnd.getValue();
+            
+            Instant instantStart = localStart.atTime(start).atZone(ZoneId.systemDefault()).toInstant();
+            Instant instantEnd = localStop.atTime(stop).atZone(ZoneId.systemDefault()).toInstant();
+            
+            Date startDate = Date.from(instantStart);
+            Date endDate = Date.from(instantEnd);
+            
+            int seconds = (int) (endDate.getTime() - startDate.getTime()) / 1000;
+            seconds = (seconds > 0) ? seconds : 0;
+            
+            timerField.clear();
+            timerField.setText(TimeConverter.convertSecondsToString(seconds));
         }
     }
-    
-    /**
-     * Calculates what the date and time fields should be to reflect the change
-     * made to the timerField in order to display a precise logging time.
-     */
-    private void changeTime()
-    {
-        if (timerField.validate())
-        {
-        if (dateStart.getValue()== null){dateStart.setValue(LocalDate.now());}
-        if (timeStart.getValue()==null){timeStart.setValue(LocalTime.now().withSecond(0));}
-        
-        int seconds = TimeConverter.convertStringToSeconds(timerField.getText());
-        
-        LocalDate localStart = dateStart.getValue();
-        LocalTime start = timeStart.getValue();
-        
-        LocalDateTime dateTime = LocalDateTime.of(localStart, start);
 
-        Instant instantEnd = dateTime.atZone(ZoneId.systemDefault()).toInstant().plusSeconds(seconds);
-        
-        dateEnd.setValue(instantEnd.atZone(ZoneId.systemDefault()).toLocalDate());
-        timeEnd.setValue(instantEnd.atZone(ZoneId.systemDefault()).toLocalTime());
+    /**
+     * Calculates what the date and time fields should be to reflect the change made to the timerField in order to display a precise logging time.
+     */
+    private void changeTime() {
+        if (timerField.validate()) {
+            if (dateStart.getValue() == null) {
+                dateStart.setValue(LocalDate.now());
+            }
+            if (timeStart.getValue() == null) {
+                timeStart.setValue(LocalTime.now().withSecond(0));
+            }
+            
+            int seconds = TimeConverter.convertStringToSeconds(timerField.getText());
+            
+            LocalDate localStart = dateStart.getValue();
+            LocalTime start = timeStart.getValue();
+            
+            LocalDateTime dateTime = LocalDateTime.of(localStart, start);
+            
+            Instant instantEnd = dateTime.atZone(ZoneId.systemDefault()).toInstant().plusSeconds(seconds);
+            
+            dateEnd.setValue(instantEnd.atZone(ZoneId.systemDefault()).toLocalDate());
+            timeEnd.setValue(instantEnd.atZone(ZoneId.systemDefault()).toLocalTime());
         }
     }
 
     /**
      * Adds a on close request to the stage which will cancel the timer if the stage is closed without disabling the timer. This insures that the timer does not run as a thread in the background when the application is closed.
      */
-    private void setupCloseRequest() {
-
+    public void setupCloseRequest() {
+        
         Stage appStage = (Stage) taskList.getScene().getWindow();
         if (appStage.getOnCloseRequest() == null) {
             appStage.setOnCloseRequest((e) -> {
+                executor.shutdownNow();
                 System.out.println("Closing thread");
                 if (timer.isEnabled()) {
                     timer.stopTimer();
@@ -607,6 +627,58 @@ public class MainUserViewController implements Initializable {
                 }
             });
         }
+    }
+
+    /**
+     * Creates a new thread that automatically updates the view every 15 seconds in case a change should happen.
+     *
+     * @return The thread to be executed.
+     */
+    private Thread update() {
+        
+        Thread thread = new Thread(() -> {
+            
+            try {
+                TimeUnit.SECONDS.sleep(1);
+                setupCloseRequest();
+                while (taskList.getScene().getWindow() != null) {
+                    
+                    TimeUnit.SECONDS.sleep(15);
+                    
+                    ObservableList<Project> projects;
+                    if (loggedUser.getRole() == Roles.ADMIN) {
+                        projects = projectModel.loadAllActiveProjects();
+                    } else {
+                        projects = projectModel.loadAllEmployeeProjects(loggedUser.getId());
+                    }
+                    Project project = projectComboBox.getValue();
+                    Task task = tasks.getValue();
+                    Platform.runLater(() -> {
+                        projectComboBox.setItems(projects);
+                    });
+                    
+                    updateView().start();
+                    
+                    Platform.runLater(() -> {
+                        if (projectComboBox.getItems().contains(project)) {
+                            projectComboBox.getSelectionModel().select(project);
+                        } else {
+                            projectComboBox.getSelectionModel().select(0);
+                        }
+                        if (tasks.getItems().contains(task)) {
+                            tasks.getSelectionModel().select(task);
+                        }
+                    });
+                }
+            } catch (SQLException ex) {
+                JFXAlert.openError(stackPane, "Error updating view");
+            } catch (InterruptedException ex) {
+                System.out.println("Update thread cancelled");
+            } finally {
+                timer.stopTimer();;
+            }
+        });
+        return thread;
     }
     
 }

@@ -25,7 +25,7 @@
    <children>
       <TableView fx:id="taskList" layoutX="60.0" layoutY="172.0" onMouseClicked="#showTime" prefHeight="509.0" prefWidth="409.0" stylesheets="@../styles/MainUserViewCSS.css">
         <columns>
-          <TableColumn fx:id="nameColumn" prefWidth="294.0" text="Task">
+          <TableColumn fx:id="nameColumn" prefWidth="283.0" text="Task">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -33,7 +33,7 @@
                      </image>
                   </ImageView>
                </graphic></TableColumn>
-          <TableColumn fx:id="timeColumn" prefWidth="114.0" text="Time">
+          <TableColumn fx:id="timeColumn" prefWidth="125.0" text="Time">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -174,7 +174,7 @@
       </GridPane>
       <TableView fx:id="taskTimerList" layoutX="522.0" layoutY="172.0" onMouseClicked="#openTaskTime" prefHeight="509.0" prefWidth="409.0" stylesheets="@../styles/MainUserViewCSS.css">
          <columns>
-            <TableColumn fx:id="durationColumn" prefWidth="144.0" text="Duration">
+            <TableColumn fx:id="durationColumn" prefWidth="114.0" text="Duration">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -182,7 +182,7 @@
                      </image>
                   </ImageView>
                </graphic></TableColumn>
-            <TableColumn fx:id="startColumn" prefWidth="125.0" sortable="false" text="Start time">
+            <TableColumn fx:id="startColumn" prefWidth="119.0" sortable="false" text="Start time">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -190,7 +190,7 @@
                      </image>
                   </ImageView>
                </graphic></TableColumn>
-            <TableColumn fx:id="endColumn" prefWidth="139.0" sortable="false" text="End time">
+            <TableColumn fx:id="endColumn" prefWidth="115.0" sortable="false" text="End time">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -198,6 +198,7 @@
                      </image>
                   </ImageView>
                </graphic></TableColumn>
+            <TableColumn fx:id="billableColumn" prefWidth="59.0" text="Billable" />
          </columns>
       </TableView>
       <JFXButton fx:id="cancelTimer" layoutX="841.0" layoutY="130.0" onAction="#cancelTime" prefHeight="17.0" prefWidth="49.0" stylesheets="@../styles/MainUserViewCSS.css" text="Cancel" textFill="WHITE" visible="false">

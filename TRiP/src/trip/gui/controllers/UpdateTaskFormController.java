@@ -42,8 +42,6 @@ public class UpdateTaskFormController implements Initializable {
     private StackPane stackPane;
     @FXML
     private StackPane stackPaneDelete;
-    @FXML
-    private JFXCheckBox billable;
 
     /**
      * Initializes the controller class.
@@ -69,7 +67,6 @@ public class UpdateTaskFormController implements Initializable {
         this.updateThread = updateThread;
         this.task = task;
         taskNameField.setText(task.getName());
-        billable.setSelected(task.isBillable());
     }
 
     /**
@@ -81,7 +78,6 @@ public class UpdateTaskFormController implements Initializable {
     private void updateTask(ActionEvent event) {
         try {
             task.setName(taskNameField.getText());
-            task.setBillable(billable.isSelected());
             taskModel.updateTask(task);
             updateThread.start();
             closeStage();

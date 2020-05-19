@@ -311,12 +311,13 @@ public class DalFacade implements IDalFacade {
      * @param projectID The ID of the project that the count is based upon.
      * @param startDate The startdate of the timespan.
      * @param endDate The enddate of the timespan.
+     * @param isBillable Boolean value representing whether or not the time is billable.
      * @return An int value representing the total amount of time having been used in seconds.
      * @throws java.sql.SQLException
      */
     @Override
-    public int loadAllBillableProjectTimeBetweenDates(int projectID, LocalDate startDate, LocalDate endDate) throws SQLException{
-        return projectManager.loadAllBillableProjectTimeBetweenDates(projectID, startDate, endDate);
+    public int loadAllProjectTimeBetweenDates(int projectID, LocalDate startDate, LocalDate endDate, boolean isBillable) throws SQLException{
+        return projectManager.loadAllProjectTimeBetweenDates(projectID, startDate, endDate, isBillable);
     }
 
     /**
@@ -326,12 +327,13 @@ public class DalFacade implements IDalFacade {
      * @param projectID The ID of the project that the count is based upon.
      * @param startDate The startdate of the timespan.
      * @param endDate The enddate of the timespan.
+     * @param isBillable Boolean value representing whether or not the time is billable.
      * @return An int value representing the total amount of time the specified employe have been working on the project in seconds.
      * @throws java.sql.SQLException
      */
     @Override
-    public int loadAllBillableEmployeeProjectTimeBetweenDates(int employeeID, int projectID, LocalDate startDate, LocalDate endDate) throws SQLException{
-        return projectManager.loadAllBillableEmployeeProjectTimeBetweenDates(employeeID, projectID, startDate, endDate);
+    public int loadAllEmployeeProjectTimeBetweenDates(int employeeID, int projectID, LocalDate startDate, LocalDate endDate, boolean isBillable) throws SQLException{
+        return projectManager.loadAllEmployeeProjectTimeBetweenDates(employeeID, projectID, startDate, endDate, isBillable);
     }
 
     /**
