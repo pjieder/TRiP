@@ -154,6 +154,6 @@
             <Font size="15.0" />
          </font></JFXButton>
       <StackPane fx:id="stackPane" layoutX="348.0" layoutY="24.0" prefHeight="159.0" prefWidth="296.0" visible="false" />
-      <ComboBox fx:id="dateChoiseBox" layoutX="71.0" layoutY="12.0" onAction="#validate" prefWidth="150.0" />
+      <ComboBox fx:id="dateChoiseBox" layoutX="71.0" layoutY="14.0" onAction="#validate" prefHeight="31.0" prefWidth="204.0" stylesheets="@../styles/StatisticsCSS.css" />
    </children>
 </AnchorPane>
