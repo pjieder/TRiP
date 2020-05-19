@@ -67,7 +67,7 @@ public class MainUserViewController implements Initializable {
     
     private Timer timer = new Timer();
     private Employee loggedUser = LoginController.loggedUser;
-    private ExecutorService executor = Executors.newSingleThreadExecutor();
+    private static ExecutorService executor = Executors.newSingleThreadExecutor();
     
     @FXML
     private ComboBox<Project> projectComboBox;
@@ -617,17 +617,16 @@ public class MainUserViewController implements Initializable {
     public void setupCloseRequest() {
         
         Stage appStage = (Stage) taskList.getScene().getWindow();
-        if (appStage.getOnCloseRequest() == null) {
+        
             appStage.setOnCloseRequest((e) -> {
                 executor.shutdownNow();
-                executor = null;
                 System.out.println("Closing thread");
                 if (timer.isEnabled()) {
                     timer.stopTimer();
                     System.out.println("Closed");
                 }
             });
-        }
+        
     }
     
     /**
@@ -644,7 +643,8 @@ public class MainUserViewController implements Initializable {
                 setupCloseRequest();
                 while (taskList.getScene().getWindow() != null) {
                     
-                    TimeUnit.SECONDS.sleep(15);
+                    TimeUnit.SECONDS.sleep(5);
+                    System.out.println("Update");
                     ObservableList<Project> projects;
                     if (loggedUser.getRole() == Roles.ADMIN) {
                         projects = projectModel.loadAllActiveProjects();
