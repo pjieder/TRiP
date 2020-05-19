@@ -42,8 +42,8 @@ public class TaskDBDAO implements ITaskDBDAO {
         Task task = new Task(taskName);
         try {
             con = DBSettings.getInstance().getConnection();
-            String sql = "INSERT INTO Task (projID, employeeID, name) "
-                    + "VALUES (?,?,?,?);";
+            String sql = "INSERT INTO Task (projID, employeeID, name)"
+                    + "VALUES (?,?,?);";
             PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             stmt.setInt(1, projectId);
