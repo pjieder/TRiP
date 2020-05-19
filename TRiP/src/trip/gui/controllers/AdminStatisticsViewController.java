@@ -12,14 +12,15 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -55,6 +56,7 @@ public class AdminStatisticsViewController implements Initializable {
     private EmployeeModel employeeModel = new EmployeeModel();
     private TaskModel taskModel = new TaskModel();
     private DecimalFormat df = new DecimalFormat("0.0#");
+    private NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(new Locale("da", "DK"));
 
     @FXML
     private LineChart<String, Double> lineChart;
@@ -149,7 +151,8 @@ public class AdminStatisticsViewController implements Initializable {
 
             Task task = data.getValue();
             double price = (((double) task.getTotalTime() - (double) task.getUnbillabletime()) / 3600) * projectComboBox.getValue().getRate();
-            return new SimpleStringProperty(df.format(price) + "DKK");
+            return new SimpleStringProperty(currencyFormatter.format(price));
+            
         });
 
         try {
@@ -396,7 +399,7 @@ public class AdminStatisticsViewController implements Initializable {
             }
             totalBillableTimeString = TimeConverter.convertSecondsToString(totalBillableTime);
             totalUnbillableTimeString = TimeConverter.convertSecondsToString(totalUnbillableTime);
-            totalPriceString = df.format(totalPrice) + " DKK";
+            totalPriceString = currencyFormatter.format(totalPrice);
 
             Platform.runLater(() -> {
                 totalBillableTimeLabelLine.setText(totalBillableTimeString);
@@ -441,7 +444,7 @@ public class AdminStatisticsViewController implements Initializable {
 
             totalBillableTimeString = TimeConverter.convertSecondsToString(totalBillableTime);
             totalUnbillableTimeString = TimeConverter.convertSecondsToString(totalUnbillableTime);
-            totalPriceString = df.format(totalPrice) + " DKK";
+            totalPriceString = currencyFormatter.format(totalPrice);
 
             Platform.runLater(() -> {
                 totalBillableTimeLabelBar.setText(totalBillableTimeString);
@@ -480,7 +483,7 @@ public class AdminStatisticsViewController implements Initializable {
         totalPrice = (totalBillableTime > 0) ? ((double) totalBillableTime / 3600) * project.getRate() : 0;
         totalBillableTimeString = TimeConverter.convertSecondsToString(totalBillableTime);
         totalUnbillableTimeString = TimeConverter.convertSecondsToString(totalUnbillableTime);
-        totalPriceString = df.format(totalPrice) + " DKK";
+        totalPriceString = currencyFormatter.format(totalPrice);
         
         Platform.runLater(() -> {
             totalBillableTimeLabelTask.setText(totalBillableTimeString);

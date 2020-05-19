@@ -642,7 +642,7 @@ public class MainUserViewController implements Initializable {
                 setupCloseRequest();
                 while (taskList.getScene().getWindow() != null) {
                     
-                    TimeUnit.SECONDS.sleep(15);
+                    TimeUnit.SECONDS.sleep(5);
                     System.out.println("Updating");
 
                     ObservableList<Project> projects;
@@ -665,14 +665,13 @@ public class MainUserViewController implements Initializable {
                             projectComboBox.getSelectionModel().select(0);
                         }
                     });
-
                 }
-                timer.stopTimer();
             } catch (SQLException ex) {
                 JFXAlert.openError(stackPane, "Error updating view");
             } catch (InterruptedException ex) {
                 System.out.println("Update thread cancelled");
             }
+            finally{timer.stopTimer();;}
         });
         return thread;
     }

@@ -35,7 +35,6 @@ public class Timer implements Runnable{
         try {
             while (true) {
                 TimeUnit.SECONDS.sleep(1);
-                System.out.println("count");
                 time++;
 
                 Platform.runLater(() -> {
