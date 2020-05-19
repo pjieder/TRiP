@@ -20,8 +20,12 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -63,6 +67,7 @@ public class MainUserViewController implements Initializable {
 
     private Timer timer = new Timer();
     private Employee loggedUser = LoginController.loggedUser;
+    private ExecutorService executor = Executors.newSingleThreadExecutor();
 
     @FXML
     private ComboBox<Project> projectComboBox;
@@ -149,12 +154,15 @@ public class MainUserViewController implements Initializable {
             CountedTime countedTime = data.getValue();
             return new SimpleStringProperty(TimeConverter.convertDateToString(countedTime.getStopTime()));
         });
-        
+
         billableColumn.setCellValueFactory((data) -> {
             CountedTime countedTime = data.getValue();
             String isBillable;
-            if (countedTime.isBillable()) {isBillable = "✓";} 
-            else {isBillable = "✕";}
+            if (countedTime.isBillable()) {
+                isBillable = "✓";
+            } else {
+                isBillable = "✕";
+            }
             return new SimpleStringProperty(isBillable);
         });
 
@@ -188,6 +196,7 @@ public class MainUserViewController implements Initializable {
         startButton.setTooltip(tooltipButton2);
         tooltipButton2.setStyle("-fx-font-size: 15px; -fx-background-color: rgb(154, 128, 254, .8);");
 
+        executor.submit(update());
     }
 
     /**
@@ -249,10 +258,12 @@ public class MainUserViewController implements Initializable {
     @FXML
     private void switchProject(ActionEvent event) {
         try {
-            taskList.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
-            tasks.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
-            tasks.getSelectionModel().select(0);
-            decideTimerEnabled();
+            if (projectComboBox.getValue() != null) {
+                taskList.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
+                tasks.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
+                tasks.getSelectionModel().select(0);
+                decideTimerEnabled();
+            }
         } catch (SQLException ex) {
             JFXAlert.openError(stackPane, "Error while attempting to switch Project.");
         }
@@ -603,11 +614,12 @@ public class MainUserViewController implements Initializable {
     /**
      * Adds a on close request to the stage which will cancel the timer if the stage is closed without disabling the timer. This insures that the timer does not run as a thread in the background when the application is closed.
      */
-    private void setupCloseRequest() {
+    public void setupCloseRequest() {
 
         Stage appStage = (Stage) taskList.getScene().getWindow();
         if (appStage.getOnCloseRequest() == null) {
             appStage.setOnCloseRequest((e) -> {
+                executor.shutdownNow();
                 System.out.println("Closing thread");
                 if (timer.isEnabled()) {
                     timer.stopTimer();
@@ -617,4 +629,53 @@ public class MainUserViewController implements Initializable {
         }
     }
 
+    /**
+     * Creates a new thread that automatically updates the view every 15 seconds in case a change should happen.
+     * @return The thread to be executed.
+     */
+    private Thread update() {
+
+        Thread thread = new Thread(() -> {
+
+            try {
+                TimeUnit.SECONDS.sleep(1);
+                setupCloseRequest();
+                while (taskList.getScene().getWindow() != null) {
+                    
+                    TimeUnit.SECONDS.sleep(15);
+                    System.out.println("Updating");
+
+                    ObservableList<Project> projects;
+                    if (loggedUser.getRole() == Roles.ADMIN) {
+                        projects = projectModel.loadAllActiveProjects();
+                    } else {
+                        projects = projectModel.loadAllEmployeeProjects(loggedUser.getId());
+                    }
+                        Project project = projectComboBox.getValue();
+                    Platform.runLater(() -> {
+                        projectComboBox.setItems(projects);
+                    });
+
+                    updateView().start();
+
+                    Platform.runLater(() -> {
+                        if (projectComboBox.getItems().contains(project)) {
+                            projectComboBox.getSelectionModel().select(project);
+                        } else {
+                            projectComboBox.getSelectionModel().select(0);
+                        }
+                    });
+
+                }
+                timer.stopTimer();
+            } catch (SQLException ex) {
+                JFXAlert.openError(stackPane, "Error updating view");
+            } catch (InterruptedException ex) {
+                System.out.println("Update thread cancelled");
+            }
+        });
+        return thread;
+    }
+    
 }
+
