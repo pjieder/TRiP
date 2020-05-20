@@ -43,7 +43,7 @@
                </graphic></TableColumn>
         </columns>
       </TableView>
-      <GridPane fx:id="startTime" layoutX="60.0" layoutY="77.0" prefHeight="44.0" prefWidth="875.0">
+      <GridPane fx:id="startTime" layoutX="60.0" layoutY="60.0" prefHeight="44.0" prefWidth="875.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="426.0" minWidth="10.0" prefWidth="343.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="276.0" minWidth="10.0" prefWidth="19.0" />
@@ -109,7 +109,7 @@
             </Button>
          </children>
       </GridPane>
-      <GridPane fx:id="addTiimerPane" layoutX="60.0" layoutY="77.0" prefHeight="44.0" prefWidth="875.0" visible="false">
+      <GridPane fx:id="addTiimerPane" layoutX="60.0" layoutY="60.0" prefHeight="44.0" prefWidth="875.0" visible="false">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="426.0" minWidth="10.0" prefWidth="177.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="426.0" minWidth="0.0" prefWidth="9.0" />
@@ -201,7 +201,7 @@
             <TableColumn fx:id="billableColumn" prefWidth="92.0" text="Billable" />
          </columns>
       </TableView>
-      <JFXButton fx:id="cancelTimer" layoutX="841.0" layoutY="130.0" onAction="#cancelTime" prefHeight="17.0" prefWidth="49.0" stylesheets="@../styles/MainUserViewCSS.css" text="Cancel" textFill="WHITE" visible="false">
+      <JFXButton fx:id="cancelTimer" layoutX="837.0" layoutY="114.0" onAction="#cancelTime" prefHeight="17.0" prefWidth="49.0" stylesheets="@../styles/MainUserViewCSS.css" text="Cancel" textFill="WHITE" visible="false">
          <font>
             <Font size="10.0" />
          </font>
