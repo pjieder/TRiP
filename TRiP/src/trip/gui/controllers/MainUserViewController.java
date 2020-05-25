@@ -33,12 +33,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -196,6 +199,64 @@ public class MainUserViewController implements Initializable {
         startButton.setTooltip(tooltipButton2);
         tooltipButton2.setStyle("-fx-font-size: 15px; -fx-background-color: rgb(154, 128, 254, .8);");
         
+        ContextMenu taskContext = new ContextMenu();
+        ContextMenu timeContext = new ContextMenu();
+        
+        MenuItem editTask = new MenuItem();
+        editTask.setText("Edit task");
+        editTask.setOnAction((event) -> {
+            editTask();
+        });
+        
+        MenuItem deleteTask = new MenuItem();
+        deleteTask.setText("Delete task");
+        deleteTask.setOnAction((event) -> {
+            
+            Thread deleteThread = new Thread(() -> {
+                try{
+                taskModel.deleteTask(taskList.getSelectionModel().getSelectedItem());
+                updateView().start();
+                }catch(SQLException ex){JFXAlert.openError(stackPane, "Error deleting task.");}
+            });
+            JFXAlert.openConfirm(stackPane, "Are you sure you want to delete this task? \nThis will remove all associated time for the task.", deleteThread);
+        });
+        
+        MenuItem editCountedTime = new MenuItem();
+        editCountedTime.setText("Edit time");
+        editCountedTime.setOnAction((event)->{openTaskTime();});
+        
+        MenuItem deleteCountedTime = new MenuItem();
+        deleteCountedTime.setText("Delete time");
+        deleteCountedTime.setOnAction((event)->{
+        
+        Thread deleteThread = new Thread(() -> {
+                try{
+                taskModel.deleteTimeForTask(taskTimerList.getSelectionModel().getSelectedItem());
+                updateView().start();
+                }catch(SQLException ex){JFXAlert.openError(stackPane, "Error deleting counted time.");}
+            });
+            JFXAlert.openConfirm(stackPane, "Are you sure you want to delete this counted time?", deleteThread);
+        });
+
+        taskContext.getItems().setAll(editTask, deleteTask);
+        timeContext.getItems().setAll(editCountedTime, deleteCountedTime);
+        taskList.setContextMenu(taskContext);
+        taskTimerList.setContextMenu(timeContext);
+        
+        taskContext.setOnShowing((event)->{
+        Platform.runLater(()->{
+            if (taskList.getSelectionModel().isEmpty()){taskContext.getItems().forEach((menuItem)->{menuItem.setDisable(true);});}
+            else{taskContext.getItems().forEach((menuItem)->{menuItem.setDisable(false);});}
+        });
+        });
+        
+        timeContext.setOnShowing((event)->{
+        Platform.runLater(()->{
+            if (taskTimerList.getSelectionModel().isEmpty()){timeContext.getItems().forEach((menuItem)->{menuItem.setDisable(true);});}
+            else{timeContext.getItems().forEach((menuItem)->{menuItem.setDisable(false);});}
+        });
+        });
+        
         executor.submit(update());
     }
 
@@ -273,7 +334,6 @@ public class MainUserViewController implements Initializable {
      * Displays the logged time for the task clicked on.
      *
      * @param event
-     * @throws IOException
      */
     @FXML
     private void showTime(MouseEvent event) {
@@ -285,29 +345,36 @@ public class MainUserViewController implements Initializable {
             decideAddTimeEnabled();
         }
         
-        if (event.getClickCount() > 1 & !taskList.getSelectionModel().isEmpty() & !event.isConsumed()) {
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(TRiP.class.getResource("views/UpdateTaskFormView.fxml"));
-                Scene scene = new Scene(fxmlLoader.load());
-                Stage stage = new Stage();
-                stage.setTitle("TRiP");
-                stage.getIcons().add(new Image(TRiP.class.getResourceAsStream("images/time.png")));
-                stage.setResizable(false);
-                UpdateTaskFormController controller = fxmlLoader.getController();
-                controller.setTask(updateView(), taskList.getSelectionModel().getSelectedItem());
-                stage.setScene(scene);
-                stage.show();
-            } catch (IOException ex) {
-                JFXAlert.openError(stackPane, "Error loading update form.");
-            }
+        if (event.getClickCount() > 1 && !taskList.getSelectionModel().isEmpty() && !event.isConsumed() && event.getButton() == MouseButton.PRIMARY) {
+            editTask();
+        }
+    }
+
+    /**
+     * If a task is selected the selected task will be opened in the UpdateTaskForm so that the user can change the saved data if changes needs to be made.
+     */
+    private void editTask() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(TRiP.class.getResource("views/UpdateTaskFormView.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+            stage.setTitle("TRiP");
+            stage.getIcons().add(new Image(TRiP.class.getResourceAsStream("images/time.png")));
+            stage.setResizable(false);
+            UpdateTaskFormController controller = fxmlLoader.getController();
+            controller.setTask(updateView(), taskList.getSelectionModel().getSelectedItem());
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException ex) {
+            JFXAlert.openError(stackPane, "Error loading update form.");
         }
     }
 
     /**
      * Adds a task to the selected project and displays it in the list of tasks.
      *
-     * @return The id of the newly inserted task.
+     * @return The newly inserted task.
      */
     private Task addTask() {
         try {
@@ -488,12 +555,20 @@ public class MainUserViewController implements Initializable {
      * Event handler for the taskTimerList. If a time is selected by double-clicking, the selected time will be opened in the UpdateTaskTimeForm so that the user can change the saved data if changes needs to be made.
      *
      * @param event
-     * @throws IOException
      */
     @FXML
     private void openTaskTime(MouseEvent event) {
-        if (event.getClickCount() > 1 & !taskTimerList.getSelectionModel().isEmpty() & !event.isConsumed()) {
-            try {
+        if (event.getClickCount() > 1 && !taskTimerList.getSelectionModel().isEmpty() && !event.isConsumed() && event.getButton() == MouseButton.PRIMARY) {
+          openTaskTime();
+        }
+    }
+
+    /**
+     * Opens the selected coutned time in the UpdateTaskTimeForm so that the user can change the saved data if changes needs to be made.
+     */
+    private void openTaskTime()
+    {
+      try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(TRiP.class.getResource("views/UpdateTasktimeFormView.fxml"));
                 Scene scene = new Scene(fxmlLoader.load());
@@ -508,9 +583,8 @@ public class MainUserViewController implements Initializable {
             } catch (IOException ex) {
                 JFXAlert.openError(stackPane, "Error opening update form.");
             }
-        }
     }
-
+    
     /**
      * Validates whether or not the add time button is enabled or disabled when a change happens.
      *
@@ -618,17 +692,17 @@ public class MainUserViewController implements Initializable {
         
         Stage appStage = (Stage) taskList.getScene().getWindow();
         
-            appStage.setOnCloseRequest((e) -> {
-                executor.shutdownNow();
-                System.out.println("Closing thread");
-                if (timer.isEnabled()) {
-                    timer.stopTimer();
-                    System.out.println("Closed");
-                }
-            });
+        appStage.setOnCloseRequest((e) -> {
+            executor.shutdownNow();
+            System.out.println("Closing thread");
+            if (timer.isEnabled()) {
+                timer.stopTimer();
+                System.out.println("Closed");
+            }
+        });
         
     }
-    
+
     /**
      * Creates a new thread that automatically updates the view every 15 seconds in case a change should happen.
      *
@@ -644,6 +718,7 @@ public class MainUserViewController implements Initializable {
                 while (taskList.getScene().getWindow() != null) {
                     
                     TimeUnit.SECONDS.sleep(15);
+                    System.out.println("Update");
                     ObservableList<Project> projects;
                     if (loggedUser.getRole() == Roles.ADMIN) {
                         projects = projectModel.loadAllActiveProjects();
