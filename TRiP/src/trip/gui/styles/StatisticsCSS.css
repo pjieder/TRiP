@@ -123,13 +123,12 @@ and open the template in the editor.
 }
 
 .table-view .table-cell{
-    -fx-text-fill: black;
     -fx-alignment: center;
     -fx-border-color: #f9f9f9;
 }
 
 .table-row-cell:selected {
-    -fx-background-color: #f1f1f1;
+    -fx-background-color: #9a80fe;
     -fx-background-insets: 0;
     -fx-background-radius: 1;
     -fx-text-fill: #ffffff;
