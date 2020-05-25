@@ -351,6 +351,23 @@ public class MainUserViewController implements Initializable {
     }
 
     /**
+     * Adds a task to the selected project and displays it in the list of tasks.
+     *
+     * @return The newly inserted task.
+     */
+    private Task addTask() {
+        try {
+            String taskName = newTaskTitle.getText().trim();
+            Task task = taskModel.addTask(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId(), taskName);
+            updateView().start();
+            return task;
+        } catch (SQLException ex) {
+            JFXAlert.openError(stackPane, "Error while attempting to add Task.");
+        }
+        return null;
+    }
+
+    /**
      * If a task is selected the selected task will be opened in the UpdateTaskForm so that the user can change the saved data if changes needs to be made.
      */
     private void editTask() {
@@ -370,24 +387,7 @@ public class MainUserViewController implements Initializable {
             JFXAlert.openError(stackPane, "Error loading update form.");
         }
     }
-
-    /**
-     * Adds a task to the selected project and displays it in the list of tasks.
-     *
-     * @return The newly inserted task.
-     */
-    private Task addTask() {
-        try {
-            String taskName = newTaskTitle.getText().trim();
-            Task task = taskModel.addTask(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId(), taskName);
-            updateView().start();
-            return task;
-        } catch (SQLException ex) {
-            JFXAlert.openError(stackPane, "Error while attempting to add Task.");
-        }
-        return null;
-    }
-
+    
     /**
      * Starts the timer for the selected or just created task.
      *
