@@ -9,10 +9,10 @@ and open the template in the editor.
 */
 
 * {
-    -fx-my-menu-color: #263238;                  /* Change according to your needs */
-    -fx-my-menu-color-highlighted: #455a64;      /* Change according to your needs */
-    -fx-my-menu-font-color: #FFFFFF;             /* Change according to your needs */
-    -fx-my-menu-font-color-highlighted: #FFFFFF; /* Change according to your needs */
+    -fx-my-menu-color: #ffffff;                  /* Change according to your needs */
+    -fx-my-menu-color-highlighted: #9a80fe;      /* Change according to your needs */
+    -fx-my-menu-font-color: black;             /* Change according to your needs */
+    -fx-my-menu-font-color-highlighted: white; /* Change according to your needs */
 }
 
 /* MENU BAR + Top-level MENU BUTTONS */
@@ -54,26 +54,32 @@ and open the template in the editor.
 /*** The item itself (not hovered / focused) ***/    
 .menu-item {
     -fx-background-color: -fx-my-menu-color; 
+    -fx-font-size: 14px;
 }
 
 /*** The item's label (not hovered / focused) ***/   
 .menu-item .label {
     -fx-text-fill: -fx-my-menu-font-color;
+    -fx-font-size: 14px;
 }
 
 /*** The item's label (disabled) ***/   
 .menu-item .label:disabled {
     -fx-opacity: 1.0;
+    -fx-font-size: 14px;
 }    
 
 /*** The item itself (hovered / focused) ***/    
 .menu-item:focused, .menu-item:hovered {
     -fx-background-color: -fx-my-menu-color-highlighted; 
+    -fx-font-size: 14px;
+    
 }
 
 /*** The item's label (hovered / focused) ***/  
 .menu-item:focused .label, .menu-item:hovered .label {
     -fx-text-fill: -fx-my-menu-font-color-highlighted;
+    -fx-font-size: 14px;
 }
 
 /* CONTEXT MENU */
