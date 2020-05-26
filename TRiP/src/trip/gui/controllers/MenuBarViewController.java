@@ -55,7 +55,7 @@ public class MenuBarViewController implements Initializable {
     /**
      * If an admin logs in, the pane view within the MenuBarView is set to MainAdminView.
      * @param stage The stage of the login.
-     * @param scene The scene of the login display.
+     * @param scene The scene of the loaded MenuBarView.
      */
     public void setAdmin(Stage stage, Scene scene){
         Thread thread = new Thread(() -> {
@@ -84,7 +84,7 @@ public class MenuBarViewController implements Initializable {
     /**
      * If a user logs in, the pane view within the MenuBarView is set to MainUserView
      * @param stage The stage of the login.
-     * @param scene The scene of the login display.
+     * @param scene The scene of the loaded MenuBarView.
      */
     public void setUser(Stage stage, Scene scene){
         Thread thread = new Thread(() -> {
