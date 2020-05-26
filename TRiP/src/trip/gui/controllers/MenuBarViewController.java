@@ -49,6 +49,7 @@ public class MenuBarViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        Platform.runLater(()->{AP.getScene().getStylesheets().add(TRiP.class.getResource("styles/ContextCSS.css").toExternalForm());});
     }
 
     /**
