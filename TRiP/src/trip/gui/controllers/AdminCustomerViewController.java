@@ -18,6 +18,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -77,6 +79,31 @@ public class AdminCustomerViewController implements Initializable {
             Customer customer = data.getValue();
             return new SimpleStringProperty(customer.getEmail());
         });
+        
+        ContextMenu customerContext = new ContextMenu();
+        
+        MenuItem createCustomer = new MenuItem();
+        createCustomer.setText("Create customer");
+        createCustomer.setOnAction((event)->{createCustomer(event);});
+        
+        MenuItem editCustomer = new MenuItem();
+        editCustomer.setText("Edit customer");
+        editCustomer.setOnAction((event)->{editCustomer(event);});
+        
+        MenuItem deleteCustomer = new MenuItem();
+        deleteCustomer.setText("Delete user");
+        deleteCustomer.setOnAction((event)->{deleteCustomer(event);});
+        
+        customerContext.getItems().setAll(createCustomer, editCustomer, deleteCustomer);
+        customerTable.setContextMenu(customerContext);
+        
+        customerContext.setOnShowing((event)->{
+        Platform.runLater(()->{
+            if (customerTable.getSelectionModel().isEmpty()){customerContext.getItems().forEach((menuItem)->{menuItem.setDisable(true);}); customerContext.getItems().get(0).setDisable(false);}
+            else{customerContext.getItems().forEach((menuItem)->{menuItem.setDisable(false);});}
+        });
+        });
+        
     }
 
     /**
@@ -95,7 +122,6 @@ public class AdminCustomerViewController implements Initializable {
      * Opens the AddEditCustomer FXML view as a new stage in order to create customers.
      *
      * @param event
-     * @throws IOException
      */
     @FXML
     private void createCustomer(ActionEvent event) {
@@ -120,7 +146,6 @@ public class AdminCustomerViewController implements Initializable {
      * Opens the AddEditCustomer FXML view as a new stage and inserts the data already stored about the selected customer.
      *
      * @param event
-     * @throws IOException
      */
     @FXML
     private void editCustomer(ActionEvent event) {

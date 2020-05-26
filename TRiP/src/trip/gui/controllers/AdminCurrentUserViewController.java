@@ -20,7 +20,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -77,6 +79,42 @@ public class AdminCurrentUserViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        ContextMenu userContext = new ContextMenu();
+        
+        MenuItem createUser = new MenuItem();
+        createUser.setText("Create user");
+        createUser.setOnAction((event)->{openAddUser(event);});
+        
+        MenuItem editUser = new MenuItem();
+        editUser.setText("Edit user");
+        editUser.setOnAction((event)->{openUpdateUser(event);});
+        
+        MenuItem inactiveUser = new MenuItem();
+        inactiveUser.setText("Set user to inactive");
+        inactiveUser.setOnAction((event)->{makeUserInactive(event);});
+        
+        userContext.getItems().setAll(createUser, editUser, inactiveUser);
+        
+        MenuItem activeUser = new MenuItem();
+        activeUser.setText("Set user to active");
+        activeUser.setOnAction((event)->{makeUserActive(event);});
+        
+        MenuItem deleteUser = new MenuItem();
+        deleteUser.setText("Delete user");
+        deleteUser.setOnAction((event)->{deleteUser(event);});
+        
+        userList.setContextMenu(userContext);
+        
+        userContext.setOnShowing((event)->{
+        Platform.runLater(()->{
+            if (isLastOnActive){userContext.getItems().setAll(createUser, editUser, inactiveUser);}
+            else{userContext.getItems().setAll(createUser,editUser,activeUser,deleteUser);}
+            if (userList.getSelectionModel().isEmpty()){userContext.getItems().forEach((menuItem)->{menuItem.setDisable(true);}); userContext.getItems().get(0).setDisable(false);}
+            else{userContext.getItems().forEach((menuItem)->{menuItem.setDisable(false);});}
+        });
+        });
+        
         loadUsers();
     }
 
@@ -99,7 +137,6 @@ public class AdminCurrentUserViewController implements Initializable {
      * Opens the RegisterForm FXML view as a new stage in order to create users.
      *
      * @param event
-     * @throws IOException
      */
     @FXML
     private void openAddUser(ActionEvent event) {
@@ -126,7 +163,6 @@ public class AdminCurrentUserViewController implements Initializable {
      * Opens the RegisterForm FXML view as a new stage and inserts the data already stored about the employee
      *
      * @param event
-     * @throws IOException
      */
     @FXML
     private void openUpdateUser(ActionEvent event) {

@@ -19,19 +19,21 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import trip.be.Project;
-import trip.gui.models.EmployeeModel;
 import trip.gui.TRiP;
 import trip.gui.models.ProjectModel;
 import trip.utilities.JFXAlert;
@@ -119,6 +121,45 @@ public class MainAdminViewController implements Initializable {
             projectTable.getSelectionModel().clearSelection();
         });
 
+        ContextMenu activeView = new ContextMenu();
+        
+        MenuItem openProject = new MenuItem();
+        openProject.setText("Open project");
+        openProject.setOnAction((event)->{openProject();});
+        
+        MenuItem addProject = new MenuItem();
+        addProject.setText("Add project");
+        addProject.setOnAction((event)->{createProject(event);});
+        
+        MenuItem editProject = new MenuItem();
+        editProject.setText("Edit Project");
+        editProject.setOnAction((event)->{editProject(event);});
+        
+        MenuItem inactiveProject = new MenuItem();
+        inactiveProject.setText("Set project to inactive");
+        inactiveProject.setOnAction((event)->{makeProjectInactive(event);});
+        
+        activeView.getItems().setAll(openProject, addProject, editProject, inactiveProject);
+        
+        MenuItem activeProject = new MenuItem();
+        activeProject.setText("Set project to active");
+        activeProject.setOnAction((event)->{makeProjectActive(event);});
+        
+        MenuItem deleteProject = new MenuItem();
+        deleteProject.setText("Delete project");
+        deleteProject.setOnAction((event)->{deleteProject(event);});
+        
+        projectTable.setContextMenu(activeView);
+        
+        activeView.setOnShowing((event)->{
+        Platform.runLater(()->{
+            if (isLastOnActive){activeView.getItems().setAll(openProject, addProject, editProject, inactiveProject);}
+            else{activeView.getItems().setAll(openProject,addProject,editProject,activeProject,deleteProject);}
+            if (projectTable.getSelectionModel().isEmpty()){activeView.getItems().forEach((menuItem)->{menuItem.setDisable(true);}); activeView.getItems().get(1).setDisable(false);}
+            else{activeView.getItems().forEach((menuItem)->{menuItem.setDisable(false);});}
+        });
+        });
+
         loadAllProjects();
     }
 
@@ -137,15 +178,22 @@ public class MainAdminViewController implements Initializable {
     }
 
     /**
-     * Opens the MainUserView FXML with the selected project already loaded and ready for time tracking.
-     *
-     * @param event
-     * @throws IOException
-     */
+    * Opens the MainUserView FXML with the selected project already loaded and ready for time tracking.
+    * @param event 
+    */
     @FXML
     private void openProject(MouseEvent event) {
 
-        if (event.getClickCount() > 1 & !projectTable.getSelectionModel().isEmpty() & !event.isConsumed()) {
+        if (event.getClickCount() > 1 && !projectTable.getSelectionModel().isEmpty() && !event.isConsumed() && event.getButton() == MouseButton.PRIMARY) {
+            openProject();
+        }
+    }
+    
+    /**
+     * Opens the MainUserView FXML with the selected project already loaded and ready for time tracking.
+     */
+    @FXML
+    private void openProject() {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(TRiP.class.getResource("views/MainUserView.fxml"));
@@ -159,14 +207,12 @@ public class MainAdminViewController implements Initializable {
             } catch (IOException ex) {
                 JFXAlert.openError(stackPane, "Error opening timer window.");
             }
-        }
     }
 
     /**
      * Opens the AddEditProject FXML view as a new stage in order to create projects.
      *
      * @param event
-     * @throws IOException
      */
     @FXML
     private void createProject(ActionEvent event) {
@@ -191,7 +237,6 @@ public class MainAdminViewController implements Initializable {
      * Opens the AddEditProject FXML view as a new stage and inserts the data already stored about the selected project.
      *
      * @param event
-     * @throws IOException
      */
     @FXML
     private void editProject(ActionEvent event) {

@@ -76,9 +76,6 @@ public class LoginController implements Initializable {
      * Event handler for the login button. Starts the thread returned by the loadPerson method.
      *
      * @param event
-     * @throws IOException
-     * @throws InterruptedException
-     * @throws ExecutionException
      */
     @FXML
     private void login(MouseEvent event){

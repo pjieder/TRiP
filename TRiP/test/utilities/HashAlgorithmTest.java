@@ -65,13 +65,10 @@ public class HashAlgorithmTest {
         int different = 0;
 
         String salt = HashAlgorithm.generateSalt();
-        String password = "1234";
-
-        String expectedPassword = HashAlgorithm.generateHash(password, salt);
 
         for (int i = 0; i < 100000; i++)
         {
-            if (expectedPassword.equals(HashAlgorithm.generateHash(password, HashAlgorithm.generateSalt())))
+            if (salt.equals(HashAlgorithm.generateSalt()))
             {
                 identical++;
             } else

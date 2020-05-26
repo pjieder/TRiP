@@ -245,7 +245,6 @@ public class AdminStatisticsViewController implements Initializable {
     /**
      * Validates whether or not the calculateBar-, calculateLine- or calculateTask button is enabled or disabled when a change happens.
      *
-     * @param event
      */
     private void validate() {
 
