@@ -104,8 +104,6 @@ public class TimeConverterTest {
         revertedList.add(date2);
         revertedList.add(date1);
         
-        //TODO
-        
         int expResultSize = 5;
         List<LocalDate> dates = TimeConverter.getDaysBetweenDates(date1, date5);
         List<LocalDate> revertedDates = TimeConverter.getDaysBetweenDates(date5, date1);
