@@ -1,0 +1,15 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 26. maj 2020, 13.20.45
+    Author     : Peter
+*/
+
+
+
+.menu-item:focused .label {
+  -fx-text-fill: green;
+}

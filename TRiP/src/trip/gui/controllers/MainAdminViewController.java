@@ -6,6 +6,7 @@
 package trip.gui.controllers;
 
 import com.jfoenix.controls.JFXButton;
+import static java.awt.Color.red;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -86,6 +87,8 @@ public class MainAdminViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        
 
         projectColumn.setCellValueFactory((data)
                 -> {

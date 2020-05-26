@@ -86,9 +86,17 @@ and open the template in the editor.
     -fx-background-color: #9a80fe;
     -fx-background-insets: 0;
     -fx-background-radius: 1;
-    -fx-text-fill: #ffffff;
 }
 
+.table-row-cell:selected .text {
+
+    -fx-fill: white ;
+
+}
+
+.table-view .column-header .arrow {
+    -fx-background-color: white;
+}
 
 .table-view *.scroll-bar:horizontal *.increment-button,
 .table-view *.scroll-bar:horizontal *.decrement-button {
@@ -105,4 +113,43 @@ and open the template in the editor.
   -fx-background-insets: 0;
   -fx-padding: 0;
   -fx-shape: null;
+}
+
+.menu-item:focused {
+     -fx-background-color: #969A9F;
+}
+
+.menu-bar {
+    -fx-background-color: black ;
+    -fx-opacity: 0.5;
+    -fx-border-width: 2.0;
+
+}
+.menu-bar .label {
+    -fx-font-size: 14.0 pt;
+    -fx-font-family: "Bookman Old Style";
+    -fx-text-fill: white;
+    -fx-font-weight: bold; 
+    -fx-padding: 10.0px;
+
+}
+.menu-bar .menu-button:hover, .menu-bar .menu-button:focused, .menu-bar .menu-button:showing {
+    -fx-background: black ;
+    -fx-opacity: 0.5;
+    -fx-text-fill: white;
+}
+
+.menu-item {
+    -fx-padding: 0.0em 0.0em 0.0em 0.0em;
+    -fx-text-fill: black;
+    -fx-background: darkgray ;
+}
+.menu-item .label{
+    -fx-font-size: 14.0 pt;
+    -fx-text-fill: black;
+}
+.menu-item .label:hover{
+    -fx-font-size: 14.0 pt;
+    -fx-background: black ;
+    -fx-text-fill: white;
 }

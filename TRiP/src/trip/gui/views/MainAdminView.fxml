@@ -74,7 +74,7 @@
                      </image>
                   </ImageView>
                </graphic></TableColumn>
-            <TableColumn fx:id="rateColumn" prefWidth="231.0" text="Rate ">
+            <TableColumn fx:id="rateColumn" prefWidth="186.0" text="Rate ">
                <graphic>
                   <ImageView fitHeight="14.0" fitWidth="107.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -86,7 +86,7 @@
                   </ImageView>
                </graphic>
             </TableColumn>
-            <TableColumn fx:id="customerColumn" prefWidth="227.0" text="Customer" />
+            <TableColumn fx:id="customerColumn" prefWidth="238.0" text="Customer" />
         </columns>
       </TableView>
       <TextField fx:id="searchBar" layoutX="231.0" layoutY="60.0" onKeyTyped="#projectSearch" prefHeight="31.0" prefWidth="406.0" promptText="Search" style="-fx-background-color: f1f1f1;" stylesheets="@../styles/MainAdminView.css">
