@@ -426,7 +426,7 @@ public class MainUserViewController implements Initializable {
             cancelTimer.setVisible(false);
             updateView().start();
         } catch (SQLException ex) {
-            JFXAlert.openError(stackPane, "Error stopping timer.");
+            JFXAlert.openError(stackPane, "Error saving time for task.");
         }
     }
 
