@@ -118,6 +118,15 @@ and open the template in the editor.
     -fx-text-fill: #ffffff;
 }
 
+.table-row-cell:selected .text {
+
+    -fx-fill: white ;
+
+}
+
+.table-view .column-header .arrow {
+    -fx-background-color: white;
+}
 
 .table-view *.scroll-bar:horizontal *.increment-button,
 .table-view *.scroll-bar:horizontal *.decrement-button {
