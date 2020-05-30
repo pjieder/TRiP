@@ -209,6 +209,6 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <StackPane fx:id="stackPane" layoutX="348.0" layoutY="24.0" prefHeight="159.0" prefWidth="296.0" visible="false" />
+      <StackPane fx:id="stackPane" layoutX="338.0" layoutY="306.0" prefHeight="159.0" prefWidth="296.0" stylesheets="@../styles/MainAdminView.css" visible="false" />
    </children>
 </AnchorPane>
