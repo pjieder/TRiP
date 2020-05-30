@@ -461,8 +461,8 @@ public class DalFacade implements IDalFacade {
      * @throws java.sql.SQLException
      */
     @Override
-    public void saveTimeForTask(Task task, int time, Date startTime, Date stopTime) throws SQLException{
-        taskManager.addTimeForTask(task, time, startTime, stopTime);
+    public void saveTimeForTask(Task task, int time, String startTime, String stopTime) throws SQLException{
+        taskManager.saveTimeForTask(task, time, startTime, stopTime);
     }
 
     /**

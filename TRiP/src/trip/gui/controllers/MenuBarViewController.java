@@ -49,7 +49,6 @@ public class MenuBarViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Platform.runLater(()->{AP.getScene().getStylesheets().add(TRiP.class.getResource("styles/ContextCSS.css").toExternalForm());});
     }
 
     /**
@@ -66,7 +65,7 @@ public class MenuBarViewController implements Initializable {
                 MainAdminViewController controller = fxmlLoader.getController();
                 controller.loadAllProjects();
                 pane.getChildren().add(adminPane);
-
+                AP.getScene().getStylesheets().add(TRiP.class.getResource("styles/ContextCSS.css").toExternalForm());
                 Platform.runLater(() -> {
                     stage.setScene(scene);
                     stage.show();
@@ -96,7 +95,7 @@ public class MenuBarViewController implements Initializable {
                 viewPane = this.pane;
                 vBox.getChildren().removeAll();
                 vBox.getChildren().setAll(logOutTab);
-
+                AP.getScene().getStylesheets().add(TRiP.class.getResource("styles/ContextCSS.css").toExternalForm());
                 Platform.runLater(() -> {
                     stage.setScene(scene);
                     stage.show();

@@ -61,7 +61,7 @@ public class Timer implements Runnable{
         this.task = task;
         this.numberLabel = numberLabel;
         this.startTime = new Date();
-        time = 0;
+        this.time = 0;
         executor = Executors.newSingleThreadExecutor();
         executor.submit(this);
     }

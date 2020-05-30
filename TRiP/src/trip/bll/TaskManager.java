@@ -13,6 +13,7 @@ import trip.be.Task;
 import trip.be.CountedTime;
 import trip.dal.dbmanagers.facades.DalFacade;
 import trip.dal.dbmanagers.facades.IDalFacade;
+import trip.utilities.TimeConverter;
 
 /**
  *
@@ -96,7 +97,11 @@ public class TaskManager {
      * @throws java.sql.SQLException
      */
     public void saveTimeForTask(Task task, int time, Date startTime, Date stopTime) throws SQLException{
-        dalFacade.saveTimeForTask(task, time, startTime, stopTime);
+        
+        String startString = TimeConverter.convertDateToStringDB(startTime);
+        String endString = TimeConverter.convertDateToStringDB(stopTime);
+        
+        dalFacade.saveTimeForTask(task, time, startString, endString);
     }
 
     /**

@@ -495,6 +495,7 @@ public class MainUserViewController implements Initializable {
                     if (!taskList.getSelectionModel().isEmpty()) {
                         
                         Task selectedTask = taskList.getSelectionModel().getSelectedItem();
+                        CountedTime selectedTime = taskTimerList.getSelectionModel().getSelectedItem();
                         taskList.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
                         taskList.refresh();
                         taskList.getSelectionModel().select(selectedTask);
@@ -502,6 +503,7 @@ public class MainUserViewController implements Initializable {
                         
                         if (taskList.getSelectionModel().getSelectedItem() != null) {
                             taskTimerList.setItems(taskList.getSelectionModel().getSelectedItem().getCountedTime());
+                            taskTimerList.getSelectionModel().select(selectedTime);
                         }
                         taskTimerList.refresh();
                     } else {
@@ -725,6 +727,7 @@ public class MainUserViewController implements Initializable {
                         projects = projectModel.loadAllEmployeeProjects(loggedUser.getId());
                     }
                     Project project = projectComboBox.getValue();
+                    
                     Task task = tasks.getValue();
                     Platform.runLater(() -> {
                         projectComboBox.setItems(projects);

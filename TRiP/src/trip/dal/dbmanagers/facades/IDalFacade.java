@@ -295,7 +295,7 @@ public interface IDalFacade {
      * @param stopTime The endtime of when the work ended.
      * @throws java.sql.SQLException
      */
-    public void saveTimeForTask(Task task, int time, Date startTime, Date stopTime) throws SQLException;
+    public void saveTimeForTask(Task task, int time, String startTime, String stopTime) throws SQLException;
 
     /**
      * Updates the specified time having been worked on the task in the database.

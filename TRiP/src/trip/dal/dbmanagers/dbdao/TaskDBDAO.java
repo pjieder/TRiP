@@ -221,7 +221,7 @@ public class TaskDBDAO implements ITaskDBDAO {
      * @throws java.sql.SQLException
      */
     @Override
-    public void addTimeForTask(Task task, int time, Date startTime, Date stopTime) throws SQLException {
+    public void saveTimeForTask(Task task, int time, String startTime, String stopTime) throws SQLException {
         Connection con = null;
         int ID = -1;
         try {
@@ -233,8 +233,8 @@ public class TaskDBDAO implements ITaskDBDAO {
 
             stmt.setInt(1, task.getId());
             stmt.setInt(2, time);
-            stmt.setString(3, TimeConverter.convertDateToStringDB(startTime));
-            stmt.setString(4, TimeConverter.convertDateToStringDB(stopTime));
+            stmt.setString(3, startTime);
+            stmt.setString(4, stopTime);
             stmt.setBoolean(5, true);
 
              stmt.executeUpdate();
