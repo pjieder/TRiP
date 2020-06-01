@@ -528,6 +528,8 @@ public class MainUserViewController implements Initializable {
                     } else {
                         tasks.getSelectionModel().selectLast();
                     }
+                    
+                    decideTimerEnabled();
                 } catch (SQLException ex) {
                     JFXAlert.openError(stackPane, "Error updating view.");
                 }
