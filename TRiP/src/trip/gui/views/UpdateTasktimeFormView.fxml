@@ -30,7 +30,7 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <JFXButton fx:id="updateButton" layoutX="106.0" layoutY="367.0" onAction="#updateCountedTime" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Update" textFill="WHITE">
+      <JFXButton fx:id="updateButton" disable="true" layoutX="106.0" layoutY="367.0" onAction="#updateCountedTime" prefHeight="31.0" prefWidth="74.0" styleClass="register-button" stylesheets="@../styles/RegisterFormCSS.css" text="Update" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
@@ -49,7 +49,7 @@
       <JFXDatePicker fx:id="dateStart" defaultColor="#9a80fe" layoutX="108.0" layoutY="132.0" onAction="#validateAddTask" prefHeight="30.0" prefWidth="126.0" promptText="3" stylesheets="@../styles/MainUserViewCSS.css" />
       <JFXDatePicker fx:id="dateStop" defaultColor="#9a80fe" layoutX="239.0" layoutY="132.0" onAction="#validateAddTask" prefHeight="30.0" prefWidth="126.0" promptText="3" stylesheets="@../styles/MainUserViewCSS.css" />
       <JFXTimePicker fx:id="timeStart" defaultColor="#9a80fe" layoutX="106.0" layoutY="206.0" onAction="#validateAddTask" prefHeight="28.0" prefWidth="126.0" promptText="2" stylesheets="@../styles/MainUserViewCSS.css" />
-      <JFXTextField fx:id="timerField" focusColor="#9a80fe00" layoutX="229.0" layoutY="259.0" prefHeight="21.0" prefWidth="210.0" text="00:00:00" unFocusColor="#4d4d4d00">
+      <JFXTextField fx:id="timerField" focusColor="#9a80fe00" layoutX="229.0" layoutY="259.0" prefHeight="21.0" prefWidth="210.0" text="00:00:00 " unFocusColor="#4d4d4d00">
          <font>
             <Font size="15.0" />
          </font>
