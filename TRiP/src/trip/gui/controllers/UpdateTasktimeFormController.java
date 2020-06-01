@@ -88,13 +88,14 @@ public class UpdateTasktimeFormController implements Initializable {
     public void setCountedTime(Thread thread, CountedTime countedTime) {
         this.countedTime = countedTime;
         this.updateThread = thread;
+        timerField.setText(TimeConverter.convertSecondsToString(countedTime.getTime()));
+        
         dateStart.setValue(countedTime.getStartTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
         dateStop.setValue(countedTime.getStopTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
 
         timeStart.setValue(countedTime.getStartTime().toInstant().atZone(ZoneId.systemDefault()).toLocalTime());
         timeStop.setValue(countedTime.getStopTime().toInstant().atZone(ZoneId.systemDefault()).toLocalTime());
 
-        timerField.setText(TimeConverter.convertSecondsToString(countedTime.getTime()));
         billable.setSelected(countedTime.isBillable());
     }
 
