@@ -9,7 +9,9 @@ and open the template in the editor.
 */
 
 
-
+/*
+Changes the color of a focused menu item label
+*/
 .menu-item:focused .label {
   -fx-text-fill: green;
 }

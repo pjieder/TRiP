@@ -8,12 +8,17 @@ and open the template in the editor.
     Author     : Peter
 */
 
+/*
+Changes the color of a button
+*/ 
 .login-button
 {
     -fx-background-color: #9a80fe;
 
 
-   
+/*
+Changes the hover color of a button
+*/  
 }
 .login-button:hover
 {
@@ -21,31 +26,49 @@ and open the template in the editor.
     
 }
 
+/*
+Changes the properties of a focused table view
+*/  
 .table-view:focused{
     -fx-background-color: transparent;
     -fx-background-insets: 0 ;
     -fx-text-fill: #ffffff;
 }
 
+/*
+Changes the properties of the column header background on a table view
+*/ 
 .table-view .column-header-background{
     -fx-background-color: linear-gradient(#9a80fe 100%, #b49afd 100%);
 }
 
+/*
+Changes the properties of the column header background label on a table view
+*/ 
 .table-view .column-header-background .label{
     -fx-background-color: transparent;
     -fx-text-fill: #ffffff;
 }
 
+/*
+Changes the properties of the column header background label on a table view
+*/ 
 .table-view .column-header {
     -fx-background-color: transparent;
 }
 
+/*
+Changes the properties of the table cell on a table view
+*/ 
 .table-view .table-cell{
     -fx-text-fill: black;
     -fx-alignment: center;
     -fx-border-color: #f9f9f9;
 }
 
+/*
+Changes the properties of a selected table row cell on a table view
+*/
 .table-row-cell:selected {
     -fx-background-color: #f1f1f1;
     -fx-background-insets: 0;
@@ -53,7 +76,9 @@ and open the template in the editor.
     -fx-text-fill: #ffffff;
 }
 
-
+/*
+Changes the properties of the horizontal scroll bar button
+*/
 .table-view *.scroll-bar:horizontal *.increment-button,
 .table-view *.scroll-bar:horizontal *.decrement-button {
   -fx-background-color: null;
@@ -62,6 +87,9 @@ and open the template in the editor.
   -fx-padding: 0;
 }
 
+/*
+Changes the properties of the horizontal scroll bar arrow
+*/
 .table-view *.scroll-bar:horizontal *.increment-arrow,
 .table-view *.scroll-bar:horizontal *.decrement-arrow {
   -fx-background-color: null;
@@ -71,6 +99,9 @@ and open the template in the editor.
   -fx-shape: null;
 }
 
+/*
+Changes the properties of a text field
+*/
 .text-field {
     -fx-accent: #9a80fe;
 }
