@@ -554,7 +554,8 @@ public class MainUserViewController implements Initializable {
     }
 
     /**
-     * Event handler for the taskTimerList. If a time is selected by double-clicking, the selected time will be opened in the UpdateTaskTimeForm so that the user can change the saved data if changes needs to be made.
+     * Event handler for the taskTimerList. If a time is selected by double-clicking, the selected time will be
+     * opened in the UpdateTaskTimeForm so that the user can change the saved data if changes needs to be made.
      *
      * @param event
      */

@@ -10,28 +10,40 @@ and open the template in the editor.
 
 @import url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
 
+/*
+Changes the color of a button
+*/ 
 .register-button
 {
     -fx-background-color: #9a80fe;
-
-
-   
 }
+
+/*
+Changes the hover color of a button
+*/ 
 .login-button:hover
 {
     -fx-background-color: #b49afd;
-    
 }
 
+/*
+Changes the font of a label
+*/ 
 .label
 {
         -fx-font-family: 'Oswald', sans-serif;
 }
 
+/*
+Changes the font size of a combobox
+*/ 
 .combo-box {
 -fx-font-size: 15;
 }
 
+/*
+Changes the properties of a text field
+*/ 
 .text-field {
     -fx-accent: #9a80fe;
 }

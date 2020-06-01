@@ -333,7 +333,8 @@ public class AdminStatisticsViewController implements Initializable {
     }
 
     /**
-     * Calculates the statistics shown in the taskchart based on the information entered. The total amount of tasks being worked on in the specified project between the selected dates are displayed.
+     * Calculates the statistics shown in the taskchart based on the information entered. The total amount of tasks being worked on 
+     * in the specified project between the selected dates are displayed.
      *
      * @param event
      */
@@ -458,7 +459,8 @@ public class AdminStatisticsViewController implements Initializable {
     }
 
     /**
-     * Calculates the total hours worked in the period and the total amount of money earned based on the rate of the rate of the selected project.
+     * Calculates the total hours worked in the period and the total amount of money earned based on the rate of the rate
+     * of the selected project.
      *
      * @param tasks The tasks the calculation is based on.
      * @param project The selected project.
@@ -493,7 +495,8 @@ public class AdminStatisticsViewController implements Initializable {
     }
 
     /**
-     * Opens the time tracking of the selected employee. This enables the admin looking at what the users has been working on and the logged time.
+     * Opens the time tracking of the selected employee. This enables the admin looking at what the users has been working on 
+     * and the logged time.
      *
      * @param event
      */

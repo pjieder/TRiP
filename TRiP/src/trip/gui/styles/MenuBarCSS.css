@@ -8,51 +8,65 @@ and open the template in the editor.
     Author     : Peter
 */
 
+/*
+Changes the hover color of a button
+*/
 .menubar1:hover{
     -fx-background-color: #f1f1f1;
     -fx-border-color: #FF9F00;
-    -fx-border-width: 0px 3px 0px 0px;
-       
+    -fx-border-width: 0px 3px 0px 0px;       
 }
 
+/*
+Changes the hover color of a button
+*/
 .menubar2:hover{
     -fx-background-color: #f1f1f1;
     -fx-border-color: #FFE470;
-    -fx-border-width: 0px 3px 0px 0px;
-       
+    -fx-border-width: 0px 3px 0px 0px;     
 }
 
+/*
+Changes the hover color of a button
+*/
 .menubar3:hover{
     -fx-background-color: #f1f1f1;
     -fx-border-color: #25D9F8;
-    -fx-border-width: 0px 3px 0px 0px;
-       
+    -fx-border-width: 0px 3px 0px 0px;     
 }
 
+/*
+Changes the hover color of a button
+*/
 .menubar4:hover{
     -fx-background-color: #f1f1f1;
     -fx-border-color: #FF4B00;
-    -fx-border-width: 0px 3px 0px 0px;
-       
+    -fx-border-width: 0px 3px 0px 0px;     
 }
 
+/*
+Changes the hover color of a button
+*/
 .menubar5:hover{
     -fx-background-color: #f1f1f1;
     -fx-border-color: #2DC471;
     -fx-border-width: 0px 3px 0px 0px;
-       
 }
 
+/*
+Changes the hover color of a button
+*/
 .menubar6:hover{
     -fx-background-color: #f1f1f1;
     -fx-border-color: #5C73BC;
-    -fx-border-width: 0px 3px 0px 0px;
-       
+    -fx-border-width: 0px 3px 0px 0px;     
 }
 
+/*
+Changes the hover color of a button
+*/
 .menubar7:hover{
     -fx-background-color: #f1f1f1;
     -fx-border-color: #b4e0fa;
     -fx-border-width: 0px 3px 0px 0px;
-       
 }

@@ -79,7 +79,8 @@ public class UpdateTasktimeFormController implements Initializable {
     }
 
     /**
-     * This method runs when the updateTasktimeForm is opened from the MainUserviewController. It takes the selected counted time and update thread and stores them as instance variables.
+     * This method runs when the updateTasktimeForm is opened from the MainUserviewController. It takes the selected counted time 
+     * and update thread and stores them as instance variables.
      *
      * @param thread the Thread returned by method updateView in the MainUserViewController.
      * @param countedTime the selected counted time to be updated.
