@@ -97,11 +97,7 @@ public class TaskManager {
      * @throws java.sql.SQLException
      */
     public void saveTimeForTask(Task task, int time, Date startTime, Date stopTime) throws SQLException{
-        
-        String startString = TimeConverter.convertDateToStringDB(startTime);
-        String endString = TimeConverter.convertDateToStringDB(stopTime);
-        
-        dalFacade.saveTimeForTask(task, time, startString, endString);
+        dalFacade.saveTimeForTask(task, time, startTime, stopTime);
     }
 
     /**

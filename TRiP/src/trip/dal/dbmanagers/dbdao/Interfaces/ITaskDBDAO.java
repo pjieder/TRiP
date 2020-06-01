@@ -76,7 +76,7 @@ public interface ITaskDBDAO {
      * @param stopTime The endtime of when the work ended.
      * @throws java.sql.SQLException
      */
-    public void saveTimeForTask(Task task, int time, String startTime, String stopTime) throws SQLException;
+    public void saveTimeForTask(Task task, int time, Date startTime, Date stopTime) throws SQLException;
 
     /**
      * Returns the total amount of time having been used on the specified task in seconds.
