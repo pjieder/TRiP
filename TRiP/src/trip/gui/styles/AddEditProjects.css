@@ -8,10 +8,16 @@ and open the template in the editor.
     Author     : Peter
 */
 
+/*
+Changes the properties of a text field
+*/
 .text-field {
     -fx-accent: #9a80fe;
 }
 
+/*
+Changes the properties of a combobox
+*/
 .combo-box{
     -fx-border-width:1;
     -fx-background-color: transparent;
@@ -20,76 +26,119 @@ and open the template in the editor.
 }
 
 
-
+/*
+Changes the properties of a combobox list-cell
+*/
 .combo-box-popup .list-cell {    
     -fx-background-color: white;    
     -fx-text-fill: #333333;
 }
 
+/*
+Changes the properties of a combobox list-cell filled hover
+*/
 .combo-box-popup .list-cell:filled:hover {
     -fx-background-color: #9a80fe;
     -fx-text-fill: #ffffff;
 }
 
+/*
+Changes the properties of a combobox list-cell filled selected
+*/
 .combo-box-popup .list-cell:filled:selected {
   -fx-background-color: #9a80fe;
   -fx-background-insets: 0 ;
   -fx-text-fill: #ffffff;
 }
 
+/*
+Changes the color of a button
+*/ 
 .login-button
 {
     -fx-background-color: #9a80fe;
 }
 
+/*
+Changes the hover color of a button
+*/ 
 .login-button:hover
 {
     -fx-background-color: #b49afd;
 }
 
+/*
+Changes the color of a rippler
+*/ 
 .jfx-rippler {
     -jfx-rippler-fill: #b49afd;
 }
 
+/*
+Changes the properties of a listview
+*/ 
 .list-view{
 -fx-border-color: f1f1f1;
 -fx-focus-color: transparent;
 -fx-background-color: transparent
 }
 
+/*
+Changes the color of even cells in a list view
+*/ 
 .list-cell:even { /* <=== changed to even */
     -fx-background-color: #f9f9f9;
 }
 
+/*
+Changes the color of odd cells in a list view
+*/ 
 .list-cell:odd { /* <=== changed to even */
     -fx-background-color: #f5f5f5;
 }
 
+/*
+Changes the color of filled hovered cells in a list view
+*/ 
 .list-cell:filled:hover {
     -fx-background-color: #f1f1f1;
 }
 
+/*
+Changes the color of selected hovered cells in a list view
+*/ 
 .list-view .list-cell:filled:selected {
   -fx-background-color: #9a80fe;
   -fx-background-insets: 0 ;
   -fx-text-fill: white;
 }
-
+/*
+Changes the properties of a choice box
+*/ 
 .choice-box > * {
     -fx-background-color: #f1f1f1;
     -fx-font-size: 15px;
     -fx-background-radius: 0;
 }
 
+/*
+Changes the colors of a focused combobox menu item
+*/ 
 .cb .menu-item:focused {
   -fx-background-color: #9a80fe; /* for example */
   -fx-text-fill: white;
 }
 
+/*
+Changes the color of a combobox context menu
+*/ 
 .cb .context-menu {
     -fx-background-color: white;
 }
 
+/*
+Changes the color of a focused combobox
+*/ 
 .cb:focused{
     -fx-faint-focus-color: transparent;
     -fx-focus-color: transparent; /* here rgba (corrected) */

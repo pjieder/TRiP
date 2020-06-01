@@ -8,14 +8,19 @@ and open the template in the editor.
     Author     : Peter
 */
 
+/*
+Changes the color of a button
+*/ 
 .button
 {
     -fx-background-color: #9a80fe;
     -fx-text-fill: white;
     -fx-cursor: hand;
-
-   
 }
+
+/*
+Changes the hover color of a button
+*/ 
 .button:hover
 {
     -fx-background-color: #b49afd;
@@ -23,7 +28,9 @@ and open the template in the editor.
 
 }
 
-
+/*
+Changes the properties of a textfield
+*/ 
 .text-field {
     -fx-background-color: -fx-control-inner-background;
     -fx-background-insets: 0;
@@ -32,52 +39,80 @@ and open the template in the editor.
 
 }
 
+/*
+Changes the properties of the input in a textfield
+*/ 
 .input .text-field {
-         -fx-prompt-text-fill: #ffffff;
+    -fx-prompt-text-fill: #ffffff;
 }
 
+/*
+Changes the properties of a combobox
+*/ 
 .combo-box{
     -fx-border-width:1;
     -fx-background-color: #f1f1f1;
     -fx-font-size: 15px;
-
 }
 
-
+/*
+Changes the properties of a list-cell in a combobox popup
+*/ 
 .combo-box-popup .list-cell {    
     -fx-background-color: white;    
     -fx-text-fill: #333333;
 }
 
+/*
+Changes the properties of a filled hovered list-cell in a combobox popup
+*/ 
 .combo-box-popup .list-cell:filled:hover {
     -fx-background-color: #9a80fe;
     -fx-text-fill: #ffffff;
 }
 
+/*
+Changes the properties of a selected hovered list-cell in a combobox popup
+*/ 
 .combo-box-popup .list-cell:filled:selected {
   -fx-background-color: #9a80fe;
   -fx-background-insets: 0 ;
   -fx-text-fill: #ffffff;
 }
 
+/*
+Changes the properties of a list view
+*/ 
 .list-view{
 -fx-border-color: #ffffff;
 -fx-focus-color: transparent;
 -fx-background-color: transparent;
 }
 
+/*
+Changes the color of even cells in a list view
+*/ 
 .list-cell:even { /* <=== changed to even */
     -fx-background-color: #f9f9f9;
 }
 
+/*
+Changes the color of odd cells in a list view
+*/ 
 .list-cell:odd { /* <=== changed to even */
     -fx-background-color: #f5f5f5;
 }
 
+/*
+Changes the color of selected hovered cells in a list view
+*/ 
 .list-cell:filled:hover {
     -fx-background-color: #f1f1f1;
 }
 
+/*
+Changes the color of filled selected cells in a list view
+*/ 
 .list-view .list-cell:filled:selected {
   -fx-background-color: #9a80fe;
   -fx-background-insets: 0 ;

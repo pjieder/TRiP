@@ -163,7 +163,8 @@ public class RegisterFormController implements Initializable {
     }
     
     /**
-     * This methods runs when the RegisterForm FXML is opened by the "add" button. It takes the update statistics thread and stores it as an instance variable.
+     * This methods runs when the RegisterForm FXML is opened by the "add" button. It takes the update statistics thread 
+     * and stores it as an instance variable.
      *
      * @param thread the Thread returned by method getUpdateListThread in the AdminCurrentUserViewController
      */
@@ -172,7 +173,8 @@ public class RegisterFormController implements Initializable {
     }
     
     /**
-     * This method runs when the RegisterForm FXML is opened by the "update" button. It takes the selected employee and update thread and stores them as instance variables.
+     * This method runs when the RegisterForm FXML is opened by the "update" button. It takes the selected employee 
+     * and update thread and stores them as instance variables.
      * @param employee The employee to be updated
      * @param thread the Thread returned by method getUpdateListThread in the AdminCurrentUserViewController.
      */

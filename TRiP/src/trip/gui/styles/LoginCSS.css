@@ -10,19 +10,27 @@ and open the template in the editor.
 
 @import url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
 
+
+/*
+Changes the color of a button
+*/ 
 .login-button
 {
     -fx-background-color: #9a80fe;
 
-
-   
 }
+
+/*
+Changes the hover color of a button
+*/ 
 .login-button:hover
 {
     -fx-background-color: #b49afd;
-    
 }
 
+/*
+Changes background of the view
+*/ 
 .background
 {
     -fx-background-image: url("../images/1.jpg");
@@ -30,25 +38,40 @@ and open the template in the editor.
     -fx-background-size: stretch;
 }
 
+/*
+Changes middle background of the view
+*/ 
 .middlebackground
 {
     -fx-background-color: rgba(255, 255, 255,0);
 }
 
+/*
+Changes the font of a label
+*/ 
 .label
 {
         -fx-font-family: 'Oswald', sans-serif;
 }
 
+/*
+Changes the properties of a jfx progress bar
+*/ 
 .jfx-progress-bar > .bar {
     -fx-background-color: #9a80fe;
 }
 
+/*
+Changes the properties of a text field
+*/ 
 .text-field {
     -fx-prompt-text-fill: white;
     -fx-accent: #9a80fe;
 }
 
+/*
+Changes the properties of text input
+*/ 
 .text-input {
     -fx-text-fill: white;    
 }

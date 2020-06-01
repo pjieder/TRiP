@@ -9,13 +9,17 @@ and open the template in the editor.
 */
 
 
-
+/*
+Changes the color of a button
+*/
 .button
 {
     -fx-background-color: #9a80fe;
 
 
-   
+/*
+Changes the hover color of a button
+*/   
 }
 .button:hover
 {
@@ -23,41 +27,47 @@ and open the template in the editor.
     
 }
 
-
+/*
+Changes the properties of a text field
+*/
 .text-field {
     -fx-background-color: -fx-control-inner-background;
     -fx-background-insets: 0;
     -fx-padding: 1 3 1 3;
 }
 
+/*
+Changes the color of the input line
+*/
 .jfx-date-picker .input-line {
     -fx-background-color: white;
 }
+
+/*
+Changes the color of the focused input line
+*/
 .jfx-date-picker .input-focused-line {
     -fx-background-color: white;
 }
 
+/*
+Changes the font-size of the date picker
+*/
 .jfx-date-picker {
     -fx-font-size: 15px;
     -fx-accent: #9a80fe;
 }
 
-.jfx-time-picker .input-line {
-    -fx-background-color: white;
-}
-.jfx-time-picker .input-focused-line {
-    -fx-background-color: white;
-}
-
-.jfx-time-picker {
-    -fx-font-size: 15px;
-    -fx-accent: #9a80fe;
-}
-
+/*
+Changes the prompt text color in a text field
+*/
 .input .text-field {
          -fx-prompt-text-fill: #ffffff;
 }
 
+/*
+Changes the properties of a combobox
+*/
 .combo-box{
     -fx-border-width:1;
     -fx-background-color: #f1f1f1;
@@ -65,52 +75,81 @@ and open the template in the editor.
 
 }
 
-
+/*
+Changes the properties of a list-cell in a combobox popup
+*/ 
 .combo-box-popup .list-cell {    
     -fx-background-color: white;    
     -fx-text-fill: #333333;
 }
 
+/*
+Changes the properties of a filled hovered list-cell in a combobox popup
+*/ 
 .combo-box-popup .list-cell:filled:hover {
     -fx-background-color: #9a80fe;
     -fx-text-fill: #ffffff;
 }
 
+/*
+Changes the properties of a selected hovered list-cell in a combobox popup
+*/ 
 .combo-box-popup .list-cell:filled:selected {
   -fx-background-color: #9a80fe;
   -fx-background-insets: 0 ;
   -fx-text-fill: #ffffff;
 }
 
+/*
+Changes the properties of a table view
+*/
 .table-view{
    -fx-background-color: transparent;
    -fx-font-size: 15px;
 }
 
+/*
+Changes the properties of a focused table view
+*/
 .table-view:focused{
     -fx-background-color: transparent;
     -fx-background-insets: 0 ;
     -fx-text-fill: #ffffff;
 }
 
+/*
+Changes the colors of the column header background
+*/
 .table-view .column-header-background{
     -fx-background-color: linear-gradient(#9a80fe 100%, #b49afd 100%);
 }
 
+/*
+Changes the colors of the column header background label
+*/
 .table-view .column-header-background .label{
     -fx-background-color: transparent;
     -fx-text-fill: #ffffff;
 }
 
+/*
+Changes the colors of the column header 
+*/
 .table-view .column-header {
     -fx-background-color: transparent;
 }
 
+/*
+Changes the properties of a table view cell
+*/
 .table-view .table-cell{
     -fx-alignment: center;
     -fx-border-color: #f9f9f9;
 }
 
+/*
+Changes the properties of a selected table row cell
+*/
 .table-row-cell:selected {
     -fx-background-color: #9a80fe;
     -fx-background-insets: 0;
@@ -118,16 +157,24 @@ and open the template in the editor.
     -fx-text-fill: #ffffff;
 }
 
+/*
+Changes the color of the text in a selected table row cell
+*/
 .table-row-cell:selected .text {
 
     -fx-fill: white ;
-
 }
 
+/*
+Changes the color of the column header arrow
+*/
 .table-view .column-header .arrow {
     -fx-background-color: white;
 }
 
+/*
+Changes the properties of the horizontal scroll bar button
+*/
 .table-view *.scroll-bar:horizontal *.increment-button,
 .table-view *.scroll-bar:horizontal *.decrement-button {
   -fx-background-color: null;
@@ -136,6 +183,9 @@ and open the template in the editor.
   -fx-padding: 0;
 }
 
+/*
+Changes the properties of the horizontal scroll bar arrow
+*/
 .table-view *.scroll-bar:horizontal *.increment-arrow,
 .table-view *.scroll-bar:horizontal *.decrement-arrow {
   -fx-background-color: null;
@@ -145,12 +195,17 @@ and open the template in the editor.
   -fx-shape: null;
 }
 
+/*
+Changes the color of a button
+*/
 #cancelTimer
 {
-    -fx-background-color: #fe6464;
-
-
+    -fx-background-color: #fe6464;   
 }
+
+/*
+Changes the hover color of a button
+*/
 #cancelTimer:hover
 {
     -fx-background-color: #ff8484;

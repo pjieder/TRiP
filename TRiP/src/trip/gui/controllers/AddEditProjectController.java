@@ -227,7 +227,8 @@ public class AddEditProjectController implements Initializable {
     }
 
     /**
-     * Removes the selected employee from the list containing active employees working on the project and returns it to the check box.
+     * Removes the selected employee from the list containing active employees working on the project 
+     * and returns it to the check box.
      *
      * @param event
      */

@@ -58,7 +58,8 @@ public class UpdateTaskFormController implements Initializable {
     }
 
     /**
-     * This method runs when the updateTaskForm FXML is opened from the MainUserViewController. It takes the selected task and update thread and stores them as instance variables.
+     * This method runs when the updateTaskForm FXML is opened from the MainUserViewController. It takes the selected task 
+     * and update thread and stores them as instance variables.
      *
      * @param updateThread the Thread returned by method updateView in the MainUserViewController.
      * @param task the selected task to be updated.
@@ -97,7 +98,8 @@ public class UpdateTaskFormController implements Initializable {
     }
 
     /**
-     * Deletes the selected task. This will result in all registered time for the task being deleted as well. A warning will pop up, warning the user if they really want to delete the selected task.
+     * Deletes the selected task. This will result in all registered time for the task being deleted as well. A warning will pop up, 
+     * warning the user if they really want to delete the selected task.
      *
      * @param event
      */
