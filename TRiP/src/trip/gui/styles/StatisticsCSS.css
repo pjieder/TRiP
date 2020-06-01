@@ -9,140 +9,224 @@ and open the template in the editor.
 */
 
 
-
+/*
+Changes the properties of a button
+*/
 .button-with-margin {
     -fx-padding: 5px;
     -fx-border-insets: 5px;
     -fx-background-insets: 5px;
 }
 
+/*
+Changes the properties of a combobox
+*/
 .combo-box{
     -fx-border-width:1;
     -fx-background-color: #f3f3f3;
     -fx-font-size: 15px;
-
 }
 
+/*
+Changes the properties of a list-cell in a combobox popup
+*/ 
 .combo-box-popup .list-cell {    
     -fx-background-color: white;    
     -fx-text-fill: #333333;
 }
 
+/*
+Changes the properties of a filled hovered list-cell in a combobox popup
+*/ 
 .combo-box-popup .list-cell:filled:hover {
     -fx-background-color: #9a80fe;
     -fx-text-fill: #ffffff;
 }
 
+/*
+Changes the properties of a selected hovered list-cell in a combobox popup
+*/ 
 .combo-box-popup .list-cell:filled:selected {
   -fx-background-color: #9a80fe;
   -fx-background-insets: 0 ;
   -fx-text-fill: #ffffff;
 }
 
+/*
+Changes the properties of a chart
+*/ 
 .chart {
     -fx-padding: 10px;
     -fx-background-color: #ffffff;
     -fx-legend-visible: false;
 }
 
+/*
+Changes the properties of chart content
+*/ 
 .chart-content {
     -fx-padding: 30px;    
 }
 
+/*
+Changes the properties of a chart title
+*/ 
 .chart-title {
     -fx-text-fill: black;
 }
 
+/*
+Changes the properties of the axis label
+*/ 
 .axis-label {
     -fx-text-fill: black;
 }
 
+/*
+Changes the properties of the chart plot background
+*/ 
 .chart-plot-background {
     -fx-background-color:transparent;
 }
 
-
+/*
+Changes the properties of rows on a chart
+*/ 
 .chart-alternative-row-fill {
     -fx-fill:transparent;
     -fx-stroke: transparent;
 }
 
+/*
+Changes the properties of a chart
+*/ 
 .default-color0.chart-series-line {
     -fx-stroke: #0000ff;
 }
 
+/*
+Changes the properties of a chart
+*/ 
 .default-color0.chart-line-symbol {
     -fx-background-color: #0000ff, white;
 }
+
+/*
+Changes the properties of a text field
+*/ 
 .text-field {
     -fx-accent: #9a80fe;
 }
 
+/*
+Changes the properties of a bar chart
+*/ 
 .default-color0.chart-bar { -fx-bar-fill: #9a80fe; }
 
+/*
+Changes the properties of a the title on a bar chart
+*/ 
 .chart-bar-title {
     -fx-text-fill: black;
 }
 
+/*
+Changes the properties of a chart series line
+*/ 
 .default-color0.chart-series-line { 
     -fx-stroke: #9a80fe; 
     -fx-stroke-width: 2px
 }
 
+/*
+Changes the properties of a chart line symbol
+*/
 .default-color0.chart-line-symbol { 
     -fx-background-color: #FF9F00; 
     -fx-opacity: 0.7;
 }
 
+/*
+Changes the properties of a jfx progress bar
+*/
 .jfx-progress-bar > .bar {
     -fx-background-color: #FF9F00;
 }
 
+/*
+Changes the properties of a table view
+*/
 .table-view{
    -fx-background-color: transparent;
    -fx-font-size: 15px;
 }
 
+/*
+Changes the properties of a focused table view
+*/
 .table-view:focused{
     -fx-background-color: transparent;
     -fx-background-insets: 0 ;
     -fx-text-fill: #ffffff;
 }
 
+/*
+Changes the colors of the column header background
+*/
 .table-view .column-header-background{
     -fx-background-color: linear-gradient(#9a80fe 100%, #b49afd 100%);
 }
 
+/*
+Changes the colors of the column header background label
+*/
 .table-view .column-header-background .label{
     -fx-background-color: transparent;
     -fx-text-fill: #ffffff;
 }
 
+/*
+Changes the colors of the column header 
+*/
 .table-view .column-header {
     -fx-background-color: transparent;
 }
 
+/*
+Changes the properties of a table view cell
+*/
 .table-view .table-cell{
     -fx-alignment: center;
     -fx-border-color: #f9f9f9;
 }
 
+/*
+Changes the properties of a selected table row cell
+*/
 .table-row-cell:selected {
     -fx-background-color: #9a80fe;
     -fx-background-insets: 0;
     -fx-background-radius: 1;
 }
 
+/*
+Changes the color of the text in a selected table row cell
+*/
 .table-row-cell:selected .text {
 
     -fx-fill: white ;
-
 }
 
+/*
+Changes the color of the column header arrow
+*/
 .table-view .column-header .arrow {
     -fx-background-color: white;
 }
 
+/*
+Changes the properties of the horizontal scroll bar button
+*/
 .table-view *.scroll-bar:horizontal *.increment-button,
 .table-view *.scroll-bar:horizontal *.decrement-button {
   -fx-background-color: null;
@@ -151,6 +235,9 @@ and open the template in the editor.
   -fx-padding: 0;
 }
 
+/*
+Changes the properties of the horizontal scroll bar arrow
+*/
 .table-view *.scroll-bar:horizontal *.increment-arrow,
 .table-view *.scroll-bar:horizontal *.decrement-arrow {
   -fx-background-color: null;
