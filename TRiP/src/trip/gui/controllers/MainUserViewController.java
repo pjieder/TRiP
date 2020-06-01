@@ -187,6 +187,8 @@ public class MainUserViewController implements Initializable {
             timerField.validate();
         });
         
+        tasks.setOnAction((event)->{decideAddTimeEnabled();});
+        
         loadProjects();
         
         final Tooltip tooltipButton = new Tooltip();
@@ -294,6 +296,11 @@ public class MainUserViewController implements Initializable {
      */
     private void loadProjects() {
         try {
+            
+            taskList.getItems().clear();
+            taskTimerList.getItems().clear();
+            tasks.getItems().clear();
+            
             if (loggedUser.getRole() == Roles.ADMIN) {
                 projectComboBox.setItems(projectModel.loadAllActiveProjects());
             } else {
@@ -359,6 +366,7 @@ public class MainUserViewController implements Initializable {
         try {
             String taskName = newTaskTitle.getText().trim();
             Task task = taskModel.addTask(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId(), taskName);
+            newTaskTitle.clear();
             updateView().start();
             return task;
         } catch (SQLException ex) {
@@ -398,7 +406,6 @@ public class MainUserViewController implements Initializable {
         
         if (!newTaskTitle.getText().trim().isEmpty()) {
             Task task = addTask();
-            newTaskTitle.clear();
             timer.startTimer(task, timerLabel);
         } else {
             timer.startTimer(taskList.getSelectionModel().getSelectedItem(), timerLabel);
@@ -507,8 +514,11 @@ public class MainUserViewController implements Initializable {
                         }
                         taskTimerList.refresh();
                     } else {
+                        if (projectComboBox.getValue() != null)
+                        {
                         taskList.setItems(taskModel.loadTasks(loggedUser.getId(), projectComboBox.getSelectionModel().getSelectedItem().getId()));
                         taskList.refresh();
+                        }
                     }
                     Task selectedItem = tasks.getSelectionModel().getSelectedItem();
                     tasks.setItems(taskList.getItems());
@@ -627,7 +637,7 @@ public class MainUserViewController implements Initializable {
     }
 
     /**
-     * Event handler for the "add task" buttonn. Gives an admin the ability to add tasks to existing users.
+     * Event handler for the "add task" button. Gives an admin the ability to add tasks to existing users.
      *
      * @param event
      */

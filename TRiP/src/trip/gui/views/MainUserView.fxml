@@ -126,7 +126,7 @@
             <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <ComboBox fx:id="tasks" onAction="#validateAddTask" prefHeight="44.0" prefWidth="234.0" promptText="Task" style="-fx-background-color: #f1f1f1;" stylesheets="@../styles/MainUserViewCSS.css" />
+            <ComboBox fx:id="tasks" prefHeight="44.0" prefWidth="234.0" promptText="Task" style="-fx-background-color: #f1f1f1;" stylesheets="@../styles/MainUserViewCSS.css" />
             <JFXButton fx:id="addTime" disable="true" onAction="#addTime" prefHeight="44.0" prefWidth="70.0" stylesheets="@../styles/MainUserViewCSS.css" text="Add" textFill="WHITE" GridPane.columnIndex="8">
                <font>
                   <Font size="15.0" />
