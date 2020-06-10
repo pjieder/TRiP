@@ -132,28 +132,20 @@ public class AddEditCustomerController implements Initializable {
     @FXML
     private void registerCustomer(ActionEvent event) {
         try{
-            
-        //variables
+
         String name = nameField.getText();
         String phoneNumber = phoneNumberField.getText();
         String email = emailField.getText();
-        
-        //Creating customer object with three values
         Customer customer = new Customer(name, phoneNumber, email);
 
-        //Create or update customer with BE
         if (customerToUpdate == null) {
             customerModel.createCustomer(customer);
-        
         } else {
             customer.setId(customerToUpdate.getId());
             customerModel.updateCustomer(customer);
         }
         
-        //update thread parameter from main view
         updateThread.start();
-        
-        //close stage
         Stage currentStage = (Stage) nameField.getScene().getWindow();
         currentStage.close();
         }
